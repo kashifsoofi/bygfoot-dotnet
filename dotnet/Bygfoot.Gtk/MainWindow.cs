@@ -1,9 +1,9 @@
-using System;
-using Gtk;
-using UI = Gtk.Builder.ObjectAttribute;
-
 namespace Bygfoot
 {
+    using System;
+    using Gtk;
+    using UI = Gtk.Builder.ObjectAttribute;
+
     class MainWindow : Window
     {
         [UI] private Label _label1 = null;
