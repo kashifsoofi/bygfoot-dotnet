@@ -305,7 +305,7 @@
                         <property name="numeric">True</property>
                         <signal name="button_press_event" handler="on_spinbutton_capacity_button_press_event"/>
                         <signal name="value_changed" handler="on_spinbutton_capacity_value_changed"/>
-                        <signal name="change_value" handler="on_spinbutton_capacity_value_changed"/>
+                        <signal name="change_value" handler="on_spinbutton_capacity_change_value"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>

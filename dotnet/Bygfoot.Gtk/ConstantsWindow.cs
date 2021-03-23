@@ -24,5 +24,13 @@ namespace Bygfoot
         private void on_button_constants_save_clicked(object sender, EventArgs a)
         {
         }
+
+        private void on_button_constants_reload_clicked(object sender, EventArgs a)
+        {
+        }
+
+        private void on_button_constants_close_clicked(object sender, EventArgs a)
+        {
+        }
     }
 }

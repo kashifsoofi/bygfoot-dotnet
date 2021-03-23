@@ -29,15 +29,15 @@ namespace Bygfoot
         {
         }
 
-        private void on_spinbutton_recreation_value_changed(object sender, ValueChangedArgs a)
+        private void on_spinbutton_recreation_value_changed(object sender, EventArgs a)
         {
         }
 
-        private void on_checkbutton_save_global_button_press_event(object sender, EventArgs a)
+        private void on_checkbutton_save_global_button_press_event(object sender, ButtonPressEventArgs a)
         {
         }
 
-        private void on_checkbutton_save_user_button_press_event(object sender, EventArgs a)
+        private void on_checkbutton_save_user_button_press_event(object sender, ButtonPressEventArgs a)
         {
         }
 

@@ -25,7 +25,11 @@ namespace Bygfoot
         {
         }
 
-        private void on_spinbutton_safety_value_changed(object sender, ChangeValueArgs a)
+        private void on_spinbutton_capacity_change_value(object sender, ChangeValueArgs a)
+        {
+        }
+
+        private void on_spinbutton_safety_value_changed(object sender, EventArgs a)
         {
         }
 

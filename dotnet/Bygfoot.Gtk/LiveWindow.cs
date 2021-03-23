@@ -41,11 +41,11 @@ namespace Bygfoot
         {
         }
 
-        private void on_spinbutton_speed_value_changed(object sender, ChangeValueArgs a)
+        private void on_spinbutton_speed_value_changed(object sender, EventArgs a)
         {
         }
 
-        private void on_spinbutton_verbosity_value_changed(object sender, ChangeValueArgs a)
+        private void on_spinbutton_verbosity_value_changed(object sender, EventArgs a)
         {
         }
     }
