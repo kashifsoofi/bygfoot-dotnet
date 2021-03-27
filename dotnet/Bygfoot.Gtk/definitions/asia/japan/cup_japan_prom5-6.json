@@ -1,0 +1,34 @@
+{
+  "cup": {
+    "name": "Hoku-shin-etsu Promotion Playoff",
+    "short_name": "Ho. Playoff",
+    "sid": "japan_prom5-6",
+    "symbol": "flag_japan.png",
+    "property": [
+      "promotion",
+      "highlight2"
+    ],
+    "add_week": "1000",
+    "week_gap": "1",
+    "cup_rounds": {
+      "cup_round": {
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "japan4-6",
+              "number_of_teams": "1",
+              "start_idx": "7",
+              "end_idx": "7"
+            },
+            {
+              "choose_team_sid": "japan5-6",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

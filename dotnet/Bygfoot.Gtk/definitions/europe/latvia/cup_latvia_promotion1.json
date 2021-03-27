@@ -1,0 +1,34 @@
+{
+  "cup": {
+    "name": "Latvia Promotion 1",
+    "short_name": "L. Prom. 1",
+    "symbol": "flag_latvia.png",
+    "sid": "latvia_promotion1",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2"
+    ],
+    "yellow_red": "3",
+    "cup_rounds": {
+      "cup_round": {
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "latvia2",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "latvia1",
+              "number_of_teams": "1",
+              "start_idx": "9",
+              "end_idx": "9"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

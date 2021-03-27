@@ -1,0 +1,64 @@
+{
+  "league": {
+    "sid": "andorra1",
+    "name": "Primera Divisió",
+    "short_name": "Primera",
+    "symbol": "flag_andorra.png",
+    "first_week": "12",
+    "week_gap": "1",
+    "break_in": [
+      {
+        "@length": "1",
+        "#text": "15"
+      },
+      {
+        "@length": "1",
+        "#text": "20"
+      },
+      {
+        "@length": "4",
+        "#text": "25"
+      },
+      {
+        "@length": "1",
+        "#text": "35"
+      }
+    ],
+    "average_talent": "5300",
+    "round_robins": "4",
+    "names_file": "spain",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "5",
+        "rank_end": "5",
+        "dest_sid": "andorra2",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Santa Coloma",
+          "team_average_talent": "3900"
+        },
+        {
+          "team_name": "Sant Julià",
+          "team_average_talent": "3800"
+        },
+        {
+          "team_name": "Principat",
+          "team_average_talent": "3700"
+        },
+        {
+          "team_name": "Encamp",
+          "team_average_talent": "3700"
+        },
+        {
+          "team_name": "Rànger's",
+          "team_average_talent": "3600"
+        }
+      ]
+    }
+  }
+}

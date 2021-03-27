@@ -1,0 +1,90 @@
+{
+  "league": {
+    "sid": "albania2",
+    "name": "Albania First Division",
+    "short_name": "1st Div.",
+    "symbol": "flag_albania.png",
+    "first_week": "8",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "4",
+      "#text": "27"
+    },
+    "average_talent": "5900",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "2",
+          "dest_sid": "albania1",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "15",
+          "rank_end": "16",
+          "dest_sid": "albania3a albania3b",
+          "prom_rel_type": "relegation"
+        }
+      ],
+      "prom_games": {
+        "prom_games_dest_sid": "albania1",
+        "prom_games_number_of_advance": "2",
+        "prom_games_cup_sid": "albania_prom_games1",
+        "prom_games_loser_sid": "albania2"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "A. Velipojë"
+        },
+        {
+          "team_name": "Burreli"
+        },
+        {
+          "team_name": "B. Lezhë"
+        },
+        {
+          "team_name": "Bilisht S."
+        },
+        {
+          "team_name": "D. Kamzë"
+        },
+        {
+          "team_name": "G. Ersekë"
+        },
+        {
+          "team_name": "Laci"
+        },
+        {
+          "team_name": "S. Korcë"
+        },
+        {
+          "team_name": "K. Krujë"
+        },
+        {
+          "team_name": "L. Gjirokastër"
+        },
+        {
+          "team_name": "Pogradeci"
+        },
+        {
+          "team_name": "T. Pukë"
+        },
+        {
+          "team_name": "S. Librazhd"
+        },
+        {
+          "team_name": "T. Cërrik"
+        },
+        {
+          "team_name": "N. Kucovë"
+        },
+        {
+          "team_name": "Skrapari"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "league": {
+    "sid": "latvia3d",
+    "name": "2. liga Ziemeļaustrumu zona",
+    "short_name": "2. L. Zi.",
+    "symbol": "flag_latvia.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "5100",
+    "yellow_red": "5",
+    "names_file": "latvia",
+    "property": "inactive",
+    "layer": "3",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Madona/Kvarcs"
+        },
+        {
+          "team_name": "Balvi"
+        },
+        {
+          "team_name": "Pļaviņas D."
+        },
+        {
+          "team_name": "Aizkraukle"
+        }
+      ]
+    }
+  }
+}

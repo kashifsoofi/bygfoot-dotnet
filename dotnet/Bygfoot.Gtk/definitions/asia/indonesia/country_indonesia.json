@@ -1,0 +1,18 @@
+{
+  "country": {
+    "name": "indonesia",
+    "rating": "9",
+    "symbol": "flag_indonesia.png",
+    "sid": "indonesia",
+    "leagues": {
+      "league": [
+        "indonesia1",
+        "indonesia2a",
+        "indonesia2b"
+      ]
+    },
+    "cups": {
+      "cup": "indonesia_champ_league"
+    }
+  }
+}

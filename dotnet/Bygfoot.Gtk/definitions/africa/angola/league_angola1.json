@@ -1,0 +1,90 @@
+{
+  "league": {
+    "sid": "angola1",
+    "layer": "1",
+    "name": "Girabola",
+    "short_name": "GB",
+    "symbol": "flag_angola.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "7300",
+    "yellow_red": "3",
+    "names_file": "general",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "14",
+        "rank_end": "16",
+        "dest_sid": "angola2",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Recreativo do Libolo",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Kabuscorp",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "1º de Agosto",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Petróleos de Luanda",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Inter Luanda",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "ASA",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Sagrada Esperança",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Santos",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Recreativo Caála",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Bravos do Maqui",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Progresso",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "1º de Maio",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Académica Soyo",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "FC Cabinda",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Benfica Luanda",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Académica Lobito",
+          "team_average_talent": "7300"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "country": {
+    "name": "iran",
+    "rating": "9",
+    "symbol": "flag_iran.png",
+    "sid": "iran",
+    "leagues": {
+      "league": [
+        "iran1",
+        "iran2a",
+        "iran2b"
+      ]
+    },
+    "cups": {
+      "cup": "iran_champ_league"
+    }
+  }
+}

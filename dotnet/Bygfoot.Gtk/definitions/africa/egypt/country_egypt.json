@@ -1,0 +1,19 @@
+{
+  "country": {
+    "name": "egypt",
+    "rating": "9",
+    "symbol": "flag_egypt.png",
+    "sid": "egypt",
+    "leagues": {
+      "league": [
+        "egypt1",
+        "egypt21",
+        "egypt22",
+        "egypt23"
+      ]
+    },
+    "cups": {
+      "cup": "cup_egypt"
+    }
+  }
+}

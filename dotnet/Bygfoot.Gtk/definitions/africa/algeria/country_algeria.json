@@ -1,0 +1,17 @@
+{
+  "country": {
+    "name": "algeria",
+    "rating": "9",
+    "symbol": "flag_algeria.png",
+    "sid": "algeria",
+    "leagues": {
+      "league": [
+        "algeria1",
+        "algeria2"
+      ]
+    },
+    "cups": {
+      "cup": "cup_algeria"
+    }
+  }
+}

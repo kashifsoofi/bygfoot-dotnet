@@ -1,0 +1,67 @@
+{
+  "league": {
+    "sid": "romania1",
+    "name": "Liga I",
+    "short_name": "L1",
+    "symbol": "flag_romania.png",
+    "first_week": "5",
+    "week_gap": "1",
+    "break_in": [
+      {
+        "@length": "1",
+        "#text": "10"
+      },
+      {
+        "@length": "9",
+        "#text": "23"
+      }
+    ],
+    "average_talent": "7500",
+    "names_file": "romania",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "5",
+        "rank_end": "8",
+        "dest_sid": "romania2a romania2b",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Steaua Bucureşti",
+          "def_file": "romania_steaua"
+        },
+        {
+          "team_name": "FC Timişoara",
+          "def_file": "romania_timisoara"
+        },
+        {
+          "team_name": "Rapid Bucureşti",
+          "def_file": "romania_rapid"
+        },
+        {
+          "team_name": "CFR Cluj",
+          "def_file": "romania_cluj"
+        },
+        {
+          "team_name": "Dinamo Bucureşti",
+          "def_file": "romania_dinamob"
+        },
+        {
+          "team_name": "FC Vaslui",
+          "def_file": "romania_vaslui"
+        },
+        {
+          "team_name": "Universitatea Craiova",
+          "def_file": "romania_craiova"
+        },
+        {
+          "team_name": "Oţelul Galaţi",
+          "def_file": "romania_otelul"
+        }
+      ]
+    }
+  }
+}

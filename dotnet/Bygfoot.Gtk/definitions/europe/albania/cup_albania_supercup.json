@@ -1,0 +1,33 @@
+{
+  "cup": {
+    "name": "Albanian Supercup",
+    "short_name": "Supercup",
+    "symbol": "flag_albania.png",
+    "sid": "albania_supercup",
+    "last_week": "7",
+    "property": "national",
+    "group": "150",
+    "cup_rounds": {
+      "cup_round": {
+        "home_away": "0",
+        "neutral": "1",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "albania_cup",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1"
+            },
+            {
+              "choose_team_sid": "albania1",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

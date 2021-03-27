@@ -1,0 +1,32 @@
+{
+  "cup": {
+    "name": "WC Qualification N. + C. America",
+    "short_name": "WCNCAmerica",
+    "sid": "wc_ncamerica",
+    "symbol": "wc_namerica.png",
+    "yellow_red": "3",
+    "last_week": "40",
+    "add_week": "23",
+    "week_gap": "1",
+    "property": "international",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "number_of_groups": "3",
+          "number_of_advance": "2",
+          "new_teams": "12",
+          "randomise_teams": "1",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "concacaf"
+            }
+          }
+        },
+        {
+          "number_of_groups": "1",
+          "number_of_advance": "3"
+        }
+      ]
+    }
+  }
+}

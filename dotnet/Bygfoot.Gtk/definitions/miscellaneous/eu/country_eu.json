@@ -1,0 +1,11 @@
+{
+  "country": {
+    "name": "European Union",
+    "rating": "8",
+    "symbol": "flag_eu.png",
+    "sid": "eu",
+    "leagues": {
+      "league": "eu"
+    }
+  }
+}

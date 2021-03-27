@@ -1,0 +1,81 @@
+{
+  "league": {
+    "sid": "germany5_1",
+    "name": "Oberliga Baden-Württemberg",
+    "short_name": "OL Baden-Württemberg",
+    "symbol": "flag_germany.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "break": "7",
+    "average_talent": "5400",
+    "names_file": "germany",
+    "yellow_red": "5",
+    "layer": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "germany4c",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Balingen"
+        },
+        {
+          "team_name": "Crailsheim"
+        },
+        {
+          "team_name": "V. Mannheim"
+        },
+        {
+          "team_name": "Bahling"
+        },
+        {
+          "team_name": "Freiberg"
+        },
+        {
+          "team_name": "Villingen"
+        },
+        {
+          "team_name": "Nöttingen"
+        },
+        {
+          "team_name": "Gmünd"
+        },
+        {
+          "team_name": "Großaspach"
+        },
+        {
+          "team_name": "Illertissen"
+        },
+        {
+          "team_name": "Kehl"
+        },
+        {
+          "team_name": "Durlach"
+        },
+        {
+          "team_name": "Stuttgarter K. II"
+        },
+        {
+          "team_name": "Hoffenheim II"
+        },
+        {
+          "team_name": "Kirchheim"
+        },
+        {
+          "team_name": "A. Walldorf"
+        },
+        {
+          "team_name": "Offenburg"
+        },
+        {
+          "team_name": "Au Iller"
+        }
+      ]
+    }
+  }
+}

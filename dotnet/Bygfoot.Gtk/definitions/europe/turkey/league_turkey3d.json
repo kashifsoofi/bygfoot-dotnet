@@ -1,0 +1,52 @@
+{
+  "league": {
+    "sid": "turkey3d",
+    "name": "TFF Second League Group 4",
+    "short_name": "2. Lig. G4",
+    "symbol": "flag_turkey.png",
+    "first_week": "8",
+    "week_gap": "1",
+    "average_talent": "6200",
+    "names_file": "turkey",
+    "yellow_red": "5",
+    "layer": "3",
+    "property": "inactive",
+    "teams": {
+      "team": [
+        {
+          "team_name": "A. S. Trabzon"
+        },
+        {
+          "team_name": "Ar. Trabzon"
+        },
+        {
+          "team_name": "Çankırı B."
+        },
+        {
+          "team_name": "Çorum"
+        },
+        {
+          "team_name": "Erzurum"
+        },
+        {
+          "team_name": "Kars S."
+        },
+        {
+          "team_name": "O. Trabzon"
+        },
+        {
+          "team_name": "P. Rize"
+        },
+        {
+          "team_name": "Tokat"
+        },
+        {
+          "team_name": "Trabzon K."
+        },
+        {
+          "team_name": "Y. Yozgat"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "cup": {
+    "name": "Scottish FA Cup",
+    "short_name": "FA Cup",
+    "symbol": "flag_scotland.png",
+    "sid": "scotland_fa",
+    "last_week": "48",
+    "week_gap": "4",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "replay": "1",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "scotland4"
+              },
+              {
+                "choose_team_sid": "scotland3"
+              },
+              {
+                "choose_team_sid": "scotland2",
+                "number_of_teams": "6",
+                "start_idx": "5",
+                "end_idx": "10",
+                "randomly": "1"
+              }
+            ]
+          },
+          "byes": "6",
+          "delay": "-6"
+        },
+        {
+          "home_away": "0",
+          "replay": "1",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "scotland2",
+                "number_of_teams": "4",
+                "start_idx": "1",
+                "end_idx": "4",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "scotland1"
+              }
+            ]
+          },
+          "delay": "-4"
+        },
+        {
+          "home_away": "0",
+          "replay": "1",
+          "delay": "-4"
+        },
+        {
+          "home_away": "0",
+          "replay": "1",
+          "delay": "-4"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1",
+          "delay": "-1"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

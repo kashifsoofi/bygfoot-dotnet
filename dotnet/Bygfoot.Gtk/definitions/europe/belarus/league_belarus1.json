@@ -1,0 +1,45 @@
+{
+  "league": {
+    "sid": "belarus1",
+    "name": "Vysshaya Liga",
+    "short_name": "Vysshaya",
+    "symbol": "flag_belarus.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "6700",
+    "names_file": "russia",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "3",
+        "rank_end": "5",
+        "dest_sid": "belarus2",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "BATE Borisov",
+          "def_file": "belarus_bate"
+        },
+        {
+          "team_name": "Dinamo Minsk",
+          "def_file": "belarus_dinamom"
+        },
+        {
+          "team_name": "FC Gomel",
+          "def_file": "belarus_gomel"
+        },
+        {
+          "team_name": "Shakhtsyor Salihorsk",
+          "def_file": "belarus_shakht"
+        },
+        {
+          "team_name": "FC Minsk",
+          "def_file": "belarus_minsk"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "cup": {
+    "name": "Slovenian Supercup",
+    "short_name": "Supercup",
+    "symbol": "flag_slovenia.png",
+    "sid": "slovenia_supercup",
+    "last_week": "2",
+    "property": "national",
+    "group": "171",
+    "cup_rounds": {
+      "cup_round": {
+        "home_away": "0",
+        "neutral": "1",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "slovenia_cup",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1"
+            },
+            {
+              "choose_team_sid": "slovenia1",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

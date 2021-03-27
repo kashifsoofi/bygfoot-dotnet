@@ -1,0 +1,38 @@
+{
+  "country": {
+    "name": "France",
+    "rating": "9",
+    "symbol": "flag_france.png",
+    "sid": "france",
+    "leagues": {
+      "league": [
+        "france1",
+        "france2",
+        "france3",
+        "france4a",
+        "france4b",
+        "france4c",
+        "france4d",
+        "france5a",
+        "france5b",
+        "france5c",
+        "france5d",
+        "france5e",
+        "france5f",
+        "france5g",
+        "france5h"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "france_coupe",
+        "france_ligue",
+        "europe_uefa3f",
+        "europe_champ_league3",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "france_supercup"
+      ]
+    }
+  }
+}

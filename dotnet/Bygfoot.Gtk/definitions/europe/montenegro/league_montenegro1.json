@@ -1,0 +1,64 @@
+{
+  "league": {
+    "sid": "montenegro1",
+    "name": "Prva crnogorska liga",
+    "short_name": "Prva crn.",
+    "symbol": "flag_montenegro.png",
+    "first_week": "6",
+    "week_gap": "1",
+    "break_in": [
+      {
+        "@length": "1",
+        "#text": "10"
+      },
+      {
+        "@length": "1",
+        "#text": "15"
+      },
+      {
+        "@length": "10",
+        "#text": "24"
+      }
+    ],
+    "average_talent": "6800",
+    "names_file": "serbia",
+    "round_robins": "3",
+    "yellow_red": "5",
+    "two_match_week_start": [
+      "8",
+      "24"
+    ],
+    "two_match_week_end": [
+      "9",
+      "25"
+    ],
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "4",
+        "rank_end": "4",
+        "dest_sid": "montenegro2",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Morgen",
+          "def_file": "montenegro_morgen"
+        },
+        {
+          "team_name": "Zeta",
+          "team_average_talent": "5000"
+        },
+        {
+          "team_name": "Rudar",
+          "team_average_talent": "5000"
+        },
+        {
+          "team_name": "Budućnost",
+          "team_average_talent": "5500"
+        }
+      ]
+    }
+  }
+}

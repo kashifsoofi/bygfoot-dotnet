@@ -1,0 +1,52 @@
+{
+  "league": {
+    "sid": "turkey3a",
+    "name": "TFF Second League Group 1",
+    "short_name": "2. Lig. G1",
+    "symbol": "flag_turkey.png",
+    "first_week": "8",
+    "week_gap": "1",
+    "average_talent": "6200",
+    "names_file": "turkey",
+    "yellow_red": "5",
+    "layer": "3",
+    "property": "inactive",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Bey. İstanbul"
+        },
+        {
+          "team_name": "B. Bilecik"
+        },
+        {
+          "team_name": "Bu. Ankara"
+        },
+        {
+          "team_name": "D. Çanakkale"
+        },
+        {
+          "team_name": "D. G. Kocaeli"
+        },
+        {
+          "team_name": "E. İstanbul"
+        },
+        {
+          "team_name": "G.O.P. İstanbul"
+        },
+        {
+          "team_name": "Ge. Kocaeli"
+        },
+        {
+          "team_name": "Kö. Kocaeli"
+        },
+        {
+          "team_name": "Pe. İstanbul"
+        },
+        {
+          "team_name": "Sar. İstanbul"
+        }
+      ]
+    }
+  }
+}

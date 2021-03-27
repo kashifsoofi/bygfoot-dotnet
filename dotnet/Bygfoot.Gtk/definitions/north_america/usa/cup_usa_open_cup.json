@@ -1,0 +1,233 @@
+{
+  "cup": {
+    "name": "US Open Cup",
+    "short_name": "Open Cup",
+    "symbol": "flag_usa.png",
+    "sid": "usa_open_cup",
+    "week_gap": "4",
+    "last_week": "34",
+    "property": [
+      "national",
+      "weak_at_home"
+    ],
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "byes": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "usa_first",
+                "number_of_teams": "3",
+                "start_idx": "11",
+                "end_idx": "13"
+              },
+              {
+                "choose_team_sid": "usa_second",
+                "number_of_teams": "4",
+                "start_idx": "7",
+                "end_idx": "10"
+              },
+              {
+                "choose_team_sid": "usa_pdl_gl",
+                "number_of_teams": "6",
+                "start_idx": "2",
+                "end_idx": "7"
+              },
+              {
+                "choose_team_sid": "usa_pdl_hl",
+                "number_of_teams": "6",
+                "start_idx": "2",
+                "end_idx": "7"
+              },
+              {
+                "choose_team_sid": "usa_pdl_ma",
+                "number_of_teams": "8",
+                "start_idx": "2",
+                "end_idx": "9"
+              },
+              {
+                "choose_team_sid": "usa_pdl_ms",
+                "number_of_teams": "6",
+                "start_idx": "2",
+                "end_idx": "7"
+              },
+              {
+                "choose_team_sid": "usa_pdl_no",
+                "number_of_teams": "7",
+                "start_idx": "2",
+                "end_idx": "8"
+              },
+              {
+                "choose_team_sid": "usa_pdl_nw",
+                "number_of_teams": "6",
+                "start_idx": "2",
+                "end_idx": "7"
+              },
+              {
+                "choose_team_sid": "usa_pdl_se",
+                "number_of_teams": "7",
+                "start_idx": "2",
+                "end_idx": "8"
+              },
+              {
+                "choose_team_sid": "usa_pdl_sw",
+                "number_of_teams": "9",
+                "start_idx": "2",
+                "end_idx": "10"
+              }
+            ]
+          }
+        },
+        {
+          "home_away": "0",
+          "byes": "0",
+          "choose_teams": {
+            "#comment": [],
+            "choose_team": {
+              "choose_team_sid": "usa_econf",
+              "number_of_teams": "1",
+              "start_idx": "7",
+              "end_idx": "7"
+            }
+          }
+        },
+        {
+          "home_away": "0"
+        },
+        {
+          "home_away": "0",
+          "byes": "0",
+          "choose_teams": {
+            "#comment": [],
+            "choose_team": [
+              {
+                "choose_team_sid": "usa_econf",
+                "number_of_teams": "2",
+                "start_idx": "5",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "usa_wconf",
+                "number_of_teams": "2",
+                "start_idx": "5",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "usa_first",
+                "number_of_teams": "10",
+                "start_idx": "1",
+                "end_idx": "10"
+              },
+              {
+                "choose_team_sid": "usa_second",
+                "number_of_teams": "6",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "usa_pdl_gl",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              },
+              {
+                "choose_team_sid": "usa_pdl_hl",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              },
+              {
+                "choose_team_sid": "usa_pdl_ma",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              },
+              {
+                "choose_team_sid": "usa_pdl_ms",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              },
+              {
+                "choose_team_sid": "usa_pdl_no",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              },
+              {
+                "choose_team_sid": "usa_pdl_nw",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              },
+              {
+                "choose_team_sid": "usa_pdl_se",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              },
+              {
+                "choose_team_sid": "usa_pdl_sw",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              }
+            ]
+          }
+        },
+        {
+          "home_away": "0",
+          "byes": "0",
+          "choose_teams": {
+            "#comment": [],
+            "choose_team": [
+              {
+                "choose_team_sid": "usa_econf",
+                "number_of_teams": "1",
+                "start_idx": "4",
+                "end_idx": "4"
+              },
+              {
+                "choose_team_sid": "usa_wconf",
+                "number_of_teams": "1",
+                "start_idx": "4",
+                "end_idx": "4"
+              }
+            ]
+          }
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "#comment": [],
+            "choose_team": [
+              {
+                "choose_team_sid": "usa_econf",
+                "number_of_teams": "3",
+                "start_idx": "1",
+                "end_idx": "3"
+              },
+              {
+                "choose_team_sid": "usa_wconf",
+                "number_of_teams": "3",
+                "start_idx": "1",
+                "end_idx": "3"
+              }
+            ]
+          }
+        },
+        {
+          "home_away": "0"
+        },
+        {
+          "home_away": "0"
+        },
+        {
+          "home_away": "0"
+        }
+      ]
+    }
+  }
+}

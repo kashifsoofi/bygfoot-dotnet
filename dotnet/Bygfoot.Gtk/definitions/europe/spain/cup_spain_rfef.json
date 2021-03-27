@@ -1,0 +1,53 @@
+{
+  "cup": {
+    "name": "Copa RFEF",
+    "short_name": "Copa RFEF",
+    "symbol": "flag_spain.png",
+    "sid": "spain_rfef",
+    "last_week": "38",
+    "week_gap": "3",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "spain3a",
+                "number_of_teams": "15",
+                "start_idx": "1",
+                "end_idx": "15"
+              },
+              {
+                "choose_team_sid": "spain3b",
+                "number_of_teams": "15",
+                "start_idx": "1",
+                "end_idx": "15"
+              },
+              {
+                "choose_team_sid": "spain3c",
+                "number_of_teams": "15",
+                "start_idx": "1",
+                "end_idx": "15"
+              },
+              {
+                "choose_team_sid": "spain3d",
+                "number_of_teams": "15",
+                "start_idx": "1",
+                "end_idx": "15"
+              }
+            ]
+          }
+        },
+        "",
+        "",
+        "",
+        "",
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

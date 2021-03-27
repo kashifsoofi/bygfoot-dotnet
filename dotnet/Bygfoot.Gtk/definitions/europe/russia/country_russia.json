@@ -1,0 +1,29 @@
+{
+  "country": {
+    "name": "Russia",
+    "symbol": "flag_russia.png",
+    "sid": "russia",
+    "rating": "7",
+    "leagues": {
+      "league": [
+        "russia1",
+        "russia2",
+        "russia3a",
+        "russia3b",
+        "russia3c",
+        "russia3d",
+        "russia3e"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "russia_cup",
+        "europe_uefa2a",
+        "europe_champ_league2a",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "russia_supercup"
+      ]
+    }
+  }
+}

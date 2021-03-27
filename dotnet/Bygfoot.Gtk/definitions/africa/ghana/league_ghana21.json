@@ -1,0 +1,90 @@
+{
+  "league": {
+    "sid": "ghana21",
+    "layer": "2",
+    "name": "Division One League 1",
+    "short_name": "Zone 1",
+    "symbol": "flag_ghana.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "6600",
+    "yellow_red": "3",
+    "names_file": "general",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "ghana1",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Upper East United",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "B.A. Stars",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Bazooka",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Bechem United",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Guan United",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Universal Stars",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Kintampo United",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Juventus",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Unity",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Tano Bofoakwa",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Berlin",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Yagbon Stars",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Roving Rovers",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Samba Stars",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Ahafoman",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Savana Stars ",
+          "team_average_talent": "6600"
+        }
+      ]
+    }
+  }
+}

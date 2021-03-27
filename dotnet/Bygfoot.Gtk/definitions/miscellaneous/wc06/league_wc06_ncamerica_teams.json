@@ -1,0 +1,79 @@
+{
+  "league": {
+    "sid": "wc06_ncamerica_teams",
+    "name": "N. + C. America",
+    "short_name": "NCAmerica",
+    "average_talent": "7000",
+    "property": "inactive",
+    "layer": "1",
+    "teams": {
+      "team": [
+        {
+          "team_name": "USA",
+          "team_average_talent": "8840",
+          "team_symbol": "flag_usa.png",
+          "team_names_file": "usa"
+        },
+        {
+          "team_name": "Panama",
+          "team_average_talent": "7690",
+          "team_symbol": "flag_panama.png"
+        },
+        {
+          "team_name": "Jamaica",
+          "team_average_talent": "8115",
+          "team_symbol": "flag_jamaica.png"
+        },
+        {
+          "team_name": "El Salvador",
+          "team_average_talent": "6990",
+          "team_symbol": "flag_el_salvador.png",
+          "team_names_file": "brazil"
+        },
+        {
+          "team_name": "Costa Rica",
+          "team_average_talent": "8500",
+          "team_symbol": "flag_costa_rica.png",
+          "team_names_file": "brazil"
+        },
+        {
+          "team_name": "Guatemala",
+          "team_average_talent": "7855",
+          "team_symbol": "flag_guatemala.png"
+        },
+        {
+          "team_name": "Honduras",
+          "team_average_talent": "8100",
+          "team_symbol": "flag_honduras.png"
+        },
+        {
+          "team_name": "Canada",
+          "team_average_talent": "7580",
+          "team_symbol": "flag_canada.png",
+          "team_names_file": "usa"
+        },
+        {
+          "team_name": "Mexico",
+          "team_average_talent": "8855",
+          "team_symbol": "flag_mexico.png",
+          "team_names_file": "brazil"
+        },
+        {
+          "team_name": "Trinidad and Tobago",
+          "team_average_talent": "7885",
+          "team_symbol": "flag_tritob.png"
+        },
+        {
+          "team_name": "St. Vincent and the Grenadines",
+          "team_average_talent": "6785",
+          "team_symbol": "flag_vingren.png"
+        },
+        {
+          "team_name": "St. Kitts and Nevis",
+          "team_average_talent": "6865",
+          "team_symbol": "flag_kittsnev.png"
+        }
+      ]
+    }
+  }
+}

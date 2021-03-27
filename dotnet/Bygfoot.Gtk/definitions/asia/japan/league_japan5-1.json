@@ -1,0 +1,51 @@
+{
+  "league": {
+    "sid": "japan5-1",
+    "name": "Kansai League 2",
+    "short_name": "Kansai 2",
+    "symbol": "flag_japan.png",
+    "first_week": "8",
+    "week_gap": "1",
+    "average_talent": "4100",
+    "names_file": "japan",
+    "round_robins": "2",
+    "break": "5",
+    "layer": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "2",
+        "dest_sid": "japan4-1",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Kyoto S."
+        },
+        {
+          "team_name": "Takada"
+        },
+        {
+          "team_name": "H. Osaka"
+        },
+        {
+          "team_name": "Riseisha"
+        },
+        {
+          "team_name": "M. H.I. Kobe"
+        },
+        {
+          "team_name": "Kihoku"
+        },
+        {
+          "team_name": "R.G. Koka"
+        },
+        {
+          "team_name": "Kobe C."
+        }
+      ]
+    }
+  }
+}

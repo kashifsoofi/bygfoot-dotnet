@@ -1,0 +1,37 @@
+{
+  "league": {
+    "sid": "latvia3e",
+    "name": "2. liga Latgales zona",
+    "short_name": "2. L. L.",
+    "symbol": "flag_latvia.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "5100",
+    "yellow_red": "5",
+    "names_file": "latvia",
+    "property": "inactive",
+    "layer": "3",
+    "teams": {
+      "team": [
+        {
+          "team_name": "B. Rēzekne II"
+        },
+        {
+          "team_name": "Rēzekne r. Malta"
+        },
+        {
+          "team_name": "Preiļi"
+        },
+        {
+          "team_name": "Līvāni"
+        },
+        {
+          "team_name": "Dagda"
+        },
+        {
+          "team_name": "Krāslava"
+        }
+      ]
+    }
+  }
+}

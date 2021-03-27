@@ -1,0 +1,36 @@
+{
+  "cup": {
+    "name": "Gamma Ethniki Promotion",
+    "short_name": "G. E. Prom.",
+    "symbol": "flag_greece.png",
+    "sid": "greece_prom_games2",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2"
+    ],
+    "yellow_red": "3",
+    "cup_rounds": {
+      "cup_round": {
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "greece3a",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "greece3b",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            }
+          ]
+        },
+        "home_away": "0",
+        "neutral": "1"
+      }
+    }
+  }
+}

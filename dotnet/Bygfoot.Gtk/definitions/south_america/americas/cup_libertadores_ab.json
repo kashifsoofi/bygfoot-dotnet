@@ -1,0 +1,237 @@
+{
+  "cup": {
+    "name": "Copa Libertadores",
+    "short_name": "CL",
+    "symbol": "wc_samerica.png",
+    "sid": "libertadores_ab",
+    "group": "1",
+    "yellow_red": "3",
+    "talent_diff": "750",
+    "add_week": "-1",
+    "last_week": "25",
+    "week_gap": "1",
+    "property": [
+      "international",
+      "highlight1"
+    ],
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "delay": "-5",
+          "byes": "0",
+          "new_teams": "12",
+          "round_name": "Pre Copa",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "LEAGUE1",
+                "number_of_teams": "2",
+                "start_idx": "5",
+                "end_idx": "6",
+                "skip_group_check": "1"
+              },
+              {
+                "choose_team_sid": "argentina1",
+                "number_of_teams": "2",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "14",
+                "skip_group_check": "1"
+              },
+              {
+                "choose_team_sid": "brazil1",
+                "number_of_teams": "2",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "14",
+                "skip_group_check": "1"
+              },
+              {
+                "choose_team_sid": "bolivia1",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "chile1",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "colombia1",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "ecuador1",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "paraguay1",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "peru1",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "uruguay1",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "venezuela1",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              }
+            ]
+          }
+        },
+        {
+          "delay": "-4",
+          "number_of_groups": "8",
+          "number_of_advance": "2",
+          "new_teams": "26",
+          "round_name": "Fase de grupos",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "LEAGUE1",
+                "number_of_teams": "4",
+                "start_idx": "1",
+                "end_idx": "4",
+                "skip_group_check": "1"
+              },
+              {
+                "choose_team_sid": "argentina1",
+                "number_of_teams": "4",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "14"
+              },
+              {
+                "choose_team_sid": "brazil1",
+                "number_of_teams": "4",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "14"
+              },
+              {
+                "choose_team_sid": "bolivia1",
+                "number_of_teams": "2",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "chile1",
+                "number_of_teams": "2",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "colombia1",
+                "number_of_teams": "2",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "ecuador1",
+                "number_of_teams": "2",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "paraguay1",
+                "number_of_teams": "2",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "peru1",
+                "number_of_teams": "2",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "uruguay1",
+                "number_of_teams": "2",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "venezuela1",
+                "number_of_teams": "2",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "mexico1",
+                "number_of_teams": "2",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              }
+            ]
+          }
+        },
+        {
+          "delay": "-3"
+        },
+        {
+          "delay": "-2"
+        },
+        {
+          "delay": "-1"
+        },
+        ""
+      ]
+    }
+  }
+}

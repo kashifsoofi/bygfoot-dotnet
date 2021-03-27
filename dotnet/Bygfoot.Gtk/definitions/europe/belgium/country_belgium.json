@@ -1,0 +1,33 @@
+{
+  "country": {
+    "name": "Belgium",
+    "rating": "7",
+    "symbol": "flag_belgium.png",
+    "sid": "belgium",
+    "leagues": {
+      "league": [
+        "belgium1",
+        "belgium2",
+        "belgium3a",
+        "belgium3b",
+        "belgium4a",
+        "belgium4b",
+        "belgium4c",
+        "belgium4d"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "belgium_beker",
+        "europe_uefa2a",
+        "europe_champ_league2",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "belgium_supercup",
+        "belgium_eindronde2",
+        "belgium_eindronde3",
+        "belgium_eindronde4"
+      ]
+    }
+  }
+}

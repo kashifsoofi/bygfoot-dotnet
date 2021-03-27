@@ -1,0 +1,24 @@
+{
+  "country": {
+    "name": "Bosnia-Herzegovina",
+    "symbol": "flag_bosnia_herzegovina.png",
+    "sid": "bosnia_herzegovina",
+    "rating": "5",
+    "leagues": {
+      "league": [
+        "bosnia_herzegovina1",
+        "bosnia_herzegovina2a",
+        "bosnia_herzegovina2b"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "bosnia_herzegovina_cup",
+        "europe_uefa",
+        "europe_champ_league",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental"
+      ]
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "league": {
+    "sid": "sweden_division_3_sydostragotaland",
+    "name": "Division 3 Sydöstra Götaland",
+    "short_name": "Div 3 SÖG",
+    "symbol": "flag_sweden.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "5000",
+    "names_file": "sweden",
+    "yellow_red": "5",
+    "layer": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "sweden_division_2_mellerstagotaland sweden_division_2_norrasvealand sweden_division_2_norrland sweden_division_2_ostrasvealand sweden_division_2_sodragotaland sweden_division_2_vastragotaland",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Älmeboda/Linneryd"
+        },
+        {
+          "team_name": "Älmhult"
+        },
+        {
+          "team_name": "Ifö/Bromölla"
+        },
+        {
+          "team_name": "Kalmar A."
+        },
+        {
+          "team_name": "Gransholm"
+        },
+        {
+          "team_name": "Nosaby"
+        },
+        {
+          "team_name": "Oskarshamn"
+        },
+        {
+          "team_name": "Rydaholm"
+        },
+        {
+          "team_name": "Rödeby"
+        },
+        {
+          "team_name": "Saxemara"
+        },
+        {
+          "team_name": "VMA"
+        },
+        {
+          "team_name": "Växjö Norra"
+        }
+      ]
+    }
+  }
+}

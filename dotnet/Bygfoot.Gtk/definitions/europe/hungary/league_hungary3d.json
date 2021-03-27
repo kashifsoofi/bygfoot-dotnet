@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "hungary3d",
+    "name": "Nemzeti Bajnokság III Duna",
+    "short_name": "NB3-Du",
+    "symbol": "flag_hungary.png",
+    "first_week": "5",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "13",
+      "#text": "21"
+    },
+    "average_talent": "5800",
+    "names_file": "hungary",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "hungary2a hungary2b",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Szigetszentmiklosi"
+        },
+        {
+          "team_name": "Soroksár"
+        },
+        {
+          "team_name": "Velence"
+        },
+        {
+          "team_name": "Siófok II"
+        },
+        {
+          "team_name": "Mori"
+        },
+        {
+          "team_name": "Kerületi"
+        },
+        {
+          "team_name": "Penzugyor"
+        },
+        {
+          "team_name": "Dunaharaszti"
+        },
+        {
+          "team_name": "Csepel"
+        },
+        {
+          "team_name": "Dorogi"
+        },
+        {
+          "team_name": "Sarisapi B."
+        },
+        {
+          "team_name": "Torokbalinti"
+        },
+        {
+          "team_name": "Kornye"
+        },
+        {
+          "team_name": "F. Székesfehérvár II"
+        },
+        {
+          "team_name": "Balatonlelle"
+        },
+        {
+          "team_name": "Csillaghegyi"
+        }
+      ]
+    }
+  }
+}

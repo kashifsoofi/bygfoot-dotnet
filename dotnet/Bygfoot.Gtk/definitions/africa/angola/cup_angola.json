@@ -1,0 +1,32 @@
+{
+  "cup": {
+    "name": "Taça de Angola",
+    "short_name": "Taça",
+    "symbol": "flag_angola.png",
+    "sid": "cup_angola",
+    "yellow_red": "3",
+    "last_week": "24",
+    "week_gap": "2",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "angola1"
+              },
+              {
+                "choose_team_sid": "angola2"
+              }
+            ]
+          }
+        },
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  }
+}

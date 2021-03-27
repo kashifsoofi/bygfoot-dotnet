@@ -1,0 +1,65 @@
+{
+  "cup": {
+    "name": "Taça da Liga",
+    "short_name": "Taça da L.",
+    "symbol": "flag_portugal.png",
+    "sid": "portugal_leaguecup",
+    "last_week": "38",
+    "week_gap": "2",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "portugal2"
+            }
+          },
+          "byes": "0",
+          "delay": "-14"
+        },
+        {
+          "home_away": "0",
+          "number_of_groups": "6",
+          "number_of_advance": "1",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "portugal1",
+              "number_of_teams": "10",
+              "start_idx": "7",
+              "end_idx": "16",
+              "randomly": "1"
+            }
+          },
+          "byes": "0",
+          "delay": "-14"
+        },
+        {
+          "home_away": "0",
+          "number_of_groups": "3",
+          "number_of_advance": "1",
+          "number_of_best_advance": "1",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "portugal1",
+              "number_of_teams": "6",
+              "start_idx": "1",
+              "end_idx": "6",
+              "randomly": "1"
+            }
+          },
+          "byes": "0",
+          "delay": "-3"
+        },
+        {
+          "home_away": "0",
+          "delay": "-2"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

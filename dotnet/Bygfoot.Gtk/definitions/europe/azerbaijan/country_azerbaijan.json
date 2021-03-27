@@ -1,0 +1,23 @@
+{
+  "country": {
+    "name": "Azerbaijan",
+    "symbol": "flag_azerbaijan.png",
+    "sid": "azerbaijan",
+    "rating": "4",
+    "leagues": {
+      "league": [
+        "azerbaijan1",
+        "azerbaijan2"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "azerbaijan_cup",
+        "europe_uefa",
+        "europe_champ_league",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental"
+      ]
+    }
+  }
+}

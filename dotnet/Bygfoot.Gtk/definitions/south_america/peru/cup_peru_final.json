@@ -1,0 +1,23 @@
+{
+  "cup": {
+    "sid": "peru_final",
+    "name": "Copa Perú",
+    "short_name": "CPeruFinal",
+    "symbol": "flag_peru.png",
+    "property": "promotion",
+    "add_week": "43",
+    "last_week": "45",
+    "cup_rounds": {
+      "cup_round": {
+        "choose_teams": {
+          "choose_team": {
+            "choose_team_sid": "peru",
+            "number_of_teams": "2",
+            "start_idx": "1",
+            "end_idx": "2"
+          }
+        }
+      }
+    }
+  }
+}

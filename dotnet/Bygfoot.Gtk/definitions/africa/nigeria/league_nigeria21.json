@@ -1,0 +1,90 @@
+{
+  "league": {
+    "sid": "nigeria21",
+    "layer": "2",
+    "name": "National League 1-A",
+    "short_name": "1-A",
+    "symbol": "flag_nigeria.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "6800",
+    "yellow_red": "3",
+    "names_file": "general",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "2",
+        "dest_sid": "nigeria1",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "JUTH",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Plateau United",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Babanawa United",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Abuja",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Mighty Jets",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Spotlights",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "El-Kanemi Warriors",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Jigawa Golden Stars",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Adamawa United",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Nasarawa United",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Dabo Babes",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Ajiya Babes",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Dallatu United",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Taraba",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Supreme Court",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Lokoja",
+          "team_average_talent": "6800"
+        }
+      ]
+    }
+  }
+}

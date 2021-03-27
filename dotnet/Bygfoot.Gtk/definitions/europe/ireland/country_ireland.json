@@ -1,0 +1,29 @@
+{
+  "country": {
+    "name": "Ireland",
+    "rating": "4",
+    "symbol": "flag_ireland.png",
+    "sid": "ireland",
+    "leagues": {
+      "league": [
+        "ireland1",
+        "ireland2",
+        "ireland3a",
+        "ireland3b"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "ireland_cup",
+        "ireland_league",
+        "ireland_setanta",
+        "europe_uefa",
+        "europe_champ_league",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "ireland_prom_games",
+        "ireland_prom_games2"
+      ]
+    }
+  }
+}

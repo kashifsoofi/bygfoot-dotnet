@@ -1,0 +1,26 @@
+{
+  "country": {
+    "name": "Ecuador",
+    "symbol": "flag_ecuador.png",
+    "sid": "ecuador",
+    "rating": "6",
+    "leagues": {
+      "league": [
+        "ecuador1",
+        "ecuador2"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "ecuador_serie_a_dos_a",
+        "ecuador_serie_a_dos_b",
+        "ecuador_serie_a_tres",
+        "ecuador_serie_b_final",
+        "libertadores",
+        "sudamericana",
+        "recopa",
+        "mundial_clubes"
+      ]
+    }
+  }
+}

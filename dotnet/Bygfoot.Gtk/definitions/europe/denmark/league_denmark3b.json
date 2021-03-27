@@ -1,0 +1,86 @@
+{
+  "league": {
+    "sid": "denmark3b",
+    "name": "Second Division East",
+    "short_name": "2. Div. E",
+    "symbol": "flag_denmark.png",
+    "first_week": "4",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "12",
+      "#text": "24"
+    },
+    "average_talent": "6000",
+    "yellow_red": "5",
+    "names_file": "denmark",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "1",
+          "dest_sid": "denmark2",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "14",
+          "rank_end": "16",
+          "dest_sid": "denmark4a denmark4b denmark4c",
+          "prom_rel_type": "relegation"
+        }
+      ]
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Avarta"
+        },
+        {
+          "team_name": "Søllerød Vedbæk"
+        },
+        {
+          "team_name": "Boldklubben"
+        },
+        {
+          "team_name": "B. København II"
+        },
+        {
+          "team_name": "Brønshøj B."
+        },
+        {
+          "team_name": "Greve F."
+        },
+        {
+          "team_name": "Glostrup"
+        },
+        {
+          "team_name": "Hellerup"
+        },
+        {
+          "team_name": "København B."
+        },
+        {
+          "team_name": "Værløse"
+        },
+        {
+          "team_name": "Ølstykke"
+        },
+        {
+          "team_name": "Skjold"
+        },
+        {
+          "team_name": "Skovlunde"
+        },
+        {
+          "team_name": "Stenløse"
+        },
+        {
+          "team_name": "Vanløse"
+        },
+        {
+          "team_name": "Vestsjælland"
+        }
+      ]
+    }
+  }
+}

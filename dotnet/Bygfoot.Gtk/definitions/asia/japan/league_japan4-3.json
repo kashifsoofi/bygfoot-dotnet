@@ -1,0 +1,51 @@
+{
+  "league": {
+    "sid": "japan4-3",
+    "name": "Kanto League 1",
+    "short_name": "Kanto 1",
+    "symbol": "flag_japan.png",
+    "first_week": "8",
+    "week_gap": "1",
+    "average_talent": "4900",
+    "names_file": "japan",
+    "round_robins": "2",
+    "break": "5",
+    "layer": "4",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "7",
+        "rank_end": "8",
+        "dest_sid": "japan5-3",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Yokohama S.C.C."
+        },
+        {
+          "team_name": "H.L. Sayama"
+        },
+        {
+          "team_name": "Yaita"
+        },
+        {
+          "team_name": "Saitama"
+        },
+        {
+          "team_name": "T. Fuchu"
+        },
+        {
+          "team_name": "Toho T."
+        },
+        {
+          "team_name": "Machida Z."
+        },
+        {
+          "team_name": "H. Tochigi"
+        }
+      ]
+    }
+  }
+}

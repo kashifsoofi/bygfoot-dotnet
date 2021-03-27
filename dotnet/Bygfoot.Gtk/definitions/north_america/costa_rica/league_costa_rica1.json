@@ -1,0 +1,77 @@
+{
+  "league": {
+    "sid": "costa_rica1",
+    "layer": "1",
+    "name": "Primera División",
+    "short_name": "Primera",
+    "symbol": "flag_costa_rica.png",
+    "first_week": "2",
+    "week_gap": "5",
+    "average_talent": "7500",
+    "yellow_red": "3",
+    "round_robins": "4",
+    "names_file": "latinoamerica",
+    "new_table": [
+      {
+        "@name": "Verano",
+        "#text": "1"
+      },
+      {
+        "@name": "Invierno",
+        "#text": "27"
+      }
+    ],
+    "teams": {
+      "team": [
+        {
+          "team_name": "Saprissa",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Herediano",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Brujas Escazú",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Liberia Mía",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Pérez Zeledón",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "San Carlos",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Puntaneras",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Alajuelense",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Cartaginés",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Ramonense",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Universidad de Costa Rica",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Carmelita",
+          "team_average_talent": "7500"
+        }
+      ]
+    }
+  }
+}

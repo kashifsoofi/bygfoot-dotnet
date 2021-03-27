@@ -1,0 +1,51 @@
+{
+  "league": {
+    "sid": "japan4-7",
+    "name": "Tokai League 1",
+    "short_name": "Tokai 1",
+    "symbol": "flag_japan.png",
+    "first_week": "8",
+    "week_gap": "1",
+    "average_talent": "4900",
+    "names_file": "japan",
+    "round_robins": "2",
+    "break": "5",
+    "layer": "4",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "7",
+        "rank_end": "8",
+        "dest_sid": "japan5-7",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Shizuoka"
+        },
+        {
+          "team_name": "Y. Valente"
+        },
+        {
+          "team_name": "S.K. Chukyo"
+        },
+        {
+          "team_name": "M. Kogyo"
+        },
+        {
+          "team_name": "Fujieda C.H."
+        },
+        {
+          "team_name": "H. Suzuka"
+        },
+        {
+          "team_name": "Kasugai"
+        },
+        {
+          "team_name": "Chukyo U."
+        }
+      ]
+    }
+  }
+}

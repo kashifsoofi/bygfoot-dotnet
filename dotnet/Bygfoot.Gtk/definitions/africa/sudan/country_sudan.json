@@ -1,0 +1,14 @@
+{
+  "country": {
+    "name": "sudan",
+    "rating": "9",
+    "symbol": "flag_sudan.png",
+    "sid": "sudan",
+    "leagues": {
+      "league": "sudan1"
+    },
+    "cups": {
+      "cup": "cup_sudan"
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "league": {
+    "sid": "poland2",
+    "name": "1 Liga",
+    "short_name": "1 L.",
+    "symbol": "flag_poland.png",
+    "first_week": "6",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "11",
+      "#text": "24"
+    },
+    "average_talent": "5400",
+    "names_file": "poland",
+    "yellow_red": "5",
+    "two_match_week_start": [
+      "15",
+      "20"
+    ],
+    "two_match_week_end": [
+      "16",
+      "21"
+    ],
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "2",
+          "dest_sid": "poland1",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "15",
+          "rank_end": "18",
+          "dest_sid": "poland3a poland3b",
+          "prom_rel_type": "relegation"
+        }
+      ],
+      "prom_games": {
+        "prom_games_dest_sid": "poland1",
+        "prom_games_cup_sid": "poland_prom_games1",
+        "prom_games_loser_sid": "poland2"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Piast Gliwice"
+        },
+        {
+          "team_name": "ŁKS Łódź"
+        },
+        {
+          "team_name": "Pogoń Szczecin"
+        },
+        {
+          "team_name": "GKS Katowice"
+        },
+        {
+          "team_name": "Nieciecza KS"
+        },
+        {
+          "team_name": "Górnik Łęczna"
+        },
+        {
+          "team_name": "Sandecja Nowy Sącz"
+        },
+        {
+          "team_name": "Warta Poznań"
+        },
+        {
+          "team_name": "Podbeskidzie Bielsko-Biała"
+        },
+        {
+          "team_name": "Dolcan Ząbki"
+        },
+        {
+          "team_name": "Flota Świnoujście"
+        },
+        {
+          "team_name": "MKS Kluczbork"
+        },
+        {
+          "team_name": "Ruch Radzionków"
+        },
+        {
+          "team_name": "Górnik Polkowice"
+        },
+        {
+          "team_name": "KSZO Ostrowiec"
+        },
+        {
+          "team_name": "Odra Wodzisław"
+        },
+        {
+          "team_name": "GKP Gorzów"
+        },
+        {
+          "team_name": "Kolejarz Stróże"
+        }
+      ]
+    }
+  }
+}

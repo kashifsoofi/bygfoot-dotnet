@@ -1,0 +1,69 @@
+{
+  "cup": {
+    "name": "Slovenský Pohár",
+    "short_name": "Slov. Pohár",
+    "symbol": "flag_slovakia.png",
+    "sid": "slovakia_cup",
+    "last_week": "44",
+    "week_gap": "3",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "slovakia3a",
+                "number_of_teams": "14",
+                "start_idx": "1",
+                "end_idx": "16",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "slovakia3b",
+                "number_of_teams": "14",
+                "start_idx": "1",
+                "end_idx": "16",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "slovakia2",
+                "number_of_teams": "9",
+                "start_idx": "1",
+                "end_idx": "12",
+                "randomly": "1"
+              }
+            ]
+          },
+          "byes": "1",
+          "delay": "-17"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "slovakia1"
+            }
+          },
+          "byes": "1",
+          "delay": "-15"
+        },
+        {
+          "home_away": "0",
+          "delay": "-16"
+        },
+        {
+          "delay": "-14"
+        },
+        {
+          "delay": "1"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

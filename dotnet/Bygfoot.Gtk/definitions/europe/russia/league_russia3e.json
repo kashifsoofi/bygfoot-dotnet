@@ -1,0 +1,57 @@
+{
+  "league": {
+    "sid": "russia3e",
+    "name": "Second Division East",
+    "short_name": "2. Div. E",
+    "symbol": "flag_russia.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "6300",
+    "names_file": "russia",
+    "yellow_red": "5",
+    "round_robins": "3",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "russia2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Chita"
+        },
+        {
+          "team_name": "Smena"
+        },
+        {
+          "team_name": "Irtysh"
+        },
+        {
+          "team_name": "S. Novosibirsk II"
+        },
+        {
+          "team_name": "Sibiryak"
+        },
+        {
+          "team_name": "M. Krasnoyarsk"
+        },
+        {
+          "team_name": "Okean"
+        },
+        {
+          "team_name": "K. Kemerovo"
+        },
+        {
+          "team_name": "Amur"
+        },
+        {
+          "team_name": "Sakhalin"
+        }
+      ]
+    }
+  }
+}

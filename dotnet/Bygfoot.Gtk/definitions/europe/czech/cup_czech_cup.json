@@ -1,0 +1,60 @@
+{
+  "cup": {
+    "name": "Pohár ČMFS",
+    "short_name": "Pohár",
+    "symbol": "flag_czech.png",
+    "sid": "czech_cup",
+    "last_week": "48",
+    "week_gap": "3",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "czech3a"
+              },
+              {
+                "choose_team_sid": "czech3b"
+              }
+            ]
+          },
+          "byes": "30",
+          "delay": "-20"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "czech2"
+              },
+              {
+                "choose_team_sid": "czech1"
+              }
+            ]
+          },
+          "delay": "-17"
+        },
+        {
+          "home_away": "0",
+          "delay": "-17"
+        },
+        {
+          "home_away": "0",
+          "delay": "-15"
+        },
+        {
+          "delay": "1"
+        },
+        "",
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

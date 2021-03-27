@@ -1,0 +1,24 @@
+{
+  "country": {
+    "name": "Faroe Islands",
+    "symbol": "flag_faroe_islands.png",
+    "sid": "faroe_islands",
+    "rating": "4",
+    "leagues": {
+      "league": [
+        "faroe_islands1",
+        "faroe_islands2",
+        "faroe_islands3"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "faroe_islands_cup",
+        "europe_uefa",
+        "europe_champ_league",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental"
+      ]
+    }
+  }
+}

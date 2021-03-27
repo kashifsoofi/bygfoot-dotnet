@@ -1,0 +1,27 @@
+{
+  "cup": {
+    "name": "Prima Divisione A Relegation",
+    "short_name": "Pr. Div. A Rel.",
+    "symbol": "flag_italy.png",
+    "sid": "italy_prom_games_3a_4",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2",
+      "promotion"
+    ],
+    "cup_rounds": {
+      "cup_round": {
+        "home_away": "1",
+        "choose_teams": {
+          "choose_team": {
+            "choose_team_sid": "italy3a",
+            "number_of_teams": "4",
+            "start_idx": "14",
+            "end_idx": "17"
+          }
+        }
+      }
+    }
+  }
+}

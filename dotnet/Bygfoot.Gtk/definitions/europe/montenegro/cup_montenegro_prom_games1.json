@@ -1,0 +1,35 @@
+{
+  "cup": {
+    "name": "Montenegro Promotion Games",
+    "short_name": "Mont. Prom.",
+    "symbol": "flag_montenegro.png",
+    "sid": "montenegro_prom_games1",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2"
+    ],
+    "yellow_red": "3",
+    "cup_rounds": {
+      "cup_round": {
+        "number_of_advance": "2",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "montenegro2",
+              "number_of_teams": "2",
+              "start_idx": "2",
+              "end_idx": "3"
+            },
+            {
+              "choose_team_sid": "montenegro1",
+              "number_of_teams": "2",
+              "start_idx": "10",
+              "end_idx": "11"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "cup": {
+    "name": "CONCACAF Copa de Campeones",
+    "short_name": "CONCACAF",
+    "sid": "mexico_concacaf",
+    "talent_diff": "-500",
+    "yellow_red": "3",
+    "last_week": "40",
+    "week_gap": "2",
+    "group": "1507",
+    "property": [
+      "international",
+      "highlight1"
+    ],
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "new_teams": "8",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "LEAGUE1",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "2"
+              },
+              {
+                "choose_team_sid": "costa_rica1",
+                "number_of_teams": "2",
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "honduras1",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "jamaica1",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "mexico1",
+                "number_of_teams": "2",
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "usa_econf",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "usa_wconf",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1"
+              }
+            ]
+          }
+        },
+        "",
+        ""
+      ]
+    }
+  }
+}

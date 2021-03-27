@@ -1,0 +1,51 @@
+{
+  "league": {
+    "sid": "japan4-4",
+    "name": "Hokkaido League 1",
+    "short_name": "Hokkaido 1",
+    "symbol": "flag_japan.png",
+    "first_week": "8",
+    "week_gap": "1",
+    "average_talent": "4900",
+    "names_file": "japan",
+    "round_robins": "2",
+    "break": "5",
+    "layer": "4",
+    "prom_rel": {
+      "prom_games": {
+        "prom_games_dest_sid": "japan4-4",
+        "prom_games_loser_sid": "japan5-4a japan5-4b japan5-4c japan5-4d",
+        "prom_games_number_of_advance": "2",
+        "prom_games_cup_sid": "japan_prom5-4"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "N. Hokkaido"
+        },
+        {
+          "team_name": "B. Hokkaido"
+        },
+        {
+          "team_name": "Sapporo"
+        },
+        {
+          "team_name": "B. Hakodate"
+        },
+        {
+          "team_name": "T. Hokkaido"
+        },
+        {
+          "team_name": "Tokachi F.S."
+        },
+        {
+          "team_name": "T. Kuriyama"
+        },
+        {
+          "team_name": "Ashikawa C.S.C."
+        }
+      ]
+    }
+  }
+}

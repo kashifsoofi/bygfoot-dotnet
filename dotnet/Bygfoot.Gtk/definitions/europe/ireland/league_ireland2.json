@@ -1,0 +1,64 @@
+{
+  "league": {
+    "sid": "ireland2",
+    "name": "FAI First Division",
+    "short_name": "Div. 1",
+    "symbol": "flag_ireland.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "round_robins": "4",
+    "average_talent": "5500",
+    "names_file": "england",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "1",
+          "dest_sid": "ireland1",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "10",
+          "rank_end": "10",
+          "dest_sid": "ireland3a ireland3b",
+          "prom_rel_type": "relegation"
+        }
+      ]
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Athlone"
+        },
+        {
+          "team_name": "Dundalk"
+        },
+        {
+          "team_name": "Kildare"
+        },
+        {
+          "team_name": "Limerick"
+        },
+        {
+          "team_name": "Longford"
+        },
+        {
+          "team_name": "Monaghan"
+        },
+        {
+          "team_name": "Shelbourne"
+        },
+        {
+          "team_name": "S. Fingal"
+        },
+        {
+          "team_name": "Waterford"
+        },
+        {
+          "team_name": "Wexford Y."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "league": {
+    "sid": "peru3",
+    "name": "Copa Perú",
+    "short_name": "EqCPeru",
+    "symbol": "flag_peru.png",
+    "average_talent": "5200",
+    "names_file": "peru",
+    "layer": "3",
+    "property": [
+      "inactive",
+      "omit_from_history"
+    ],
+    "teams": {
+      "team": [
+        {
+          "team_name": "A. Torino"
+        },
+        {
+          "team_name": "D. Pomalca"
+        },
+        {
+          "team_name": "S. Buenos Aires"
+        },
+        {
+          "team_name": "Higos U."
+        },
+        {
+          "team_name": "Renovación P."
+        },
+        {
+          "team_name": "Olimpia"
+        },
+        {
+          "team_name": "U. S. Sipán"
+        },
+        {
+          "team_name": "Agricobank"
+        },
+        {
+          "team_name": "D. Porvenir"
+        },
+        {
+          "team_name": "Amenaza V."
+        },
+        {
+          "team_name": "S. Rosa Tarapoto"
+        },
+        {
+          "team_name": "S. Cayetano"
+        },
+        {
+          "team_name": "Comerciantes U."
+        },
+        {
+          "team_name": "D. Huallaga"
+        },
+        {
+          "team_name": "C. Mannucci"
+        },
+        {
+          "team_name": "T. Chical"
+        },
+        {
+          "team_name": "C. N. I."
+        },
+        {
+          "team_name": "Tecnológico"
+        },
+        {
+          "team_name": "S. Rosa Pucallpa"
+        },
+        {
+          "team_name": "A. D. O."
+        },
+        {
+          "team_name": "O. Benavides"
+        },
+        {
+          "team_name": "A. Chalaco"
+        },
+        {
+          "team_name": "A. Pilsen"
+        },
+        {
+          "team_name": "U. Supe"
+        },
+        {
+          "team_name": "Bolognesi"
+        },
+        {
+          "team_name": "U. Huaral"
+        },
+        {
+          "team_name": "S. I. M. A."
+        },
+        {
+          "team_name": "Cable Visión"
+        },
+        {
+          "team_name": "S. Huancayo"
+        },
+        {
+          "team_name": "M. Yanahuanca"
+        },
+        {
+          "team_name": "L. Huánuco"
+        },
+        {
+          "team_name": "A. Universidad"
+        },
+        {
+          "team_name": "Wanka"
+        },
+        {
+          "team_name": "U. Minas"
+        },
+        {
+          "team_name": "M. Acoria"
+        },
+        {
+          "team_name": "U. N. I. C. A."
+        },
+        {
+          "team_name": "M. Huamanga"
+        },
+        {
+          "team_name": "S. Huamanga"
+        },
+        {
+          "team_name": "J. Guadalupe"
+        },
+        {
+          "team_name": "M. Acobamba"
+        },
+        {
+          "team_name": "Cobresol"
+        },
+        {
+          "team_name": "D. Piérola"
+        },
+        {
+          "team_name": "Dínamo"
+        },
+        {
+          "team_name": "I. D. U. N. S. A."
+        },
+        {
+          "team_name": "A. Huracán"
+        },
+        {
+          "team_name": "Municipal Locumba"
+        },
+        {
+          "team_name": "Policial S. R."
+        },
+        {
+          "team_name": "Garcilaso"
+        },
+        {
+          "team_name": "D. E. A."
+        },
+        {
+          "team_name": "M. I. N. S. A."
+        },
+        {
+          "team_name": "Diablos R."
+        },
+        {
+          "team_name": "M. S. Jerónimo"
+        },
+        {
+          "team_name": "S. Rosa Quillabamba"
+        },
+        {
+          "team_name": "A. Ugarte"
+        },
+        {
+          "team_name": "J. La Joya"
+        },
+        {
+          "team_name": "Aurora"
+        }
+      ]
+    }
+  }
+}

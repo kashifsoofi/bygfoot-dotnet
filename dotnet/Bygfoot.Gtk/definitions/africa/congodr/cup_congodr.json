@@ -1,0 +1,37 @@
+{
+  "cup": {
+    "name": "Coupe du Congo",
+    "short_name": "Coupe",
+    "symbol": "flag_congodr.png",
+    "sid": "cup_congodr",
+    "yellow_red": "3",
+    "last_week": "24",
+    "week_gap": "2",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "congodr1",
+              "number_of_teams": "18",
+              "start_idx": "8",
+              "end_idx": "25"
+            }
+          }
+        },
+        {
+          "choose_team": {
+            "choose_team_sid": "congodr1",
+            "number_of_teams": "7",
+            "start_idx": "1",
+            "end_idx": "7"
+          }
+        },
+        "",
+        "",
+        ""
+      ]
+    }
+  }
+}

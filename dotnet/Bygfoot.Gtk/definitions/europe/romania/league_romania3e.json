@@ -1,0 +1,84 @@
+{
+  "league": {
+    "sid": "romania3e",
+    "name": "Liga III Seria 5",
+    "short_name": "L3S5",
+    "symbol": "flag_romania.png",
+    "first_week": "5",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "9",
+      "#text": "23"
+    },
+    "average_talent": "6000",
+    "names_file": "romania",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "romania2a",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "U. Sânicolau Mare"
+        },
+        {
+          "team_name": "D. Orăştie"
+        },
+        {
+          "team_name": "N. Sebiş"
+        },
+        {
+          "team_name": "B. Vânju Mare"
+        },
+        {
+          "team_name": "M. M. Valea Copcii"
+        },
+        {
+          "team_name": "G. Arad"
+        },
+        {
+          "team_name": "P. Gătaia"
+        },
+        {
+          "team_name": "F. Covaci"
+        },
+        {
+          "team_name": "V. Sânandrei"
+        },
+        {
+          "team_name": "A. G. Albina"
+        },
+        {
+          "team_name": "M. Simeria"
+        },
+        {
+          "team_name": "C. Ineu"
+        },
+        {
+          "team_name": "F. Timişoara II"
+        },
+        {
+          "team_name": "N. M. M. Bechicerecul Mic"
+        },
+        {
+          "team_name": "C. Vulcan"
+        },
+        {
+          "team_name": "C. Timişoara"
+        },
+        {
+          "team_name": "F. Reşiţa"
+        },
+        {
+          "team_name": "C. Hunedoara"
+        }
+      ]
+    }
+  }
+}

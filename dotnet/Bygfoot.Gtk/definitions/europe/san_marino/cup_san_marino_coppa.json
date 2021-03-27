@@ -1,0 +1,45 @@
+{
+  "cup": {
+    "name": "Coppa Titano",
+    "short_name": "Coppa",
+    "symbol": "flag_san_marino.png",
+    "sid": "san_marino_coppa",
+    "last_week": "45",
+    "week_gap": "2",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "number_of_groups": "3",
+          "number_of_advance": "2",
+          "number_of_best_advance": "2",
+          "home_away": "1",
+          "neutral": "1",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "san_marino_group_a"
+              },
+              {
+                "choose_team_sid": "san_marino_group_b"
+              }
+            ]
+          },
+          "delay": "-7"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "league": {
+    "sid": "croatia3c",
+    "name": "Treća Hrvatska Liga Jug",
+    "short_name": "Treća HNL J",
+    "symbol": "flag_croatia.png",
+    "first_week": "5",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "10",
+      "#text": "24"
+    },
+    "average_talent": "6000",
+    "names_file": "serbia",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "croatia2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Dugopolje"
+        },
+        {
+          "team_name": "G. Dubrovnik"
+        },
+        {
+          "team_name": "A. Kaštel Gomilica"
+        },
+        {
+          "team_name": "J. Kaštel Sučurac"
+        },
+        {
+          "team_name": "J. L. Ploče"
+        },
+        {
+          "team_name": "N. Split"
+        },
+        {
+          "team_name": "K. Čilipi"
+        },
+        {
+          "team_name": "N. Metković"
+        },
+        {
+          "team_name": "Omiš"
+        },
+        {
+          "team_name": "P. Biograd na moru"
+        },
+        {
+          "team_name": "P. Stobreč"
+        },
+        {
+          "team_name": "Hrvace"
+        },
+        {
+          "team_name": "Rastane"
+        },
+        {
+          "team_name": "V. Kaštel Stari"
+        },
+        {
+          "team_name": "V. Benkovac"
+        },
+        {
+          "team_name": "N. Opuzen"
+        },
+        {
+          "team_name": "Z. Unešić"
+        },
+        {
+          "team_name": "Z. Makarska"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "cup": {
+    "name": "Tohoku Promotion Playoff",
+    "short_name": "To. Playoff",
+    "sid": "japan_prom5-5",
+    "symbol": "flag_japan.png",
+    "property": [
+      "promotion",
+      "highlight2"
+    ],
+    "add_week": "1000",
+    "week_gap": "1",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "japan5-5a",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              },
+              {
+                "choose_team_sid": "japan5-5b",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              }
+            ]
+          }
+        },
+        {
+          "choose_team": {
+            "choose_team_sid": "japan4-5",
+            "number_of_teams": "1",
+            "start_idx": "8",
+            "end_idx": "8"
+          }
+        }
+      ]
+    }
+  }
+}

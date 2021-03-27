@@ -1,0 +1,62 @@
+{
+  "league": {
+    "sid": "sweden_division_3_mellerstagotaland",
+    "name": "Division 3 Mellersta Götaland",
+    "short_name": "Div 3 MG",
+    "symbol": "flag_sweden.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "5000",
+    "names_file": "sweden",
+    "yellow_red": "5",
+    "layer": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "sweden_division_2_mellerstagotaland sweden_division_2_norrasvealand sweden_division_2_norrland sweden_division_2_ostrasvealand sweden_division_2_sodragotaland sweden_division_2_vastragotaland",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Sandared"
+        },
+        {
+          "team_name": "Grimsås"
+        },
+        {
+          "team_name": "Byttorp"
+        },
+        {
+          "team_name": "Heimer"
+        },
+        {
+          "team_name": "I. Falköping"
+        },
+        {
+          "team_name": "I. Mariestad"
+        },
+        {
+          "team_name": "Skara"
+        },
+        {
+          "team_name": "Ulvåker"
+        },
+        {
+          "team_name": "Gauthiod"
+        },
+        {
+          "team_name": "Tibro"
+        },
+        {
+          "team_name": "Mariedal"
+        },
+        {
+          "team_name": "Åsarp/Trädet"
+        }
+      ]
+    }
+  }
+}

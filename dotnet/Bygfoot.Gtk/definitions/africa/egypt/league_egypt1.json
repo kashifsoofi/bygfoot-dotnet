@@ -1,0 +1,90 @@
+{
+  "league": {
+    "sid": "egypt1",
+    "layer": "1",
+    "name": "Egyptian Premier League",
+    "short_name": "Premier",
+    "symbol": "flag_egypt.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "7300",
+    "yellow_red": "3",
+    "names_file": "general",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "14",
+        "rank_end": "16",
+        "dest_sid": "egypt21 egypt22 egypt23",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Al-Ahly",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Zamalek",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Ismaily",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Ittihad Al-Shorta",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Petrojet",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Haras al-Hodoud",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Intag Harby",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "ENPPI",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Al-Jaish",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Ittihad",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Mokawloon al-Arab",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Al-Gouna",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Al-Masry",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Ghazl al-Mehalla",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Mansoura",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Assyut Petrol",
+          "team_average_talent": "7300"
+        }
+      ]
+    }
+  }
+}

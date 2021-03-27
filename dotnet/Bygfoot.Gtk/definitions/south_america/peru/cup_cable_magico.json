@@ -1,0 +1,37 @@
+{
+  "cup": {
+    "name": "Copa Cable Mágico",
+    "short_name": "Cable Magico",
+    "symbol": "flag_peru.png",
+    "sid": "cable_magico",
+    "add_week": "47",
+    "last_week": "48",
+    "week_gap": "1",
+    "property": [
+      "national",
+      "silent_on_fixture_error"
+    ],
+    "cup_rounds": {
+      "cup_round": {
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "peru1",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1",
+              "from_table": "1"
+            },
+            {
+              "choose_team_sid": "peru1",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1",
+              "from_table": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

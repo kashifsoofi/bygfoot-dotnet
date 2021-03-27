@@ -1,0 +1,28 @@
+{
+  "cup": {
+    "name": "Nations Cup 3rd and 4th",
+    "short_name": "Nations Cup 3rd and 4th",
+    "sid": "nations_cup_34",
+    "symbol": "wc_oceania.png",
+    "yellow_red": "2",
+    "last_week": "20",
+    "add_week": "20",
+    "week_gap": "1",
+    "property": "international",
+    "cup_rounds": {
+      "cup_round": {
+        "new_teams": "2",
+        "home_away": "0",
+        "neutral": "1",
+        "choose_teams": {
+          "choose_team": {
+            "choose_team_sid": "nations_cup",
+            "number_of_teams": "2",
+            "start_idx": "3",
+            "end_idx": "4"
+          }
+        }
+      }
+    }
+  }
+}

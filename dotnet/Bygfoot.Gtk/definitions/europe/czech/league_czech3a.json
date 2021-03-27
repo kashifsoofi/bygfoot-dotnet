@@ -1,0 +1,84 @@
+{
+  "league": {
+    "sid": "czech3a",
+    "name": "3. Ligy Česká fotbalová liga",
+    "short_name": "3. L. CFL",
+    "symbol": "flag_czech.png",
+    "first_week": "6",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "11",
+      "#text": "23"
+    },
+    "average_talent": "6000",
+    "names_file": "czech",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "czech2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "K. Dvur"
+        },
+        {
+          "team_name": "O. Letohrad"
+        },
+        {
+          "team_name": "B. Karlovy Vary"
+        },
+        {
+          "team_name": "S. Liberec II"
+        },
+        {
+          "team_name": "N. Deštné"
+        },
+        {
+          "team_name": "Jablonec II"
+        },
+        {
+          "team_name": "D. Ceské Budejovice II"
+        },
+        {
+          "team_name": "Hlavice"
+        },
+        {
+          "team_name": "M. Boleslav II"
+        },
+        {
+          "team_name": "V. Plzen II"
+        },
+        {
+          "team_name": "Písek"
+        },
+        {
+          "team_name": "Sl. Praha II"
+        },
+        {
+          "team_name": "S. Krc"
+        },
+        {
+          "team_name": "S. Varnsdorf"
+        },
+        {
+          "team_name": "S. Vyšehrad"
+        },
+        {
+          "team_name": "S. Sezimovo Ústí"
+        },
+        {
+          "team_name": "Vlašim"
+        },
+        {
+          "team_name": "V. Zizkov II"
+        }
+      ]
+    }
+  }
+}

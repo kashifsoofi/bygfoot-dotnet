@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "austria4c",
+    "name": "Landesliga Niederösterreich",
+    "short_name": "LL NÖ.",
+    "symbol": "flag_austria.png",
+    "first_week": "2",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "13",
+      "#text": "23"
+    },
+    "average_talent": "5000",
+    "names_file": "germany",
+    "layer": "4",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "austria3a austria3b austria3c",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Gaflenz"
+        },
+        {
+          "team_name": "Sollenau"
+        },
+        {
+          "team_name": "Leobendorf"
+        },
+        {
+          "team_name": "Kottingbrunn"
+        },
+        {
+          "team_name": "Schrems"
+        },
+        {
+          "team_name": "Ardagger"
+        },
+        {
+          "team_name": "Götzendorf"
+        },
+        {
+          "team_name": "Retz"
+        },
+        {
+          "team_name": "Langenrohr"
+        },
+        {
+          "team_name": "Vösendorf"
+        },
+        {
+          "team_name": "Herzogenburg"
+        },
+        {
+          "team_name": "Mistelbach"
+        },
+        {
+          "team_name": "Ortmann"
+        },
+        {
+          "team_name": "Haitzendorf"
+        },
+        {
+          "team_name": "Kremsen"
+        },
+        {
+          "team_name": "Stockerau"
+        }
+      ]
+    }
+  }
+}

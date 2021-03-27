@@ -1,0 +1,81 @@
+{
+  "league": {
+    "sid": "germany5_10",
+    "name": "Oberliga Schleswig-Holstein",
+    "short_name": "OL S-H",
+    "symbol": "flag_germany.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "break": "7",
+    "average_talent": "5400",
+    "names_file": "germany",
+    "yellow_red": "5",
+    "layer": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "germany4a",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "H. Rhen"
+        },
+        {
+          "team_name": "H. Kiel II"
+        },
+        {
+          "team_name": "E. Büdelsdorf"
+        },
+        {
+          "team_name": "Itzehoe"
+        },
+        {
+          "team_name": "Schleswig S."
+        },
+        {
+          "team_name": "Neumunster"
+        },
+        {
+          "team_name": "Heid"
+        },
+        {
+          "team_name": "Kropp"
+        },
+        {
+          "team_name": "V. Lübeck II"
+        },
+        {
+          "team_name": "Heikendorf"
+        },
+        {
+          "team_name": "Flensburg"
+        },
+        {
+          "team_name": "Eckernförd"
+        },
+        {
+          "team_name": "V. Horst"
+        },
+        {
+          "team_name": "C. Kiel"
+        },
+        {
+          "team_name": "Altenholz"
+        },
+        {
+          "team_name": "Husum"
+        },
+        {
+          "team_name": "Kilia"
+        },
+        {
+          "team_name": "N. Strand"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "country": {
+    "name": "ghana",
+    "rating": "9",
+    "symbol": "flag_ghana.png",
+    "sid": "ghana",
+    "leagues": {
+      "league": [
+        "ghana1",
+        "ghana21",
+        "ghana22",
+        "ghana23"
+      ]
+    },
+    "cups": {
+      "cup": "cup_ghana"
+    }
+  }
+}

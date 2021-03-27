@@ -1,0 +1,83 @@
+{
+  "league": {
+    "sid": "russia3a",
+    "name": "Second Division West",
+    "short_name": "2. Div. W",
+    "symbol": "flag_russia.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "6300",
+    "names_file": "russia",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "russia2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "M. R. Moscow"
+        },
+        {
+          "team_name": "T. Vladimir"
+        },
+        {
+          "team_name": "Sheksna"
+        },
+        {
+          "team_name": "S. Kostroma"
+        },
+        {
+          "team_name": "Volga"
+        },
+        {
+          "team_name": "S. Murmansk"
+        },
+        {
+          "team_name": "D. St. Petersburg"
+        },
+        {
+          "team_name": "Dmytrov"
+        },
+        {
+          "team_name": "Reutov"
+        },
+        {
+          "team_name": "Pskov"
+        },
+        {
+          "team_name": "S. Shchyolkovo"
+        },
+        {
+          "team_name": "Ze. Moscow"
+        },
+        {
+          "team_name": "Volochanin-Ratmir"
+        },
+        {
+          "team_name": "Istra"
+        },
+        {
+          "team_name": "Torpedo R. G."
+        },
+        {
+          "team_name": "D. Vologda"
+        },
+        {
+          "team_name": "Nara-Desna"
+        },
+        {
+          "team_name": "Tekstilshchik T."
+        },
+        {
+          "team_name": "Z. St. Petersburg II"
+        }
+      ]
+    }
+  }
+}

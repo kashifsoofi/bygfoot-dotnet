@@ -1,0 +1,92 @@
+{
+  "league": {
+    "sid": "romania2a",
+    "name": "Liga II Seria 1",
+    "short_name": "L2S1",
+    "symbol": "flag_romania.png",
+    "first_week": "5",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "9",
+      "#text": "23"
+    },
+    "average_talent": "6700",
+    "names_file": "romania",
+    "yellow_red": "5",
+    "layer": "2",
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "2",
+          "dest_sid": "romania1",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "15",
+          "rank_end": "18",
+          "dest_sid": "romania3a romania3c romania3e",
+          "prom_rel_type": "relegation"
+        }
+      ]
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "C. Piatra Neamţ"
+        },
+        {
+          "team_name": "C. Suceava"
+        },
+        {
+          "team_name": "P. Ploieşti"
+        },
+        {
+          "team_name": "C. Chiajna"
+        },
+        {
+          "team_name": "C. Buftea"
+        },
+        {
+          "team_name": "C. Ploieşti"
+        },
+        {
+          "team_name": "D. Bucureşti II"
+        },
+        {
+          "team_name": "D. Tulcea"
+        },
+        {
+          "team_name": "Botoşani"
+        },
+        {
+          "team_name": "S. S. Bucureşti"
+        },
+        {
+          "team_name": "D. Giurgiu"
+        },
+        {
+          "team_name": "P. Bucureşti"
+        },
+        {
+          "team_name": "S. Bacău"
+        },
+        {
+          "team_name": "F. Bacău"
+        },
+        {
+          "team_name": "D. Galaţi"
+        },
+        {
+          "team_name": "Snagov"
+        },
+        {
+          "team_name": "F. Braşov"
+        },
+        {
+          "team_name": "P. Modelu"
+        }
+      ]
+    }
+  }
+}

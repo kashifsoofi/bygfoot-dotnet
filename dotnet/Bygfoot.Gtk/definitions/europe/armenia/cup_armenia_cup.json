@@ -1,0 +1,33 @@
+{
+  "cup": {
+    "name": "Armenian Cup",
+    "short_name": "Arm. Cup",
+    "symbol": "flag_armenia.png",
+    "sid": "armenia_cup",
+    "last_week": "40",
+    "week_gap": "4",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "armenia1"
+              },
+              {
+                "choose_team_sid": "armenia2"
+              }
+            ]
+          }
+        },
+        "",
+        "",
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

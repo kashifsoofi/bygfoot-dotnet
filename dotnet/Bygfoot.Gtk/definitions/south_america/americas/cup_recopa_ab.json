@@ -1,0 +1,30 @@
+{
+  "cup": {
+    "name": "Recopa Sudamericana",
+    "short_name": "Recopa",
+    "sid": "recopa_ab",
+    "add_week": "45",
+    "last_week": "50",
+    "property": "international",
+    "cup_rounds": {
+      "cup_round": {
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "sudamericana_ab",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1"
+            },
+            {
+              "choose_team_sid": "libertadores_ab",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

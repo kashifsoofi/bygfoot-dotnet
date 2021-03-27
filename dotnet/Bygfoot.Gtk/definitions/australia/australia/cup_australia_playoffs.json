@@ -1,0 +1,34 @@
+{
+  "cup": {
+    "name": "A-League Playoffs",
+    "short_name": "A-Lg. PO",
+    "symbol": "flag_australia.png",
+    "sid": "australia_playoffs",
+    "add_week": "1000",
+    "week_gap": "1",
+    "property": [
+      "national",
+      "highlight1"
+    ],
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "neutral": "1",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "australia1",
+              "number_of_teams": "4",
+              "start_idx": "1",
+              "end_idx": "4"
+            }
+          }
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

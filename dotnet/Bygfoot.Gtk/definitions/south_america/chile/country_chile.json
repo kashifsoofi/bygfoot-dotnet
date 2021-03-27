@@ -1,0 +1,23 @@
+{
+  "country": {
+    "name": "Chile",
+    "symbol": "flag_chile.png",
+    "sid": "chile",
+    "rating": "6",
+    "leagues": {
+      "league": [
+        "chile1",
+        "chile2"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "copa_chile",
+        "libertadores",
+        "sudamericana",
+        "recopa",
+        "mundial_clubes"
+      ]
+    }
+  }
+}

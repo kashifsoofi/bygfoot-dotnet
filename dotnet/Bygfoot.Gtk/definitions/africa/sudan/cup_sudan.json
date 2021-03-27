@@ -1,0 +1,36 @@
+{
+  "cup": {
+    "name": "Sudan Cup",
+    "short_name": "Cup",
+    "symbol": "flag_sudan.png",
+    "sid": "cup_sudan",
+    "yellow_red": "3",
+    "last_week": "24",
+    "week_gap": "2",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "sudan1",
+              "number_of_teams": "12",
+              "start_idx": "3",
+              "end_idx": "14"
+            }
+          }
+        },
+        {
+          "choose_team": {
+            "choose_team_sid": "sudan1",
+            "number_of_teams": "2",
+            "start_idx": "1",
+            "end_idx": "2"
+          }
+        },
+        "",
+        ""
+      ]
+    }
+  }
+}

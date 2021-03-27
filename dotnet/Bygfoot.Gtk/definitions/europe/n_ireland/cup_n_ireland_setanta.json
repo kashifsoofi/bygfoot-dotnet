@@ -1,0 +1,66 @@
+{
+  "cup": {
+    "name": "Setanta Sports Cup",
+    "short_name": "Setanta Cup",
+    "symbol": "map_ireland.png",
+    "sid": "n_ireland_setanta",
+    "last_week": "19",
+    "week_gap": "4",
+    "property": "international",
+    "talent_diff": "500",
+    "group": "101",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "number_of_groups": "2",
+          "number_of_advance": "2",
+          "new_teams": "8",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "ireland1",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "12",
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "ireland1",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "4",
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "n_ireland_cup",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "n_ireland1",
+                "number_of_teams": "3",
+                "start_idx": "1",
+                "end_idx": "4",
+                "randomly": "1"
+              }
+            ]
+          },
+          "delay": "2"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

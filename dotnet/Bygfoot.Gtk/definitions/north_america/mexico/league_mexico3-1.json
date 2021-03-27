@@ -1,0 +1,62 @@
+{
+  "league": {
+    "sid": "mexico3-1",
+    "name": "Segunda Division Zona Bajio",
+    "short_name": "2a Bajio",
+    "symbol": "flag_mexico.png",
+    "layer": "3",
+    "first_week": "3",
+    "week_gap": "1",
+    "average_talent": "6000",
+    "yellow_red": "3",
+    "round_robins": "2",
+    "names_file": "latinoamerica",
+    "break": "13",
+    "teams": {
+      "team": [
+        {
+          "team_name": "C.A. Hidalgo"
+        },
+        {
+          "team_name": "P. Salamanca"
+        },
+        {
+          "team_name": "C.D. Irapuato"
+        },
+        {
+          "team_name": "F.C. Celaya"
+        },
+        {
+          "team_name": "T. Naucalpan"
+        },
+        {
+          "team_name": "A.C. Aguascalientes"
+        },
+        {
+          "team_name": "Apatzingan"
+        },
+        {
+          "team_name": "Necaxa R."
+        },
+        {
+          "team_name": "A.C. Leon"
+        },
+        {
+          "team_name": "A.R. Tantoyuca"
+        },
+        {
+          "team_name": "Toluca F."
+        },
+        {
+          "team_name": "C. Leon"
+        },
+        {
+          "team_name": "H. San Juan del Río"
+        },
+        {
+          "team_name": "M. Jalpan de Serra"
+        }
+      ]
+    }
+  }
+}

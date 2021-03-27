@@ -1,0 +1,42 @@
+{
+  "cup": {
+    "name": "Federation Cup",
+    "short_name": "Cup",
+    "symbol": "flag_nigeria.png",
+    "sid": "cup_nigeria",
+    "yellow_red": "3",
+    "last_week": "36",
+    "week_gap": "2",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "nigeria1"
+              },
+              {
+                "choose_team_sid": "nigeria21",
+                "number_of_teams": "6",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "nigeria22",
+                "number_of_teams": "6",
+                "start_idx": "1",
+                "end_idx": "6"
+              }
+            ]
+          }
+        },
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  }
+}

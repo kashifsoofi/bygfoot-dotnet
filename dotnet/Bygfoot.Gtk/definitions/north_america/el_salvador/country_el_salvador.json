@@ -1,0 +1,14 @@
+{
+  "country": {
+    "name": "el_salvador",
+    "rating": "9",
+    "symbol": "flag_el_salvador.png",
+    "sid": "el_salvador",
+    "leagues": {
+      "league": "el_salvador1"
+    },
+    "cups": {
+      "cup": "el_salvador_champ_league"
+    }
+  }
+}

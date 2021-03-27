@@ -1,0 +1,24 @@
+{
+  "country": {
+    "name": "Montenegro",
+    "symbol": "flag_montenegro.png",
+    "sid": "montenegro",
+    "rating": "5",
+    "leagues": {
+      "league": [
+        "montenegro1",
+        "montenegro2"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "montenegro_cup",
+        "europe_uefa",
+        "europe_champ_league",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "montenegro_prom_games1"
+      ]
+    }
+  }
+}

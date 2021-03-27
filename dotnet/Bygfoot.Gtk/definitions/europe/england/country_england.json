@@ -1,0 +1,32 @@
+{
+  "country": {
+    "name": "England",
+    "rating": "10",
+    "symbol": "flag_england.png",
+    "sid": "england",
+    "leagues": {
+      "league": [
+        "england1",
+        "england2",
+        "england3",
+        "england4",
+        "england5"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "england_fa",
+        "england_league",
+        "europe_uefa3e",
+        "europe_champ_league4",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "england_league_vs_cup",
+        "england_prom_games2",
+        "england_prom_games3",
+        "england_prom_games4",
+        "england_prom_games5"
+      ]
+    }
+  }
+}

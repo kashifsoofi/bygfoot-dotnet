@@ -1,0 +1,84 @@
+{
+  "league": {
+    "sid": "romania3b",
+    "name": "Liga III Seria 2",
+    "short_name": "L3S2",
+    "symbol": "flag_romania.png",
+    "first_week": "5",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "9",
+      "#text": "23"
+    },
+    "average_talent": "6000",
+    "names_file": "romania",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "romania2b",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Ra. Bucureşti II"
+        },
+        {
+          "team_name": "I. G. Bucureşti"
+        },
+        {
+          "team_name": "C. Eforie"
+        },
+        {
+          "team_name": "S. Bucureşti II"
+        },
+        {
+          "team_name": "Ro. Bucureşti"
+        },
+        {
+          "team_name": "C. Brăila"
+        },
+        {
+          "team_name": "C. Năvodari"
+        },
+        {
+          "team_name": "C. Ovidiu"
+        },
+        {
+          "team_name": "P. Constanţa"
+        },
+        {
+          "team_name": "C. Medgidia"
+        },
+        {
+          "team_name": "U. Slobozia"
+        },
+        {
+          "team_name": "D. Călăraşi"
+        },
+        {
+          "team_name": "C. Mangalia"
+        },
+        {
+          "team_name": "V. Însurăţei"
+        },
+        {
+          "team_name": "F. Constanţa II"
+        },
+        {
+          "team_name": "P. Galaţi"
+        },
+        {
+          "team_name": "Câmpina"
+        },
+        {
+          "team_name": "S. Stejaru"
+        }
+      ]
+    }
+  }
+}

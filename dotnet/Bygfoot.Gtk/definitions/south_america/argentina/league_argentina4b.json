@@ -1,0 +1,215 @@
+{
+  "league": {
+    "sid": "argentina4b",
+    "layer": "4",
+    "name": "Torneo Argentino B",
+    "short_name": "Argentino B",
+    "symbol": "flag_argentina.png",
+    "average_talent": "5800",
+    "names_file": "argentina",
+    "prom_rel": {
+      "prom_games": {
+        "prom_games_dest_sid": "argentina3b",
+        "prom_games_loser_sid": "argentina4b",
+        "prom_games_number_of_advance": "2",
+        "prom_games_cup_sid": "argentino_b_final"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Cruz del Sur",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Gral. Roca",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Boca (RG)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "D. Madryn",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Huracan (CR)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Alvarado",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Independiente (Ta)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Liniers (BB)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "G. Universitario",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Racing (O)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Bella Vista",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Ferro Sud (Ol)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Linqueno",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "La Emilia",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Sportivo Atletico",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Juventud Unida (G)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Def de Belgrano (VR)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Juventud",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "A. Argentinos (25)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Tiro Federal M.",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Ben Hur",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Gral. Paz Jrs",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "At. San Jorge",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Sp. Atenas",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Tte. Origone",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "9 de Julio (M)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Sp. del Bono",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "At. Union (SJ)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Juventud Alianza",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Guaymallen",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "A. Trinidad",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Gimnasia (M)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "San Martin (M)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "At. Parana",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Guarani A. Franco",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Sarmiento (SE)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Chaco For Ever",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "At. Colegiales",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Textil Mandiyu",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Sportivo Patria",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Gimnasia y Tiro",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Concepcion F. C.",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Talleres (P)",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Atletico Famailla",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "At. Policial",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "Altos Hornos Zapla",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "At. Concepcion",
+          "team_average_talent": "5800"
+        },
+        {
+          "team_name": "At. Independiente (N)",
+          "team_average_talent": "5800"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "country": {
+    "name": "Argentina",
+    "symbol": "flag_argentina.png",
+    "sid": "argentina",
+    "rating": "8",
+    "leagues": {
+      "league": [
+        "argentina1",
+        "argentina2",
+        "argentina3a",
+        "argentina4a",
+        "argentina3b",
+        "argentina4b"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "reducido",
+        "reducido_1c",
+        "argentino_a_fase1",
+        "argentino_a_fase2",
+        "argentino_a_final",
+        "argentino_a_descenso",
+        "argentino_b_fase1",
+        "argentino_b_fase2",
+        "argentino_b_final",
+        "libertadores_ab",
+        "sudamericana_ab",
+        "recopa_ab",
+        "mundial_clubes_ab"
+      ]
+    }
+  }
+}

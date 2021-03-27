@@ -1,0 +1,106 @@
+{
+  "cup": {
+    "name": "Kupata na Balgariya",
+    "short_name": "К. na Balgariya",
+    "symbol": "flag_bulgaria.png",
+    "sid": "bulgaria_national",
+    "yellow_red": "3",
+    "last_week": "45",
+    "week_gap": "3",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "bulgaria3a",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "19",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "bulgaria3b",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "16",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "bulgaria3c",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "19",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "bulgaria3d",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "20",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "bulgaria2a",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "15",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "bulgaria2b",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "16",
+                "randomly": "1"
+              }
+            ]
+          },
+          "byes": "1",
+          "delay": "-5"
+        },
+        {
+          "home_away": "0",
+          "choose_team": [
+            {
+              "choose_team_sid": "bulgaria2a",
+              "number_of_teams": "14",
+              "start_idx": "1",
+              "end_idx": "15",
+              "randomly": "1"
+            },
+            {
+              "choose_team_sid": "bulgaria2b",
+              "number_of_teams": "14",
+              "start_idx": "1",
+              "end_idx": "16",
+              "randomly": "1"
+            }
+          ],
+          "delay": "-6"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "bulgaria1"
+            }
+          },
+          "delay": "-7"
+        },
+        {
+          "home_away": "0",
+          "delay": "-6"
+        },
+        "",
+        "",
+        {
+          "neutral": "1",
+          "home_away": "0"
+        }
+      ]
+    }
+  }
+}

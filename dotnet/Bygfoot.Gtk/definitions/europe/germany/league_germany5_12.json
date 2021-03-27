@@ -1,0 +1,81 @@
+{
+  "league": {
+    "sid": "germany5_12",
+    "name": "Oberliga Niedersachsen Ost",
+    "short_name": "OL N O",
+    "symbol": "flag_germany.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "break": "7",
+    "average_talent": "5400",
+    "names_file": "germany",
+    "yellow_red": "5",
+    "layer": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "germany4b",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Goslar"
+        },
+        {
+          "team_name": "E. Braunschweig II"
+        },
+        {
+          "team_name": "H. Lüneburg"
+        },
+        {
+          "team_name": "T. Ottersberg"
+        },
+        {
+          "team_name": "Heeslingen"
+        },
+        {
+          "team_name": "Gifhorn"
+        },
+        {
+          "team_name": "D. Assel"
+        },
+        {
+          "team_name": "O. Scharmbeck"
+        },
+        {
+          "team_name": "Celle"
+        },
+        {
+          "team_name": "E. Northeim"
+        },
+        {
+          "team_name": "Maschen"
+        },
+        {
+          "team_name": "Ölper"
+        },
+        {
+          "team_name": "F. Braunschweig"
+        },
+        {
+          "team_name": "W. Göttingen"
+        },
+        {
+          "team_name": "B. W. Bornreihe"
+        },
+        {
+          "team_name": "Güldenstern S."
+        },
+        {
+          "team_name": "Rotenburg"
+        },
+        {
+          "team_name": "Vorsfelde"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "league": {
+    "sid": "fyr_macedonia3b",
+    "name": "Makedonska Treta Liga Север Division B",
+    "short_name": "Treta L. C. Div B",
+    "symbol": "flag_fyr_macedonia.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "5500",
+    "names_file": "serbia",
+    "yellow_red": "5",
+    "layer": "3",
+    "property": "inactive",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Besa"
+        },
+        {
+          "team_name": "Dračevo"
+        },
+        {
+          "team_name": "G. Lisice"
+        },
+        {
+          "team_name": "Lepenec"
+        },
+        {
+          "team_name": "Mladinec"
+        },
+        {
+          "team_name": "Slavija"
+        },
+        {
+          "team_name": "Treska"
+        },
+        {
+          "team_name": "Volkovo"
+        }
+      ]
+    }
+  }
+}

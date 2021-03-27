@@ -1,0 +1,123 @@
+{
+  "league": {
+    "sid": "england3",
+    "name": "Football League One",
+    "short_name": "League One",
+    "symbol": "championship.png",
+    "first_week": "6",
+    "week_gap": "1",
+    "average_talent": "5800",
+    "names_file": "england",
+    "yellow_red": "5",
+    "two_match_week_start": [
+      "7",
+      "13",
+      "24",
+      "31",
+      "36"
+    ],
+    "two_match_week_end": [
+      "8",
+      "14",
+      "25",
+      "32",
+      "37"
+    ],
+    "prom_rel": {
+      "prom_games": {
+        "prom_games_dest_sid": "england2",
+        "prom_games_cup_sid": "england_prom_games3"
+      },
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "2",
+          "dest_sid": "england2",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "21",
+          "rank_end": "24",
+          "dest_sid": "england4",
+          "prom_rel_type": "relegation"
+        }
+      ]
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Bournmouth"
+        },
+        {
+          "team_name": "Brendford"
+        },
+        {
+          "team_name": "Brighton and Hove Albion"
+        },
+        {
+          "team_name": "Bristol Rovers"
+        },
+        {
+          "team_name": "Carlisle United"
+        },
+        {
+          "team_name": "Charlton Athletic"
+        },
+        {
+          "team_name": "Colchester United"
+        },
+        {
+          "team_name": "Dagenham and Redbridge"
+        },
+        {
+          "team_name": "Exeter City"
+        },
+        {
+          "team_name": "Hartepool Unted"
+        },
+        {
+          "team_name": "Huddersfield Town"
+        },
+        {
+          "team_name": "Leyton Orient"
+        },
+        {
+          "team_name": "Notts County"
+        },
+        {
+          "team_name": "Milton Keynes Dons"
+        },
+        {
+          "team_name": "Plymouth Argyle"
+        },
+        {
+          "team_name": "Oldham Athletic"
+        },
+        {
+          "team_name": "Peterborough United"
+        },
+        {
+          "team_name": "Rochdale"
+        },
+        {
+          "team_name": "Sheffield Wednesday"
+        },
+        {
+          "team_name": "Southampton"
+        },
+        {
+          "team_name": "Swindon Town"
+        },
+        {
+          "team_name": "Tranmere Rovers"
+        },
+        {
+          "team_name": "Walsall"
+        },
+        {
+          "team_name": "Yeovil Town"
+        }
+      ]
+    }
+  }
+}

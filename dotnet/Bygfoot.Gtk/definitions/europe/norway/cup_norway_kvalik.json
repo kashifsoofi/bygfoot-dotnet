@@ -1,0 +1,35 @@
+{
+  "cup": {
+    "name": "Opprykkskvalik",
+    "short_name": "Opp.kv.",
+    "symbol": "flag_norway.png",
+    "sid": "norway_kvalik",
+    "yellow_red": "3",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2"
+    ],
+    "cup_rounds": {
+      "cup_round": {
+        "home_away": "1",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "norway1",
+              "number_of_teams": "1",
+              "start_idx": "13",
+              "end_idx": "13"
+            },
+            {
+              "choose_team_sid": "norway2",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

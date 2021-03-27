@@ -1,0 +1,88 @@
+{
+  "cup": {
+    "name": "Copa Mundial de Clubes",
+    "short_name": "CMundialClub",
+    "sid": "mundial_clubes",
+    "group": "5",
+    "yellow_red": "2",
+    "talent_diff": "750",
+    "add_week": "51",
+    "last_week": "52",
+    "week_gap": "0",
+    "property": "international",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "new_teams": "4",
+          "home_away": "0",
+          "neutral": "1",
+          "round_name": "Fase 1",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "england1 spain1 italy1 germany1",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "4"
+              },
+              {
+                "choose_team_sid": "mexico1 usa_wconf usa_econf",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "4"
+              },
+              {
+                "choose_team_sid": "australia1",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "japan1",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              }
+            ]
+          }
+        },
+        {
+          "new_teams": "2",
+          "home_away": "0",
+          "neutral": "1",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "recopa_ab",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              },
+              {
+                "choose_team_sid": "england1 spain1 italy1 germany1",
+                "number_of_teams": "1",
+                "randomly": "1",
+                "generate": "1",
+                "start_idx": "1",
+                "end_idx": "4"
+              }
+            ]
+          }
+        },
+        {
+          "new_teams": "2",
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

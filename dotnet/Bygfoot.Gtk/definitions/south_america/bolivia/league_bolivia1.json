@@ -1,0 +1,67 @@
+{
+  "league": {
+    "sid": "bolivia1",
+    "layer": "1",
+    "name": "Primera Division",
+    "short_name": "Primera",
+    "symbol": "flag_bolivia.png",
+    "average_talent": "7000",
+    "names_file": "latinoamerica",
+    "first_week": "7",
+    "week_gap": "1",
+    "yellow_red": "5",
+    "round_robins": "2",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Real Potosi",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "S. Jose",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "La Paz",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Bolivar",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Blooming",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Aurora",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Guabira",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "N. Potosi",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Universitario",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "O. Petrolero",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "T. Strongest",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "R. Mamore",
+          "team_average_talent": "7000"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "league": {
+    "sid": "mexico3-4",
+    "name": "Segunda Division Zona Occidente",
+    "short_name": "2a Occidente",
+    "symbol": "flag_mexico.png",
+    "layer": "3",
+    "first_week": "3",
+    "week_gap": "1",
+    "average_talent": "6000",
+    "yellow_red": "3",
+    "round_robins": "2",
+    "names_file": "latinoamerica",
+    "break": "13",
+    "teams": {
+      "team": [
+        {
+          "team_name": "F.S. Manzanillo"
+        },
+        {
+          "team_name": "Autlan"
+        },
+        {
+          "team_name": "Tecoman"
+        },
+        {
+          "team_name": "J. de Zamora"
+        },
+        {
+          "team_name": "Hermosillo"
+        },
+        {
+          "team_name": "C.U. de Guadalajara"
+        },
+        {
+          "team_name": "V. de Ixtlan"
+        },
+        {
+          "team_name": "R. La Piedad"
+        },
+        {
+          "team_name": "C.F.A. Guadalajara F."
+        },
+        {
+          "team_name": "Delfines F.C."
+        },
+        {
+          "team_name": "Morelia"
+        },
+        {
+          "team_name": "C.D. Guadalajara F."
+        },
+        {
+          "team_name": "Jersy Nay"
+        },
+        {
+          "team_name": "Zapotlanejo"
+        }
+      ]
+    }
+  }
+}

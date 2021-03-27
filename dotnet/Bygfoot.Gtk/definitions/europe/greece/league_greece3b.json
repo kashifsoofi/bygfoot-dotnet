@@ -1,0 +1,81 @@
+{
+  "league": {
+    "sid": "greece3b",
+    "name": "Gamma Ethniki North",
+    "short_name": "G. E. N",
+    "symbol": "flag_greece.png",
+    "first_week": "9",
+    "week_gap": "1",
+    "break": "2",
+    "average_talent": "6400",
+    "names_file": "greece",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "greece2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "A. Artas"
+        },
+        {
+          "team_name": "A. Giannitsa"
+        },
+        {
+          "team_name": "E. Katerini"
+        },
+        {
+          "team_name": "Lamia"
+        },
+        {
+          "team_name": "Fokikos"
+        },
+        {
+          "team_name": "D. Dramas"
+        },
+        {
+          "team_name": "E. Ptolemaida"
+        },
+        {
+          "team_name": "E. Alexandroupoli"
+        },
+        {
+          "team_name": "E. Filippiades"
+        },
+        {
+          "team_name": "N. Volos"
+        },
+        {
+          "team_name": "O. Anagennisi"
+        },
+        {
+          "team_name": "M. Neapolis"
+        },
+        {
+          "team_name": "N. Epivates"
+        },
+        {
+          "team_name": "P. Agrinio"
+        },
+        {
+          "team_name": "P. Grevena"
+        },
+        {
+          "team_name": "P. Preveza"
+        },
+        {
+          "team_name": "T. Thermis"
+        },
+        {
+          "team_name": "Zakynthos"
+        }
+      ]
+    }
+  }
+}

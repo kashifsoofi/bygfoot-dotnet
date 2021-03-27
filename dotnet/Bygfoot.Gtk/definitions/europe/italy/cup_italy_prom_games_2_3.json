@@ -1,0 +1,27 @@
+{
+  "cup": {
+    "name": "Serie B Relegation",
+    "short_name": "Serie B Rel.",
+    "symbol": "flag_italy.png",
+    "sid": "italy_prom_games_2_3",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2",
+      "promotion"
+    ],
+    "cup_rounds": {
+      "cup_round": {
+        "home_away": "1",
+        "choose_teams": {
+          "choose_team": {
+            "choose_team_sid": "italy2",
+            "number_of_teams": "2",
+            "start_idx": "18",
+            "end_idx": "19"
+          }
+        }
+      }
+    }
+  }
+}

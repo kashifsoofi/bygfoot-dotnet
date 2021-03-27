@@ -1,0 +1,82 @@
+{
+  "league": {
+    "sid": "iran2",
+    "layer": "2",
+    "name": "Azadegan Ligue Group A",
+    "short_name": "Group A",
+    "symbol": "flag_iran.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "6800",
+    "yellow_red": "3",
+    "names_file": "general",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "2",
+        "dest_sid": "iran1",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Steel Azin",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Shahrdari Tabriz",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Petroshimi Tabriz",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Sanaye Arak",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Gol Gohar",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Sepahan Novin",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Senat Naft",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Kowsar Lorestan",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Mehrkam Pars",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Moghavemat Mersad",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Shahrdari Bandar",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Nassaji Mazandaran",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Homa",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Shahrdari Zanjan",
+          "team_average_talent": "6800"
+        }
+      ]
+    }
+  }
+}

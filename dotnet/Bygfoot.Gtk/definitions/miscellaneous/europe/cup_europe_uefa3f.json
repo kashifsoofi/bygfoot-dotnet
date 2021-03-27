@@ -1,0 +1,962 @@
+{
+  "cup": {
+    "name": "UEFA Cup",
+    "short_name": "UEFA Cup",
+    "symbol": "flag_eu.png",
+    "sid": "europe_uefa3f",
+    "group": "1",
+    "yellow_red": "3",
+    "last_week": "47",
+    "week_gap": "2",
+    "break_in": [
+      {
+        "@length": "1",
+        "#text": "20"
+      },
+      {
+        "@length": "-1",
+        "#text": "23"
+      },
+      {
+        "@length": "-1",
+        "#text": "36"
+      },
+      {
+        "@length": "-1",
+        "#text": "39"
+      },
+      {
+        "@length": "-1",
+        "#text": "43"
+      },
+      {
+        "@length": "-1",
+        "#text": "46"
+      }
+    ],
+    "add_week": "0",
+    "property": [
+      "international",
+      "league talents",
+      "highlight1"
+    ],
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "new_teams": "74",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "bulgaria1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "switzerland1",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "9",
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "norway1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "israel1",
+                "number_of_teams": "2",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "serbia1",
+                "number_of_teams": "2",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "denmark1",
+                "number_of_teams": "2",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "denmark1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "austria1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "austria1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "poland1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "poland1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "hungary1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "hungary1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "slovakia1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "slovakia1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "croatia1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "croatia1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "cyprus1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "cyprus1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "sweden_allsvenskan",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "sweden_allsvenskan",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "slovenia1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "slovenia1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "bosnia_herzegovina1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "bosnia_herzegovina1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "latvia1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "latvia1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "lithuania1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "lithuania1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "finland1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "finland1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "moldova1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "moldova1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "ireland1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "ireland1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "georgia1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "georgia1",
+                "#text": "\n\t#the cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "switzerland1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "fyr_macedonia1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "fyr_macedonia1",
+                "#text": "\n\t#the cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "iceland1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "iceland1",
+                "#text": "\n\t#the cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "belarus1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "belarus1",
+                "#text": "\n\t#the cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "albania1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "albania1",
+                "#text": "\n\t#the cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "estonia1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "estonia1",
+                "#text": "\n\t#the cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "armenia1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "armenia1",
+                "#text": "\n\t#the cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "azerbaijan1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "azerbaijan1",
+                "#text": "\n\t#the cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "kazakhstan1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "kazakhstan1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "n_ireland1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "n_ireland1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "wales1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "wales1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "faroe_islands1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "faroe_islands1",
+                "#text": "\n\t#the cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "luxembourg1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "luxembourg1",
+                "#text": "\n\t#the cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "malta1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "malta1",
+                "#text": "\n\t#the cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "andorra1",
+                "#text": "\n\t#the national cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "san_marino_group_a san_marino_group_b",
+                "#text": "\n\t#the national cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "montenegro1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "montenegro1",
+                "#text": "\n\t#the cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {/*this entry includes the 3 Fair Play winners awarded by the UEFA which begin in the first qualifying round. Since the criteria are impossible to implement here, the teams are drawn randomly*/
+                "choose_team_sid": "albania1 andorra1 armenia1 austria1 azerbaijan1 belarus1 belgium1 bosnia_herzegovina1 bulgaria1 croatia1 cyprus1 czech1 denmark1 england1 estonia1 faroe_islands1 finland1 france1 fyr_macedonia1 georgia1 germany1 greece1 hungary1 iceland1 ireland1 israel1 italy1 kazakhstan1 latvia1 lithuania1 luxembourg1 malta1 moldova1 montenegro1 netherlands1 n_ireland1 norway1 poland1 portugal1 romania1 russia1 san_marino_group_a san_marino_group_b serbia1 scotland1 slovakia1 slovenia1 spain1 sweden_allsvenskan switzerland1 turkey1 ukraine1 wales1",
+                "number_of_teams": "3",
+                "randomly": "1",
+                "generate": "1"
+              }
+            ]
+          },
+          "byes": "0",
+          "delay": "-6"
+        },
+        {
+          "new_teams": "27",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "russia1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "scotland1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "ukraine1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "belgium1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "czech1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "turkey1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "greece1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "greece1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "bulgaria1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "bulgaria1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "switzerland1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "switzerland1",
+                "#text": "\n\t#the cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "norway1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "norway1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "israel1",
+                "#text": "\n\t#the cup winner here.\n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "serbia1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {/*this represents the 11 Intertoto Cup winners that enter the UEFA Cup in the 2nd qualifying round. As that cup isn't included in this game and would be hard to squeeze in or implement, the 11 winners are drawn randomly.*/
+                "choose_team_sid": "albania1 andorra1 armenia1 austria1 azerbaijan1 belarus1 belgium1 bosnia_herzegovina1 bulgaria1 croatia1 cyprus1 czech1 denmark1 england1 estonia1 faroe_islands1 finland1 france1 fyr_macedonia1 georgia1 germany1 greece1 hungary1 iceland1 ireland1 israel1 italy1 kazakhstan1 latvia1 lithuania1 luxembourg1 malta1 moldova1 montenegro1 netherlands1 n_ireland1 norway1 poland1 portugal1 romania1 russia1 san_marino_group_a san_marino_group_b serbia1 scotland1 slovakia1 slovenia1 spain1 sweden_allsvenskan switzerland1 turkey1 ukraine1 wales1",
+                "number_of_teams": "11",
+                "randomly": "1",
+                "generate": "1"
+              }
+            ]
+          },
+          "byes": "0",
+          "delay": "-6"
+        },
+        {
+          "add_week": "0",
+          "new_teams": "48",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "LEAGUE1",
+                "number_of_teams": "1",
+                "start_idx": "4",
+                "end_idx": "4"
+              },
+              {
+                "choose_team_sid": "CUP1",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "5"
+              },
+              {
+                "choose_team_sid": "CUP2",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "6"
+              },
+              {
+                "choose_team_sid": "spain1",
+                "number_of_teams": "2",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "spain1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "england1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "england1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "england1",
+                "#text": "\n\t#the league cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "italy1",
+                "number_of_teams": "2",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "italy1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "france1",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "france1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "france1",
+                "#text": "\n\t#the league cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "germany1",
+                "number_of_teams": "2",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "germany1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "portugal1",
+                "number_of_teams": "2",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "portugal1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "romania1",
+                "number_of_teams": "3",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "romania1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "netherlands1",
+                "number_of_teams": "3",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "netherlands1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "russia1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "scotland1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "ukraine1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "belgium1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "czech1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {
+                "choose_team_sid": "turkey1",
+                "#text": "\n\t#the cup winner here. \n\t  ",
+                "number_of_teams": "1",
+                "#comment": [],
+                "randomly": "1",
+                "generate": "1"
+              },
+              {/*16 losers of the UCL 3rd qualifying round that enter the 1st round proper of the UEFA Cup*/
+                "choose_team_sid": "europe_champ_league*",
+                "wait_for_cup": {
+                  "@round": "3",
+                  "#text": "europe_champ_league*"
+                },
+                "skip_group_check": "1",
+                "preload": "0",
+                "number_of_teams": "16",
+                "start_idx": "17",
+                "end_idx": "32"
+              }
+            ]
+          },
+          "byes": "0",
+          "delay": "-6"
+        },
+        {
+          "number_of_groups": "8",
+          "number_of_advance": "3",
+          "home_away": "0",
+          "delay": "-5"
+        },
+        {
+          "new_teams": "8",
+          "choose_teams": {
+            "choose_team": {/*3rd-placed teams in the UCL group stage that join the 1st knockout round of UEFA Cup*/
+              "choose_team_sid": "europe_champ_league*",
+              "skip_group_check": "1",
+              "preload": "0",
+              "number_of_teams": "8",
+              "start_idx": "17",
+              "end_idx": "24"
+            }
+          },
+          "delay": "3"
+        },
+        {
+          "delay": "2"
+        },
+        {
+          "delay": "2"
+        },
+        {
+          "delay": "1"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

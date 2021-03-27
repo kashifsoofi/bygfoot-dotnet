@@ -1,0 +1,51 @@
+{
+  "cup": {
+    "name": "Development Cup",
+    "short_name": "Dev Cup",
+    "symbol": "flag_usa.png",
+    "sid": "usa_pdl_cup",
+    "add_week": "1000"/*<last_week>31</last_week>*/,
+    "week_gap": "1",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "neutral": "1",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "usa_pdl_central",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              },
+              {
+                "choose_team_sid": "usa_pdl_eastern",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              },
+              {
+                "choose_team_sid": "usa_pdl_southern",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              },
+              {
+                "choose_team_sid": "usa_pdl_western",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              }
+            ]
+          }
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

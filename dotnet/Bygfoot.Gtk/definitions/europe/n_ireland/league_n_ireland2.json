@@ -1,0 +1,89 @@
+{
+  "league": {
+    "sid": "n_ireland2",
+    "name": "IFA Championship",
+    "short_name": "IFA Champ.",
+    "symbol": "flag_n_ireland.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "5400",
+    "names_file": "england",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "1",
+          "dest_sid": "n_ireland1",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "16",
+          "rank_end": "17",
+          "dest_sid": "n_ireland3",
+          "prom_rel_type": "relegation"
+        }
+      ],
+      "prom_games": {
+        "prom_games_dest_sid": "n_ireland1",
+        "prom_games_cup_sid": "n_ireland_prom_games1",
+        "prom_games_loser_sid": "n_ireland2"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Ards"
+        },
+        {
+          "team_name": "Armagh"
+        },
+        {
+          "team_name": "Ballinamallard"
+        },
+        {
+          "team_name": "Ballyclare"
+        },
+        {
+          "team_name": "Ballymoney"
+        },
+        {
+          "team_name": "Banbridge"
+        },
+        {
+          "team_name": "Carrick"
+        },
+        {
+          "team_name": "Coagh"
+        },
+        {
+          "team_name": "Dergview"
+        },
+        {
+          "team_name": "Donegal"
+        },
+        {
+          "team_name": "Glebe"
+        },
+        {
+          "team_name": "Killymoon"
+        },
+        {
+          "team_name": "Larne"
+        },
+        {
+          "team_name": "Limavady"
+        },
+        {
+          "team_name": "Loughgall"
+        },
+        {
+          "team_name": "Portadown"
+        },
+        {
+          "team_name": "Tobermore"
+        }
+      ]
+    }
+  }
+}

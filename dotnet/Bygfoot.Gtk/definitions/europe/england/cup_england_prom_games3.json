@@ -1,0 +1,32 @@
+{
+  "cup": {
+    "name": "Promotion Games FL One",
+    "short_name": "Prom. Gam.",
+    "symbol": "championship.png",
+    "sid": "england_prom_games3",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2"
+    ],
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "1",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "england3",
+              "number_of_teams": "4",
+              "start_idx": "3",
+              "end_idx": "6"
+            }
+          }
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

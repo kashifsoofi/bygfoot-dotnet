@@ -1,0 +1,42 @@
+{
+  "league": {
+    "sid": "japan5-4b",
+    "name": "Hokkaido League 2 Block B",
+    "short_name": "Hokkaido 2-B",
+    "symbol": "flag_japan.png",
+    "first_week": "8",
+    "week_gap": "2",
+    "average_talent": "3975",
+    "names_file": "japan",
+    "round_robins": "1",
+    "layer": "5",
+    "teams": {
+      "team": [
+        {
+          "team_name": "K. Ashikawa"
+        },
+        {
+          "team_name": "W. Dohoku"
+        },
+        {
+          "team_name": "K.S.C. Ashikawa"
+        },
+        {
+          "team_name": "M. Sorachi"
+        },
+        {
+          "team_name": "Sorachi N."
+        },
+        {
+          "team_name": "Naie"
+        },
+        {
+          "team_name": "R. Sorachi"
+        },
+        {
+          "team_name": "R. Ashikawa"
+        }
+      ]
+    }
+  }
+}

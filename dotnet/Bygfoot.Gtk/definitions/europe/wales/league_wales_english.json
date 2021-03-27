@@ -1,0 +1,19 @@
+{
+  "league": {
+    "sid": "wales_english",
+    "symbol": "flag_england.png",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Cardiff"
+        },
+        {
+          "team_name": "Swansea"
+        },
+        {
+          "team_name": "Wrexham"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "france5g",
+    "name": "CFA2 Groupe G",
+    "short_name": "CFA2 G",
+    "symbol": "flag_france.png",
+    "first_week": "6",
+    "week_gap": "1",
+    "break": "5",
+    "average_talent": "4700",
+    "names_file": "france",
+    "yellow_red": "5",
+    "layer": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "france4a france4b france4c france4d",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Blois"
+        },
+        {
+          "team_name": "Cognac"
+        },
+        {
+          "team_name": "Niort B"
+        },
+        {
+          "team_name": "O. Saumur"
+        },
+        {
+          "team_name": "Auxerre C"
+        },
+        {
+          "team_name": "Le Poiré-sur-Vie Vendée"
+        },
+        {
+          "team_name": "Saint-Pryve Saint-Hilaire"
+        },
+        {
+          "team_name": "Herbiers"
+        },
+        {
+          "team_name": "Tours B"
+        },
+        {
+          "team_name": "Arménienne"
+        },
+        {
+          "team_name": "Alencon"
+        },
+        {
+          "team_name": "Châteauroux B"
+        },
+        {
+          "team_name": "Thouars"
+        },
+        {
+          "team_name": "Malesherbes"
+        },
+        {
+          "team_name": "Buxerolles"
+        },
+        {
+          "team_name": "Choisy le Roi"
+        },
+        {
+          "team_name": "Chartres"
+        }
+      ]
+    }
+  }
+}

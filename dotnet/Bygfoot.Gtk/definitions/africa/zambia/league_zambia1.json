@@ -1,0 +1,90 @@
+{
+  "league": {
+    "sid": "zambia1",
+    "layer": "1",
+    "name": "KCM Super Division",
+    "short_name": "KCM",
+    "symbol": "flag_zambia.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "7100",
+    "yellow_red": "3",
+    "names_file": "general",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "13",
+        "rank_end": "16",
+        "dest_sid": "zambia2",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "ZESCO United",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "Nchanga Rangers",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "Green Buffaloes",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "Power Dynamos",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "Zanaco",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "Nkana",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "Nkwazi",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "Red Arrows",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "Konkola Blades",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "Kabwe Warriors",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "Roan United",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "Choma Eagles",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "Forest Rangers",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "City of Lusaka",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "Lusaka Dynamos",
+          "team_average_talent": "7100"
+        },
+        {
+          "team_name": "National Assembly",
+          "team_average_talent": "7100"
+        }
+      ]
+    }
+  }
+}

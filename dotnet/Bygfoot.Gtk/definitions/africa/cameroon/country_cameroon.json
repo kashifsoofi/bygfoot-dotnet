@@ -1,0 +1,17 @@
+{
+  "country": {
+    "name": "cameroon",
+    "rating": "9",
+    "symbol": "flag_cameroon.png",
+    "sid": "cameroon",
+    "leagues": {
+      "league": [
+        "cameroon1",
+        "cameroon2"
+      ]
+    },
+    "cups": {
+      "cup": "cup_cameroon"
+    }
+  }
+}

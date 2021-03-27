@@ -1,0 +1,31 @@
+{
+  "cup": {
+    "name": "Serie B: Final",
+    "short_name": "Serie B: Final",
+    "symbol": "flag_ecuador.png",
+    "sid": "ecuador_serie_b_final",
+    "add_week": "43",
+    "last_week": "48",
+    "week_gap": "1",
+    "property": [
+      "promotion",
+      "national",
+      "highlight1"
+    ],
+    "cup_rounds": {
+      "cup_round": {
+        "number_of_groups": "1",
+        "number_of_advance": "2",
+        "round_name": "Final",
+        "choose_teams": {
+          "choose_team": {
+            "choose_team_sid": "ecuador2",
+            "number_of_teams": "4",
+            "start_idx": "1",
+            "end_idx": "4"
+          }
+        }
+      }
+    }
+  }
+}

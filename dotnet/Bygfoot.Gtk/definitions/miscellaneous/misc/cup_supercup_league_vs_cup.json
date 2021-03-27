@@ -1,0 +1,32 @@
+{
+  "cup": {
+    "name": "National Supercup",
+    "short_name": "Nat. Supercup",
+    "sid": "supercup_league_vs_cup",
+    "add_week": "1000",
+    "group": "137",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": {
+        "home_away": "0",
+        "neutral": "1",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "CUP1",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1"
+            },
+            {
+              "choose_team_sid": "LEAGUE1",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

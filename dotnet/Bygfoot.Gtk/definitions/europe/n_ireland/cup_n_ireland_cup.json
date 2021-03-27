@@ -1,0 +1,60 @@
+{
+  "cup": {
+    "name": "The Irish Cup",
+    "short_name": "I. Cup",
+    "symbol": "flag_n_ireland.png",
+    "sid": "n_ireland_cup",
+    "last_week": "45",
+    "week_gap": "3",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "n_ireland2"
+              },
+              {
+                "choose_team_sid": "n_ireland3"
+              }
+            ]
+          },
+          "byes": "11",
+          "delay": "-9"
+        },
+        {
+          "home_away": "0",
+          "replay": "1",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "n_ireland1"
+            }
+          },
+          "byes": "0",
+          "delay": "-9"
+        },
+        {
+          "home_away": "0",
+          "replay": "1",
+          "delay": "-3"
+        },
+        {
+          "home_away": "0",
+          "replay": "1",
+          "delay": "-3"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1",
+          "delay": "-2"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

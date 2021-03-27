@@ -1,0 +1,35 @@
+{
+  "cup": {
+    "name": "Copa Mustang II",
+    "short_name": "Mustang II",
+    "symbol": "flag_colombia.png",
+    "sid": "mustang2",
+    "add_week": "47",
+    "last_week": "48",
+    "week_gap": "1",
+    "property": [
+      "national",
+      "highlight1"
+    ],
+    "cup_rounds": {
+      "cup_round": {
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "mustang2a",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1"
+            },
+            {
+              "choose_team_sid": "mustang2b",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

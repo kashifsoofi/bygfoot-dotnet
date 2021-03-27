@@ -1,0 +1,20 @@
+{
+  "country": {
+    "name": "thailand",
+    "rating": "9",
+    "symbol": "flag_thailand.png",
+    "sid": "thailand",
+    "leagues": {
+      "league": [
+        "thailand1",
+        "thailand2",
+        "thailand3a",
+        "thailand3b",
+        "thailand3c"
+      ]
+    },
+    "cups": {
+      "cup": "thailand_champ_league"
+    }
+  }
+}

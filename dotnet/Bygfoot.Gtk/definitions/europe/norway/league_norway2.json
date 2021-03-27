@@ -1,0 +1,86 @@
+{
+  "league": {
+    "sid": "norway2",
+    "name": "Adeccoligaen",
+    "short_name": "1. div.",
+    "symbol": "flag_norway.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "6400",
+    "yellow_red": "5",
+    "names_file": "norway",
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "1",
+          "dest_sid": "norway1",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "13",
+          "rank_end": "16",
+          "dest_sid": "norway3a norway3b norway3c norway3d",
+          "prom_rel_type": "relegation"
+        }
+      ],
+      "prom_games": {
+        "prom_games_dest_sid": "norway1",
+        "prom_games_cup_sid": "norway_kvalik",
+        "prom_games_loser_sid": "norway2"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Alta"
+        },
+        {
+          "team_name": "Bryne"
+        },
+        {
+          "team_name": "Haugesund"
+        },
+        {
+          "team_name": "Hødd"
+        },
+        {
+          "team_name": "Hønefoss"
+        },
+        {
+          "team_name": "Kongsvinger"
+        },
+        {
+          "team_name": "L-Ham"
+        },
+        {
+          "team_name": "Moss"
+        },
+        {
+          "team_name": "Notodden"
+        },
+        {
+          "team_name": "Nybergsund"
+        },
+        {
+          "team_name": "O. Grenland"
+        },
+        {
+          "team_name": "S. Sarpsborg"
+        },
+        {
+          "team_name": "Sandefjord"
+        },
+        {
+          "team_name": "Sandnes Ulf"
+        },
+        {
+          "team_name": "Sogndal"
+        },
+        {
+          "team_name": "Start"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "league": {
+    "sid": "moldova1",
+    "name": "Divizia Nationala",
+    "short_name": "Div. Nat.",
+    "symbol": "flag_moldova.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "break_in": [
+      {
+        "@length": "1",
+        "#text": "10"
+      },
+      {
+        "@length": "1",
+        "#text": "15"
+      },
+      {
+        "@length": "14",
+        "#text": "22"
+      }
+    ],
+    "average_talent": "6000",
+    "names_file": "romania",
+    "round_robins": "3",
+    "yellow_red": "5",
+    "two_match_week_start": [
+      "2",
+      "10"
+    ],
+    "two_match_week_end": [
+      "3",
+      "11"
+    ],
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "3",
+        "rank_end": "3",
+        "dest_sid": "moldova2",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Iskra-Stal Ribnita",
+          "def_file": "moldova_iskra"
+        },
+        {
+          "team_name": "Sheriff Tiraspol",
+          "def_file": "moldova_sheriff"
+        },
+        {
+          "team_name": "Zimbru Chişinău",
+          "def_file": "moldova_zimbru"
+        }
+      ]
+    }
+  }
+}

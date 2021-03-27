@@ -1,0 +1,75 @@
+{
+  "league": {
+    "sid": "latvia2",
+    "name": "1. liga",
+    "short_name": "1. L.",
+    "symbol": "flag_latvia.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "5800",
+    "yellow_red": "5",
+    "names_file": "latvia",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "latvia1",
+        "prom_rel_type": "promotion"
+      },
+      "prom_games": {
+        "prom_games_dest_sid": "latvia1",
+        "prom_games_cup_sid": "latvia_promotion1",
+        "prom_games_loser_sid": "latvia2"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "A. Smiltene"
+        },
+        {
+          "team_name": "A. Rīga"
+        },
+        {
+          "team_name": "D. Rīga"
+        },
+        {
+          "team_name": "Gulbene"
+        },
+        {
+          "team_name": "J. Rīga"
+        },
+        {
+          "team_name": "Jēkabpils"
+        },
+        {
+          "team_name": "Jelgava"
+        },
+        {
+          "team_name": "K. Jūrmala"
+        },
+        {
+          "team_name": "Liepājas M. II"
+        },
+        {
+          "team_name": "M-L. U. Rīga"
+        },
+        {
+          "team_name": "S. Jūrmala"
+        },
+        {
+          "team_name": "T. Ventspils"
+        },
+        {
+          "team_name": "Tukums"
+        },
+        {
+          "team_name": "Valmiera"
+        },
+        {
+          "team_name": "Z. Ilūkste"
+        }
+      ]
+    }
+  }
+}

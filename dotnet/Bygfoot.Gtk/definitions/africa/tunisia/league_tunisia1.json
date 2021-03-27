@@ -1,0 +1,82 @@
+{
+  "league": {
+    "sid": "tunisia1",
+    "layer": "1",
+    "name": "Ligue Professionnelle 1",
+    "short_name": "LP 1",
+    "symbol": "flag_tunisia.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "7300",
+    "yellow_red": "3",
+    "names_file": "general",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "13",
+        "rank_end": "14",
+        "dest_sid": "tunisia2",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Espérance de Tunis",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Étoile du Sahel",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Sfaxien",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Stade Tunisien",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Club Africain",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Hammam-Lif",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Espérance de Zarzis",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Bizertin",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Kairouanaise",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Hammam_Sousse",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "La Marsa",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Gabès",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Beni-Khalled",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Monastir",
+          "team_average_talent": "7300"
+        }
+      ]
+    }
+  }
+}

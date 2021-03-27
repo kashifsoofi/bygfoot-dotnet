@@ -1,0 +1,79 @@
+{
+  "cup": {
+    "name": "Cupa Republicii Moldova",
+    "short_name": "CupaRM",
+    "symbol": "flag_moldova.png",
+    "sid": "moldova_cup",
+    "last_week": "45",
+    "week_gap": "3",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "moldova3a"
+              },
+              {
+                "choose_team_sid": "moldova3b"
+              }
+            ]
+          },
+          "byes": "6",
+          "delay": "-12"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "moldova2",
+              "number_of_teams": "12",
+              "start_idx": "2",
+              "end_idx": "16",
+              "randomly": "1"
+            }
+          },
+          "byes": "2",
+          "delay": "-12"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "moldova1",
+              "number_of_teams": "3",
+              "start_idx": "9",
+              "end_idx": "11",
+              "randomly": "1"
+            }
+          },
+          "byes": "0",
+          "delay": "-13"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "moldova1",
+              "number_of_teams": "8",
+              "start_idx": "1",
+              "end_idx": "8",
+              "randomly": "1"
+            }
+          },
+          "delay": "-13"
+        },
+        {
+          "delay": "-14"
+        },
+        "",
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

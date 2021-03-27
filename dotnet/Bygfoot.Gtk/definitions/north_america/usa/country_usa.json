@@ -1,0 +1,42 @@
+{
+  "country": {
+    "name": "United States",
+    "rating": "5",
+    "symbol": "flag_usa.png",
+    "sid": "usa",
+    "leagues": {
+      "#comment": [],
+      "league": [
+        "usa_econf",
+        "usa_wconf",
+        "usa_first",
+        "usa_second",
+        "usa_pdl_gl",
+        "usa_pdl_hl",
+        "usa_pdl_ma",
+        "usa_pdl_no",
+        "usa_pdl_ms",
+        "usa_pdl_se",
+        "usa_pdl_nw",
+        "usa_pdl_sw"
+      ]
+    },
+    "cups": {/* COMMENT OUT CONFERENCE PLAYOFFS FOR SINGLE TABLE MLS */
+      "cup": [
+        "usa_eplayoff",
+        "usa_wplayoff",
+        "usa_mls_cup",
+        "usa_open_cup",
+        "usa_first_cup",
+        "usa_second_cup",
+        "usa_pdl_central",
+        "usa_pdl_eastern",
+        "usa_pdl_southern",
+        "usa_pdl_western",
+        "usa_pdl_cup",
+        "usa_champ_league",
+        "usa_superliga"
+      ]
+    }
+  }
+}

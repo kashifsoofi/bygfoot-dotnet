@@ -1,0 +1,58 @@
+{
+  "league": {
+    "sid": "aus_vic6se",
+    "name": "Prov. Division 3 SE",
+    "short_name": "Prov.3SE",
+    "symbol": "flag_aus_victoria.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "2900",
+    "names_file": "australia",
+    "layer": "7",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "2",
+        "dest_sid": "aus_vic5se",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Berwick K"
+        },
+        {
+          "team_name": "Boroondara L"
+        },
+        {
+          "team_name": "Camberwell G"
+        },
+        {
+          "team_name": "Carey O"
+        },
+        {
+          "team_name": "Caulfield U"
+        },
+        {
+          "team_name": "Dandenong City"
+        },
+        {
+          "team_name": "Dandenong S"
+        },
+        {
+          "team_name": "Eltham North"
+        },
+        {
+          "team_name": "Endeavour Hills"
+        },
+        {
+          "team_name": "Mornington"
+        },
+        {
+          "team_name": "Scotch O B"
+        }
+      ]
+    }
+  }
+}

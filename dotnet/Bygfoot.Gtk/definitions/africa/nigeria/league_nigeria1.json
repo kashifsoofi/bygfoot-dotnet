@@ -1,0 +1,106 @@
+{
+  "league": {
+    "sid": "nigeria1",
+    "layer": "1",
+    "name": "Nigeria Premier League",
+    "short_name": "Premier",
+    "symbol": "flag_nigeria.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "7300",
+    "yellow_red": "3",
+    "names_file": "general",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "17",
+        "rank_end": "20",
+        "dest_sid": "nigeria21 nigeria22",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Enyimba",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Kano Pillars",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Sunshine Stars",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Kwara United",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Enugu Rangers",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Warri Wolves",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Niger Tornadoes",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Heartland",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Gombe United",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Kaduna United",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "3SC Shooting Stars",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Dolphins",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Lobi Stars",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Ocean Boys",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Zamfara United",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Sharks",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Wikki Tourists",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Bayelsa United",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Gateway",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Ranchers Bees",
+          "team_average_talent": "7300"
+        }
+      ]
+    }
+  }
+}

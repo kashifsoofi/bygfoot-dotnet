@@ -1,0 +1,36 @@
+{
+  "cup": {
+    "name": "Play-Off for Division Two",
+    "short_name": "Play-Off D2.",
+    "symbol": "flag_scotland.png",
+    "sid": "scotland_prom_games3",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2"
+    ],
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "scotland3",
+                "number_of_teams": "1",
+                "start_idx": "9",
+                "end_idx": "9"
+              },
+              {
+                "choose_team_sid": "scotland4",
+                "number_of_teams": "3",
+                "start_idx": "2",
+                "end_idx": "4"
+              }
+            ]
+          }
+        },
+        ""
+      ]
+    }
+  }
+}

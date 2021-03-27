@@ -1,0 +1,30 @@
+{
+  "country": {
+    "name": "Bulgaria",
+    "rating": "6",
+    "symbol": "flag_bulgaria.png",
+    "sid": "bulgaria",
+    "leagues": {
+      "league": [
+        "bulgaria1",
+        "bulgaria2a",
+        "bulgaria2b",
+        "bulgaria3a",
+        "bulgaria3b",
+        "bulgaria3c",
+        "bulgaria3d"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "bulgaria_national",
+        "europe_uefa3b",
+        "europe_champ_league1b",
+        "supercup_bulgaria",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "bulgaria_prom_games2"
+      ]
+    }
+  }
+}

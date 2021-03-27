@@ -1,0 +1,52 @@
+{
+  "league": {
+    "sid": "turkey3b",
+    "name": "TFF Second League Group 2",
+    "short_name": "2. Lig. G2",
+    "symbol": "flag_turkey.png",
+    "first_week": "8",
+    "week_gap": "1",
+    "average_talent": "6200",
+    "names_file": "turkey",
+    "yellow_red": "5",
+    "layer": "3",
+    "property": "inactive",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Adana D."
+        },
+        {
+          "team_name": "Afyon"
+        },
+        {
+          "team_name": "Ak. Manisa"
+        },
+        {
+          "team_name": "Al. Antalya"
+        },
+        {
+          "team_name": "Al. İzmir"
+        },
+        {
+          "team_name": "Bu. İzmir"
+        },
+        {
+          "team_name": "Denizli B."
+        },
+        {
+          "team_name": "F. Mugla"
+        },
+        {
+          "team_name": "M. B. Mugla"
+        },
+        {
+          "team_name": "T. I. Y. Mersin"
+        },
+        {
+          "team_name": "Tu. Manisa"
+        }
+      ]
+    }
+  }
+}

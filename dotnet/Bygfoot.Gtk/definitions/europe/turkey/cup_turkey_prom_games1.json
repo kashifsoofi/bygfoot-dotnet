@@ -1,0 +1,31 @@
+{
+  "cup": {
+    "name": "Super Lig Promotion",
+    "short_name": "Super L. Prom.",
+    "symbol": "flag_turkey.png",
+    "sid": "turkey_prom_games1",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2"
+    ],
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "turkey2",
+              "number_of_teams": "4",
+              "start_idx": "3",
+              "end_idx": "6"
+            }
+          }
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

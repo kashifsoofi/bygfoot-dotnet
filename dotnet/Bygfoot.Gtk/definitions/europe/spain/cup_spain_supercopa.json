@@ -1,0 +1,32 @@
+{
+  "cup": {
+    "name": "Supercopa de España",
+    "short_name": "Supercopa",
+    "symbol": "flag_spain.png",
+    "sid": "spain_supercopa",
+    "last_week": "7",
+    "week_gap": "1",
+    "property": "national",
+    "group": "172",
+    "cup_rounds": {
+      "cup_round": {
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "spain_cdr",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1"
+            },
+            {
+              "choose_team_sid": "spain1",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

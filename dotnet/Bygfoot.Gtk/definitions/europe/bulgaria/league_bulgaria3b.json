@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "bulgaria3b",
+    "name": "V PFG Group Northwest",
+    "short_name": "V PFG NW",
+    "symbol": "flag_bulgaria.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "11",
+      "#text": "23"
+    },
+    "average_talent": "6000",
+    "yellow_red": "5",
+    "names_file": "bulgaria",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "bulgaria2a",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "B. Vraca"
+        },
+        {
+          "team_name": "B. Vidin"
+        },
+        {
+          "team_name": "L. Drjanovo"
+        },
+        {
+          "team_name": "J. Gabrovo"
+        },
+        {
+          "team_name": "L. G. Orjahovica"
+        },
+        {
+          "team_name": "G. Belene"
+        },
+        {
+          "team_name": "M. Luiza"
+        },
+        {
+          "team_name": "O. Levski"
+        },
+        {
+          "team_name": "Pavlikeni"
+        },
+        {
+          "team_name": "B. Debelec"
+        },
+        {
+          "team_name": "S. Nikopol"
+        },
+        {
+          "team_name": "Bo. Dimonovo"
+        },
+        {
+          "team_name": "St. Pleven"
+        },
+        {
+          "team_name": "Ak. Svishhov"
+        },
+        {
+          "team_name": "Trjavna"
+        },
+        {
+          "team_name": "C. Elena"
+        }
+      ]
+    }
+  }
+}

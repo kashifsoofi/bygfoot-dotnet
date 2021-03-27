@@ -1,0 +1,38 @@
+{
+  "league": {
+    "sid": "n_ireland1",
+    "name": "IFA Premiership",
+    "short_name": "IFA Prem.",
+    "symbol": "flag_n_ireland.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "round_robins": "3",
+    "average_talent": "6000",
+    "names_file": "england",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "3",
+        "rank_end": "3",
+        "dest_sid": "n_ireland2",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Cliftonville",
+          "def_file": "n_ireland_cliftonville"
+        },
+        {
+          "team_name": "Glentoran",
+          "def_file": "n_ireland_glentoran"
+        },
+        {
+          "team_name": "Linfield",
+          "def_file": "n_ireland_linfield"
+        }
+      ]
+    }
+  }
+}

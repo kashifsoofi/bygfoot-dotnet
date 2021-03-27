@@ -1,0 +1,83 @@
+{
+  "cup": {
+    "name": "Segunda Division Torneo Clausura",
+    "short_name": "2a Clausura"/*<name>Promocion a 1a "a"</name>
+	<short_name>1a "a" Promocion</short_name>*/,
+    "sid": "prom_games_mexico2",
+    "property": [
+      "promotion",
+      "highlight2"
+    ],
+    "group": "1620",
+    "add_week": "1000",
+    "week_gap": "1",
+    "last_week": "48",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "mexico3-5",
+                "number_of_teams": "3",
+                "start_idx": "1",
+                "end_idx": "3"
+              },
+              {
+                "choose_team_sid": "mexico3-3",
+                "number_of_teams": "4",
+                "start_idx": "1",
+                "end_idx": "4"
+              },
+              {
+                "choose_team_sid": "mexico3-1",
+                "number_of_teams": "1",
+                "start_idx": "3",
+                "end_idx": "3"
+              },
+              {
+                "choose_team_sid": "mexico3-4",
+                "number_of_teams": "3",
+                "start_idx": "1",
+                "end_idx": "3"
+              },
+              {
+                "choose_team_sid": "mexico3-2",
+                "number_of_teams": "3",
+                "start_idx": "1",
+                "end_idx": "3"
+              },
+              {
+                "choose_team_sid": "mexico3-1",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "2"
+              }
+            ]
+          },
+          "two_match_week": "1"
+        },
+        {
+          "two_match_week": "1"
+        },
+        {
+          "two_match_week": "1"
+        },
+        {
+          "two_match_week": "1"
+        },
+        {
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "mexico2",
+              "number_of_teams": "1",
+              "start_idx": "24",
+              "end_idx": "24"
+            }
+          },
+          "two_match_week": "1"
+        }
+      ]
+    }
+  }
+}

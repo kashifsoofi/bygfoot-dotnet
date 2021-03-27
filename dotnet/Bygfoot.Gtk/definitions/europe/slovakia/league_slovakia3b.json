@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "slovakia3b",
+    "name": "Slovak Second League East",
+    "short_name": "2. L. E",
+    "symbol": "flag_slovakia.png",
+    "first_week": "3",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "12",
+      "#text": "23"
+    },
+    "average_talent": "5800",
+    "names_file": "czech",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "slovakia2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Čadca"
+        },
+        {
+          "team_name": "D. Kubín"
+        },
+        {
+          "team_name": "D. Banska Bystrica II"
+        },
+        {
+          "team_name": "G. S. Ľubovňa"
+        },
+        {
+          "team_name": "J. Bánová"
+        },
+        {
+          "team_name": "O. Lipany"
+        },
+        {
+          "team_name": "Poprad"
+        },
+        {
+          "team_name": "S. Trebišov"
+        },
+        {
+          "team_name": "S. Nová Ves"
+        },
+        {
+          "team_name": "Š. Podbrezová II"
+        },
+        {
+          "team_name": "T. Liptovský Mikuláš"
+        },
+        {
+          "team_name": "T. Prešov II"
+        },
+        {
+          "team_name": "T. Teplice"
+        },
+        {
+          "team_name": "Vranov nad Topľou"
+        },
+        {
+          "team_name": "Žiar nad Hronom"
+        },
+        {
+          "team_name": "Žilina II"
+        }
+      ]
+    }
+  }
+}

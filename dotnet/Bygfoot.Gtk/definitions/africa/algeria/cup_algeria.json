@@ -1,0 +1,32 @@
+{
+  "cup": {
+    "name": "Coupe Nationale",
+    "short_name": "Coupe",
+    "symbol": "flag_algeria.png",
+    "sid": "cup_algeria",
+    "yellow_red": "3",
+    "last_week": "24",
+    "week_gap": "2",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "algeria1"
+              },
+              {
+                "choose_team_sid": "algeria2"
+              }
+            ]
+          }
+        },
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  }
+}

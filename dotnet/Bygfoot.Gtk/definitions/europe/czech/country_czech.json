@@ -1,0 +1,25 @@
+{
+  "country": {
+    "name": "Czech Republic",
+    "symbol": "flag_czech.png",
+    "sid": "czech",
+    "rating": "7",
+    "leagues": {
+      "league": [
+        "czech1",
+        "czech2",
+        "czech3a",
+        "czech3b"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "czech_cup",
+        "europe_uefa2a",
+        "europe_champ_league2",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental"
+      ]
+    }
+  }
+}

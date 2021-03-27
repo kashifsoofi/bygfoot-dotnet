@@ -1,0 +1,17 @@
+{
+  "country": {
+    "name": "india",
+    "rating": "9",
+    "symbol": "flag_india.png",
+    "sid": "india",
+    "leagues": {
+      "league": [
+        "india1",
+        "india2"
+      ]
+    },
+    "cups": {
+      "cup": "india_champ_league"
+    }
+  }
+}

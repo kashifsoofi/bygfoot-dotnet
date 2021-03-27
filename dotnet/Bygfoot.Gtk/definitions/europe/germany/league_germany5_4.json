@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "germany5_4",
+    "name": "Oberliga Nordost-Nord",
+    "short_name": "OL NOFV Nord",
+    "symbol": "flag_germany.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "7",
+      "#text": "24"
+    },
+    "average_talent": "5400",
+    "names_file": "germany",
+    "yellow_red": "5",
+    "layer": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "germany4a",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "D. Berlin"
+        },
+        {
+          "team_name": "Ludwigsfeld"
+        },
+        {
+          "team_name": "Lichterfeld"
+        },
+        {
+          "team_name": "Greif"
+        },
+        {
+          "team_name": "P. Berlin"
+        },
+        {
+          "team_name": "Neustrelitz"
+        },
+        {
+          "team_name": "Schöneiche"
+        },
+        {
+          "team_name": "Falkensee F."
+        },
+        {
+          "team_name": "Berlin An."
+        },
+        {
+          "team_name": "Spandau"
+        },
+        {
+          "team_name": "Rathenow"
+        },
+        {
+          "team_name": "Greifswald"
+        },
+        {
+          "team_name": "Reinickendorf"
+        },
+        {
+          "team_name": "Bentwisch"
+        },
+        {
+          "team_name": "T. B. Berlin"
+        },
+        {
+          "team_name": "Brandenburg S."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "cup": {
+    "name": "Confederations Cup Qualifier",
+    "short_name": "Confederations Cup Qualifier",
+    "sid": "confederations_cup_qualifier",
+    "symbol": "flag_fifa.png",
+    "yellow_red": "2",
+    "last_week": "55",
+    "add_week": "23",
+    "week_gap": "1",
+    "property": "international",
+    "cup_rounds": {
+      "cup_round": {
+        "number_of_groups": "1",
+        "number_of_advance": "2",
+        "new_teams": "4",
+        "home_away": "0",
+        "neutral": "1",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "copa_america",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "eurocup",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "cup_of_nations",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "asian_cup",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

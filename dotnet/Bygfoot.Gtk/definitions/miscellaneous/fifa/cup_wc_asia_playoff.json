@@ -1,0 +1,28 @@
+{
+  "cup": {
+    "name": "WC Qualification Playoff Asia",
+    "short_name": "WCQAsiaPlayoff",
+    "sid": "wc_asia_playoff",
+    "symbol": "wc_asia.png",
+    "yellow_red": "3",
+    "last_week": "44",
+    "add_week": "41",
+    "property": [
+      "international",
+      "highlight2"
+    ],
+    "cup_rounds": {
+      "cup_round": {
+        "new_teams": "2",
+        "choose_teams": {
+          "choose_team": {
+            "choose_team_sid": "wc_asia",
+            "number_of_teams": "2",
+            "start_idx": "5",
+            "end_idx": "6"
+          }
+        }
+      }
+    }
+  }
+}

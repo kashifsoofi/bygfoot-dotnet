@@ -1,0 +1,26 @@
+{
+  "country": {
+    "name": "Northern Ireland",
+    "symbol": "flag_n_ireland.png",
+    "sid": "n_ireland",
+    "rating": "5",
+    "leagues": {
+      "league": [
+        "n_ireland1",
+        "n_ireland2",
+        "n_ireland3"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "n_ireland_cup",
+        "n_ireland_setanta",
+        "europe_uefa",
+        "europe_champ_league",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "n_ireland_prom_games1"
+      ]
+    }
+  }
+}

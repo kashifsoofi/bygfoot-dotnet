@@ -1,0 +1,76 @@
+{
+  "league": {
+    "sid": "switzerland3c",
+    "name": "1. Liga Gruppe 3",
+    "short_name": "1. L. G3",
+    "symbol": "flag_switzerland.png",
+    "first_week": "3",
+    "week_gap": "1",
+    "break_in": [
+      {
+        "@length": "1",
+        "#text": "12"
+      },
+      {
+        "@length": "10",
+        "#text": "25"
+      }
+    ],
+    "average_talent": "6000",
+    "names_file": "germany",
+    "yellow_red": "5",
+    "layer": "3",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Baden"
+        },
+        {
+          "team_name": "Biaschesi"
+        },
+        {
+          "team_name": "Chiasso"
+        },
+        {
+          "team_name": "Eschen/Mauren"
+        },
+        {
+          "team_name": "G. Zürich II"
+        },
+        {
+          "team_name": "Höngg"
+        },
+        {
+          "team_name": "Kreuzlingen"
+        },
+        {
+          "team_name": "Mendrisio-Stabio"
+        },
+        {
+          "team_name": "Rapperswil-Jona"
+        },
+        {
+          "team_name": "R. S. Zürich"
+        },
+        {
+          "team_name": "St. Gallen II"
+        },
+        {
+          "team_name": "S. Schaffhausen"
+        },
+        {
+          "team_name": "Tuggen"
+        },
+        {
+          "team_name": "Winterthur II"
+        },
+        {
+          "team_name": "Y. F. Juventus"
+        },
+        {
+          "team_name": "Zürich II"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "germany5_7",
+    "name": "Oberliga Bremen",
+    "short_name": "OL Bremen",
+    "symbol": "flag_germany.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "7",
+      "#text": "24"
+    },
+    "average_talent": "5400",
+    "names_file": "germany",
+    "yellow_red": "5",
+    "layer": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "germany4b",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Brinkum"
+        },
+        {
+          "team_name": "F. Bremerhaven"
+        },
+        {
+          "team_name": "Bremen S."
+        },
+        {
+          "team_name": "Blumenthal"
+        },
+        {
+          "team_name": "O. Bremerhaven"
+        },
+        {
+          "team_name": "W. Bremen III"
+        },
+        {
+          "team_name": "Habenhausen"
+        },
+        {
+          "team_name": "T. Bremen"
+        },
+        {
+          "team_name": "A. Vegasack"
+        },
+        {
+          "team_name": "B. Melchiorshausen"
+        },
+        {
+          "team_name": "V. Bremen"
+        },
+        {
+          "team_name": "Wulsdorf"
+        },
+        {
+          "team_name": "Schwachhausen"
+        },
+        {
+          "team_name": "V. Blockdiek"
+        },
+        {
+          "team_name": "Osterholz"
+        },
+        {
+          "team_name": "V. S. Bremen"
+        }
+      ]
+    }
+  }
+}

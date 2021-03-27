@@ -1,0 +1,45 @@
+{
+  "league": {
+    "sid": "moldova3b",
+    "name": "Divizia B Sud",
+    "short_name": "DivBSud",
+    "symbol": "flag_moldova.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "4900",
+    "names_file": "romania",
+    "layer": "3",
+    "property": "inactive",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Viişoara"
+        },
+        {
+          "team_name": "Cantemir"
+        },
+        {
+          "team_name": "Victoria"
+        },
+        {
+          "team_name": "Sinteza"
+        },
+        {
+          "team_name": "Kolos"
+        },
+        {
+          "team_name": "Cahul II"
+        },
+        {
+          "team_name": "Congaz"
+        },
+        {
+          "team_name": "Maiak"
+        },
+        {
+          "team_name": "Locomotiva"
+        }
+      ]
+    }
+  }
+}

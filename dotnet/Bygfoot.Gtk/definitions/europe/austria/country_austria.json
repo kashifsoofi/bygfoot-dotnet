@@ -1,0 +1,35 @@
+{
+  "country": {
+    "name": "Austria",
+    "symbol": "flag_austria.png",
+    "sid": "austria",
+    "rating": "6",
+    "leagues": {
+      "league": [
+        "austria1",
+        "austria2",
+        "austria3a",
+        "austria3b",
+        "austria3c",
+        "austria4a",
+        "austria4b",
+        "austria4c",
+        "austria4d",
+        "austria4e",
+        "austria4f",
+        "austria4g",
+        "austria4h",
+        "austria4i"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "austria_cup",
+        "europe_uefa",
+        "europe_champ_league1a",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental"
+      ]
+    }
+  }
+}

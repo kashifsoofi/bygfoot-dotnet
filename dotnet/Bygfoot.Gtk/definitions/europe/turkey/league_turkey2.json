@@ -1,0 +1,94 @@
+{
+  "league": {
+    "sid": "turkey2",
+    "name": "TFF First League",
+    "short_name": "1. Lig.",
+    "symbol": "flag_turkey.png",
+    "first_week": "8",
+    "week_gap": "1",
+    "break_in": [
+      {
+        "@length": "4",
+        "#text": "26"
+      },
+      {
+        "@length": "1",
+        "#text": "39"
+      }
+    ],
+    "average_talent": "6900",
+    "names_file": "turkey",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "2",
+        "dest_sid": "turkey1",
+        "prom_rel_type": "promotion"
+      },
+      "prom_games": {
+        "prom_games_dest_sid": "turkey1",
+        "prom_games_cup_sid": "turkey_prom_games1",
+        "prom_games_loser_sid": "turkey2"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Adana"
+        },
+        {
+          "team_name": "A. İzmir"
+        },
+        {
+          "team_name": "Bolu"
+        },
+        {
+          "team_name": "Diyarbakır"
+        },
+        {
+          "team_name": "Gaziantep B."
+        },
+        {
+          "team_name": "Giresun"
+        },
+        {
+          "team_name": "Gü. İstanbul"
+        },
+        {
+          "team_name": "Karabük"
+        },
+        {
+          "team_name": "Ka. İzmir"
+        },
+        {
+          "team_name": "Kar. İstanbul"
+        },
+        {
+          "team_name": "Kas. İstanbul"
+        },
+        {
+          "team_name": "Kayseri"
+        },
+        {
+          "team_name": "Malatya"
+        },
+        {
+          "team_name": "Manisa"
+        },
+        {
+          "team_name": "Ordu"
+        },
+        {
+          "team_name": "Rize"
+        },
+        {
+          "team_name": "Sakarya"
+        },
+        {
+          "team_name": "Samsun"
+        }
+      ]
+    }
+  }
+}

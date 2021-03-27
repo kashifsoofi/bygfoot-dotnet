@@ -1,0 +1,90 @@
+{
+  "league": {
+    "sid": "morocco2",
+    "layer": "2",
+    "name": "Botola 2",
+    "short_name": "GNF 2",
+    "symbol": "flag_morocco.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "6800",
+    "yellow_red": "3",
+    "names_file": "general",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "2",
+        "dest_sid": "morocco1",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Chabab Kasba Tadla",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "CR Al Hoceima",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "US Mohammédia",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "COD Meknès",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "US Temara",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Chabab Houara",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Stade Marocain",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Racing Casablanca",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Raja Al Hoceima",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "CAY Berrechid",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "MC Oujda",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "TAS Casablanca",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Rachad Bernoussi",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "IR Tanger",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "IR Fkih Ben Salah",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "SCC Mohammédia",
+          "team_average_talent": "6800"
+        }
+      ]
+    }
+  }
+}

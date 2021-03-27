@@ -1,0 +1,98 @@
+{
+  "league": {
+    "sid": "zambia22",
+    "layer": "2",
+    "name": "Division 1 South",
+    "short_name": "South",
+    "symbol": "flag_zambia.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "6600",
+    "yellow_red": "3",
+    "names_file": "general",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "2",
+        "dest_sid": "zambia1",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Luena Buffaloes",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Nakambala Leopards",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Profound Warriors",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Green Eagles",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Nampundwe",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Kafue Celtic",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Lusaka City Council",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Kalomo Jetters",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Mazabuka United",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Livingstone Pirates",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Young Green Eagles",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Paramilitary",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Riflemen",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Communite",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Kummawa",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "TP Rangers",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Lusaka Tigers",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Zesco Shockers",
+          "team_average_talent": "6600"
+        }
+      ]
+    }
+  }
+}

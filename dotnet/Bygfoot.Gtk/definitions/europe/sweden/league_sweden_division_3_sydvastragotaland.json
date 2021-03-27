@@ -1,0 +1,62 @@
+{
+  "league": {
+    "sid": "sweden_division_3_sydvastragotaland",
+    "name": "Division 3 Sydvästra Götaland",
+    "short_name": "Div 3 SVG",
+    "symbol": "flag_sweden.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "5000",
+    "names_file": "sweden",
+    "yellow_red": "5",
+    "layer": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "sweden_division_2_mellerstagotaland sweden_division_2_norrasvealand sweden_division_2_norrland sweden_division_2_ostrasvealand sweden_division_2_sodragotaland sweden_division_2_vastragotaland",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Örby"
+        },
+        {
+          "team_name": "Dalen/KFF"
+        },
+        {
+          "team_name": "Fjärås"
+        },
+        {
+          "team_name": "Hinneryd"
+        },
+        {
+          "team_name": "Lerkil"
+        },
+        {
+          "team_name": "Halmia"
+        },
+        {
+          "team_name": "Torekov"
+        },
+        {
+          "team_name": "Skene"
+        },
+        {
+          "team_name": "Slottskog/Godh"
+        },
+        {
+          "team_name": "Tvååker"
+        },
+        {
+          "team_name": "Åstorp"
+        },
+        {
+          "team_name": "Väster"
+        }
+      ]
+    }
+  }
+}

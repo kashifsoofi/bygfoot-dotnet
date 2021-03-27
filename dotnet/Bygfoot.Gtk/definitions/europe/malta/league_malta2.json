@@ -1,0 +1,73 @@
+{
+  "league": {
+    "sid": "malta2",
+    "name": "First Division",
+    "short_name": "1. Div.",
+    "symbol": "flag_malta.png",
+    "first_week": "8",
+    "week_gap": "1",
+    "break_in": [
+      {
+        "@length": "1",
+        "#text": "10"
+      },
+      {
+        "@length": "1",
+        "#text": "15"
+      },
+      {
+        "@length": "1",
+        "#text": "26"
+      },
+      {
+        "@length": "1",
+        "#text": "36"
+      }
+    ],
+    "average_talent": "5000",
+    "round_robins": "3",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "malta1",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Mosta"
+        },
+        {
+          "team_name": "Dingli S."
+        },
+        {
+          "team_name": "Mqabba"
+        },
+        {
+          "team_name": "Pietà H."
+        },
+        {
+          "team_name": "Rabat A."
+        },
+        {
+          "team_name": "San Gwann"
+        },
+        {
+          "team_name": "Senglea A."
+        },
+        {
+          "team_name": "S. G. Cospicua"
+        },
+        {
+          "team_name": "S. P. Zabbar"
+        },
+        {
+          "team_name": "V. S. Birgu"
+        }
+      ]
+    }
+  }
+}

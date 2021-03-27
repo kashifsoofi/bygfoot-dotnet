@@ -1,0 +1,24 @@
+{
+  "country": {
+    "name": "Malta",
+    "symbol": "flag_malta.png",
+    "sid": "malta",
+    "rating": "4",
+    "leagues": {
+      "league": [
+        "malta1",
+        "malta2"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "malta_cup",
+        "europe_uefa",
+        "europe_champ_league",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "malta_supercup"
+      ]
+    }
+  }
+}

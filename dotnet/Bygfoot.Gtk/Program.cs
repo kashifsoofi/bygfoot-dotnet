@@ -13,7 +13,7 @@ namespace Bygfoot
             var app = new Application("org.Bygfoot.Bygfoot", GLib.ApplicationFlags.None);
             app.Register(GLib.Cancellable.Current);
 
-            var win = new MainWindow();
+            var win = new StartupWindow();
             app.AddWindow(win);
 
             win.Show();

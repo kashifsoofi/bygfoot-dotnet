@@ -1,0 +1,44 @@
+{
+  "cup": {
+    "name": "Kazakhstan Cup",
+    "short_name": "Cup",
+    "symbol": "flag_kazakhstan.png",
+    "sid": "kazakhstan_cup",
+    "last_week": "31",
+    "week_gap": "3",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "kazakhstan2"
+              },
+              {
+                "choose_team_sid": "kazakhstan1"
+              }
+            ]
+          },
+          "byes": "2",
+          "delay": "-10"
+        },
+        {
+          "home_away": "0",
+          "delay": "-11"
+        },
+        {
+          "delay": "-12"
+        },
+        {
+          "delay": "2"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

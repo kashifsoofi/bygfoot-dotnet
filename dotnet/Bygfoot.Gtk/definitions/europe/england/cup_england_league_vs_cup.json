@@ -1,0 +1,32 @@
+{
+  "cup": {
+    "name": "Community Shield",
+    "short_name": "Com. Shield",
+    "sid": "england_league_vs_cup",
+    "last_week": "6",
+    "property": "national",
+    "group": "156",
+    "cup_rounds": {
+      "cup_round": {
+        "home_away": "0",
+        "neutral": "1",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "england_fa",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1"
+            },
+            {
+              "choose_team_sid": "england1",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

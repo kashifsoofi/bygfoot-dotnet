@@ -1,0 +1,24 @@
+{
+  "country": {
+    "name": "Kazakhstan",
+    "symbol": "flag_kazakhstan.png",
+    "sid": "kazakhstan",
+    "rating": "4",
+    "leagues": {
+      "league": [
+        "kazakhstan1",
+        "kazakhstan2"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "kazakhstan_cup",
+        "europe_uefa",
+        "europe_champ_league",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "kazakhstan_supercup"
+      ]
+    }
+  }
+}

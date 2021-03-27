@@ -1,0 +1,59 @@
+{
+  "league": {
+    "sid": "bosnia_herzegovina1",
+    "name": "Premijer Liga",
+    "short_name": "Prem. L.",
+    "symbol": "flag_bosnia_herzegovina.png",
+    "first_week": "6",
+    "week_gap": "1",
+    "break_in": [
+      {
+        "@length": "1",
+        "#text": "10"
+      },
+      {
+        "@length": "1",
+        "#text": "15"
+      },
+      {
+        "@length": "10",
+        "#text": "23"
+      }
+    ],
+    "average_talent": "6900",
+    "names_file": "serbia",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "4",
+        "rank_end": "5",
+        "dest_sid": "bosnia_herzegovina2a bosnia_herzegovina2b",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Željezničar",
+          "def_file": "bosnia_herzegovina_zeljeznicar"
+        },
+        {
+          "team_name": "Borac Banja Luka",
+          "def_file": "bosnia_herzegovina_banja"
+        },
+        {
+          "team_name": "Sarajevo",
+          "def_file": "bosnia_herzegovina_sarajevo"
+        },
+        {
+          "team_name": "Široki Brijeg",
+          "def_file": "bosnia_herzegovina_siroki"
+        },
+        {
+          "team_name": "Zrinjski Mostar",
+          "def_file": "bosnia_herzegovina_zrinjski"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "cup": {
+    "name": "Promotion Games Div. 2",
+    "short_name": "Prom. Gam.",
+    "symbol": "flag_sweden.png",
+    "sid": "sweden_prom_games_div3_2",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2"
+    ],
+    "cup_rounds": {
+      "cup_round": {
+        "number_of_groups": "6",
+        "number_of_advance": "1",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "sweden_division_2_mellerstagotaland",
+              "number_of_teams": "1",
+              "start_idx": "10",
+              "end_idx": "10"
+            },
+            {
+              "choose_team_sid": "sweden_division_2_norrasvealand",
+              "number_of_teams": "1",
+              "start_idx": "10",
+              "end_idx": "10"
+            },
+            {
+              "choose_team_sid": "sweden_division_2_norrland",
+              "number_of_teams": "1",
+              "start_idx": "10",
+              "end_idx": "10"
+            },
+            {
+              "choose_team_sid": "sweden_division_2_ostrasvealand",
+              "number_of_teams": "1",
+              "start_idx": "10",
+              "end_idx": "10"
+            },
+            {
+              "choose_team_sid": "sweden_division_2_sodragotaland",
+              "number_of_teams": "1",
+              "start_idx": "10",
+              "end_idx": "10"
+            },
+            {
+              "choose_team_sid": "sweden_division_2_vastragotaland",
+              "number_of_teams": "1",
+              "start_idx": "10",
+              "end_idx": "10"
+            },
+            {
+              "choose_team_sid": "sweden_division_3_mellerstagotaland",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "sweden_division_3_mellerstanorrland",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "sweden_division_3_nordostragotaland",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "sweden_division_3_nordvastragotaland",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "sweden_division_3_norranorrland",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "sweden_division_3_norrasvealand",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "sweden_division_3_sodrasvealand",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "sweden_division_3_sodragotaland",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "sweden_division_3_sodranorrland",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "sweden_division_3_sydostragotaland",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "sweden_division_3_sydvastragotaland",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "sweden_division_3_vastrasvealand",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

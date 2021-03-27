@@ -1,0 +1,35 @@
+{
+  "cup": {
+    "name": "Copa Venezuela",
+    "short_name": "Copa Venezuela",
+    "symbol": "flag_venezuela.png",
+    "sid": "copa_venezuela",
+    "yellow_red": "2",
+    "last_week": "45",
+    "week_gap": "3",
+    "add_week": "0",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "round_name": "Fase 1",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "venezuela1"
+              },
+              {
+                "choose_team_sid": "venezuela2"
+              }
+            ]
+          }
+        },
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  }
+}

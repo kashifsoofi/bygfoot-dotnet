@@ -1,0 +1,81 @@
+{
+  "league": {
+    "sid": "germany5_11",
+    "name": "Oberliga Niedersachsen West",
+    "short_name": "OL N W",
+    "symbol": "flag_germany.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "break": "7",
+    "average_talent": "5400",
+    "names_file": "germany",
+    "yellow_red": "5",
+    "layer": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "germany4b",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Meppen"
+        },
+        {
+          "team_name": "E. Nordhorn"
+        },
+        {
+          "team_name": "VB. Oldenburg"
+        },
+        {
+          "team_name": "Bavenstedt"
+        },
+        {
+          "team_name": "VL. Oldenburg"
+        },
+        {
+          "team_name": "G. Leer"
+        },
+        {
+          "team_name": "Havelse"
+        },
+        {
+          "team_name": "B. Rothenfelde"
+        },
+        {
+          "team_name": "Langenhagen"
+        },
+        {
+          "team_name": "V. Osnabrück II"
+        },
+        {
+          "team_name": "Pewsum"
+        },
+        {
+          "team_name": "P. Hameln"
+        },
+        {
+          "team_name": "B. Hildesheim"
+        },
+        {
+          "team_name": "S. W. Rehden"
+        },
+        {
+          "team_name": "A. Hannover"
+        },
+        {
+          "team_name": "Lingen"
+        },
+        {
+          "team_name": "Heessel"
+        },
+        {
+          "team_name": "Wilhelmshaven II"
+        }
+      ]
+    }
+  }
+}

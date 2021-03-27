@@ -1,0 +1,73 @@
+{
+  "cup": {
+    "name": "League Cup",
+    "short_name": "League C.",
+    "symbol": "flag_ireland.png",
+    "sid": "ireland_league",
+    "last_week": "25",
+    "week_gap": "4",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "ireland3a",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "8",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "ireland3b",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "8",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "ireland2"
+              },
+              {
+                "choose_team_sid": "ireland1",
+                "number_of_teams": "8",
+                "start_idx": "5",
+                "end_idx": "12",
+                "randomly": "1"
+              }
+            ]
+          },
+          "byes": "4",
+          "delay": "-6"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "ireland1",
+              "number_of_teams": "4",
+              "start_idx": "1",
+              "end_idx": "4",
+              "randomly": "1"
+            }
+          },
+          "byes": "0",
+          "delay": "-7"
+        },
+        {
+          "home_away": "0",
+          "delay": "-4"
+        },
+        {
+          "home_away": "0",
+          "delay": "-2"
+        },
+        {
+          "home_away": "0"
+        }
+      ]
+    }
+  }
+}

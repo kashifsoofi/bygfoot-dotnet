@@ -1,0 +1,67 @@
+{
+  "league": {
+    "sid": "belarus2",
+    "name": "First Division",
+    "short_name": "1. Div.",
+    "symbol": "flag_belarus.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "5900",
+    "names_file": "russia",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "3",
+        "dest_sid": "belarus1",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Baranovichi"
+        },
+        {
+          "team_name": "B. Bobruisk"
+        },
+        {
+          "team_name": "P. Postavy"
+        },
+        {
+          "team_name": "F. Minsk"
+        },
+        {
+          "team_name": "D. Grodno"
+        },
+        {
+          "team_name": "F. Mozyr"
+        },
+        {
+          "team_name": "K. Slonim"
+        },
+        {
+          "team_name": "K. Svetlogorsk"
+        },
+        {
+          "team_name": "Lida"
+        },
+        {
+          "team_name": "F. Polotsk"
+        },
+        {
+          "team_name": "S. Shklov"
+        },
+        {
+          "team_name": "V. Nesvizh"
+        },
+        {
+          "team_name": "V. Rechitsa"
+        },
+        {
+          "team_name": "V. Pinsk"
+        }
+      ]
+    }
+  }
+}

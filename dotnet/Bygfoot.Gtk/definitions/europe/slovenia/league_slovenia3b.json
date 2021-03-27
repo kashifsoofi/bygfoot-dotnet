@@ -1,0 +1,72 @@
+{
+  "league": {
+    "sid": "slovenia3b",
+    "name": "Tretja liga - zahod",
+    "short_name": "3. SNL Z",
+    "symbol": "flag_slovenia.png",
+    "first_week": "4",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "11",
+      "#text": "23"
+    },
+    "average_talent": "5800",
+    "names_file": "serbia",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "slovenia2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "A. Miren"
+        },
+        {
+          "team_name": "Brda"
+        },
+        {
+          "team_name": "Dob"
+        },
+        {
+          "team_name": "J. Dekani"
+        },
+        {
+          "team_name": "Kamnik"
+        },
+        {
+          "team_name": "Korte"
+        },
+        {
+          "team_name": "Kranj"
+        },
+        {
+          "team_name": "Krka"
+        },
+        {
+          "team_name": "Sava"
+        },
+        {
+          "team_name": "Radomlje"
+        },
+        {
+          "team_name": "S. Šencur"
+        },
+        {
+          "team_name": "Sl. Ljubljana"
+        },
+        {
+          "team_name": "Tolmin"
+        },
+        {
+          "team_name": "T. Sežana"
+        }
+      ]
+    }
+  }
+}

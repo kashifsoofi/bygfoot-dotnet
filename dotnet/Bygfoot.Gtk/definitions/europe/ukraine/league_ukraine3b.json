@@ -1,0 +1,84 @@
+{
+  "league": {
+    "sid": "ukraine3b",
+    "name": "Druha Liha B",
+    "short_name": "DL B",
+    "symbol": "flag_ukraine.png",
+    "first_week": "3",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "12",
+      "#text": "23"
+    },
+    "average_talent": "6000",
+    "names_file": "ukraine",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "ukraine2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "T. Armyansk"
+        },
+        {
+          "team_name": "A. Kharkiv"
+        },
+        {
+          "team_name": "D. 75 Dnipropetrovsk"
+        },
+        {
+          "team_name": "H. Kryvyi Rih"
+        },
+        {
+          "team_name": "S. Sverdlovsk"
+        },
+        {
+          "team_name": "P. Sevastopol II"
+        },
+        {
+          "team_name": "O. Melitopol"
+        },
+        {
+          "team_name": "S. Donetsk III"
+        },
+        {
+          "team_name": "K. Kremenchuk"
+        },
+        {
+          "team_name": "I. Mariupil II"
+        },
+        {
+          "team_name": "Poltava"
+        },
+        {
+          "team_name": "T. Donetsk"
+        },
+        {
+          "team_name": "H. Komsomolsk"
+        },
+        {
+          "team_name": "S. Dniprodzerzhynsk"
+        },
+        {
+          "team_name": "Sumy"
+        },
+        {
+          "team_name": "M. Zaporizhzhya II"
+        },
+        {
+          "team_name": "O. Donetsk"
+        },
+        {
+          "team_name": "Z. Kirovohrad"
+        }
+      ]
+    }
+  }
+}

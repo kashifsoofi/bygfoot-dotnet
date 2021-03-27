@@ -1,0 +1,98 @@
+{
+  "league": {
+    "sid": "indonesia1",
+    "layer": "1",
+    "name": "Super Liga",
+    "short_name": "Super Liga",
+    "symbol": "flag_indonesia.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "7000",
+    "yellow_red": "3",
+    "names_file": "general",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "15",
+        "rank_end": "18",
+        "dest_sid": "indonesia2a indonesia2b",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Persipura",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Persiwa",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Persib Maung",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Persik",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Sriwijaya",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Persela",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Persija",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "PSM",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Pelita Jaya",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Arema",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Persijap",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Persiba",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "PKT",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Persitara",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "PSMS",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Delta Putra",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Persita",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "PSIS",
+          "team_average_talent": "7000"
+        }
+      ]
+    }
+  }
+}

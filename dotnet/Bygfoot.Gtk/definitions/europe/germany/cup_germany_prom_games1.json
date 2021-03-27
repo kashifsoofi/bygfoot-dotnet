@@ -1,0 +1,34 @@
+{
+  "cup": {
+    "name": "2. Bundesliga Promotion Games",
+    "short_name": "2. BL Prom.",
+    "symbol": "flag_germany.png",
+    "sid": "germany_prom_games1",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2"
+    ],
+    "yellow_red": "3",
+    "cup_rounds": {
+      "cup_round": {
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "germany2",
+              "number_of_teams": "1",
+              "start_idx": "3",
+              "end_idx": "3"
+            },
+            {
+              "choose_team_sid": "germany1",
+              "number_of_teams": "1",
+              "start_idx": "16",
+              "end_idx": "16"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

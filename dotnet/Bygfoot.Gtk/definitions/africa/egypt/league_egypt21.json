@@ -1,0 +1,90 @@
+{
+  "league": {
+    "sid": "egypt21",
+    "layer": "2",
+    "name": "Second Division Group1",
+    "short_name": "Group 1",
+    "symbol": "flag_egypt.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "6800",
+    "yellow_red": "3",
+    "names_file": "general",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "egypt1",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Misr Al-Maqasah",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Telefonad Beni Suef",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Grand Hotel",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Aswan",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "El-Minya",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Wadi Dakla Ibshawai",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Sohaq",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Shabab El-Waladeya",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Aluminium",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "El-Fayoum",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Sokar El-Hawamdia",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Sukar abu Qourqas",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "El-Wosta",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Shoban Qenah",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Wadi El-Gedid",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "El-Madina",
+          "team_average_talent": "6800"
+        }
+      ]
+    }
+  }
+}

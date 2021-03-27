@@ -1,0 +1,67 @@
+{
+  "league": {
+    "sid": "kazakhstan2",
+    "name": "First Division",
+    "short_name": "1. Div",
+    "symbol": "flag_kazakhstan.png",
+    "first_week": "2",
+    "week_gap": "1",
+    "average_talent": "5300",
+    "names_file": "russia",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "2",
+        "dest_sid": "kazakhstan1",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "A. Petropavl"
+        },
+        {
+          "team_name": "A. Zhas"
+        },
+        {
+          "team_name": "A. Stepnogorsk"
+        },
+        {
+          "team_name": "A. Zhetygara"
+        },
+        {
+          "team_name": "A. Uralsk"
+        },
+        {
+          "team_name": "A. Shimkent"
+        },
+        {
+          "team_name": "B. Temirtau"
+        },
+        {
+          "team_name": "C. Aktau"
+        },
+        {
+          "team_name": "G. Khromtau"
+        },
+        {
+          "team_name": "I. S. Iliyskiy"
+        },
+        {
+          "team_name": "K. Sarbazdary"
+        },
+        {
+          "team_name": "K. Satpaev"
+        },
+        {
+          "team_name": "S. Semey"
+        },
+        {
+          "team_name": "Taraz"
+        }
+      ]
+    }
+  }
+}

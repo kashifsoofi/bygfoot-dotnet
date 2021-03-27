@@ -1,0 +1,37 @@
+{
+  "league": {
+    "sid": "japan5-4a",
+    "name": "Hokkaido League 2 Block A",
+    "short_name": "Hokkaido 2-A",
+    "symbol": "flag_japan.png",
+    "first_week": "8",
+    "week_gap": "1",
+    "average_talent": "3975",
+    "names_file": "japan",
+    "round_robins": "2",
+    "break": "5",
+    "layer": "5",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Sapporo W."
+        },
+        {
+          "team_name": "Sapporo H."
+        },
+        {
+          "team_name": "Vankei"
+        },
+        {
+          "team_name": "Otaru"
+        },
+        {
+          "team_name": "Mikaho"
+        },
+        {
+          "team_name": "B.O. Sapporo"
+        }
+      ]
+    }
+  }
+}

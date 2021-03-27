@@ -1,0 +1,31 @@
+{
+  "country": {
+    "name": "Estonia",
+    "symbol": "flag_estonia.png",
+    "sid": "estonia",
+    "rating": "4",
+    "leagues": {
+      "league": [
+        "estonia1",
+        "estonia2",
+        "estonia3a",
+        "estonia3b",
+        "estonia4a",
+        "estonia4b",
+        "estonia4c",
+        "estonia4d"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "estonia_cup",
+        "europe_uefa",
+        "europe_champ_league",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "estonia_supercup",
+        "estonia_prom_games1"
+      ]
+    }
+  }
+}

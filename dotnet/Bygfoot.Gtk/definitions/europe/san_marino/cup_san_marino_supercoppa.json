@@ -1,0 +1,33 @@
+{
+  "cup": {
+    "name": "Supercoppa San Marino",
+    "short_name": "Supercoppa",
+    "symbol": "flag_san_marino.png",
+    "sid": "san_marino_supercoppa",
+    "last_week": "10",
+    "property": "national",
+    "group": "17",
+    "cup_rounds": {
+      "cup_round": {
+        "home_away": "0",
+        "neutral": "1",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "san_marino_playoffs",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1"
+            },
+            {
+              "choose_team_sid": "san_marino_coppa",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

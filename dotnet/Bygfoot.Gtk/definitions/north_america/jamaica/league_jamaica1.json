@@ -1,0 +1,77 @@
+{
+  "league": {
+    "sid": "jamaica1",
+    "layer": "1",
+    "name": "Premier League",
+    "short_name": "Premier",
+    "symbol": "flag_jamaica.png",
+    "first_week": "5",
+    "week_gap": "1",
+    "average_talent": "7000",
+    "yellow_red": "3",
+    "round_robins": "4",
+    "names_file": "england",
+    "new_table": [
+      {
+        "@name": "Verano",
+        "#text": "1"
+      },
+      {
+        "@name": "Invierno",
+        "#text": "27"
+      }
+    ],
+    "teams": {
+      "team": [
+        {
+          "team_name": "Tivoli Gardens",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Portmore United",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Harbour View",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Boys' Town",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Arnett Gardens",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Waterhouse",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Rivoli United",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Saint George's",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Village United",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Sporting Central",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Meadhaven United",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Reno",
+          "team_average_talent": "7000"
+        }
+      ]
+    }
+  }
+}

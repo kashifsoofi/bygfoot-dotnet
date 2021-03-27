@@ -1,0 +1,73 @@
+{
+  "cup": {
+    "name": "Lithuanian Cup",
+    "short_name": "Cup",
+    "symbol": "flag_lithuania.png",
+    "sid": "lithuania_cup",
+    "last_week": "44",
+    "week_gap": "3",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "lithuania2",
+              "number_of_teams": "9",
+              "start_idx": "5",
+              "end_idx": "13"
+            }
+          },
+          "delay": "-16"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "lithuania2",
+                "number_of_teams": "4",
+                "start_idx": "1",
+                "end_idx": "4"
+              },
+              {
+                "choose_team_sid": "lithuania1",
+                "number_of_teams": "4",
+                "start_idx": "5",
+                "end_idx": "8"
+              }
+            ]
+          },
+          "byes": "0",
+          "delay": "-13"
+        },
+        {
+          "home_away": "0",
+          "byes": "0",
+          "delay": "-13"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "lithuania1",
+              "number_of_teams": "4",
+              "start_idx": "1",
+              "end_idx": "4"
+            }
+          },
+          "delay": "-14"
+        },
+        {
+          "home_away": "0",
+          "delay": "-1"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

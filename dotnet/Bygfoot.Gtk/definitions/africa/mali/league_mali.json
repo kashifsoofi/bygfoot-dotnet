@@ -1,0 +1,75 @@
+{
+  "league": {
+    "sid": "mali1",
+    "layer": "1",
+    "name": "Championnat National",
+    "short_name": "Première",
+    "symbol": "flag_mali.png",
+    "first_week": "7",
+    "round_robins": "1",
+    "week_gap": "1",
+    "average_talent": "7300",
+    "yellow_red": "3",
+    "names_file": "general",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Stade Malien",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Djoliba Athlétic",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Centre Salif Keïta",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Olympique Bamako",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Jeanne d'Arc",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "AS Réal",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "AS Police",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "AS de Korofina",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Onze Créateurs",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Duguwolofila de Babanba",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "USFAS",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Bakaridjan de Barouéli",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "AS Sigui",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "AS Stade Malien",
+          "team_average_talent": "7300"
+        }
+      ]
+    }
+  }
+}

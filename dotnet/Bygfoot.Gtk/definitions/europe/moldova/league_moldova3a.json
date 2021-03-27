@@ -1,0 +1,45 @@
+{
+  "league": {
+    "sid": "moldova3a",
+    "name": "Divizia B Nord",
+    "short_name": "DivBNord",
+    "symbol": "flag_moldova.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "4900",
+    "names_file": "romania",
+    "layer": "3",
+    "property": "inactive",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Podiş"
+        },
+        {
+          "team_name": "Cricova"
+        },
+        {
+          "team_name": "Flacăra"
+        },
+        {
+          "team_name": "Floreşti"
+        },
+        {
+          "team_name": "Teleneşti"
+        },
+        {
+          "team_name": "Glodeni"
+        },
+        {
+          "team_name": "Volna"
+        },
+        {
+          "team_name": "Sculeni"
+        },
+        {
+          "team_name": "Speranţa"
+        }
+      ]
+    }
+  }
+}

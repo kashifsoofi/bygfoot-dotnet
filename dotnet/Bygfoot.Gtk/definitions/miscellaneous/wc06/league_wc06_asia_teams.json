@@ -1,0 +1,173 @@
+{
+  "league": {
+    "sid": "wc06_asia_teams",
+    "name": "Asia",
+    "short_name": "Asia",
+    "average_talent": "7000",
+    "property": "inactive",
+    "layer": "1",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Iran",
+          "team_average_talent": "8510",
+          "team_symbol": "flag_iran.png"
+        },
+        {
+          "team_name": "Jordan",
+          "team_average_talent": "7760",
+          "team_symbol": "flag_jordan.png"
+        },
+        {
+          "team_name": "Qatar",
+          "team_average_talent": "7705",
+          "team_symbol": "flag_qatar.png"
+        },
+        {
+          "team_name": "Laos",
+          "team_average_talent": "6055",
+          "team_symbol": "flag_laos.png"
+        },
+        {
+          "team_name": "Uzbekistan",
+          "team_average_talent": "7855",
+          "team_symbol": "flag_uzbekistan.png"
+        },
+        {
+          "team_name": "Iraq",
+          "team_average_talent": "7770",
+          "team_symbol": "flag_iraq.png"
+        },
+        {
+          "team_name": "Palestine",
+          "team_average_talent": "6705",
+          "team_symbol": "flag_palestine.png"
+        },
+        {
+          "team_name": "Chinese Taipei",
+          "team_average_talent": "6260",
+          "team_symbol": "flag_chtaipei.png"
+        },
+        {
+          "team_name": "Japan",
+          "team_average_talent": "8580",
+          "team_symbol": "flag_japan.png"
+        },
+        {
+          "team_name": "Oman",
+          "team_average_talent": "7685",
+          "team_symbol": "flag_oman.png"
+        },
+        {
+          "team_name": "India",
+          "team_average_talent": "6720",
+          "team_symbol": "flag_india.png"
+        },
+        {
+          "team_name": "Singapore",
+          "team_average_talent": "7370",
+          "team_symbol": "flag_singapore.png"
+        },
+        {
+          "team_name": "Kuwait",
+          "team_average_talent": "7835",
+          "team_symbol": "flag_kuwait.png"
+        },
+        {
+          "team_name": "China PR",
+          "team_average_talent": "7845",
+          "team_symbol": "flag_china.png"
+        },
+        {
+          "team_name": "Hong Kong",
+          "team_average_talent": "6970",
+          "team_symbol": "flag_hongkong.png"
+        },
+        {
+          "team_name": "Malaysia",
+          "team_average_talent": "7030",
+          "team_symbol": "flag_malaysia.png"
+        },
+        {
+          "team_name": "Korea DPR",
+          "team_average_talent": "7575",
+          "team_symbol": "flag_korea_dpr.png"
+        },
+        {
+          "team_name": "United Arab Emirates",
+          "team_average_talent": "7540",
+          "team_symbol": "flag_uae.png"
+        },
+        {
+          "team_name": "Thailand",
+          "team_average_talent": "7425",
+          "team_symbol": "flag_thailand.png"
+        },
+        {
+          "team_name": "Yemen",
+          "team_average_talent": "6755",
+          "team_symbol": "flag_yemen.png"
+        },
+        {
+          "team_name": "Bahrain",
+          "team_average_talent": "7940",
+          "team_symbol": "flag_bahrain.png"
+        },
+        {
+          "team_name": "Syria",
+          "team_average_talent": "7315",
+          "team_symbol": "flag_syria.png"
+        },
+        {
+          "team_name": "Tajikistan",
+          "team_average_talent": "6570",
+          "team_symbol": "flag_tajikistan.png"
+        },
+        {
+          "team_name": "Kyrgyzstan",
+          "team_average_talent": "6310",
+          "team_symbol": "flag_kyrgyzstan.png"
+        },
+        {
+          "team_name": "Korea Republic",
+          "team_average_talent": "8385",
+          "team_symbol": "flag_korea.png"
+        },
+        {
+          "team_name": "Lebanon",
+          "team_average_talent": "6990",
+          "team_symbol": "flag_lebanon.png"
+        },
+        {
+          "team_name": "Vietnam SR",
+          "team_symbol": "flag_vietnam.png"
+        },
+        {
+          "team_name": "Maldives",
+          "team_average_talent": "6555",
+          "team_symbol": "flag_maldives.png"
+        },
+        {
+          "team_name": "Saudi Arabia",
+          "team_average_talent": "8375",
+          "team_symbol": "flag_saudi_arabia.png"
+        },
+        {
+          "team_name": "Turkmenistan",
+          "team_average_talent": "7140",
+          "team_symbol": "flag_turkmenistan.png"
+        },
+        {
+          "team_name": "Indonesia",
+          "team_average_talent": "7375",
+          "team_symbol": "flag_indonesia.png"
+        },
+        {
+          "team_name": "Sri Lanka",
+          "team_average_talent": "6555",
+          "team_symbol": "flag_sri_lanka.png"
+        }
+      ]
+    }
+  }
+}

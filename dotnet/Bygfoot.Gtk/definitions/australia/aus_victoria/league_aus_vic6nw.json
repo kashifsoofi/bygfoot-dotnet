@@ -1,0 +1,61 @@
+{
+  "league": {
+    "sid": "aus_vic6nw",
+    "name": "Prov. Division 3 NW",
+    "short_name": "Prov.3NW",
+    "symbol": "flag_aus_victoria.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "2900",
+    "names_file": "australia",
+    "layer": "7",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "2",
+        "dest_sid": "aus_vic5nw",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Ascot Vale"
+        },
+        {
+          "team_name": "Bell Park"
+        },
+        {
+          "team_name": "Epping City"
+        },
+        {
+          "team_name": "Hallam"
+        },
+        {
+          "team_name": "Keon Park"
+        },
+        {
+          "team_name": "Meadow Park"
+        },
+        {
+          "team_name": "Melbourne T"
+        },
+        {
+          "team_name": "Northern F"
+        },
+        {
+          "team_name": "Reservoir U"
+        },
+        {
+          "team_name": "Thornbury U"
+        },
+        {
+          "team_name": "Watsonia Heights"
+        },
+        {
+          "team_name": "Youth U"
+        }
+      ]
+    }
+  }
+}

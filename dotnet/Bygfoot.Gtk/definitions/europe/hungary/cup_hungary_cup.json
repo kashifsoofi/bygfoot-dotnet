@@ -1,0 +1,94 @@
+{
+  "cup": {
+    "name": "Magyar Kupa",
+    "short_name": "MagyarK",
+    "symbol": "flag_hungary.png",
+    "sid": "hungary_cup",
+    "last_week": "45",
+    "week_gap": "2",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "hungary3a"
+              },
+              {
+                "choose_team_sid": "hungary3b"
+              },
+              {
+                "choose_team_sid": "hungary3c"
+              },
+              {
+                "choose_team_sid": "hungary3d"
+              },
+              {
+                "choose_team_sid": "hungary3e"
+              },
+              {
+                "choose_team_sid": "hungary3f"
+              }
+            ]
+          },
+          "byes": "20",
+          "delay": "-18"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "hungary2a"
+              },
+              {
+                "choose_team_sid": "hungary2b"
+              }
+            ]
+          },
+          "byes": "0",
+          "delay": "-18"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "hungary1",
+              "number_of_teams": "13",
+              "start_idx": "4",
+              "end_idx": "16",
+              "randomly": "1"
+            }
+          },
+          "byes": "0",
+          "delay": "-19"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "hungary1",
+              "number_of_teams": "3",
+              "start_idx": "1",
+              "end_idx": "3",
+              "randomly": "1"
+            }
+          },
+          "byes": "0",
+          "delay": "-19"
+        },
+        {
+          "delay": "-18"
+        },
+        "",
+        "",
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

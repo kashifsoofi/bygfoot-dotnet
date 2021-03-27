@@ -1,0 +1,37 @@
+{
+  "cup": {
+    "name": "WC Qualification Playoff Asia/N. + C. America",
+    "short_name": "WCQAsiaNCAmericaPlayoff",
+    "sid": "wc_asia_ncamerica",
+    "symbol": "wc.png",
+    "yellow_red": "3",
+    "last_week": "48",
+    "add_week": "45",
+    "week_gap": "1",
+    "property": [
+      "international",
+      "highlight2"
+    ],
+    "cup_rounds": {
+      "cup_round": {
+        "new_teams": "2",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "wc_asia_playoff",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1"
+            },
+            {
+              "choose_team_sid": "wc_ncamerica",
+              "number_of_teams": "1",
+              "start_idx": "4",
+              "end_idx": "4"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

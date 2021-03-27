@@ -1,0 +1,61 @@
+{
+  "league": {
+    "sid": "estonia4b",
+    "name": "Third League South",
+    "short_name": "3. L. S",
+    "symbol": "flag_estonia.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "4300",
+    "yellow_red": "5",
+    "layer": "4",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "estonia3a estonia3b",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Metec"
+        },
+        {
+          "team_name": "Premium"
+        },
+        {
+          "team_name": "Kotkad"
+        },
+        {
+          "team_name": "Lootos"
+        },
+        {
+          "team_name": "V. Pärnu III"
+        },
+        {
+          "team_name": "Põltsamaa"
+        },
+        {
+          "team_name": "Koeru"
+        },
+        {
+          "team_name": "Liverpool P."
+        },
+        {
+          "team_name": "Fauna"
+        },
+        {
+          "team_name": "Noorus"
+        },
+        {
+          "team_name": "Elva II"
+        },
+        {
+          "team_name": "Järva-Jaani"
+        }
+      ]
+    }
+  }
+}

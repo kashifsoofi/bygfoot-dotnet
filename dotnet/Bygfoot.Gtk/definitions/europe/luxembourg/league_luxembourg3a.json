@@ -1,0 +1,72 @@
+{
+  "league": {
+    "sid": "luxembourg3a",
+    "name": "Division 1 Group 1",
+    "short_name": "Div. 1. G1",
+    "symbol": "flag_luxembourg.png",
+    "first_week": "6",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "12",
+      "#text": "24"
+    },
+    "average_talent": "4700",
+    "names_file": "belgium",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "luxembourg2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Y. B. Diekirch"
+        },
+        {
+          "team_name": "Mamer"
+        },
+        {
+          "team_name": "J. Schieren"
+        },
+        {
+          "team_name": "Wincrange"
+        },
+        {
+          "team_name": "Bastendorf"
+        },
+        {
+          "team_name": "Harlange-Tarchamps"
+        },
+        {
+          "team_name": "Hobscheid Eischen"
+        },
+        {
+          "team_name": "J. Gilsdorf"
+        },
+        {
+          "team_name": "D. C. Echternach"
+        },
+        {
+          "team_name": "Kehlen"
+        },
+        {
+          "team_name": "Ell"
+        },
+        {
+          "team_name": "Lorentzweiler"
+        },
+        {
+          "team_name": "B. B. Muhlenbach"
+        },
+        {
+          "team_name": "O. Vianden"
+        }
+      ]
+    }
+  }
+}

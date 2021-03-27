@@ -1,0 +1,70 @@
+{
+  "league": {
+    "sid": "turkey1",
+    "name": "Super Lig",
+    "symbol": "flag_turkey.png",
+    "first_week": "8",
+    "week_gap": "1",
+    "break_in": [
+      {
+        "@length": "1",
+        "#text": "10"
+      },
+      {
+        "@length": "1",
+        "#text": "15"
+      },
+      {
+        "@length": "4",
+        "#text": "26"
+      },
+      {
+        "@length": "1",
+        "#text": "39"
+      }
+    ],
+    "average_talent": "7700",
+    "names_file": "turkey",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "5",
+        "rank_end": "7",
+        "dest_sid": "turkey2",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Fenerbahçe",
+          "def_file": "turkey_fenerbahce"
+        },
+        {
+          "team_name": "Beşiktaş",
+          "def_file": "turkey_besiktas"
+        },
+        {
+          "team_name": "Galasataray",
+          "def_file": "turkey_galasataray"
+        },
+        {
+          "team_name": "Trabzonspor",
+          "def_file": "turkey_trabzonspor"
+        },
+        {
+          "team_name": "Bursaspor",
+          "def_file": "turkey_bursaspor"
+        },
+        {
+          "team_name": "Kayserispor",
+          "def_file": "turkey_kayserispor"
+        },
+        {
+          "team_name": "Gaziantepspor",
+          "def_file": "turkey_gaziante"
+        }
+      ]
+    }
+  }
+}

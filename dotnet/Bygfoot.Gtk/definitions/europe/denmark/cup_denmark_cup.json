@@ -1,0 +1,81 @@
+{
+  "cup": {
+    "name": "Ekstra Bladet Cup",
+    "short_name": "Landspokal",
+    "symbol": "flag_denmark.png",
+    "sid": "denmark_cup",
+    "last_week": "47",
+    "week_gap": "4",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "denmark4a"
+              },
+              {
+                "choose_team_sid": "denmark4b"
+              },
+              {
+                "choose_team_sid": "denmark4c"
+              },
+              {
+                "choose_team_sid": "denmark3a"
+              },
+              {
+                "choose_team_sid": "denmark3b"
+              },
+              {
+                "choose_team_sid": "denmark2"
+              }
+            ]
+          },
+          "byes": "6",
+          "delay": "-12"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "denmark1",
+              "number_of_teams": "8",
+              "start_idx": "5",
+              "end_idx": "12"
+            }
+          },
+          "byes": "0",
+          "delay": "-14"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "denmark1",
+              "number_of_teams": "4",
+              "start_idx": "1",
+              "end_idx": "4"
+            }
+          },
+          "byes": "0",
+          "delay": "-14"
+        },
+        {
+          "home_away": "0",
+          "delay": "-13"
+        },
+        {
+          "home_away": "0",
+          "delay": "-15"
+        },
+        "",
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

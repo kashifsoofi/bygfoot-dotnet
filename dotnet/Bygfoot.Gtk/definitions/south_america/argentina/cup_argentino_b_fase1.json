@@ -1,0 +1,28 @@
+{
+  "cup": {
+    "name": "Torneo Argentino B",
+    "short_name": "Argentino B",
+    "symbol": "flag_argentina.png",
+    "sid": "argentino_b_fase1",
+    "add_week": "0",
+    "last_week": "36",
+    "week_gap": "1",
+    "property": [
+      "national",
+      "omit_from_history"
+    ],
+    "cup_rounds": {
+      "cup_round": {
+        "number_of_groups": "8",
+        "number_of_advance": "2",
+        "round_robins": "6",
+        "round_name": "Fase 1",
+        "choose_teams": {
+          "choose_team": {
+            "choose_team_sid": "argentina4b"
+          }
+        }
+      }
+    }
+  }
+}

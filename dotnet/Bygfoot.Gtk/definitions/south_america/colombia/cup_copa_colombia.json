@@ -1,0 +1,34 @@
+{
+  "cup": {
+    "name": "Copa Colombia",
+    "short_name": "CColombia",
+    "symbol": "flag_colombia.png",
+    "sid": "copa_colombia",
+    "add_week": "0",
+    "last_week": "43",
+    "week_gap": "3",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "round_name": "Fase 1",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "colombia1"
+              },
+              {
+                "choose_team_sid": "colombia2"
+              }
+            ]
+          }
+        },
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  }
+}

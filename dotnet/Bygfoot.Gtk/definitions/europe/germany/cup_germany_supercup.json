@@ -1,0 +1,33 @@
+{
+  "cup": {
+    "name": "T-Home Supercup",
+    "short_name": "Supercup",
+    "symbol": "flag_germany.png",
+    "sid": "germany_supercup",
+    "last_week": "5",
+    "property": "national",
+    "group": "159",
+    "cup_rounds": {
+      "cup_round": {
+        "home_away": "0",
+        "neutral": "1",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "germany1",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1"
+            },
+            {
+              "choose_team_sid": "germany_dfb",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

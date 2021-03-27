@@ -1,0 +1,28 @@
+{
+  "country": {
+    "name": "Serbia",
+    "rating": "7",
+    "symbol": "flag_serbia.png",
+    "sid": "serbia",
+    "leagues": {
+      "league": [
+        "serbia1",
+        "serbia2",
+        "serbia3a",
+        "serbia3b",
+        "serbia3c",
+        "serbia3d"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "serbia_cup",
+        "europe_uefa3a",
+        "europe_champ_league1a",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "serbia_prom_games1"
+      ]
+    }
+  }
+}

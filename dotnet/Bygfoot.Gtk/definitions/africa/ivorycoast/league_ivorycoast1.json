@@ -1,0 +1,82 @@
+{
+  "league": {
+    "sid": "ivorycoast1",
+    "layer": "1",
+    "name": "Ligue 1 MTN",
+    "short_name": "MTN 1",
+    "symbol": "flag_cdi.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "7300",
+    "yellow_red": "3",
+    "names_file": "general",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "13",
+        "rank_end": "14",
+        "dest_sid": "ivorycoast21 ivorycoast21",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "ASEC Mimosas",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Jeunesse d'Abidjan",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Séwé Sport",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "SO Armée",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Stella d'Adjamé",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Amadou Diallo",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Issia Wazi",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Africa Sports",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "USC Bassam",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Denguélé d'Odienné",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "ASC Ouragahio",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Stade d'Abidjan",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Sabé de Bouna",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "FC Hiré",
+          "team_average_talent": "7300"
+        }
+      ]
+    }
+  }
+}

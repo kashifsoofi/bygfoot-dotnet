@@ -1,0 +1,51 @@
+{
+  "league": {
+    "sid": "usa_second",
+    "name": "Second Division",
+    "short_name": "2nd Div",
+    "symbol": "flag_usa.png",
+    "first_week": "3",
+    "week_gap": "1",
+    "average_talent": "6500",
+    "layer": "3",
+    "round_robins": "2",
+    "two_match_week_start": "13",
+    "two_match_week_end": "18",
+    "yellow_red": "5",
+    "names_file": "usa",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Richmond"
+        },
+        {
+          "team_name": "Charlotte"
+        },
+        {
+          "team_name": "New Hampshire"
+        },
+        {
+          "team_name": "Cincinnati"
+        },
+        {
+          "team_name": "W. Massachusetts"
+        },
+        {
+          "team_name": "Wilmington"
+        },
+        {
+          "team_name": "Harrisburg"
+        },
+        {
+          "team_name": "Baltimore"
+        },
+        {
+          "team_name": "Bermuda"
+        },
+        {
+          "team_name": "Cleveland C."
+        }
+      ]
+    }
+  }
+}

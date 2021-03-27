@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "serbia3c",
+    "name": "Srpska Liga Vojvodina",
+    "short_name": "S. L. V.",
+    "symbol": "flag_serbia.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "8",
+      "#text": "25"
+    },
+    "average_talent": "6100",
+    "names_file": "serbia",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "serbia2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Mladost Apatin"
+        },
+        {
+          "team_name": "Pivara"
+        },
+        {
+          "team_name": "Kikinda"
+        },
+        {
+          "team_name": "Mladost Bački Jarak"
+        },
+        {
+          "team_name": "Palić"
+        },
+        {
+          "team_name": "Radnički Nova Pazova"
+        },
+        {
+          "team_name": "Senta"
+        },
+        {
+          "team_name": "Sloga Temerin"
+        },
+        {
+          "team_name": "Tekstilac Ites"
+        },
+        {
+          "team_name": "Cement Beočin"
+        },
+        {
+          "team_name": "Vršac"
+        },
+        {
+          "team_name": "Donji Srem Pećinci"
+        },
+        {
+          "team_name": "Veternik"
+        },
+        {
+          "team_name": "Dolina"
+        },
+        {
+          "team_name": "Sloboda Novi Kozarci"
+        },
+        {
+          "team_name": "Solunac Rastina"
+        }
+      ]
+    }
+  }
+}

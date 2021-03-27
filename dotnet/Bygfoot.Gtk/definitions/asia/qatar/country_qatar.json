@@ -1,0 +1,17 @@
+{
+  "country": {
+    "name": "qatar",
+    "rating": "9",
+    "symbol": "flag_qatar.png",
+    "sid": "qatar",
+    "leagues": {
+      "league": [
+        "qatar1",
+        "qatar2"
+      ]
+    },
+    "cups": {
+      "cup": "qatar_champ_league"
+    }
+  }
+}

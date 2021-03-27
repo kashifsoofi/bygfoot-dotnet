@@ -1,0 +1,26 @@
+{
+  "cup": {
+    "name": "EuroCup Qualifiers",
+    "short_name": "EuroCup Qualifiers",
+    "sid": "eurocup_qualifiers",
+    "symbol": "wc_europe.png",
+    "yellow_red": "3",
+    "last_week": "14",
+    "add_week": "0",
+    "week_gap": "1",
+    "property": "international",
+    "cup_rounds": {
+      "cup_round": {
+        "number_of_groups": "8",
+        "number_of_advance": "2",
+        "new_teams": "52",
+        "randomise_teams": "1",
+        "choose_teams": {
+          "choose_team": {
+            "choose_team_sid": "uefa"
+          }
+        }
+      }
+    }
+  }
+}

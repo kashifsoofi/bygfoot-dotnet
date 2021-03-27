@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "serbia3a",
+    "name": "Srpska Liga Istok",
+    "short_name": "S. L. I.",
+    "symbol": "flag_serbia.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "8",
+      "#text": "25"
+    },
+    "average_talent": "6100",
+    "names_file": "serbia",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "serbia2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Balkanski Dimitrovgrad"
+        },
+        {
+          "team_name": "Car Konstantin"
+        },
+        {
+          "team_name": "Dubočica Leskovac"
+        },
+        {
+          "team_name": "Hajduk Veljko"
+        },
+        {
+          "team_name": "Jedinstvo Bošnjace"
+        },
+        {
+          "team_name": "Jedinstvo Paraćin"
+        },
+        {
+          "team_name": "Kopaonik Brus"
+        },
+        {
+          "team_name": "Radnik Surdulica"
+        },
+        {
+          "team_name": "Radnički Pirot"
+        },
+        {
+          "team_name": "Radnički Svilajnac"
+        },
+        {
+          "team_name": "Radnički Niš"
+        },
+        {
+          "team_name": "Rudar Alpos"
+        },
+        {
+          "team_name": "Svrljig"
+        },
+        {
+          "team_name": "Timok Zaječar"
+        },
+        {
+          "team_name": "Vlasina Vlasotince"
+        },
+        {
+          "team_name": "Župa Aleksandrovac"
+        }
+      ]
+    }
+  }
+}

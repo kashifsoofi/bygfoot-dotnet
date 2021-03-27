@@ -1,0 +1,30 @@
+{
+  "cup": {
+    "name": "Descenso Argentino A-B",
+    "short_name": "Descenso Argentino A-B",
+    "symbol": "flag_argentina.png",
+    "sid": "argentino_a_descenso",
+    "add_week": "37",
+    "last_week": "48",
+    "property": [
+      "promotion",
+      "national",
+      "highlight3",
+      "omit_from_history"
+    ],
+    "week_gap": "1",
+    "cup_rounds": {
+      "cup_round": {
+        "round_name": "Descenso",
+        "choose_teams": {
+          "choose_team": {
+            "choose_team_sid": "argentino_a_fase1",
+            "number_of_teams": "4",
+            "start_idx": "21",
+            "end_idx": "24"
+          }
+        }
+      }
+    }
+  }
+}

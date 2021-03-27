@@ -1,0 +1,68 @@
+{
+  "league": {
+    "sid": "lithuania2",
+    "name": "1 Lyga",
+    "short_name": "1 L.",
+    "symbol": "flag_lithuania.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "5700",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "lithuania1",
+        "prom_rel_type": "promotion"
+      },
+      "prom_games": {
+        "prom_games_dest_sid": "lithuania1",
+        "prom_games_cup_sid": "lithuania_prom_games1",
+        "prom_games_loser_sid": "lithuania2"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "A. Alytus"
+        },
+        {
+          "team_name": "F. Anyksciai"
+        },
+        {
+          "team_name": "B. Gargzdai"
+        },
+        {
+          "team_name": "L. Jonava"
+        },
+        {
+          "team_name": "K. j. Kaunas"
+        },
+        {
+          "team_name": "R. Kaunas"
+        },
+        {
+          "team_name": "L. T. Kaunas"
+        },
+        {
+          "team_name": "N. Kedainiai"
+        },
+        {
+          "team_name": "G. Klaipeda"
+        },
+        {
+          "team_name": "K. Pakruojis"
+        },
+        {
+          "team_name": "T. Taurage"
+        },
+        {
+          "team_name": "U. Utena"
+        },
+        {
+          "team_name": "F. Vilnius"
+        }
+      ]
+    }
+  }
+}

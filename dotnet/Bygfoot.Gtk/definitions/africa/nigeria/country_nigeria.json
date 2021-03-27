@@ -1,0 +1,18 @@
+{
+  "country": {
+    "name": "nigeria",
+    "rating": "9",
+    "symbol": "flag_nigeria.png",
+    "sid": "nigeria",
+    "leagues": {
+      "league": [
+        "nigeria1",
+        "nigeria21",
+        "nigeria22"
+      ]
+    },
+    "cups": {
+      "cup": "cup_nigeria"
+    }
+  }
+}

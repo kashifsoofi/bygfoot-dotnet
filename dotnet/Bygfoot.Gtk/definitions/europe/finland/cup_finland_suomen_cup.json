@@ -1,0 +1,77 @@
+{
+  "cup": {
+    "name": "Suomen Cup",
+    "short_name": "Cup",
+    "symbol": "flag_finland.png",
+    "sid": "finland_suomen_cup",
+    "last_week": "28",
+    "week_gap": "3",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "finland3a"
+              },
+              {
+                "choose_team_sid": "finland3b"
+              },
+              {
+                "choose_team_sid": "finland3c"
+              },
+              {
+                "choose_team_sid": "finland2"
+              },
+              {
+                "choose_team_sid": "finland1",
+                "number_of_teams": "10",
+                "start_idx": "5",
+                "end_idx": "14",
+                "randomly": "1"
+              }
+            ]
+          },
+          "delay": "-3",
+          "byes": "46"
+        },
+        {
+          "home_away": "0",
+          "delay": "-4",
+          "byes": "0"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "finland1",
+              "number_of_teams": "4",
+              "start_idx": "1",
+              "end_idx": "4",
+              "randomly": "1"
+            }
+          },
+          "delay": "-6"
+        },
+        {
+          "home_away": "0",
+          "delay": "-7"
+        },
+        {
+          "home_away": "0",
+          "delay": "-5"
+        },
+        {
+          "home_away": "0",
+          "delay": "1"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

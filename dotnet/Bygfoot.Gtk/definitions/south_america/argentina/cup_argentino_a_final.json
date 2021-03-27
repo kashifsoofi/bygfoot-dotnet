@@ -1,0 +1,28 @@
+{
+  "cup": {
+    "name": "Torneo Argentino A",
+    "short_name": "Argentino A",
+    "symbol": "flag_argentina.png",
+    "sid": "argentino_a_final",
+    "add_week": "44",
+    "last_week": "46",
+    "property": [
+      "promotion",
+      "national",
+      "highlight2"
+    ],
+    "week_gap": "1",
+    "cup_rounds": {
+      "cup_round": {
+        "choose_teams": {
+          "choose_team": {
+            "choose_team_sid": "argentino_a_fase2",
+            "number_of_teams": "2",
+            "start_idx": "1",
+            "end_idx": "2"
+          }
+        }
+      }
+    }
+  }
+}

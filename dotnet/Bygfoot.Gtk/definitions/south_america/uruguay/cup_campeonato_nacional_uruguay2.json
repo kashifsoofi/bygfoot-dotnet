@@ -1,0 +1,37 @@
+{
+  "cup": {
+    "name": "Campeonato Nacional Segunda",
+    "short_name": "CN2",
+    "symbol": "flag_uruguay.png",
+    "sid": "campeonato_nacional_uruguay2",
+    "add_week": "47",
+    "last_week": "48",
+    "week_gap": "1",
+    "property": [
+      "national",
+      "silent_on_fixture_error"
+    ],
+    "cup_rounds": {
+      "cup_round": {
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "uruguay2",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1",
+              "from_table": "1"
+            },
+            {
+              "choose_team_sid": "uruguay2",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1",
+              "from_table": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

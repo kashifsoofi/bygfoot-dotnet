@@ -1,0 +1,70 @@
+{
+  "league": {
+    "sid": "usa_first",
+    "name": "First Division",
+    "short_name": "1st Div",
+    "symbol": "flag_usa.png",
+    "first_week": "3",
+    "week_gap": "1",
+    "average_talent": "6800",
+    "layer": "2",
+    "round_robins": "2",
+    "two_match_week_start": [
+      "7",
+      "10",
+      "20",
+      "23"
+    ],
+    "two_match_week_end": [
+      "8",
+      "17",
+      "21",
+      "24"
+    ],
+    "yellow_red": "5",
+    "names_file": "usa",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Vancouver"
+        },
+        {
+          "team_name": "Montreal"
+        },
+        {
+          "team_name": "Rochester"
+        },
+        {
+          "team_name": "Portland"
+        },
+        {
+          "team_name": "Puerto Rico"
+        },
+        {
+          "team_name": "Virginia Beach"
+        },
+        {
+          "team_name": "Miami"
+        },
+        {
+          "team_name": "Charleston"
+        },
+        {
+          "team_name": "Atlanta"
+        },
+        {
+          "team_name": "Seattle"
+        },
+        {
+          "team_name": "Minnesota"
+        },
+        {
+          "team_name": "North Carolina"
+        },
+        {
+          "team_name": "California"
+        }
+      ]
+    }
+  }
+}

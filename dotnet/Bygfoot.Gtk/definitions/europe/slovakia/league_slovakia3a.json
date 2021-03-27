@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "slovakia3a",
+    "name": "Slovak Second League West",
+    "short_name": "2. L. W",
+    "symbol": "flag_slovakia.png",
+    "first_week": "3",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "12",
+      "#text": "23"
+    },
+    "average_talent": "5800",
+    "names_file": "czech",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "slovakia2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "A. Petržalka II"
+        },
+        {
+          "team_name": "B. J. Bohunice"
+        },
+        {
+          "team_name": "Du. Bratislava"
+        },
+        {
+          "team_name": "I. Petržalka"
+        },
+        {
+          "team_name": "Moravany nad Váhom"
+        },
+        {
+          "team_name": "Nitra II"
+        },
+        {
+          "team_name": "Nové Mesto nad Váhom"
+        },
+        {
+          "team_name": "Púchov"
+        },
+        {
+          "team_name": "R. Bratislava"
+        },
+        {
+          "team_name": "Senec"
+        },
+        {
+          "team_name": "S. Bratislava II"
+        },
+        {
+          "team_name": "S. Nemšová"
+        },
+        {
+          "team_name": "S. Trnava II"
+        },
+        {
+          "team_name": "S. Vráble"
+        },
+        {
+          "team_name": "T. Topoľčany"
+        },
+        {
+          "team_name": "Vrbové"
+        }
+      ]
+    }
+  }
+}

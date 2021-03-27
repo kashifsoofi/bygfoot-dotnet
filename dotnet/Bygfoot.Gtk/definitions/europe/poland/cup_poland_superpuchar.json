@@ -1,0 +1,33 @@
+{
+  "cup": {
+    "name": "Superpuchar Polski",
+    "short_name": "Superpuchar",
+    "symbol": "flag_poland.png",
+    "sid": "poland_superpuchar",
+    "last_week": "4",
+    "property": "national",
+    "group": "166",
+    "cup_rounds": {
+      "cup_round": {
+        "home_away": "0",
+        "neutral": "1",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "poland_puchar",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1"
+            },
+            {
+              "choose_team_sid": "poland1",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

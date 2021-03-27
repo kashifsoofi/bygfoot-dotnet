@@ -1,0 +1,39 @@
+{
+  "cup": {
+    "name": "FA Cup",
+    "short_name": "Cup",
+    "symbol": "flag_ghana.png",
+    "sid": "cup_ghana",
+    "yellow_red": "3",
+    "last_week": "30",
+    "week_gap": "2",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "ghana1"
+              },
+              {
+                "choose_team_sid": "ghana21"
+              },
+              {
+                "choose_team_sid": "ghana22"
+              },
+              {
+                "choose_team_sid": "ghana23"
+              }
+            ]
+          }
+        },
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  }
+}

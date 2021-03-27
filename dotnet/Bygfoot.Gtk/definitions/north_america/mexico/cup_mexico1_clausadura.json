@@ -1,0 +1,35 @@
+{
+  "cup": {
+    "name": "México Liga Primera Torneo Clausadura",
+    "short_name": "México Clausadura",
+    "sid": "mexico1_clausadura",
+    "property": "national",
+    "add_week": "22",
+    "last_week": "46",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "randomise_teams": "1",
+          "number_of_groups": "3",
+          "number_of_advance": "1",
+          "number_of_best_advance": "5",
+          "round_robins": "3",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "mexico1"
+            }
+          }
+        },
+        {
+          "home_away": "1"
+        },
+        {
+          "home_away": "1"
+        },
+        {
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

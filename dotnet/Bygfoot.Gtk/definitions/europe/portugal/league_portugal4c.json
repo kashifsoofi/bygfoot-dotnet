@@ -1,0 +1,69 @@
+{
+  "league": {
+    "sid": "portugal4c",
+    "name": "III Divisão Group C",
+    "short_name": "III Div. C",
+    "symbol": "flag_portugal.png",
+    "first_week": "8",
+    "week_gap": "1",
+    "break": "7",
+    "average_talent": "5900",
+    "yellow_red": "5",
+    "names_file": "portugal",
+    "layer": "4",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "2",
+        "dest_sid": "portugal3a portugal3b portugal3c portugal3d",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Fiaes"
+        },
+        {
+          "team_name": "A. Viseu"
+        },
+        {
+          "team_name": "Anadia"
+        },
+        {
+          "team_name": "Milheiroense"
+        },
+        {
+          "team_name": "Cinfaes"
+        },
+        {
+          "team_name": "Agueda"
+        },
+        {
+          "team_name": "Tondela"
+        },
+        {
+          "team_name": "Satao"
+        },
+        {
+          "team_name": "Avanca"
+        },
+        {
+          "team_name": "Fornos Algodres"
+        },
+        {
+          "team_name": "U. Lamas"
+        },
+        {
+          "team_name": "da Tocha"
+        },
+        {
+          "team_name": "Valecambrense"
+        },
+        {
+          "team_name": "Joao Ver"
+        }
+      ]
+    }
+  }
+}

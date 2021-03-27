@@ -1,0 +1,34 @@
+{
+  "cup": {
+    "sid": "peru",
+    "name": "Copa Perú",
+    "short_name": "CPeru",
+    "symbol": "flag_peru.png",
+    "add_week": "32",
+    "last_week": "42",
+    "property": "omit_from_history",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "number_of_groups": "4",
+          "number_of_advance": "2",
+          "round_name": "Fase 2",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "peru_elim",
+              "number_of_teams": "16",
+              "start_idx": "1",
+              "end_idx": "16"
+            }
+          }
+        },
+        {
+          "round_name": "Cuartos de final"
+        },
+        {
+          "round_name": "Semifinal"
+        }
+      ]
+    }
+  }
+}

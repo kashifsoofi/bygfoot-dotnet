@@ -1,0 +1,80 @@
+{
+  "cup": {
+    "name": "Hrvatski nogometni kup",
+    "short_name": "Hrv. kup",
+    "symbol": "flag_croatia.png",
+    "sid": "croatia_cup",
+    "last_week": "48",
+    "week_gap": "3",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "croatia2",
+                "number_of_teams": "8",
+                "start_idx": "5",
+                "end_idx": "16",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "croatia3a",
+                "number_of_teams": "8",
+                "start_idx": "1",
+                "end_idx": "18",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "croatia3b",
+                "number_of_teams": "8",
+                "start_idx": "1",
+                "end_idx": "18",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "croatia3c",
+                "number_of_teams": "8",
+                "start_idx": "1",
+                "end_idx": "18",
+                "randomly": "1"
+              }
+            ]
+          },
+          "delay": "-15"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "croatia1"
+              },
+              {
+                "choose_team_sid": "croatia2",
+                "number_of_teams": "4",
+                "start_idx": "1",
+                "end_idx": "4",
+                "randomly": "1"
+              }
+            ]
+          },
+          "delay": "-14"
+        },
+        {
+          "home_away": "0",
+          "delay": "-12"
+        },
+        {
+          "delay": "-13"
+        },
+        {
+          "delay": "-3"
+        },
+        ""
+      ]
+    }
+  }
+}

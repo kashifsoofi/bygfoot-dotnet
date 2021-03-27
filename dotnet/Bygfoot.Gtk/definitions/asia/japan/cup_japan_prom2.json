@@ -1,0 +1,34 @@
+{
+  "cup": {
+    "name": "J1|J2 Promotion Playoff",
+    "short_name": "J1|J2 Playoff",
+    "sid": "japan_prom2",
+    "symbol": "flag_japan.png",
+    "property": [
+      "promotion",
+      "highlight2"
+    ],
+    "add_week": "1000",
+    "week_gap": "1",
+    "cup_rounds": {
+      "cup_round": {
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "LEAGUE2",
+              "number_of_teams": "1",
+              "start_idx": "3",
+              "end_idx": "3"
+            },
+            {
+              "choose_team_sid": "LEAGUE1",
+              "number_of_teams": "1",
+              "start_idx": "16",
+              "end_idx": "16"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

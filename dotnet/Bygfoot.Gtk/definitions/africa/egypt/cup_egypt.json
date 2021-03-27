@@ -1,0 +1,39 @@
+{
+  "cup": {
+    "name": "Egypt Cup",
+    "short_name": "Cup",
+    "symbol": "flag_egypt.png",
+    "sid": "cup_egypt",
+    "yellow_red": "3",
+    "last_week": "30",
+    "week_gap": "2",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "egypt1"
+              },
+              {
+                "choose_team_sid": "egypt21"
+              },
+              {
+                "choose_team_sid": "egypt22"
+              },
+              {
+                "choose_team_sid": "egypt23"
+              }
+            ]
+          }
+        },
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  }
+}

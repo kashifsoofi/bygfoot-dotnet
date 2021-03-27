@@ -1,0 +1,35 @@
+{
+  "cup": {
+    "name": "Albania Promotion Games",
+    "short_name": "Alb. Prom.",
+    "symbol": "flag_albania.png",
+    "sid": "albania_prom_games1",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2"
+    ],
+    "yellow_red": "3",
+    "cup_rounds": {
+      "cup_round": {
+        "number_of_advance": "2",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "albania2",
+              "number_of_teams": "2",
+              "start_idx": "3",
+              "end_idx": "4"
+            },
+            {
+              "choose_team_sid": "albania1",
+              "number_of_teams": "2",
+              "start_idx": "9",
+              "end_idx": "10"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

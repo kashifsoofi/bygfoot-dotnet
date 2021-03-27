@@ -1,0 +1,17 @@
+{
+  "country": {
+    "name": "united arab emirates",
+    "rating": "9",
+    "symbol": "flag_uae.png",
+    "sid": "uae",
+    "leagues": {
+      "league": [
+        "uae1",
+        "uae2"
+      ]
+    },
+    "cups": {
+      "cup": "uae_champ_league"
+    }
+  }
+}

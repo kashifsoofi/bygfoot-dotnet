@@ -1,0 +1,48 @@
+{
+  "league": {
+    "sid": "usa_pdl_ma",
+    "name": "Mid-Atlantic Development",
+    "short_name": "M.A.D.L.",
+    "symbol": "flag_usa.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "6100",
+    "layer": "4",
+    "round_robins": "2",
+    "two_match_week_start": "5",
+    "two_match_week_end": "18",
+    "yellow_red": "5",
+    "names_file": "usa",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Delaware"
+        },
+        {
+          "team_name": "Fredericksburg"
+        },
+        {
+          "team_name": "N. Virginia"
+        },
+        {
+          "team_name": "Ocean City"
+        },
+        {
+          "team_name": "Reading"
+        },
+        {
+          "team_name": "Richmond F."
+        },
+        {
+          "team_name": "Virginia Beach"
+        },
+        {
+          "team_name": "West Virginia"
+        },
+        {
+          "team_name": "Williamsburg"
+        }
+      ]
+    }
+  }
+}

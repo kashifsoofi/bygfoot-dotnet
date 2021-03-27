@@ -1,0 +1,56 @@
+{
+  "league": {
+    "sid": "mexico3-2",
+    "name": "Segunda Division Zona Norte",
+    "short_name": "2a Norte",
+    "symbol": "flag_mexico.png",
+    "layer": "3",
+    "first_week": "5",
+    "week_gap": "1",
+    "average_talent": "6000",
+    "yellow_red": "3",
+    "round_robins": "2",
+    "names_file": "latinoamerica",
+    "break": "15",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Altamira"
+        },
+        {
+          "team_name": "B. Nuevo Laredo"
+        },
+        {
+          "team_name": "Monterey"
+        },
+        {
+          "team_name": "Durango"
+        },
+        {
+          "team_name": "T. Madero"
+        },
+        {
+          "team_name": "Delicias"
+        },
+        {
+          "team_name": "F.C. Excelsior"
+        },
+        {
+          "team_name": "Santos L."
+        },
+        {
+          "team_name": "Vaqueros A."
+        },
+        {
+          "team_name": "U.A. Tamaulipas"
+        },
+        {
+          "team_name": "Cachorros U.A.N.L."
+        },
+        {
+          "team_name": "A. Lagunero"
+        }
+      ]
+    }
+  }
+}

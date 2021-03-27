@@ -1,0 +1,68 @@
+{
+  "league": {
+    "sid": "mexico3-3",
+    "name": "Segunda Division Zona Centro",
+    "short_name": "2a Centro",
+    "symbol": "flag_mexico.png",
+    "layer": "3",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "6000",
+    "yellow_red": "3",
+    "round_robins": "2",
+    "names_file": "latinoamerica",
+    "break": "11",
+    "teams": {
+      "team": [
+        {
+          "team_name": "P. Anahuac"
+        },
+        {
+          "team_name": "Cuautitlan"
+        },
+        {
+          "team_name": "Pachuca J."
+        },
+        {
+          "team_name": "R. de La Plata"
+        },
+        {
+          "team_name": "U.A. de Hidalgo"
+        },
+        {
+          "team_name": "P. Naucalpan"
+        },
+        {
+          "team_name": "Cuautla"
+        },
+        {
+          "team_name": "Mexico D.F. P.P."
+        },
+        {
+          "team_name": "A. Coapa"
+        },
+        {
+          "team_name": "Tecamachalco"
+        },
+        {
+          "team_name": "A. Cuernavaca"
+        },
+        {
+          "team_name": "Puebla F."
+        },
+        {
+          "team_name": "U.A.E. Mexico"
+        },
+        {
+          "team_name": "Pachuca T."
+        },
+        {
+          "team_name": "Zecatepel"
+        },
+        {
+          "team_name": "A. Tapatio"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "cup": {
+    "name": "Primera \"a\" Division Torneo Clausura",
+    "short_name": "1a \"a\" Clausura",
+    "sid": "mexico2_clausura",
+    "property": [
+      "national",
+      "highlight3"
+    ],
+    "add_week": "42",
+    "week_gap": "1",
+    "last_week": "44",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "mexico2",
+              "number_of_teams": "8",
+              "start_idx": "1",
+              "end_idx": "8"
+            }
+          },
+          "two_match_week": "1"
+        },
+        {
+          "two_match_week": "1"
+        },
+        {
+          "two_match_week": "1"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "league": {
+    "sid": "netherlands2",
+    "name": "Jupiler League",
+    "short_name": "1e div.",
+    "symbol": "flag_netherlands.png",
+    "first_week": "6",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "3",
+      "#text": "26"
+    },
+    "average_talent": "6800",
+    "yellow_red": "5",
+    "names_file": "netherlands",
+    "two_match_week_start": "7",
+    "two_match_week_end": "8",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "netherlands1",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Apeldoorn"
+        },
+        {
+          "team_name": "Cambuur"
+        },
+        {
+          "team_name": "Den Bosch"
+        },
+        {
+          "team_name": "Dordrecht"
+        },
+        {
+          "team_name": "Eindhoven"
+        },
+        {
+          "team_name": "Emmen"
+        },
+        {
+          "team_name": "Excelsior"
+        },
+        {
+          "team_name": "F. Sittard"
+        },
+        {
+          "team_name": "G. A. Eagles"
+        },
+        {
+          "team_name": "Haarlem"
+        },
+        {
+          "team_name": "Helmond"
+        },
+        {
+          "team_name": "Maastricht"
+        },
+        {
+          "team_name": "O. Almere"
+        },
+        {
+          "team_name": "Roosendaal"
+        },
+        {
+          "team_name": "R. Waalwijk"
+        },
+        {
+          "team_name": "Telstar"
+        },
+        {
+          "team_name": "T. Oss"
+        },
+        {
+          "team_name": "Veendam"
+        },
+        {
+          "team_name": "Venlo"
+        },
+        {
+          "team_name": "Zwolle"
+        }
+      ]
+    }
+  }
+}

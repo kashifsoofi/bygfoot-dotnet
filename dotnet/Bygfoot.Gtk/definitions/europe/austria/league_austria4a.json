@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "austria4a",
+    "name": "Landesliga Burgenland",
+    "short_name": "LL B.",
+    "symbol": "flag_austria.png",
+    "first_week": "2",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "13",
+      "#text": "23"
+    },
+    "average_talent": "5000",
+    "names_file": "germany",
+    "layer": "4",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "austria3a austria3b austria3c",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Oberwart"
+        },
+        {
+          "team_name": "A. Baumgarten"
+        },
+        {
+          "team_name": "Kohfidisch"
+        },
+        {
+          "team_name": "Güssingen"
+        },
+        {
+          "team_name": "E. Parndorf II"
+        },
+        {
+          "team_name": "Forchtenstein"
+        },
+        {
+          "team_name": "Neudörfl"
+        },
+        {
+          "team_name": "Oberpullendorf"
+        },
+        {
+          "team_name": "Purbach"
+        },
+        {
+          "team_name": "Klingenbach"
+        },
+        {
+          "team_name": "Schattendorf"
+        },
+        {
+          "team_name": "H. Unterpetersdorf"
+        },
+        {
+          "team_name": "Jennersdorf"
+        },
+        {
+          "team_name": "Neuberg"
+        },
+        {
+          "team_name": "St. Margarethen"
+        },
+        {
+          "team_name": "Tadten"
+        }
+      ]
+    }
+  }
+}

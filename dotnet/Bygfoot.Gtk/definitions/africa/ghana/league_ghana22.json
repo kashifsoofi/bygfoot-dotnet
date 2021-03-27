@@ -1,0 +1,90 @@
+{
+  "league": {
+    "sid": "ghana22",
+    "layer": "2",
+    "name": "Division One League 2",
+    "short_name": "Zone 2",
+    "symbol": "flag_ghana.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "6600",
+    "yellow_red": "3",
+    "names_file": "general",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "ghana1",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Mine Stars",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Medeama",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Ebusua Dwarfs",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "West Ham United",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Metro Stars",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Deportivo",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Samartex",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Windy Professionals",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Starke",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Tarkwa United",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Gold Stars",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Venomenous Vipers",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Cornerstone",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Gamba All Blacks",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Norchip",
+          "team_average_talent": "6600"
+        },
+        {
+          "team_name": "Feyenoord Academy",
+          "team_average_talent": "6600"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "league": {
+    "sid": "finland2",
+    "name": "Ykkönen",
+    "short_name": "1. Div.",
+    "symbol": "flag_finland.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "6100",
+    "yellow_red": "5",
+    "names_file": "finland",
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "1",
+          "dest_sid": "finland1",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "12",
+          "rank_end": "14",
+          "dest_sid": "finland3a finland3b finland3c",
+          "prom_rel_type": "relegation"
+        }
+      ],
+      "prom_games": {
+        "prom_games_dest_sid": "finland1",
+        "prom_games_cup_sid": "finland_prom_games1",
+        "prom_games_loser_sid": "finland2"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "A. Helsinki"
+        },
+        {
+          "team_name": "I. Grankulla"
+        },
+        {
+          "team_name": "Hämeenlinna"
+        },
+        {
+          "team_name": "Joensuu"
+        },
+        {
+          "team_name": "Jyväskylä"
+        },
+        {
+          "team_name": "Kemi"
+        },
+        {
+          "team_name": "Kokkola"
+        },
+        {
+          "team_name": "K. Helsinki"
+        },
+        {
+          "team_name": "A. Oulu"
+        },
+        {
+          "team_name": "P. Helsinki"
+        },
+        {
+          "team_name": "T. Seinäjoki"
+        },
+        {
+          "team_name": "T. Tampere"
+        },
+        {
+          "team_name": "I. Vasa"
+        },
+        {
+          "team_name": "V. Helsinki"
+        }
+      ]
+    }
+  }
+}

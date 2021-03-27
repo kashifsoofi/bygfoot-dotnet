@@ -1,0 +1,69 @@
+{
+  "league": {
+    "sid": "guatemala1",
+    "layer": "1",
+    "name": "Primera División",
+    "short_name": "Primera",
+    "symbol": "flag_guatemala.png",
+    "first_week": "5",
+    "week_gap": "1",
+    "average_talent": "7500",
+    "yellow_red": "3",
+    "round_robins": "4",
+    "names_file": "latinoamerica",
+    "new_table": [
+      {
+        "@name": "Verano",
+        "#text": "1"
+      },
+      {
+        "@name": "Invierno",
+        "#text": "23"
+      }
+    ],
+    "teams": {
+      "team": [
+        {
+          "team_name": "Municipal",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Xelajú",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Comunicaciones",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Heredia",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Suchitepéquez",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Jalapa",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Xinabajul",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Zacapa",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Marquense",
+          "team_average_talent": "7500"
+        },
+        {
+          "team_name": "Petapa",
+          "team_average_talent": "7500"
+        }
+      ]
+    }
+  }
+}

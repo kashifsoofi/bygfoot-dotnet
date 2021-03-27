@@ -1,0 +1,28 @@
+{
+  "country": {
+    "name": "Switzerland",
+    "symbol": "flag_switzerland.png",
+    "sid": "switzerland",
+    "rating": "6",
+    "leagues": {
+      "league": [
+        "switzerland1",
+        "switzerland2",
+        "switzerland3a",
+        "switzerland3b",
+        "switzerland3c"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "switzerland_cup",
+        "europe_uefa3b",
+        "europe_champ_league1a",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "switzerland_prom_games1",
+        "switzerland_prom_games2"
+      ]
+    }
+  }
+}

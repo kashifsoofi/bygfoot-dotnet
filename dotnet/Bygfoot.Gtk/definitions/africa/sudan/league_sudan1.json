@@ -1,0 +1,74 @@
+{
+  "league": {
+    "sid": "sudan1",
+    "layer": "1",
+    "name": "Sudani Champion League",
+    "short_name": "League",
+    "symbol": "flag_sudan.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "7300",
+    "yellow_red": "3",
+    "names_file": "general",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Al-Hilal",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Al-Merreikh",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Al-Khartoum",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Al-Nil",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Al-Mawrada",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Jazeerat",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Hay al-Arab",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Al-Hilal Port Sudan",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Al-Hilal Kaduqli",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Al-Amal",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Ahli",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Al-Ittihad",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Al-Ahli",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Merghani",
+          "team_average_talent": "7300"
+        }
+      ]
+    }
+  }
+}

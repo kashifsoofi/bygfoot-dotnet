@@ -1,0 +1,74 @@
+{
+  "league": {
+    "sid": "conmebol",
+    "name": "CONMEBOL",
+    "short_name": "CONMEBOL",
+    "average_talent": "9000",
+    "property": "inactive",
+    "layer": "1",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Argentina",
+          "team_average_talent": "8730",
+          "team_symbol": "flag_argentina.png",
+          "team_names_file": "latinoamerica"
+        },
+        {
+          "team_name": "Brazil",
+          "team_average_talent": "9135",
+          "team_symbol": "flag_brazil.png",
+          "team_names_file": "brazil"
+        },
+        {
+          "team_name": "Ecuador",
+          "team_average_talent": "8155",
+          "team_symbol": "flag_ecuador.png",
+          "team_names_file": "latinoamerica"
+        },
+        {
+          "team_name": "Paraguay",
+          "team_average_talent": "8265",
+          "team_symbol": "flag_paraguay.png",
+          "team_names_file": "latinoamerica"
+        },
+        {
+          "team_name": "Uruguay",
+          "team_average_talent": "8445",
+          "team_symbol": "flag_uruguay.png",
+          "team_names_file": "latinoamerica"
+        },
+        {
+          "team_name": "Colombia",
+          "team_average_talent": "8405",
+          "team_symbol": "flag_colombia.png",
+          "team_names_file": "latinoamerica"
+        },
+        {
+          "team_name": "Chile",
+          "team_average_talent": "7785",
+          "team_symbol": "flag_chile.png",
+          "team_names_file": "latinoamerica"
+        },
+        {
+          "team_name": "Venezuela",
+          "team_average_talent": "7695",
+          "team_symbol": "flag_venezuela.png",
+          "team_names_file": "latinoamerica"
+        },
+        {
+          "team_name": "Peru",
+          "team_average_talent": "7750",
+          "team_symbol": "flag_peru.png",
+          "team_names_file": "peru"
+        },
+        {
+          "team_name": "Bolivia",
+          "team_average_talent": "7280",
+          "team_symbol": "flag_bolivia.png",
+          "team_names_file": "latinoamerica"
+        }
+      ]
+    }
+  }
+}

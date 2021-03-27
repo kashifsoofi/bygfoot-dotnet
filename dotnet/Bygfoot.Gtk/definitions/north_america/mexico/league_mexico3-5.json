@@ -1,0 +1,53 @@
+{
+  "league": {
+    "sid": "mexico3-5",
+    "name": "Segunda Division Zona Sur",
+    "short_name": "2a Sur",
+    "symbol": "flag_mexico.png",
+    "layer": "3",
+    "first_week": "5",
+    "week_gap": "1",
+    "average_talent": "6000",
+    "yellow_red": "3",
+    "round_robins": "2",
+    "names_file": "latinoamerica",
+    "break": "15",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Coatzacoalcos"
+        },
+        {
+          "team_name": "Inter Playa del C."
+        },
+        {
+          "team_name": "J. Tabasco"
+        },
+        {
+          "team_name": "Orizaba"
+        },
+        {
+          "team_name": "Ocelotes U.N.A.Ch."
+        },
+        {
+          "team_name": "Cordoba"
+        },
+        {
+          "team_name": "F.C. Itzaes"
+        },
+        {
+          "team_name": "U. del Golfo"
+        },
+        {
+          "team_name": "T.B. de Xalapa"
+        },
+        {
+          "team_name": "L. Rio Grande"
+        },
+        {
+          "team_name": "P. Cancun"
+        }
+      ]
+    }
+  }
+}

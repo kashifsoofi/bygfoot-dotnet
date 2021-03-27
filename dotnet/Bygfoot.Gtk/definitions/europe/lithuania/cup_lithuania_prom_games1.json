@@ -1,0 +1,34 @@
+{
+  "cup": {
+    "name": "1. Lyga Promotion Games",
+    "short_name": "1. L. Prom.",
+    "symbol": "flag_lithuania.png",
+    "sid": "lithuania_prom_games1",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2"
+    ],
+    "yellow_red": "3",
+    "cup_rounds": {
+      "cup_round": {
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "lithuania2",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "lithuania1",
+              "number_of_teams": "1",
+              "start_idx": "7",
+              "end_idx": "7"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

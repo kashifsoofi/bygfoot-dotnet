@@ -1,0 +1,68 @@
+{
+  "league": {
+    "sid": "norway3c",
+    "name": "2. divisjon avd. 3",
+    "short_name": "2.3",
+    "symbol": "flag_norway.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "5800",
+    "yellow_red": "5",
+    "names_file": "norway",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "norway2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Fa. Bergen"
+        },
+        {
+          "team_name": "Flekkerøy"
+        },
+        {
+          "team_name": "Fy. Bergen"
+        },
+        {
+          "team_name": "Lillestrøm II"
+        },
+        {
+          "team_name": "Mandal"
+        },
+        {
+          "team_name": "N-S. Ågotnes"
+        },
+        {
+          "team_name": "O. Osøyro"
+        },
+        {
+          "team_name": "Randaberg"
+        },
+        {
+          "team_name": "Stavanger"
+        },
+        {
+          "team_name": "V. Haugesund"
+        },
+        {
+          "team_name": "V. Vennesla"
+        },
+        {
+          "team_name": "V. Stavanger II"
+        },
+        {
+          "team_name": "Ålgård"
+        },
+        {
+          "team_name": "Å. Bergen"
+        }
+      ]
+    }
+  }
+}

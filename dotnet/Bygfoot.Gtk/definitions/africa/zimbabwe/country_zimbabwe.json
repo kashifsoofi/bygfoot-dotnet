@@ -1,0 +1,24 @@
+{
+  "country": {
+    "name": "zimbabwe",
+    "rating": "9",
+    "symbol": "flag_zimbabwe.png",
+    "sid": "zimbabwe",
+    "leagues": {
+      "league": [
+        "zimbabwe1",
+        "zimbabwe21",
+        "zimbabwe22",
+        "zimbabwe23",
+        "zimbabwe24",
+        "zimbabwe31",
+        "zimbabwe32",
+        "zimbabwe33",
+        "zimbabwe34"
+      ]
+    },
+    "cups": {
+      "cup": "cup_zimbabwe"
+    }
+  }
+}

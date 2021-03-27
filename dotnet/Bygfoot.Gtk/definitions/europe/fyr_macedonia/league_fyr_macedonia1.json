@@ -1,0 +1,70 @@
+{
+  "league": {
+    "sid": "fyr_macedonia1",
+    "name": "Prva Liga",
+    "short_name": "Prva L.",
+    "symbol": "flag_fyr_macedonia.png",
+    "first_week": "6",
+    "week_gap": "1",
+    "break_in": [
+      {
+        "@length": "1",
+        "#text": "10"
+      },
+      {
+        "@length": "1",
+        "#text": "15"
+      },
+      {
+        "@length": "11",
+        "#text": "25"
+      }
+    ],
+    "average_talent": "6700",
+    "names_file": "serbia",
+    "round_robins": "3",
+    "yellow_red": "5",
+    "two_match_week_start": [
+      "13",
+      "23",
+      "28"
+    ],
+    "two_match_week_end": [
+      "14",
+      "24",
+      "29"
+    ],
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "4",
+        "rank_end": "5",
+        "dest_sid": "fyr_macedonia2",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Rabotnički",
+          "team_average_talent": "5100"
+        },
+        {
+          "team_name": "Pobeda",
+          "team_average_talent": "4000"
+        },
+        {
+          "team_name": "Vardar",
+          "team_average_talent": "4400"
+        },
+        {
+          "team_name": "Teteks",
+          "team_average_talent": "4500"
+        },
+        {
+          "team_name": "Bregalnica",
+          "team_average_talent": "4000"
+        }
+      ]
+    }
+  }
+}

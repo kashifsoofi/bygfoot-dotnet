@@ -1,0 +1,99 @@
+{
+  "league": {
+    "sid": "colombia2",
+    "layer": "2",
+    "name": "Primera B",
+    "short_name": "Primera B",
+    "symbol": "flag_colombia.png",
+    "average_talent": "6800",
+    "names_file": "latinoamerica",
+    "property": [
+      "inactive",
+      "omit_from_history"
+    ],
+    "prom_rel": {
+      "prom_games": {
+        "prom_games_dest_sid": "colombia1",
+        "prom_games_loser_sid": "colombia2",
+        "prom_games_number_of_advance": "2",
+        "prom_games_cup_sid": "copa_premier_final"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Academia",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "A. Petrolera",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Barranquilla",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Bogotá",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Centauros",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Córdoba",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Cortulúa",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Depor",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Expreso R.",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Girardot",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Itaguí",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "J. Soacha",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "R. Santander",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Patriotas",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "R. Cartagena",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Rionegro",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "U. Magdalena",
+          "team_average_talent": "6800"
+        },
+        {
+          "team_name": "Valledupar",
+          "team_average_talent": "6800"
+        }
+      ]
+    }
+  }
+}

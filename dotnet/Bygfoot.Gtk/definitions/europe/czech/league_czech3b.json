@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "czech3b",
+    "name": "3. Ligy Moravskoslezská fotbalová liga",
+    "short_name": "3. L. MSFL",
+    "symbol": "flag_czech.png",
+    "first_week": "6",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "11",
+      "#text": "23"
+    },
+    "average_talent": "6000",
+    "names_file": "czech",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "czech2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Blansko"
+        },
+        {
+          "team_name": "B. Knínicky"
+        },
+        {
+          "team_name": "Breclav"
+        },
+        {
+          "team_name": "B. Ostrava II"
+        },
+        {
+          "team_name": "F. F. Místek"
+        },
+        {
+          "team_name": "Brno II"
+        },
+        {
+          "team_name": "H. S. Kromeríz"
+        },
+        {
+          "team_name": "Hlucín"
+        },
+        {
+          "team_name": "Mutenice"
+        },
+        {
+          "team_name": "Slovácko II"
+        },
+        {
+          "team_name": "S. Olomouc II"
+        },
+        {
+          "team_name": "Unicov"
+        },
+        {
+          "team_name": "V. Jihlava II"
+        },
+        {
+          "team_name": "Zábreh"
+        },
+        {
+          "team_name": "Zlín II"
+        },
+        {
+          "team_name": "Znojmo"
+        }
+      ]
+    }
+  }
+}

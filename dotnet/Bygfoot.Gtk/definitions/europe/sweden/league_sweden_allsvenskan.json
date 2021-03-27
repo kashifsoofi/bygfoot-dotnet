@@ -1,0 +1,45 @@
+{
+  "league": {
+    "sid": "sweden_allsvenskan",
+    "name": "Allsvenskan",
+    "short_name": "Allsv.",
+    "symbol": "flag_sweden.png",
+    "first_week": "2",
+    "week_gap": "1",
+    "average_talent": "7000",
+    "names_file": "sweden",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "4",
+        "rank_end": "5",
+        "dest_sid": "sweden_superettan",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Malmö FF",
+          "def_file": "sweden_malmo"
+        },
+        {
+          "team_name": "IFK Göteborg",
+          "team_average_talent": "6550"
+        },
+        {
+          "team_name": "IF Elfsborg",
+          "team_average_talent": "6400"
+        },
+        {
+          "team_name": "Helsingborgs IF",
+          "team_average_talent": "6300"
+        },
+        {
+          "team_name": "Kalmar FF",
+          "team_average_talent": "6100"
+        }
+      ]
+    }
+  }
+}

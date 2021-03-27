@@ -1,0 +1,77 @@
+{
+  "league": {
+    "sid": "belize1",
+    "layer": "1",
+    "name": "Premier League",
+    "short_name": "Premier",
+    "symbol": "flag_belize.png",
+    "first_week": "5",
+    "week_gap": "1",
+    "average_talent": "7000",
+    "yellow_red": "3",
+    "round_robins": "4",
+    "names_file": "england",
+    "new_table": [
+      {
+        "@name": "Summer",
+        "#text": "1"
+      },
+      {
+        "@name": "Winter",
+        "#text": "27"
+      }
+    ],
+    "teams": {
+      "team": [
+        {
+          "team_name": "Hankook Verdes",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "FC Belize",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Georgetown Ibayani",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Belize Defense Force",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Alliance Scorpions",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Nizhee Corozal",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Suga Boys",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Wagiya",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "San Pedro Bullsharks",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Ilagulei",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "Tafari",
+          "team_average_talent": "7000"
+        },
+        {
+          "team_name": "San Pedro Dolphins",
+          "team_average_talent": "7000"
+        }
+      ]
+    }
+  }
+}

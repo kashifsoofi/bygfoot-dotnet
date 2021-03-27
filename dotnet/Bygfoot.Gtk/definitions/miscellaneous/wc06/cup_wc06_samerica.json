@@ -1,0 +1,26 @@
+{
+  "cup": {
+    "name": "Qualification S. America",
+    "short_name": "QSAmerica",
+    "sid": "wc06_samerica",
+    "symbol": "wc_samerica.png",
+    "yellow_red": "3",
+    "last_week": "18",
+    "add_week": "0",
+    "week_gap": "1",
+    "property": "international",
+    "cup_rounds": {
+      "cup_round": {
+        "number_of_groups": "1",
+        "number_of_advance": "4",
+        "new_teams": "10",
+        "randomise_teams": "0",
+        "choose_teams": {
+          "choose_team": {
+            "choose_team_sid": "wc06_samerica_teams"
+          }
+        }
+      }
+    }
+  }
+}

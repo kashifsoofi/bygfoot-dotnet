@@ -1,0 +1,104 @@
+{
+  "league": {
+    "sid": "spain2",
+    "name": "Segunda División",
+    "short_name": "Segunda",
+    "symbol": "flag_spain.png",
+    "first_week": "9",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "1",
+      "#text": "26"
+    },
+    "average_talent": "6600",
+    "names_file": "spain",
+    "yellow_red": "5",
+    "layer": "2",
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "3",
+          "dest_sid": "spain1",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "19",
+          "rank_end": "22",
+          "dest_sid": "spain3a spain3b spain3c spain3d",
+          "prom_rel_type": "relegation"
+        }
+      ]
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Alavés"
+        },
+        {
+          "team_name": "Albacete"
+        },
+        {
+          "team_name": "Alicante"
+        },
+        {
+          "team_name": "Castellón"
+        },
+        {
+          "team_name": "C. Vigo"
+        },
+        {
+          "team_name": "Córdoba"
+        },
+        {
+          "team_name": "Eibar"
+        },
+        {
+          "team_name": "Elche"
+        },
+        {
+          "team_name": "Gimnàstic"
+        },
+        {
+          "team_name": "Girona"
+        },
+        {
+          "team_name": "Hércules"
+        },
+        {
+          "team_name": "Huesca"
+        },
+        {
+          "team_name": "Las Palmas"
+        },
+        {
+          "team_name": "L. Valencia"
+        },
+        {
+          "team_name": "Murcia"
+        },
+        {
+          "team_name": "R. V. Madrid"
+        },
+        {
+          "team_name": "Salamanca"
+        },
+        {
+          "team_name": "Sevilla A."
+        },
+        {
+          "team_name": "R. Sociedad"
+        },
+        {
+          "team_name": "Tenerife"
+        },
+        {
+          "team_name": "Zaragoza"
+        },
+        {
+          "team_name": "Xerez"
+        }
+      ]
+    }
+  }
+}

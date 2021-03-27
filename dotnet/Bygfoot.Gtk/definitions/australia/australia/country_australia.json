@@ -1,0 +1,17 @@
+{
+  "country": {
+    "name": "Australia",
+    "rating": "5",
+    "symbol": "flag_australia.png",
+    "sid": "australia",
+    "leagues": {
+      "league": "australia1"
+    },
+    "cups": {
+      "cup": [
+        "australia_a_league",
+        "australia_playoffs"
+      ]
+    }
+  }
+}

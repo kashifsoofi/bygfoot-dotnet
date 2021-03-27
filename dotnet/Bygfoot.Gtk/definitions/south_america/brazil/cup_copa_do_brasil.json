@@ -1,0 +1,41 @@
+{
+  "cup": {
+    "name": "Copa do Brasil",
+    "short_name": "Copa",
+    "symbol": "flag_brazil.png",
+    "sid": "copa_do_brasil",
+    "add_week": "0",
+    "last_week": "47",
+    "week_gap": "3",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "round_name": "Pre Copa",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "brazil1",
+                "number_of_teams": "14",
+                "start_idx": "7",
+                "end_idx": "20"
+              },
+              {
+                "choose_team_sid": "brazil2"
+              },
+              {
+                "choose_team_sid": "brazil3"
+              }
+            ]
+          }
+        },
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  }
+}

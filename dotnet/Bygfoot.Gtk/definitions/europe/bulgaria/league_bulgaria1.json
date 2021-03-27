@@ -1,0 +1,59 @@
+{
+  "league": {
+    "sid": "bulgaria1",
+    "name": "A PFG",
+    "short_name": "А",
+    "symbol": "flag_bulgaria.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "break_in": [
+      {
+        "@length": "1",
+        "#text": "10"
+      },
+      {
+        "@length": "1",
+        "#text": "15"
+      },
+      {
+        "@length": "11",
+        "#text": "23"
+      }
+    ],
+    "average_talent": "7500",
+    "yellow_red": "5",
+    "names_file": "bulgaria",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "3",
+        "rank_end": "5",
+        "dest_sid": "bulgaria2a bulgaria2b",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Levski Sofia",
+          "def_file": "bulgaria_levski"
+        },
+        {
+          "team_name": "CSKA Sofia",
+          "def_file": "bulgaria_sofia"
+        },
+        {
+          "team_name": "Litex Lovech",
+          "def_file": "bulgaria_litex"
+        },
+        {
+          "team_name": "Locomotiv Plovdiv",
+          "def_file": "bulgaria_plovdiv"
+        },
+        {
+          "team_name": "Chernomorets",
+          "def_file": "bulgaria_cherno"
+        }
+      ]
+    }
+  }
+}

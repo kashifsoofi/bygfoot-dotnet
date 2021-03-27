@@ -1,0 +1,14 @@
+{
+  "country": {
+    "name": "nicaragua",
+    "rating": "9",
+    "symbol": "flag_nicaragua.png",
+    "sid": "nicaragua",
+    "leagues": {
+      "league": "nicaragua1"
+    },
+    "cups": {
+      "cup": "nicaragua_champ_league"
+    }
+  }
+}

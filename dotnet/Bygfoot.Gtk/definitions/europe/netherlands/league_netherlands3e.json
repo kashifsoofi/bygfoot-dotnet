@@ -1,0 +1,61 @@
+{
+  "league": {
+    "sid": "netherlands3e",
+    "name": "Zondag Hoofdklasse B",
+    "short_name": "Zon. hoofdkl.b",
+    "symbol": "flag_netherlands.png",
+    "first_week": "9",
+    "week_gap": "1",
+    "break": "8",
+    "average_talent": "6100",
+    "yellow_red": "5",
+    "names_file": "netherlands",
+    "layer": "3",
+    "teams": {
+      "team": [
+        {
+          "team_name": "D. Kaatsheuvel"
+        },
+        {
+          "team_name": "Deurne"
+        },
+        {
+          "team_name": "Gemert"
+        },
+        {
+          "team_name": "B. Breda"
+        },
+        {
+          "team_name": "Schijndel"
+        },
+        {
+          "team_name": "U. Veldhoven"
+        },
+        {
+          "team_name": "D. B. Helmond"
+        },
+        {
+          "team_name": "L. Tilburg"
+        },
+        {
+          "team_name": "Rosmalen"
+        },
+        {
+          "team_name": "Cuijk"
+        },
+        {
+          "team_name": "Meerssen"
+        },
+        {
+          "team_name": "Papendrecht"
+        },
+        {
+          "team_name": "E. Echt"
+        },
+        {
+          "team_name": "Venray"
+        }
+      ]
+    }
+  }
+}

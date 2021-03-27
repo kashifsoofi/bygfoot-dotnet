@@ -1,0 +1,18 @@
+{
+  "country": {
+    "name": "korea",
+    "rating": "9",
+    "symbol": "flag_korea.png",
+    "sid": "korea",
+    "leagues": {
+      "league": [
+        "korea1",
+        "korea2",
+        "korea3"
+      ]
+    },
+    "cups": {
+      "cup": "korea_champ_league"
+    }
+  }
+}

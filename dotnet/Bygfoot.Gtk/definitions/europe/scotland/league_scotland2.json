@@ -1,0 +1,64 @@
+{
+  "league": {
+    "sid": "scotland2",
+    "name": "Scottish Division One",
+    "short_name": "SD1",
+    "symbol": "flag_scotland.png",
+    "first_week": "6",
+    "week_gap": "1",
+    "average_talent": "7000",
+    "round_robins": "4",
+    "names_file": "scotland",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "1",
+          "dest_sid": "scotland1",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "10",
+          "rank_end": "10",
+          "dest_sid": "scotland3",
+          "prom_rel_type": "relegation"
+        }
+      ]
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Airdrie"
+        },
+        {
+          "team_name": "Clyde"
+        },
+        {
+          "team_name": "Dundee"
+        },
+        {
+          "team_name": "Dunfermline"
+        },
+        {
+          "team_name": "Livingston"
+        },
+        {
+          "team_name": "Morton"
+        },
+        {
+          "team_name": "Partick"
+        },
+        {
+          "team_name": "Queen of S."
+        },
+        {
+          "team_name": "Ross C."
+        },
+        {
+          "team_name": "St Johnstone"
+        }
+      ]
+    }
+  }
+}

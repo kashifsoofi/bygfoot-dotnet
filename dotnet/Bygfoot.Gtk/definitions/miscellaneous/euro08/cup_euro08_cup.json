@@ -1,0 +1,88 @@
+{
+  "cup": {
+    "name": "Euro 2008",
+    "short_name": "Euro 2008",
+    "sid": "euro08_cup",
+    "symbol": "flag_euro08.png",
+    "yellow_red": "3",
+    "week_gap": "1",
+    "property": "international",
+    "last_week": "25",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "new_teams": "50",
+          "number_of_groups": "7",
+          "number_of_advance": "2",
+          "number_of_best_advance": "2",
+          "randomise_teams": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "euro08_europe_teams",
+                "number_of_teams": "8",
+                "start_idx": "1",
+                "end_idx": "8"
+              },
+              {
+                "choose_team_sid": "euro08_europe_teams",
+                "number_of_teams": "7",
+                "start_idx": "9",
+                "end_idx": "15"
+              },
+              {
+                "choose_team_sid": "euro08_europe_teams",
+                "number_of_teams": "7",
+                "start_idx": "16",
+                "end_idx": "22"
+              },
+              {
+                "choose_team_sid": "euro08_europe_teams",
+                "number_of_teams": "7",
+                "start_idx": "23",
+                "end_idx": "29"
+              },
+              {
+                "choose_team_sid": "euro08_europe_teams",
+                "number_of_teams": "7",
+                "start_idx": "30",
+                "end_idx": "36"
+              },
+              {
+                "choose_team_sid": "euro08_europe_teams",
+                "number_of_teams": "7",
+                "start_idx": "37",
+                "end_idx": "43"
+              },
+              {
+                "choose_team_sid": "euro08_europe_teams",
+                "number_of_teams": "7",
+                "start_idx": "44",
+                "end_idx": "50"
+              }
+            ]
+          }
+        },
+        {
+          "new_teams": "2",
+          "home_away": "0",
+          "neutral": "1",
+          "number_of_groups": "4",
+          "number_of_advance": "2"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

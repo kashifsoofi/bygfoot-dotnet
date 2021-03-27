@@ -1,0 +1,30 @@
+{
+  "cup": {
+    "name": "Copa Premier",
+    "short_name": "CPremier3",
+    "symbol": "flag_colombia.png",
+    "sid": "copa_premier_final",
+    "add_week": "41",
+    "last_week": "45",
+    "week_gap": "1",
+    "property": [
+      "promotion",
+      "national"
+    ],
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "copa_premier_fase2",
+              "number_of_teams": "4",
+              "start_idx": "1",
+              "end_idx": "4"
+            }
+          }
+        },
+        ""
+      ]
+    }
+  }
+}

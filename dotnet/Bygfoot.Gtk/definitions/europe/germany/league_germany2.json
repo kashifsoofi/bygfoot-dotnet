@@ -1,0 +1,113 @@
+{
+  "league": {
+    "sid": "germany2",
+    "name": "2. Bundesliga",
+    "short_name": "2. BL",
+    "symbol": "flag_germany.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "break_in": [
+      {
+        "@length": "1",
+        "#text": "10"
+      },
+      {
+        "@length": "1",
+        "#text": "15"
+      },
+      {
+        "@length": "6",
+        "#text": "25"
+      },
+      {
+        "@length": "1",
+        "#text": "39"
+      }
+    ],
+    "average_talent": "6400",
+    "names_file": "germany",
+    "yellow_red": "5",
+    "two_match_week_start": [
+      "9",
+      "32"
+    ],
+    "two_match_week_end": [
+      "10",
+      "33"
+    ],
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "2",
+          "dest_sid": "germany1",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "17",
+          "rank_end": "18",
+          "dest_sid": "germany3",
+          "prom_rel_type": "relegation"
+        }
+      ]
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Aachen"
+        },
+        {
+          "team_name": "Ahlen"
+        },
+        {
+          "team_name": "Augsburg"
+        },
+        {
+          "team_name": "Duisburg"
+        },
+        {
+          "team_name": "F. Frankfurt"
+        },
+        {
+          "team_name": "Freiburg"
+        },
+        {
+          "team_name": "G. Fürth"
+        },
+        {
+          "team_name": "Ingolstadt"
+        },
+        {
+          "team_name": "Kaiserslautern"
+        },
+        {
+          "team_name": "Koblenz"
+        },
+        {
+          "team_name": "Mainz"
+        },
+        {
+          "team_name": "T. München"
+        },
+        {
+          "team_name": "Nürnberg"
+        },
+        {
+          "team_name": "Oberhausen"
+        },
+        {
+          "team_name": "Osnabrück"
+        },
+        {
+          "team_name": "Rostock"
+        },
+        {
+          "team_name": "St. Pauli"
+        },
+        {
+          "team_name": "W. Wiesbaden"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "country": {
+    "name": "Scotland",
+    "rating": "7",
+    "symbol": "flag_scotland.png",
+    "sid": "scotland",
+    "leagues": {
+      "league": [
+        "scotland1",
+        "scotland2",
+        "scotland3",
+        "scotland4"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "scotland_fa",
+        "scotland_league",
+        "europe_uefa2a",
+        "europe_champ_league2s",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "scotland_prom_games2",
+        "scotland_prom_games3"
+      ]
+    }
+  }
+}

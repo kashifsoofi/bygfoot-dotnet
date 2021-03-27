@@ -1,0 +1,23 @@
+{
+  "country": {
+    "name": "Belarus",
+    "symbol": "flag_belarus.png",
+    "sid": "belarus",
+    "rating": "5",
+    "leagues": {
+      "league": [
+        "belarus1",
+        "belarus2"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "belarus_cup",
+        "europe_uefa",
+        "europe_champ_league",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental"
+      ]
+    }
+  }
+}

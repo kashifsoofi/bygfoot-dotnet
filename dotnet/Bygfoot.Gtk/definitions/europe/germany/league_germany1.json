@@ -1,0 +1,128 @@
+{
+  "league": {
+    "sid": "germany1",
+    "name": "1.Bundesliga",
+    "short_name": "BL",
+    "symbol": "bundesliga.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "break_in": [
+      {
+        "@length": "1",
+        "#text": "10"
+      },
+      {
+        "@length": "1",
+        "#text": "15"
+      },
+      {
+        "@length": "6",
+        "#text": "25"
+      },
+      {
+        "@length": "1",
+        "#text": "39"
+      }
+    ],
+    "average_talent": "8300",
+    "names_file": "germany",
+    "yellow_red": "5",
+    "two_match_week_start": [
+      "9",
+      "32"
+    ],
+    "two_match_week_end": [
+      "10",
+      "33"
+    ],
+    "prom_rel": {
+      "prom_games": {
+        "prom_games_dest_sid": "germany1",
+        "prom_games_cup_sid": "germany_prom_games1",
+        "prom_games_loser_sid": "germany2"
+      },
+      "prom_rel_element": {
+        "rank_start": "17",
+        "rank_end": "18",
+        "dest_sid": "germany2",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Bayern Munich",
+          "def_file": "germany_bayern"
+        },
+        {
+          "team_name": "Borussia Dortmund",
+          "def_file": "germany_borussia"
+        },
+        {
+          "team_name": "Bayer Leverkusen",
+          "def_file": "germany_bayer"
+        },
+        {
+          "team_name": "Schalke 04",
+          "def_file": "germany_schalke"
+        },
+        {
+          "team_name": "Hamburger SV",
+          "def_file": "germany_hamburger"
+        },
+        {
+          "team_name": "VfL Wolfsburg",
+          "def_file": "germany_wolfsburg"
+        },
+        {
+          "team_name": "Werder Bremen",
+          "def_file": "germany_werder"
+        },
+        {
+          "team_name": "VfB Stuttgart",
+          "def_file": "germany_stuttgart"
+        },
+        {
+          "team_name": "1899 Hoffenheim",
+          "def_file": "germany_hoffenheim"
+        },
+        {
+          "team_name": "1.FC Köln",
+          "def_file": "germany_koln"
+        },
+        {
+          "team_name": "1.FC Nürnberg",
+          "def_file": "germany_nurnberg"
+        },
+        {
+          "team_name": "Hannover 96",
+          "def_file": "germany_hannover"
+        },
+        {
+          "team_name": "Eintracht Frankfurt",
+          "def_file": "germany_eintracht"
+        },
+        {
+          "team_name": "SC Freiburg",
+          "def_file": "germany_freiburg"
+        },
+        {
+          "team_name": "Borussia Mönchengladbach",
+          "def_file": "germany_gladbach"
+        },
+        {
+          "team_name": "FSV Mainz 05",
+          "def_file": "germany_mainz"
+        },
+        {
+          "team_name": "1.FC Kaiserslautern",
+          "def_file": "germany_kaiserslautern"
+        },
+        {
+          "team_name": "St Pauli",
+          "def_file": "germany_stpauli"
+        }
+      ]
+    }
+  }
+}

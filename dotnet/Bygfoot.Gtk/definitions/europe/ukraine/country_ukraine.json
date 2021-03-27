@@ -1,0 +1,26 @@
+{
+  "country": {
+    "name": "Ukraine",
+    "symbol": "flag_ukraine.png",
+    "sid": "ukraine",
+    "rating": "7",
+    "leagues": {
+      "league": [
+        "ukraine1",
+        "ukraine2",
+        "ukraine3a",
+        "ukraine3b"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "ukraine_cup",
+        "europe_uefa2a",
+        "europe_champ_league2",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "ukraine_supercup"
+      ]
+    }
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "cup": {
+    "name": "Svenska Cupen",
+    "short_name": "Cupen",
+    "symbol": "flag_sweden.png",
+    "sid": "sweden_cupen",
+    "last_week": "47",
+    "week_gap": "4",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "byes": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "sweden_division_1_sodra",
+                "number_of_teams": "7",
+                "start_idx": "1",
+                "end_idx": "7"
+              },
+              {
+                "choose_team_sid": "sweden_division_1_norra",
+                "number_of_teams": "7",
+                "start_idx": "1",
+                "end_idx": "7"
+              },
+              {
+                "choose_team_sid": "sweden_division_2_mellerstagotaland",
+                "number_of_teams": "5",
+                "start_idx": "1",
+                "end_idx": "5"
+              },
+              {
+                "choose_team_sid": "sweden_division_2_norrasvealand",
+                "number_of_teams": "5",
+                "start_idx": "1",
+                "end_idx": "5"
+              },
+              {
+                "choose_team_sid": "sweden_division_2_norrland",
+                "number_of_teams": "5",
+                "start_idx": "1",
+                "end_idx": "5"
+              },
+              {
+                "choose_team_sid": "sweden_division_2_ostrasvealand",
+                "number_of_teams": "5",
+                "start_idx": "1",
+                "end_idx": "5"
+              },
+              {
+                "choose_team_sid": "sweden_division_2_sodragotaland",
+                "number_of_teams": "5",
+                "start_idx": "1",
+                "end_idx": "5"
+              },
+              {
+                "choose_team_sid": "sweden_division_2_vastragotaland",
+                "number_of_teams": "5",
+                "start_idx": "1",
+                "end_idx": "5"
+              },
+              {
+                "choose_team_sid": "sweden_division_3_mellerstagotaland",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "2"
+              },
+              {
+                "choose_team_sid": "sweden_division_3_mellerstanorrland",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "2"
+              },
+              {
+                "choose_team_sid": "sweden_division_3_nordostrasvealand",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "2"
+              },
+              {
+                "choose_team_sid": "sweden_division_3_nordvastragotaland",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "2"
+              },
+              {
+                "choose_team_sid": "sweden_division_3_norranorrland",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "2"
+              },
+              {
+                "choose_team_sid": "sweden_division_3_norrasvealand",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "2"
+              },
+              {
+                "choose_team_sid": "sweden_division_3_ostrasvealand",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "2"
+              },
+              {
+                "choose_team_sid": "sweden_division_3_sodragotaland",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "2"
+              },
+              {
+                "choose_team_sid": "sweden_division_3_sodranorrland",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "2"
+              },
+              {
+                "choose_team_sid": "sweden_division_3_sydostragotaland",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "2"
+              },
+              {
+                "choose_team_sid": "sweden_division_3_sydvastragotaland",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "2"
+              },
+              {
+                "choose_team_sid": "sweden_division_3_vastrasvealand",
+                "number_of_teams": "2",
+                "start_idx": "1",
+                "end_idx": "2"
+              }
+            ]
+          }
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "sweden_allsvenskan"
+              },
+              {
+                "choose_team_sid": "sweden_superettan"
+              }
+            ]
+          }
+        },
+        {
+          "home_away": "0"
+        },
+        {
+          "home_away": "0"
+        },
+        {
+          "home_away": "0"
+        },
+        {
+          "home_away": "0"
+        },
+        {
+          "home_away": "0"
+        }
+      ]
+    }
+  }
+}

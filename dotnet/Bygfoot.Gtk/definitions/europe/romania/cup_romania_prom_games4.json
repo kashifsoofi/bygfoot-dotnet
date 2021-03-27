@@ -1,0 +1,44 @@
+{
+  "cup": {
+    "name": "Liga III Baraj promovare B",
+    "short_name": "L. III Prom. B",
+    "symbol": "flag_romania.png",
+    "sid": "romania_prom_games4",
+    "yellow_red": "3",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2"
+    ],
+    "cup_rounds": {
+      "cup_round": {
+        "home_away": "0",
+        "neutral": "1",
+        "number_of_groups": "1",
+        "number_of_advance": "1",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "romania3d",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "romania3e",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "romania3f",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

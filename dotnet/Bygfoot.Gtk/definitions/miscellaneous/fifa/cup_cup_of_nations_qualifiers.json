@@ -1,0 +1,26 @@
+{
+  "cup": {
+    "name": "Cup of Nations Qualifiers",
+    "short_name": "Cup of Nations Qualifiers",
+    "sid": "cup_of_nations_qualifiers",
+    "symbol": "wc_africa.png",
+    "yellow_red": "3",
+    "last_week": "12",
+    "add_week": "0",
+    "week_gap": "1",
+    "property": "international",
+    "cup_rounds": {
+      "cup_round": {
+        "number_of_groups": "8",
+        "number_of_advance": "2",
+        "new_teams": "30",
+        "randomise_teams": "1",
+        "choose_teams": {
+          "choose_team": {
+            "choose_team_sid": "caf"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "league": {
+    "sid": "greece2",
+    "name": "Beta Ethniki",
+    "short_name": "B'",
+    "symbol": "flag_greece.png",
+    "first_week": "9",
+    "week_gap": "1",
+    "break": "2",
+    "average_talent": "7100",
+    "names_file": "greece",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "3",
+          "dest_sid": "greece1",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "16",
+          "rank_end": "18",
+          "dest_sid": "greece3a greece3b",
+          "prom_rel_type": "relegation"
+        }
+      ]
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "A. Asteras"
+        },
+        {
+          "team_name": "A. Karditsa"
+        },
+        {
+          "team_name": "A. Kalamaria"
+        },
+        {
+          "team_name": "At. Athena"
+        },
+        {
+          "team_name": "D. Rodos"
+        },
+        {
+          "team_name": "E. Asteras"
+        },
+        {
+          "team_name": "E. Piraeus"
+        },
+        {
+          "team_name": "I. Zografou"
+        },
+        {
+          "team_name": "I. Nikaias"
+        },
+        {
+          "team_name": "Kalamata"
+        },
+        {
+          "team_name": "Kallithea"
+        },
+        {
+          "team_name": "Kastoria"
+        },
+        {
+          "team_name": "Kavala"
+        },
+        {
+          "team_name": "Kerkyra"
+        },
+        {
+          "team_name": "O.Volou"
+        },
+        {
+          "team_name": "P. Giannina"
+        },
+        {
+          "team_name": "P. Katerini"
+        },
+        {
+          "team_name": "Veria"
+        }
+      ]
+    }
+  }
+}

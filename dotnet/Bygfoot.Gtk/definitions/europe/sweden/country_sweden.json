@@ -1,0 +1,47 @@
+{
+  "country": {
+    "name": "Sweden",
+    "rating": "6",
+    "symbol": "flag_sweden.png",
+    "sid": "sweden",
+    "leagues": {
+      "league": [
+        "sweden_allsvenskan",
+        "sweden_superettan",
+        "sweden_division_1_norra",
+        "sweden_division_1_sodra",
+        "sweden_division_2_vastragotaland",
+        "sweden_division_2_sodragotaland",
+        "sweden_division_2_ostrasvealand",
+        "sweden_division_2_norrland",
+        "sweden_division_2_norrasvealand",
+        "sweden_division_2_mellerstagotaland",
+        "sweden_division_3_mellerstagotaland",
+        "sweden_division_3_mellerstanorrland",
+        "sweden_division_3_nordostragotaland",
+        "sweden_division_3_nordvastragotaland",
+        "sweden_division_3_norranorrland",
+        "sweden_division_3_norrasvealand",
+        "sweden_division_3_sodrasvealand",
+        "sweden_division_3_sodragotaland",
+        "sweden_division_3_sodranorrland",
+        "sweden_division_3_sydostragotaland",
+        "sweden_division_3_sydvastragotaland",
+        "sweden_division_3_vastrasvealand"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "sweden_cupen",
+        "europe_uefa",
+        "europe_champ_league",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "sweden_supercupen",
+        "sweden_prom_games_allsvenskan",
+        "sweden_prom_games_superettan",
+        "sweden_prom_games_div3_2"
+      ]
+    }
+  }
+}

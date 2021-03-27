@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "bosnia_herzegovina2a",
+    "name": "Prva Liga",
+    "short_name": "Prva L.",
+    "symbol": "flag_bosnia_herzegovina.png",
+    "first_week": "6",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "10",
+      "#text": "23"
+    },
+    "average_talent": "6100",
+    "names_file": "serbia",
+    "layer": "2",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "bosnia_herzegovina1",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "B. Visoko"
+        },
+        {
+          "team_name": "B. Gracanica"
+        },
+        {
+          "team_name": "B. Banovići"
+        },
+        {
+          "team_name": "G. Gabela"
+        },
+        {
+          "team_name": "Vitez"
+        },
+        {
+          "team_name": "J. Bihac"
+        },
+        {
+          "team_name": "Krajina C."
+        },
+        {
+          "team_name": "I. Bugojno"
+        },
+        {
+          "team_name": "O. Mionica"
+        },
+        {
+          "team_name": "Capljina"
+        },
+        {
+          "team_name": "R. Kakanj"
+        },
+        {
+          "team_name": "S. Napredak"
+        },
+        {
+          "team_name": "O. Sarajevo"
+        },
+        {
+          "team_name": "T. Livno"
+        },
+        {
+          "team_name": "Žepce"
+        },
+        {
+          "team_name": "O. Semizovac"
+        }
+      ]
+    }
+  }
+}

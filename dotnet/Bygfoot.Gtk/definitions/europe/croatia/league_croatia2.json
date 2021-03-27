@@ -1,0 +1,90 @@
+{
+  "league": {
+    "sid": "croatia2",
+    "name": "Druga Liga",
+    "short_name": "Druga HNL",
+    "symbol": "flag_croatia.png",
+    "first_week": "5",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "10",
+      "#text": "24"
+    },
+    "average_talent": "6700",
+    "names_file": "serbia",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "1",
+          "dest_sid": "croatia1",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "14",
+          "rank_end": "16",
+          "dest_sid": "croatia3a croatia3b croatia3c",
+          "prom_rel_type": "relegation"
+        }
+      ],
+      "prom_games": {
+        "prom_games_dest_sid": "croatia1",
+        "prom_games_cup_sid": "croatia_prom_games1",
+        "prom_games_loser_sid": "croatia2"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "H. Dragovoljac"
+        },
+        {
+          "team_name": "Imotski"
+        },
+        {
+          "team_name": "Is. Pula"
+        },
+        {
+          "team_name": "J. Sinj"
+        },
+        {
+          "team_name": "Karlovac"
+        },
+        {
+          "team_name": "Lo. Zagreb"
+        },
+        {
+          "team_name": "Međimurje"
+        },
+        {
+          "team_name": "Moslavina"
+        },
+        {
+          "team_name": "M. Zrnovnica"
+        },
+        {
+          "team_name": "P. Kostrena"
+        },
+        {
+          "team_name": "S. Sisak"
+        },
+        {
+          "team_name": "S. Stari Perkovci"
+        },
+        {
+          "team_name": "Solin"
+        },
+        {
+          "team_name": "Suhopolje"
+        },
+        {
+          "team_name": "Trogir"
+        },
+        {
+          "team_name": "Vinogradar"
+        }
+      ]
+    }
+  }
+}

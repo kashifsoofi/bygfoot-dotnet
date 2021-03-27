@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "austria4g",
+    "name": "Landesliga Tirol",
+    "short_name": "LL T.",
+    "symbol": "flag_austria.png",
+    "first_week": "2",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "13",
+      "#text": "23"
+    },
+    "average_talent": "5000",
+    "names_file": "germany",
+    "layer": "4",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "austria3a austria3b austria3c",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "W. Innsbruck II"
+        },
+        {
+          "team_name": "Kundl"
+        },
+        {
+          "team_name": "Innsbruck A."
+        },
+        {
+          "team_name": "Fügen"
+        },
+        {
+          "team_name": "Jenbach"
+        },
+        {
+          "team_name": "Kirchberg"
+        },
+        {
+          "team_name": "Reichenau U. II"
+        },
+        {
+          "team_name": "Matrei und Umgebung"
+        },
+        {
+          "team_name": "Längenfeld"
+        },
+        {
+          "team_name": "S. Innsbruck"
+        },
+        {
+          "team_name": "Kolsass Weer"
+        },
+        {
+          "team_name": "Telfs"
+        },
+        {
+          "team_name": "Kirchbichl"
+        },
+        {
+          "team_name": "Wörgl"
+        },
+        {
+          "team_name": "Oberperfuss"
+        },
+        {
+          "team_name": "Absam"
+        }
+      ]
+    }
+  }
+}

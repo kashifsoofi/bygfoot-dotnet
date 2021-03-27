@@ -1,0 +1,66 @@
+{
+  "cup": {
+    "name": "Kupa e Shqipërisë",
+    "short_name": "Kupa",
+    "symbol": "flag_albania.png",
+    "sid": "albania_cup",
+    "last_week": "45",
+    "week_gap": "3",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "albania3a",
+                "number_of_teams": "8",
+                "start_idx": "1",
+                "end_idx": "12",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "albania3b",
+                "number_of_teams": "8",
+                "start_idx": "1",
+                "end_idx": "13",
+                "randomly": "1"
+              }
+            ]
+          },
+          "delay": "-2"
+        },
+        {
+          "home_away": "0",
+          "delay": "-4"
+        },
+        {
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "albania2"
+              },
+              {
+                "choose_team_sid": "albania1"
+              }
+            ]
+          },
+          "byes": "0",
+          "delay": "-3"
+        },
+        {
+          "delay": "-4"
+        },
+        "",
+        {
+          "delay": "-1"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

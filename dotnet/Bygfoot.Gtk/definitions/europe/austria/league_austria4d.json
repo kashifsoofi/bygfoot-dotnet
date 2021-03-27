@@ -1,0 +1,78 @@
+{
+  "league": {
+    "sid": "austria4d",
+    "name": "Landesliga Kärnten",
+    "short_name": "LL K.",
+    "symbol": "flag_austria.png",
+    "first_week": "2",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "13",
+      "#text": "23"
+    },
+    "average_talent": "5000",
+    "names_file": "germany",
+    "layer": "4",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "austria3a austria3b austria3c",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "St. Stefan"
+        },
+        {
+          "team_name": "A. Kärnten II"
+        },
+        {
+          "team_name": "Bleiburg"
+        },
+        {
+          "team_name": "Völkermarkt"
+        },
+        {
+          "team_name": "A. Ferlach"
+        },
+        {
+          "team_name": "Villach"
+        },
+        {
+          "team_name": "Lendorf"
+        },
+        {
+          "team_name": "St. Andrä II"
+        },
+        {
+          "team_name": "R. Lienz"
+        },
+        {
+          "team_name": "Nußdorf D."
+        },
+        {
+          "team_name": "Sittersdorf"
+        },
+        {
+          "team_name": "Landskron"
+        },
+        {
+          "team_name": "St. Michael"
+        },
+        {
+          "team_name": "Treibach"
+        },
+        {
+          "team_name": "Griffen"
+        },
+        {
+          "team_name": "Wolfsberg"
+        }
+      ]
+    }
+  }
+}

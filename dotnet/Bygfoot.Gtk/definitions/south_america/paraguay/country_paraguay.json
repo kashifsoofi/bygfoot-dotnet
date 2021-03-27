@@ -1,0 +1,23 @@
+{
+  "country": {
+    "name": "Paraguay",
+    "symbol": "flag_paraguay.png",
+    "sid": "paraguay",
+    "rating": "7",
+    "leagues": {
+      "league": [
+        "paraguay1",
+        "paraguay2"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "libertadores",
+        "sudamericana",
+        "recopa",
+        "mundial_clubes",
+        "campeonato_nacional_paraguay1"
+      ]
+    }
+  }
+}

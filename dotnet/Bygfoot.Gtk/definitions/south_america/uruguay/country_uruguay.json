@@ -1,0 +1,26 @@
+{
+  "country": {
+    "name": "Uruguay",
+    "symbol": "flag_uruguay.png",
+    "sid": "uruguay",
+    "rating": "7",
+    "leagues": {
+      "league": [
+        "uruguay1",
+        "uruguay2",
+        "uruguay3"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "campeonato_nacional_uruguay1",
+        "campeonato_nacional_uruguay2",
+        "campeonato_nacional_uruguay3",
+        "libertadores",
+        "sudamericana",
+        "recopa",
+        "mundial_clubes"
+      ]
+    }
+  }
+}

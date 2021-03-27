@@ -1,0 +1,78 @@
+{
+  "cup": {
+    "name": "Torneo Reducido (3B)",
+    "short_name": "Reducido",
+    "symbol": "flag_argentina.png",
+    "sid": "reducido",
+    "add_week": "44",
+    "last_week": "48",
+    "week_gap": "1",
+    "property": [
+      "national",
+      "promotion",
+      "highlight3"
+    ],
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "randomise_teams": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "argentina3b",
+                "number_of_teams": "1",
+                "start_idx": "2",
+                "end_idx": "2"
+              },
+              {
+                "choose_team_sid": "argentina3b",
+                "number_of_teams": "1",
+                "start_idx": "9",
+                "end_idx": "9"
+              },
+              {
+                "choose_team_sid": "argentina3b",
+                "number_of_teams": "1",
+                "start_idx": "3",
+                "end_idx": "3"
+              },
+              {
+                "choose_team_sid": "argentina3b",
+                "number_of_teams": "1",
+                "start_idx": "8",
+                "end_idx": "8"
+              },
+              {
+                "choose_team_sid": "argentina3b",
+                "number_of_teams": "1",
+                "start_idx": "4",
+                "end_idx": "4"
+              },
+              {
+                "choose_team_sid": "argentina3b",
+                "number_of_teams": "1",
+                "start_idx": "7",
+                "end_idx": "7"
+              },
+              {
+                "choose_team_sid": "argentina3b",
+                "number_of_teams": "1",
+                "start_idx": "5",
+                "end_idx": "5"
+              },
+              {
+                "choose_team_sid": "argentina3b",
+                "number_of_teams": "1",
+                "start_idx": "6",
+                "end_idx": "6"
+              }
+            ]
+          }
+        },
+        "",
+        ""
+      ]
+    }
+  }
+}

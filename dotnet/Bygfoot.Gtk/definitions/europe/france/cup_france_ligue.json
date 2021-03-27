@@ -1,0 +1,89 @@
+{
+  "cup": {
+    "name": "Coupe de la Ligue",
+    "short_name": "C. Ligue",
+    "symbol": "flag_france.png",
+    "sid": "france_ligue",
+    "last_week": "43",
+    "week_gap": "4",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "france2",
+                "number_of_teams": "5",
+                "start_idx": "16",
+                "end_idx": "20",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "france3",
+                "number_of_teams": "5",
+                "start_idx": "1",
+                "end_idx": "5"
+              }
+            ]
+          },
+          "byes": "0",
+          "delay": "-9"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "france2",
+              "number_of_teams": "15",
+              "start_idx": "1",
+              "end_idx": "15",
+              "randomly": "1"
+            }
+          },
+          "byes": "0",
+          "delay": "-12"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "france1",
+              "number_of_teams": "18",
+              "start_idx": "3",
+              "end_idx": "20",
+              "randomly": "1"
+            }
+          },
+          "byes": "0",
+          "delay": "-14"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "france1",
+              "number_of_teams": "2",
+              "start_idx": "1",
+              "end_idx": "2",
+              "randomly": "1"
+            }
+          },
+          "delay": "-11"
+        },
+        {
+          "home_away": "0",
+          "delay": "-6"
+        },
+        {
+          "home_away": "0",
+          "delay": "-7"
+        },
+        {
+          "home_away": "0"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "country": {
+    "name": "guatemala",
+    "rating": "9",
+    "symbol": "flag_guatemala.png",
+    "sid": "guatemala",
+    "leagues": {
+      "league": "guatemala1"
+    },
+    "cups": {
+      "cup": "guatemala_champ_league"
+    }
+  }
+}

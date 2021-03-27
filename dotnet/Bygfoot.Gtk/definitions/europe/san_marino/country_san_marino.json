@@ -1,0 +1,25 @@
+{
+  "country": {
+    "name": "San Marino",
+    "symbol": "flag_san_marino.png",
+    "sid": "san_marino",
+    "rating": "4",
+    "leagues": {/*<league>san_marino1</league>*/
+      "league": [
+        "san_marino_group_a",
+        "san_marino_group_b"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "san_marino_coppa",
+        "san_marino_playoffs",
+        "europe_uefa1",
+        "europe_champ_league",
+        "san_marino_supercoppa",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental"
+      ]
+    }
+  }
+}

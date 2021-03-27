@@ -1,0 +1,32 @@
+{
+  "cup": {
+    "name": "First Division Playoffs",
+    "short_name": "1st Div Playoffs",
+    "symbol": "flag_usa.png",
+    "sid": "usa_first_cup",
+    "add_week": "1000"/*<last_week>38</last_week>*/,
+    "week_gap": "1",
+    "property": [
+      "national",
+      "highlight1"
+    ],
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "usa_first",
+              "number_of_teams": "8",
+              "start_idx": "1",
+              "end_idx": "8"
+            }
+          }
+        },
+        "",
+        {
+          "home_away": "0"
+        }
+      ]
+    }
+  }
+}

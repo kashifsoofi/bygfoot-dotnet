@@ -1,0 +1,51 @@
+{
+  "cup": {
+    "name": "Clausura",
+    "short_name": "Clausura",
+    "symbol": "flag_bolivia.png",
+    "sid": "clausura_final",
+    "add_week": "42",
+    "last_week": "46",
+    "week_gap": "1",
+    "property": [
+      "national",
+      "highlight1"
+    ],
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "randomise_teams": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "clausura_grupo_a",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              },
+              {
+                "choose_team_sid": "clausura_grupo_b",
+                "number_of_teams": "1",
+                "start_idx": "2",
+                "end_idx": "2"
+              },
+              {
+                "choose_team_sid": "clausura_grupo_b",
+                "number_of_teams": "1",
+                "start_idx": "1",
+                "end_idx": "1"
+              },
+              {
+                "choose_team_sid": "clausura_grupo_a",
+                "number_of_teams": "1",
+                "start_idx": "2",
+                "end_idx": "2"
+              }
+            ]
+          }
+        },
+        ""
+      ]
+    }
+  }
+}

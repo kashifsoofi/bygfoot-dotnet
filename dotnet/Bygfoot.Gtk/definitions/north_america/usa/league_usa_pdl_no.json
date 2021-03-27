@@ -1,0 +1,45 @@
+{
+  "league": {
+    "sid": "usa_pdl_no",
+    "name": "Northeast Development",
+    "short_name": "N.Ea.D.L.",
+    "symbol": "flag_usa.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "6100",
+    "layer": "4",
+    "round_robins": "2",
+    "two_match_week_start": "10",
+    "two_match_week_end": "14",
+    "yellow_red": "5",
+    "names_file": "usa",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Albany"
+        },
+        {
+          "team_name": "Brooklyn"
+        },
+        {
+          "team_name": "Cape Cod"
+        },
+        {
+          "team_name": "Long Island"
+        },
+        {
+          "team_name": "Ottawa"
+        },
+        {
+          "team_name": "Rhode Island"
+        },
+        {
+          "team_name": "Vermont"
+        },
+        {
+          "team_name": "Westchester"
+        }
+      ]
+    }
+  }
+}

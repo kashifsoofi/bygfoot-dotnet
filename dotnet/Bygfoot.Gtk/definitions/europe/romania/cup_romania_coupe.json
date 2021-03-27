@@ -1,0 +1,102 @@
+{
+  "cup": {
+    "name": "Cupa României",
+    "short_name": "Cupa",
+    "symbol": "flag_romania.png",
+    "sid": "romania_coupe",
+    "last_week": "50",
+    "week_gap": "3",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "romania3a"
+              },
+              {
+                "choose_team_sid": "romania3b"
+              },
+              {
+                "choose_team_sid": "romania3c"
+              },
+              {
+                "choose_team_sid": "romania3d"
+              },
+              {
+                "choose_team_sid": "romania3e"
+              },
+              {
+                "choose_team_sid": "romania3f"
+              }
+            ]
+          },
+          "byes": "53",
+          "delay": "-18"
+        },
+        {
+          "home_away": "0",
+          "byes": "0",
+          "delay": "-19"
+        },
+        {
+          "home_away": "0",
+          "byes": "0",
+          "delay": "-20"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "romania2a",
+                "number_of_teams": "17",
+                "start_idx": "1",
+                "end_idx": "18",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "romania2b"
+              }
+            ]
+          },
+          "byes": "1",
+          "delay": "-21"
+        },
+        {
+          "home_away": "0",
+          "byes": "0",
+          "delay": "-22"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "romania1"
+            }
+          },
+          "byes": "0",
+          "delay": "-22"
+        },
+        {
+          "home_away": "0",
+          "delay": "-21"
+        },
+        {
+          "home_away": "0",
+          "delay": "-3"
+        },
+        {
+          "home_away": "0",
+          "delay": "-3"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

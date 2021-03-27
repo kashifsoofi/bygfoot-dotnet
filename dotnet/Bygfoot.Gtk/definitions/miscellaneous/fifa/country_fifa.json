@@ -1,0 +1,56 @@
+{
+  "country": {
+    "name": "Fifa",
+    "rating": [
+      "-1",
+      "10"
+    ],
+    "symbol": "flag_fifa.png",
+    "sid": "fifa",
+    "supernational": "1",
+    "leagues": {
+      "league": [
+        "conmebol",
+        "concacaf",
+        "uefa",
+        "ofc",
+        "caf",
+        "afc"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "copa_america",
+        "copa_america_34",
+        "gold_cup",
+        "gold_cup_34",
+        "eurocup_qualifiers",
+        "eurocup",
+        "eurocup_34",
+        "nations_cup",
+        "nations_cup_34",
+        "cup_of_nations_qualifiers",
+        "cup_of_nations",
+        "cup_of_nations_34",
+        "asian_cup_qualifiers",
+        "asian_cup",
+        "asian_cup_34",
+        "wc_samerica",
+        "wc_ncamerica",
+        "wc_oceania",
+        "wc_oceania_samerica",
+        "wc_europe",
+        "wc_europe_playoffs",
+        "wc_africa",
+        "wc_asia",
+        "wc_asia_playoff",
+        "wc_asia_ncamerica",
+        "confederations_cup_qualifier",
+        "confederations_cup",
+        "confederations_cup_34",
+        "wc_final",
+        "wc_final_34"
+      ]
+    }
+  }
+}

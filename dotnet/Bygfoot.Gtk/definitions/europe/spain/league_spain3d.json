@@ -1,0 +1,88 @@
+{
+  "league": {
+    "sid": "spain3d",
+    "name": "Segunda División B G4",
+    "short_name": "2ª Div. B G4",
+    "symbol": "flag_spain.png",
+    "first_week": "9",
+    "week_gap": "1",
+    "break_in": {
+      "@length": "1",
+      "#text": "26"
+    },
+    "average_talent": "5800",
+    "names_file": "spain",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_games": {
+        "prom_games_dest_sid": "spain2",
+        "prom_games_cup_sid": "spain_prom_games_4"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Antequera"
+        },
+        {
+          "team_name": "Cádiz"
+        },
+        {
+          "team_name": "Ceuta"
+        },
+        {
+          "team_name": "Conquense"
+        },
+        {
+          "team_name": "Écija"
+        },
+        {
+          "team_name": "Granada"
+        },
+        {
+          "team_name": "Granada 74"
+        },
+        {
+          "team_name": "Guadalajara"
+        },
+        {
+          "team_name": "Jaén"
+        },
+        {
+          "team_name": "Linares"
+        },
+        {
+          "team_name": "Linense"
+        },
+        {
+          "team_name": "Lucena"
+        },
+        {
+          "team_name": "Marbella"
+        },
+        {
+          "team_name": "Melilla"
+        },
+        {
+          "team_name": "Poli Ejido"
+        },
+        {
+          "team_name": "Portuense"
+        },
+        {
+          "team_name": "Puertollano"
+        },
+        {
+          "team_name": "Roquetas"
+        },
+        {
+          "team_name": "San Fernando"
+        },
+        {
+          "team_name": "B. Sevilla B"
+        }
+      ]
+    }
+  }
+}

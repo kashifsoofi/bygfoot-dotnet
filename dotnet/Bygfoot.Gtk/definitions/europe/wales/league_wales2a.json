@@ -1,0 +1,80 @@
+{
+  "league": {
+    "sid": "wales2a",
+    "name": "Welsh League Div. 1",
+    "short_name": "Welsh D1",
+    "symbol": "flag_wales.png",
+    "first_week": "7",
+    "week_gap": "1",
+    "average_talent": "5500",
+    "names_file": "england",
+    "yellow_red": "5",
+    "layer": "2",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "wales1",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Afan Lido"
+        },
+        {
+          "team_name": "Barry"
+        },
+        {
+          "team_name": "Bettws"
+        },
+        {
+          "team_name": "Bridgend"
+        },
+        {
+          "team_name": "Bryntirion"
+        },
+        {
+          "team_name": "Caerleon"
+        },
+        {
+          "team_name": "Caldicot"
+        },
+        {
+          "team_name": "Cardiff Co."
+        },
+        {
+          "team_name": "Cambrian and Clydach"
+        },
+        {
+          "team_name": "Croesyceiliog"
+        },
+        {
+          "team_name": "Cwmbran"
+        },
+        {
+          "team_name": "Dinas Powys"
+        },
+        {
+          "team_name": "E. Aberaman"
+        },
+        {
+          "team_name": "Goytre"
+        },
+        {
+          "team_name": "Newport"
+        },
+        {
+          "team_name": "Pontardawe"
+        },
+        {
+          "team_name": "Taffs Well"
+        },
+        {
+          "team_name": "Ton Pentre"
+        }
+      ]
+    }
+  }
+}

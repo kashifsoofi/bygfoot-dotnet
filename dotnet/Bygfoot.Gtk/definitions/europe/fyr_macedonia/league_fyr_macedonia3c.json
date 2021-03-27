@@ -1,0 +1,55 @@
+{
+  "league": {
+    "sid": "fyr_macedonia3c",
+    "name": "Makedonska Treta Liga Југ",
+    "short_name": "Treta L. J.",
+    "symbol": "flag_fyr_macedonia.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "5500",
+    "names_file": "serbia",
+    "yellow_red": "5",
+    "layer": "3",
+    "property": "inactive",
+    "teams": {
+      "team": [
+        {
+          "team_name": "11 Oktomvri"
+        },
+        {
+          "team_name": "Babuna"
+        },
+        {
+          "team_name": "Borec"
+        },
+        {
+          "team_name": "D. Ezero"
+        },
+        {
+          "team_name": "G. Konjari"
+        },
+        {
+          "team_name": "I. Basino"
+        },
+        {
+          "team_name": "M. Krivogaštani"
+        },
+        {
+          "team_name": "Partizan"
+        },
+        {
+          "team_name": "P. Valandovo"
+        },
+        {
+          "team_name": "Prevalec"
+        },
+        {
+          "team_name": "Tikveš"
+        },
+        {
+          "team_name": "V. Tabak"
+        }
+      ]
+    }
+  }
+}

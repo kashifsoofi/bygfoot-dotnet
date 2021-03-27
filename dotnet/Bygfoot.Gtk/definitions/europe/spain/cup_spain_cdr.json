@@ -1,0 +1,92 @@
+{
+  "cup": {
+    "name": "Copa del Rey",
+    "short_name": "Copa del Rey",
+    "symbol": "flag_spain.png",
+    "sid": "spain_cdr",
+    "last_week": "45",
+    "week_gap": "2",
+    "property": "national",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": [
+              {
+                "choose_team_sid": "spain3a",
+                "number_of_teams": "10",
+                "start_idx": "1",
+                "end_idx": "20",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "spain3b",
+                "number_of_teams": "10",
+                "start_idx": "1",
+                "end_idx": "20",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "spain3c",
+                "number_of_teams": "10",
+                "start_idx": "1",
+                "end_idx": "20",
+                "randomly": "1"
+              },
+              {
+                "choose_team_sid": "spain3d",
+                "number_of_teams": "10",
+                "start_idx": "1",
+                "end_idx": "20",
+                "randomly": "1"
+              }
+            ]
+          },
+          "byes": "4",
+          "delay": "-14"
+        },
+        {
+          "home_away": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "spain2",
+              "number_of_teams": "21",
+              "start_idx": "1",
+              "end_idx": "22",
+              "randomly": "1"
+            }
+          },
+          "byes": "3",
+          "delay": "-14"
+        },
+        {
+          "home_away": "0",
+          "byes": "1",
+          "delay": "-12"
+        },
+        {
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "spain1"
+            }
+          },
+          "delay": "-11"
+        },
+        {
+          "delay": "-6"
+        },
+        {
+          "delay": "-7"
+        },
+        {
+          "delay": "-7"
+        },
+        {
+          "home_away": "0",
+          "neutral": "1"
+        }
+      ]
+    }
+  }
+}

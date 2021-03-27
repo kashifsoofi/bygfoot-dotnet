@@ -1,0 +1,25 @@
+{
+  "country": {
+    "name": "Republic of Moldova",
+    "symbol": "flag_moldova.png",
+    "sid": "moldova",
+    "rating": "5",
+    "leagues": {
+      "league": [
+        "moldova1",
+        "moldova2",
+        "moldova3a",
+        "moldova3b"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "moldova_cup",
+        "europe_uefa",
+        "europe_champ_league",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental"
+      ]
+    }
+  }
+}

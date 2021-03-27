@@ -1,0 +1,55 @@
+{
+  "league": {
+    "sid": "malta1",
+    "name": "BOV Premier League",
+    "short_name": "Prem. Lg.",
+    "symbol": "flag_malta.png",
+    "first_week": "8",
+    "week_gap": "1",
+    "break_in": [
+      {
+        "@length": "1",
+        "#text": "10"
+      },
+      {
+        "@length": "1",
+        "#text": "15"
+      },
+      {
+        "@length": "1",
+        "#text": "26"
+      },
+      {
+        "@length": "1",
+        "#text": "36"
+      }
+    ],
+    "average_talent": "5600",
+    "round_robins": "3",
+    "yellow_red": "5",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "3",
+        "rank_end": "3",
+        "dest_sid": "malta2",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Valletta",
+          "def_file": "malta_valletta"
+        },
+        {
+          "team_name": "Sliema Wanderers",
+          "def_file": "malta_sliema"
+        },
+        {
+          "team_name": "Floriana",
+          "def_file": "malta_floriana"
+        }
+      ]
+    }
+  }
+}

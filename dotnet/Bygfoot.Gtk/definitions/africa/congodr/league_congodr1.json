@@ -1,0 +1,119 @@
+{
+  "league": {
+    "sid": "congodr1",
+    "layer": "1",
+    "name": "Linafoot",
+    "short_name": "Linafoot",
+    "symbol": "flag_congodr.png",
+    "first_week": "7",
+    "round_robins": "1",
+    "week_gap": "1",
+    "average_talent": "7300",
+    "yellow_red": "3",
+    "names_file": "general",
+    "teams": {
+      "team": [
+        {
+          "team_name": "AS Vita Club",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "TP Mazembe",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Motema Pembe",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Olympic Kinshasa",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Saint-Eloi Lupopo",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "New Soger",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Likasi",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Vutuka",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Matiti Mabe",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Elima",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Veti Club",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Molunge",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Babeti ya Sika",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Tshinkunku",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Saint-Luc",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Sanga Balende",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Bantous",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Ndjadi",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "CIOD de Pangi",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Virunga",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Kabasha",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Ajax",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Muungano",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Nika",
+          "team_average_talent": "7300"
+        },
+        {
+          "team_name": "Malekesa",
+          "team_average_talent": "7300"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "country": {
+    "name": "Iceland",
+    "symbol": "flag_iceland.png",
+    "sid": "iceland",
+    "rating": "4",
+    "leagues": {
+      "league": [
+        "iceland1",
+        "iceland2",
+        "iceland3"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "iceland_cup",
+        "europe_uefa",
+        "europe_champ_league",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental"
+      ]
+    }
+  }
+}

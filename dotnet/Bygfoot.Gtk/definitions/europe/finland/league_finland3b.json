@@ -1,0 +1,68 @@
+{
+  "league": {
+    "sid": "finland3b",
+    "name": "Kakkonen - Lohko B",
+    "short_name": "2 B",
+    "symbol": "flag_finland.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "5400",
+    "yellow_red": "5",
+    "names_file": "finland",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "1",
+        "rank_end": "1",
+        "dest_sid": "finland2",
+        "prom_rel_type": "promotion"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "I. Ekenäs"
+        },
+        {
+          "team_name": "Espoo"
+        },
+        {
+          "team_name": "Forssa"
+        },
+        {
+          "team_name": "H. Äänekoski"
+        },
+        {
+          "team_name": "I. Finström"
+        },
+        {
+          "team_name": "I. Tampere"
+        },
+        {
+          "team_name": "Kaarina"
+        },
+        {
+          "team_name": "Lohja"
+        },
+        {
+          "team_name": "P. Rauma"
+        },
+        {
+          "team_name": "Pori"
+        },
+        {
+          "team_name": "P. Tampere"
+        },
+        {
+          "team_name": "Salo"
+        },
+        {
+          "team_name": "S. Turku"
+        },
+        {
+          "team_name": "I. Åbo"
+        }
+      ]
+    }
+  }
+}

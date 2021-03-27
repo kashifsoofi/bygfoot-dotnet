@@ -1,0 +1,33 @@
+{
+  "cup": {
+    "name": "Kazakhstan Supercup",
+    "short_name": "Supercup",
+    "symbol": "flag_kazakhstan.png",
+    "sid": "kazakhstan_supercup",
+    "last_week": "1",
+    "property": "national",
+    "group": "163",
+    "cup_rounds": {
+      "cup_round": {
+        "home_away": "0",
+        "neutral": "1",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "kazakhstan_cup",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1"
+            },
+            {
+              "choose_team_sid": "kazakhstan1",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "2"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

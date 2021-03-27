@@ -1,0 +1,49 @@
+{
+  "league": {
+    "sid": "latvia3c",
+    "name": "2. liga Vidzemes zona",
+    "short_name": "2. L. V.",
+    "symbol": "flag_latvia.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "5100",
+    "yellow_red": "5",
+    "names_file": "latvia",
+    "property": "inactive",
+    "layer": "3",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Ogre"
+        },
+        {
+          "team_name": "Staicele B."
+        },
+        {
+          "team_name": "Upesciems"
+        },
+        {
+          "team_name": "V. A. Riga"
+        },
+        {
+          "team_name": "Valka"
+        },
+        {
+          "team_name": "Ropaži"
+        },
+        {
+          "team_name": "Priekuļi"
+        },
+        {
+          "team_name": "Ādaži"
+        },
+        {
+          "team_name": "Vangaži"
+        },
+        {
+          "team_name": "A. Smiltene II"
+        }
+      ]
+    }
+  }
+}

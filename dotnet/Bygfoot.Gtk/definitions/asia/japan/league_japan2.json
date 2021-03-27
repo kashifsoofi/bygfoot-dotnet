@@ -1,0 +1,101 @@
+{
+  "league": {
+    "sid": "japan2",
+    "name": "Division 2",
+    "short_name": "J2",
+    "symbol": "flag_japan.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "two_match_week_start": [
+      "3",
+      "7",
+      "10",
+      "16",
+      "20",
+      "23",
+      "26",
+      "29",
+      "33",
+      "36",
+      "41",
+      "44"
+    ],
+    "two_match_week_end": [
+      "4",
+      "8",
+      "14",
+      "17",
+      "21",
+      "24",
+      "27",
+      "30",
+      "34",
+      "37",
+      "42",
+      "48"
+    ],
+    "average_talent": "7000",
+    "names_file": "japan",
+    "round_robins": "4",
+    "layer": "2",
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "2",
+          "dest_sid": "japan1",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "13",
+          "rank_end": "13",
+          "dest_sid": "japan3",
+          "prom_rel_type": "relegation"
+        }
+      ]
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Fukuoka"
+        },
+        {
+          "team_name": "C. Osaka"
+        },
+        {
+          "team_name": "Kyoto S."
+        },
+        {
+          "team_name": "Tosu"
+        },
+        {
+          "team_name": "Sendai"
+        },
+        {
+          "team_name": "C. Sapporo"
+        },
+        {
+          "team_name": "Tokyo V."
+        },
+        {
+          "team_name": "Yamagata"
+        },
+        {
+          "team_name": "Ehime"
+        },
+        {
+          "team_name": "Mito"
+        },
+        {
+          "team_name": "Hiratsuka S.B."
+        },
+        {
+          "team_name": "Kusatsu"
+        },
+        {
+          "team_name": "Tokushima"
+        }
+      ]
+    }
+  }
+}

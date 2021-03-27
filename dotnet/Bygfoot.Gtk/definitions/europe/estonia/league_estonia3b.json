@@ -1,0 +1,75 @@
+{
+  "league": {
+    "sid": "estonia3b",
+    "name": "Second League Lõuna",
+    "short_name": "2. L. L",
+    "symbol": "flag_estonia.png",
+    "first_week": "1",
+    "week_gap": "1",
+    "average_talent": "4900",
+    "yellow_red": "5",
+    "layer": "3",
+    "prom_rel": {
+      "prom_rel_element": [
+        {
+          "rank_start": "1",
+          "rank_end": "1",
+          "dest_sid": "estonia2",
+          "prom_rel_type": "promotion"
+        },
+        {
+          "rank_start": "13",
+          "rank_end": "14",
+          "dest_sid": "estonia4a estonia4b estonia4c estonia4d",
+          "prom_rel_type": "relegation"
+        }
+      ]
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Nõmme U."
+        },
+        {
+          "team_name": "Santos"
+        },
+        {
+          "team_name": "T. Viljandi II"
+        },
+        {
+          "team_name": "HÜJK"
+        },
+        {
+          "team_name": "V. Pärnu II"
+        },
+        {
+          "team_name": "M. T. Tartu III"
+        },
+        {
+          "team_name": "Võru"
+        },
+        {
+          "team_name": "Tabasalu"
+        },
+        {
+          "team_name": "Tarvastu"
+        },
+        {
+          "team_name": "Sörve"
+        },
+        {
+          "team_name": "Ganvix"
+        },
+        {
+          "team_name": "Kalevi S."
+        },
+        {
+          "team_name": "Warrior II"
+        },
+        {
+          "team_name": "Kadakas"
+        }
+      ]
+    }
+  }
+}

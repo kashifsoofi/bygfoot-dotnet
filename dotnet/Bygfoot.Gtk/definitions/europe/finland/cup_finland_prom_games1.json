@@ -1,0 +1,34 @@
+{
+  "cup": {
+    "name": "Veikkausliigan karsinta",
+    "short_name": "VL kars.",
+    "symbol": "flag_finland.png",
+    "sid": "finland_prom_games1",
+    "add_week": "1000",
+    "property": [
+      "national",
+      "highlight2"
+    ],
+    "yellow_red": "3",
+    "cup_rounds": {
+      "cup_round": {
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "finland2",
+              "number_of_teams": "1",
+              "start_idx": "2",
+              "end_idx": "2"
+            },
+            {
+              "choose_team_sid": "finland1",
+              "number_of_teams": "1",
+              "start_idx": "13",
+              "end_idx": "13"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

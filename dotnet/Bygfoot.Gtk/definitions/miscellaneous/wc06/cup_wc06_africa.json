@@ -1,0 +1,55 @@
+{
+  "cup": {
+    "name": "Qualification Africa",
+    "short_name": "QAfrica",
+    "sid": "wc06_africa",
+    "symbol": "wc_africa.png",
+    "yellow_red": "3",
+    "last_week": "10",
+    "add_week": "0",
+    "week_gap": "1",
+    "property": "international",
+    "cup_rounds": {
+      "cup_round": {
+        "number_of_groups": "5",
+        "number_of_advance": "1",
+        "new_teams": "30",
+        "randomise_teams": "0",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "wc06_africa_teams",
+              "number_of_teams": "6",
+              "start_idx": "1",
+              "end_idx": "6"
+            },
+            {
+              "choose_team_sid": "wc06_africa_teams",
+              "number_of_teams": "6",
+              "start_idx": "7",
+              "end_idx": "12"
+            },
+            {
+              "choose_team_sid": "wc06_africa_teams",
+              "number_of_teams": "6",
+              "start_idx": "13",
+              "end_idx": "18"
+            },
+            {
+              "choose_team_sid": "wc06_africa_teams",
+              "number_of_teams": "6",
+              "start_idx": "19",
+              "end_idx": "24"
+            },
+            {
+              "choose_team_sid": "wc06_africa_teams",
+              "number_of_teams": "6",
+              "start_idx": "25",
+              "end_idx": "30"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

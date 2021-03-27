@@ -1,0 +1,108 @@
+{
+  "league": {
+    "sid": "brazil1",
+    "layer": "1",
+    "name": "Serie A",
+    "short_name": "Serie A",
+    "symbol": "flag_brazil.png",
+    "average_talent": "8200",
+    "names_file": "brazil",
+    "first_week": "7",
+    "week_gap": "1",
+    "yellow_red": "5",
+    "round_robins": "2",
+    "break": "3",
+    "prom_rel": {
+      "prom_rel_element": {
+        "rank_start": "17",
+        "rank_end": "20",
+        "dest_sid": "brazil2",
+        "prom_rel_type": "relegation"
+      }
+    },
+    "teams": {
+      "team": [
+        {
+          "team_name": "Fluminense",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "Sao Paulo",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "Santos",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "Flamengo",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "Cruzeiro",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "Gremio",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "Palmeiras",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "A. Mineiro",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "Botafogo",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "V. da Gama",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "Internacional",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "A. Paranaense",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "Coritiba",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "Figueirense",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "Bahia",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "America (MG)",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "A. Goianiense",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "Ceara",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "Corinthians",
+          "team_average_talent": "8200"
+        },
+        {
+          "team_name": "Avai",
+          "team_average_talent": "8200"
+        }
+      ]
+    }
+  }
+}

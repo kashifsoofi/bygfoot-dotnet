@@ -1,0 +1,24 @@
+{
+  "country": {
+    "name": "Cyprus",
+    "symbol": "flag_cyprus.png",
+    "sid": "cyprus",
+    "rating": "5",
+    "leagues": {
+      "league": [
+        "cyprus1",
+        "cyprus2"
+      ]
+    },
+    "cups": {
+      "cup": [
+        "cyprus_cup",
+        "europe_uefa",
+        "europe_champ_league",
+        "supercup_europe_uefa",
+        "supercup_europe_intercontinental",
+        "cyprus_supercup"
+      ]
+    }
+  }
+}

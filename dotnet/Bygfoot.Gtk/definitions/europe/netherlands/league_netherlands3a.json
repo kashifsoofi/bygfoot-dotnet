@@ -1,0 +1,61 @@
+{
+  "league": {
+    "sid": "netherlands3a",
+    "name": "Zaterdag Hoofdklasse A",
+    "short_name": "Zat. hoofdkl.a",
+    "symbol": "flag_netherlands.png",
+    "first_week": "9",
+    "week_gap": "1",
+    "break": "8",
+    "average_talent": "6100",
+    "yellow_red": "5",
+    "names_file": "netherlands",
+    "layer": "3",
+    "teams": {
+      "team": [
+        {
+          "team_name": "Alphen a. d. Rijn"
+        },
+        {
+          "team_name": "A. Hendrik Ido Ambacht"
+        },
+        {
+          "team_name": "Barendrecht"
+        },
+        {
+          "team_name": "Capelle a. d. IJssel"
+        },
+        {
+          "team_name": "D. Pernis"
+        },
+        {
+          "team_name": "E. Maassluis"
+        },
+        {
+          "team_name": "Heerjansdam"
+        },
+        {
+          "team_name": "Katwijk"
+        },
+        {
+          "team_name": "Lisse"
+        },
+        {
+          "team_name": "Noordwijk"
+        },
+        {
+          "team_name": "Q. B. Katwijk"
+        },
+        {
+          "team_name": "Rijnsburg B."
+        },
+        {
+          "team_name": "S. Den Haag"
+        },
+        {
+          "team_name": "T. L. Sassenheim"
+        }
+      ]
+    }
+  }
+}

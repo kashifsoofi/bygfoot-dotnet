@@ -1,0 +1,54 @@
+{
+  "cup": {
+    "name": "Copa Mustang I: Grupo A",
+    "short_name": "Mustang IA",
+    "symbol": "flag_colombia.png",
+    "sid": "mustang1a",
+    "add_week": "20",
+    "last_week": "25",
+    "week_gap": "1",
+    "property": [
+      "national",
+      "omit_from_history",
+      "highlight1"
+    ],
+    "cup_rounds": {
+      "cup_round": {
+        "number_of_groups": "1",
+        "randomise_teams": "0",
+        "choose_teams": {
+          "choose_team": [
+            {
+              "choose_team_sid": "colombia1",
+              "number_of_teams": "1",
+              "start_idx": "1",
+              "end_idx": "1",
+              "from_table": "1"
+            },
+            {
+              "choose_team_sid": "colombia1",
+              "number_of_teams": "1",
+              "start_idx": "3",
+              "end_idx": "3",
+              "from_table": "1"
+            },
+            {
+              "choose_team_sid": "colombia1",
+              "number_of_teams": "1",
+              "start_idx": "5",
+              "end_idx": "5",
+              "from_table": "1"
+            },
+            {
+              "choose_team_sid": "colombia1",
+              "number_of_teams": "1",
+              "start_idx": "7",
+              "end_idx": "7",
+              "from_table": "1"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

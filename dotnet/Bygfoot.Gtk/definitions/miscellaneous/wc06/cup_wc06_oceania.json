@@ -1,0 +1,29 @@
+{
+  "cup": {
+    "name": "Qualification Oceania",
+    "short_name": "QOceania",
+    "sid": "wc06_oceania",
+    "symbol": "wc_oceania.png",
+    "yellow_red": "3",
+    "last_week": "12",
+    "add_week": "0",
+    "week_gap": "1",
+    "property": "international",
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "number_of_groups": "1",
+          "number_of_advance": "2",
+          "new_teams": "6",
+          "randomise_teams": "0",
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "wc06_oceania_teams"
+            }
+          }
+        },
+        ""
+      ]
+    }
+  }
+}

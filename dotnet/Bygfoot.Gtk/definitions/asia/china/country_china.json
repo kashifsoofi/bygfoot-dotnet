@@ -1,0 +1,19 @@
+{
+  "country": {
+    "name": "china",
+    "rating": "9",
+    "symbol": "flag_china.png",
+    "sid": "china",
+    "leagues": {
+      "league": [
+        "china1",
+        "china2",
+        "china3a",
+        "china3b"
+      ]
+    },
+    "cups": {
+      "cup": "china_champ_league"
+    }
+  }
+}

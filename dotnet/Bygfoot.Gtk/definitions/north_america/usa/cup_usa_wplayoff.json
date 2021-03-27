@@ -1,0 +1,31 @@
+{
+  "cup": {
+    "name": "Western Conference Playoffs",
+    "short_name": "WC Playoffs",
+    "symbol": "flag_usa.png",
+    "sid": "usa_wplayoff",
+    "add_week": "1000",
+    "week_gap": "1",
+    "property": [
+      "national",
+      "highlight1"
+    ],
+    "cup_rounds": {
+      "cup_round": [
+        {
+          "choose_teams": {
+            "choose_team": {
+              "choose_team_sid": "usa_wconf",
+              "number_of_teams": "4",
+              "start_idx": "1",
+              "end_idx": "4"
+            }
+          }
+        },
+        {
+          "home_away": "0"
+        }
+      ]
+    }
+  }
+}
