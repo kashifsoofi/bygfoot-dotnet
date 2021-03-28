@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Bygfoot.Options
+﻿namespace Bygfoot.Options
 {
+	using System;
+	using System.Collections.Generic;
+
 	public class OptionsList
 	{
 		private List<Option> _lstOptions;

@@ -5,7 +5,7 @@ using System.IO;
 using System.Xml;
 using Bygfoot.Helpers;
 
-namespace Bygfoot.Model
+namespace Bygfoot.Models
 {
 	/** Information about what cup another cup has to wait for
      * before scheduling matches. */

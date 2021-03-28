@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Bygfoot.Options;
-using System.Configuration;
-//using Serilog.Core;
-//using Serilog;
-
-namespace Bygfoot.Helpers
+﻿namespace Bygfoot.Helpers
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using Bygfoot.Options;
+
 	public class FileHelper
 	{
 		// private static Logger _logger = new LoggerConfiguration().CreateLogger();

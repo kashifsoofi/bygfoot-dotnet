@@ -5,7 +5,7 @@ using System.IO;
 using System.Xml;
 using Bygfoot.Helpers;
 
-namespace Bygfoot.Model
+namespace Bygfoot.Models
 {
 	public enum PromRelType
 	{

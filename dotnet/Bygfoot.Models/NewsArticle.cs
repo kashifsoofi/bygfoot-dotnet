@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Bygfoot.Model
+namespace Bygfoot.Models
 {
 	/** Enumeration of news article types. */
 	public enum NewsArticleTypes

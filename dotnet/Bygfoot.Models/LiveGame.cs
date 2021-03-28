@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-namespace Bygfoot.Model
+namespace Bygfoot.Models
 {
 	/** Events happening during a live game.  Some of these events should always
      * be ordered in blocks as they can occur.  For example LIVE_GAME_EVENT_POST

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Bygfoot.Model
+namespace Bygfoot.Models
 {
 	/** A list of first names and last names
      * from a file. */

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace Bygfoot.Model
+namespace Bygfoot.Models
 {
 	/** Lineup types for a CPU team (ie. which players
      * are preferred when putting together the first 11). */

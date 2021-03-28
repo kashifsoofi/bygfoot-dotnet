@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Bygfoot.Options
+﻿namespace Bygfoot.Options
 {
+	using System;
+	using System.Collections.Generic;
+
 	public class Option
 	{
 		const float OPTION_FLOAT_DIVISOR = (float)100000.0;

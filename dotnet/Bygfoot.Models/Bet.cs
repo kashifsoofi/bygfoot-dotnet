@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bygfoot.Model
+namespace Bygfoot.Models
 {
 	/** A struct representing a betting possibility: a fixture plus odds. */
 	public class BetMatch

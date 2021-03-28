@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Bygfoot.Model
+namespace Bygfoot.Models
 {
 	public enum FixtureCompare
 	{

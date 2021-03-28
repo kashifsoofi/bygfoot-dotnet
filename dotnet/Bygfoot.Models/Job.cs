@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Bygfoot.Model
+namespace Bygfoot.Models
 {
 	/** Enumeration describing the type of a job. */
 	public enum JobType

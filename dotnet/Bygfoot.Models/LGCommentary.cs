@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Bygfoot.Model
+namespace Bygfoot.Models
 {
 	/** Structure describing a commentary
      * for the live game.  */

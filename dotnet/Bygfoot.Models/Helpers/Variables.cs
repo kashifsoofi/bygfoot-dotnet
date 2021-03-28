@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Bygfoot.Model;
+using Bygfoot.Models;
 using Bygfoot.Options;
 
 namespace Bygfoot.Helpers

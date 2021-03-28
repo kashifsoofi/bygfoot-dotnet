@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Bygfoot.Model
+namespace Bygfoot.Models
 {
 	public class YouthAcademy
 	{

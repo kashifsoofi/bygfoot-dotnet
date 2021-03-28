@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Bygfoot.Options;
 
-namespace Bygfoot.Model
+namespace Bygfoot.Models
 {
 	/** Indices for the money_in array. */
 	public enum MonIn

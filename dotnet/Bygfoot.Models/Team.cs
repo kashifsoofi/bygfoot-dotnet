@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using Bygfoot.Helpers;
 
-namespace Bygfoot.Model
+namespace Bygfoot.Models
 {
 	/** Possibilities for team comparison. */
 	public enum TeamCompare
