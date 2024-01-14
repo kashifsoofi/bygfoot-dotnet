@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bygfoot.Domain", "Bygfoot.Domain\Bygfoot.Domain.csproj", "{01425FC4-467B-4222-B871-6E8D945A36D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bygfoot.App", "Bygfoot.App\Bygfoot.App.csproj", "{706513B3-8F5B-4CAB-8E99-8FAB714B6037}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01425FC4-467B-4222-B871-6E8D945A36D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01425FC4-467B-4222-B871-6E8D945A36D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01425FC4-467B-4222-B871-6E8D945A36D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01425FC4-467B-4222-B871-6E8D945A36D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{706513B3-8F5B-4CAB-8E99-8FAB714B6037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{706513B3-8F5B-4CAB-8E99-8FAB714B6037}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{706513B3-8F5B-4CAB-8E99-8FAB714B6037}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{706513B3-8F5B-4CAB-8E99-8FAB714B6037}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
