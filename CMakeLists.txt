@@ -30,6 +30,8 @@ add_definitions("-DPACKAGE=\"${PROJECT_NAME}\"")
 add_definitions("-DVERS=\"${BYGFOOT_VERSION}\"")
 link_directories ("./")
 
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Bygfoot.App/bin/Debug/net8.0)
+
 add_library(bygfoot SHARED
     src/bet.c src/bet.h src/bet_struct.h
     src/bygfoot.h
@@ -122,7 +124,7 @@ add_library(bygfoot SHARED
 # this won't work with the global variables in bygfoot.
 target_compile_options(bygfoot PRIVATE
 	               -Wno-deprecated-declarations
-		       -fcommon)
+		       -fcommon) # -DDEBUG
 # Link the target to the GTK+ libraries
 target_link_libraries (bygfoot ${GTK2_LIBRARIES} ${GLIB_LIBRARIES} m
                                ${ZLIB_LIBRARIES})
