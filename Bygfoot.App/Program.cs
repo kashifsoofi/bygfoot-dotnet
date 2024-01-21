@@ -1,4 +1,6 @@
 ﻿using System.Runtime.InteropServices;
+using Bygfoot.Gtk;
+using Bygfoot.Store;
 
 public class Program
 {
@@ -7,6 +9,7 @@ public class Program
 
     public static void Main(string[] args)
     {
-        c_main(args.Length, args);
+        var app = new App(new FileStore());
+        app.Run();
     }
 }

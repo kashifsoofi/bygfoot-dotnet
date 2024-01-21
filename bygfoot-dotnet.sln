@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bygfoot.Domain", "Bygfoot.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bygfoot.App", "Bygfoot.App\Bygfoot.App.csproj", "{706513B3-8F5B-4CAB-8E99-8FAB714B6037}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bygfoot.Gtk", "Bygfoot.Gtk\Bygfoot.Gtk.csproj", "{49E4FE08-DEF5-4ECA-ADC6-A6108CDA5EE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bygfoot.Store", "Bygfoot.Store\Bygfoot.Store.csproj", "{64BAC27E-357E-4F82-AF2B-A63CDBA15AC5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{706513B3-8F5B-4CAB-8E99-8FAB714B6037}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{706513B3-8F5B-4CAB-8E99-8FAB714B6037}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{706513B3-8F5B-4CAB-8E99-8FAB714B6037}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49E4FE08-DEF5-4ECA-ADC6-A6108CDA5EE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49E4FE08-DEF5-4ECA-ADC6-A6108CDA5EE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49E4FE08-DEF5-4ECA-ADC6-A6108CDA5EE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49E4FE08-DEF5-4ECA-ADC6-A6108CDA5EE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64BAC27E-357E-4F82-AF2B-A63CDBA15AC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64BAC27E-357E-4F82-AF2B-A63CDBA15AC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64BAC27E-357E-4F82-AF2B-A63CDBA15AC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64BAC27E-357E-4F82-AF2B-A63CDBA15AC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
