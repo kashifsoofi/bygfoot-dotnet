@@ -1,18 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="**\*.ui" />
+    <EmbeddedResource Include="**/*.ui">
+      <LogicalName>%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="GirCore.Gtk-4.0" Version="0.5.0-preview.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bygfoot.Gtk\Bygfoot.Gtk.csproj" />
+    <Folder Include="Windows/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bygfoot.Store\Bygfoot.Store.csproj" />
   </ItemGroup>
 
 </Project>

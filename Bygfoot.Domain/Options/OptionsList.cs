@@ -11,11 +11,6 @@ public class OptionsList
         _dictOptions = new Dictionary<string, Option>();
     }
 
-    public void Add(string name, string value)
-    {
-        Add(new Option(name, value));
-    }
-
     public void Add(Option option)
     {
         _lstOptions.Add(option);

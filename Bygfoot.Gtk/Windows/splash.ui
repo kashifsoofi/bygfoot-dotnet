@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.16.0 -->
+<interface>
+  <!-- interface-name splash.ui -->
+  <requires lib="gtk" version="4.12"/>
+  <object class="GtkWindow" id="SplashWindow">
+    <child>
+      <object class="GtkBox">
+        <property name="margin-bottom">5</property>
+        <property name="margin-end">5</property>
+        <property name="margin-start">5</property>
+        <property name="margin-top">5</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkNotebook">
+            <property name="page">1</property>
+            <child>
+              <object class="GtkImage">
+                <property name="file">support_files/pixmaps/bygfoot_splash.png</property>
+                <property name="height-request">230</property>
+              </object>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel">
+                <property name="label"> </property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow">
+                <child>
+                  <object class="GtkListView" id="listview_splash_contributors"/>
+                </child>
+              </object>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel">
+                <property name="label">Contributors</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="height-request">1</property>
+            <property name="margin-bottom">4</property>
+            <property name="margin-top">4</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkBox">
+                <property name="spacing">3</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="icon-name">dialog-information-symbolic</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label">Did you know?</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label_splash_hintcounter">
+                    <property name="halign">end</property>
+                    <property name="hexpand">True</property>
+                    <property name="justify">right</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_splash_hint">
+                <property name="halign">center</property>
+                <property name="height-request">90</property>
+                <property name="margin-bottom">5</property>
+                <property name="margin-top">5</property>
+                <property name="valign">center</property>
+                <property name="wrap">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="hexpand">True</property>
+                <property name="homogeneous">True</property>
+                <property name="spacing">3</property>
+                <child>
+                  <object class="GtkButton" id="button_splash_hint_back">
+                    <child>
+                      <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="icon-name">go-previous-symbolic</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label">Previous</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_splash_hint_next">
+                    <child>
+                      <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="icon-name">go-next-symbolic</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label">Next</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="height-request">1</property>
+            <property name="margin-bottom">4</property>
+            <property name="margin-top">4</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="homogeneous">True</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkButton" id="button_splash_new_game">
+                <child>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkImage">
+                        <property name="icon-name">document-new-symbolic</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Start new game</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_splash_load_game">
+                <child>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkImage">
+                        <property name="icon-name">document-open-symbolic</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Load game</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_splash_resume_game">
+                <child>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkImage">
+                        <property name="icon-name">document-open-recent-symbolic</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Resume game</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_splash_quit">
+                <child>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkImage">
+                        <property name="icon-name">window-close-symbolic</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Quit</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="hexpand">True</property>
+            <property name="spacing">5</property>
+            <child>
+              <object class="GtkLabel" id="label_splash_progress">
+                <property name="label">Ready</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <style/>
+  </object>
+</interface>
