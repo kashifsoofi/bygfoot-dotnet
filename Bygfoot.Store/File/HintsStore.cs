@@ -1,20 +1,63 @@
 ﻿
+using Bygfoot.Domain;
+
 namespace Bygfoot.Store;
 
 public class HintsStore : IHintsStore
 {
+    private string HintNumPath => Path.Combine($"{FileStore.GetBygfootDir()}", "hint_num");
+
     public List<string> GetHints()
     {
-        throw new NotImplementedException();
+        var optionsList = LoadHintsFile();
+        var hints = new List<string>();
+        for (var i = 0; i < optionsList.Count; i++)
+        {
+            hints.Add(optionsList[i].StringValue);
+        }
+        return hints;
     }
 
     public int LoadHintNumber()
     {
-        throw new NotImplementedException();
+        var hintNumPath = HintNumPath;
+        Console.WriteLine(hintNumPath);
+        if (!FileStore.Exists(HintNumPath))
+        {
+            return 0;
+        }
+        Console.WriteLine(hintNumPath);
+
+        var hintNumStr = File.ReadAllText(hintNumPath);
+        if (!int.TryParse(hintNumStr, out var hintNum))
+        {
+            return 0;
+        }
+
+        return hintNum;
     }
 
-    public void SaveHintNumber()
+    public void SaveHintNumber(int hintNum)
     {
-        throw new NotImplementedException();
+        var hintNumPath = HintNumPath;
+        Console.WriteLine(hintNumPath);
+        File.WriteAllText(hintNumPath, hintNum.ToString());
+    }
+
+    private string GetLanguageCode()
+    {
+        return "en";
+    }
+
+    private OptionsList LoadHintsFile()
+    {
+        var hintsFilename = $"bygfoot_hints_{GetLanguageCode()}";
+        var hintsFilenameSup = FileStore.FindSupportFile(hintsFilename);
+        if (string.IsNullOrEmpty(hintsFilenameSup))
+        {
+            hintsFilename = "../support_files/hints/bygfoot_hints_en";
+        }
+
+        return FileStore.LoadOptionsFile(hintsFilename!);
     }
 }

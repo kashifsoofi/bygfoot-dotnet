@@ -73,9 +73,12 @@
             </child>
             <child>
               <object class="GtkLabel" id="label_splash_hint">
-                <property name="halign">end</property>
-                <property name="height-request">110</property>
-                <property name="lines">3</property>
+                <property name="halign">center</property>
+                <property name="height-request">90</property>
+                <property name="margin-bottom">5</property>
+                <property name="margin-top">5</property>
+                <property name="valign">center</property>
+                <property name="wrap">True</property>
               </object>
             </child>
             <child>

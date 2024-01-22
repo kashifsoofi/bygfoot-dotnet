@@ -2,12 +2,12 @@
 
 public interface IStore
 {
-    
+    IHintsStore HintsStore { get; }   
 }
 
 public interface IHintsStore
 {
     int LoadHintNumber();
-    void SaveHintNumber();
+    void SaveHintNumber(int hintNum);
     List<string> GetHints();
 }
