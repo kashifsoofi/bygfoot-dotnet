@@ -44,7 +44,8 @@ public class SplashWindow : Window
 
     private void WindowDestroy()
     {
-        _hintsStore.SaveHintNumber(_hintNum);
+        var hintNum = (_hintNum + 1) % _hints.Count;
+        _hintsStore.SaveHintNumber(hintNum);
         Destroy();
     }
 
@@ -57,14 +58,6 @@ public class SplashWindow : Window
     private void ShowHint()
     {
         var totalHints = _hints.Count;
-        if (_hintNum < 0)
-        {
-            _hintNum = totalHints - 1;
-        }
-        if (_hintNum >= totalHints)
-        {
-            _hintNum = 0;
-        }
 
         var hint = _hints[_hintNum];
         _labelHint.SetLabel(hint);
@@ -75,13 +68,13 @@ public class SplashWindow : Window
 
     private void OnHintBackClicked(Button sender, EventArgs args)
     {
-        _hintNum -= 1;
+        _hintNum = _hintNum == 0 ? _hints.Count - 1 : _hintNum - 1;
         ShowHint();
     }
 
     private void OnHintNextClicked(Button sender, EventArgs args)
     {
-        _hintNum += 1;
+        _hintNum = (_hintNum + 1) % _hints.Count;
         ShowHint();
     }
 
