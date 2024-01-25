@@ -7,6 +7,13 @@ public class HintsStore : IHintsStore
 {
     private string HintNumPath => Path.Combine($"{FileStore.GetBygfootDir()}", "hint_num");
 
+    private readonly FileStore _fileStore;
+
+    public HintsStore(FileStore fileStore)
+    {
+        _fileStore = fileStore;
+    }
+
     public List<string> GetHints()
     {
         var optionsList = LoadHintsFile();
@@ -52,12 +59,12 @@ public class HintsStore : IHintsStore
     private OptionsList LoadHintsFile()
     {
         var hintsFilename = $"bygfoot_hints_{GetLanguageCode()}";
-        var hintsFilenameSup = FileStore.FindSupportFile(hintsFilename);
+        var hintsFilenameSup = _fileStore.FindSupportFile(hintsFilename, false);
         if (string.IsNullOrEmpty(hintsFilenameSup))
         {
             hintsFilename = "../support_files/hints/bygfoot_hints_en";
         }
 
-        return FileStore.LoadOptionsFile(hintsFilename!);
+        return _fileStore.LoadOptionsFile(hintsFilename!, false);
     }
 }
