@@ -5,7 +5,7 @@ public class Option
     const float OPTION_FLOAT_DIVISOR = (float)100000.0;
 
     public string Name { get; set; }
-    public string StringValue { get; set; }
+    public string? StringValue { get; set; }
     public int Value { get; set;}
 
     private Option(string name, string stringValue, int value)
@@ -15,12 +15,8 @@ public class Option
         Value = value;
     }
 
-    public Option(string name, string stringValue)
-        : this(name, stringValue, -1)
-    { }
-
-    public Option(string name, int value)
-        : this(name, "", value)
+    public Option(string name)
+        : this(name, "", -1)
     { }
 }
 

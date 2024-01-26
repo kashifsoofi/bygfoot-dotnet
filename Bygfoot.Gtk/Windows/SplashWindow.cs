@@ -5,6 +5,7 @@ namespace Bygfoot.Gtk.Windows;
 
 public class SplashWindow : Window
 {
+    [Connect("listview_splash_contributors")] private ListView _listViewContributors;
     [Connect("label_splash_hintcounter")] private Label _labelHintCounter;
     [Connect("label_splash_hint")] private Label _labelHint;
     [Connect("button_splash_hint_back")] private Button _buttonHintBack;
@@ -14,11 +15,12 @@ public class SplashWindow : Window
     [Connect("button_splash_resume_game")] private Button _buttonResumeGame;
     [Connect("button_splash_quit")] private Button _buttonQuit;
 
+    private readonly IHelpStore _helpStore;
     private readonly IHintsStore _hintsStore;
     private readonly List<string> _hints;
     private int _hintNum;
 
-    private SplashWindow(Builder builder, string name, IHintsStore hintsStore)
+    private SplashWindow(Builder builder, string name, IHelpStore helpStore, IHintsStore hintsStore)
         : base(builder.GetPointer(name), false)
     {
         builder.Connect(this);
@@ -32,14 +34,17 @@ public class SplashWindow : Window
         _buttonResumeGame!.OnClicked += OnResumeGameClicked;
         _buttonQuit!.OnClicked += OnQuitClicked;
 
+        _helpStore = helpStore;
+        ShowContributors();
+
         _hintsStore = hintsStore;
         _hints = _hintsStore.GetHints();
         _hintNum = _hintsStore.LoadHintNumber();
         ShowHint();
     }
 
-    public SplashWindow(IHintsStore hintsStore)
-        : this(new Builder("splash.ui"), "SplashWindow", hintsStore)
+    public SplashWindow(IHelpStore helpStore, IHintsStore hintsStore)
+        : this(new Builder("splash.ui"), "SplashWindow", helpStore, hintsStore)
     { }
 
     private void WindowDestroy()
@@ -53,6 +58,36 @@ public class SplashWindow : Window
     {
         WindowDestroy();
         return false;
+    }
+
+    private void ShowContributors()
+    {
+        var contributors = _helpStore.GetContributors();
+        
+        var stringList = StringList.New(null);
+        foreach (var contributor in contributors)
+        {
+            stringList.Append($"\n<span size='large'>{contributor.Title}</span>");
+            foreach (var entry in contributor.Entries)
+            {
+                stringList.Append(entry);
+            }
+        }
+
+        var selectionModel = NoSelection.New(stringList);
+        _listViewContributors.SetModel(selectionModel);
+
+        var factory = SignalListItemFactory.New();
+        factory.OnSetup += (_, args) => {
+            ((ListItem)args.Object).Child = Label.New("");
+        };
+        factory.OnBind += (_, args) => {
+            var listItem = (ListItem)args.Object;
+            var pos = listItem.Position;
+            var label = (Label)listItem.Child;
+            label.SetLabel(stringList.GetString(pos));
+        };
+        _listViewContributors.Factory = factory;
     }
 
     private void ShowHint()

@@ -6,27 +6,28 @@ public class FileStore : IStore
 {
     const string HomeDirName = ".bygfoot";
 
-    private readonly string PackageDataDir = @"..\..\.."; //ConfigurationManager.AppSettings["PACKAGE_DATA_DIR"];
+    private readonly string PackageDataDir = @"../../../.."; //ConfigurationManager.AppSettings["PACKAGE_DATA_DIR"];
     private readonly string PackageLocaleDir = CurrentDir;
     private readonly List<string> _supportDirectories = new List<string>();
     private readonly List<string> _rootDefinitionsDirectories = new List<string>();
     private readonly List<string> _definitionsDirectories = new List<string>();
 
-    private readonly IHintsStore _hintsStore;
+    public IHelpStore HelpStore { get; }
+    public IHintsStore HintsStore { get; }
 
     public FileStore()
     {
         var baseDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PackageDataDir);
         baseDir = Path.GetFullPath(baseDir);
         string supportFilesDir = Path.Combine(baseDir, "support_files");
+        Console.WriteLine(supportFilesDir);
 
         AddSupportDirectoryRecursive(supportFilesDir);
         AddSupportDirectoryRecursive(GetBygfootDir());
 
-        _hintsStore = new HintsStore(this);
+        HelpStore = new HelpStore(this);
+        HintsStore = new HintsStore(this);
     }
-
-    public IHintsStore HintsStore => _hintsStore;
 
     private void AddSupportDirectoryRecursive(string directory)
     {
@@ -85,7 +86,7 @@ public class FileStore : IStore
         return CurrentDir;
     }
 
-    public string FindSupportFile(string filename, bool warning)
+    public string? FindSupportFile(string filename, bool warning)
     {
         // _logger.Debug("FileHelper.FindSupportFile");
 
@@ -99,7 +100,7 @@ public class FileStore : IStore
 
         //if (warning)
         //  Debug.PrintMessage("FindSupportFile: file '{0}' not found.", filename);
-        return "";
+        return null;
     }
 
     /** Return the country definition files found in the support dirs.
@@ -138,27 +139,26 @@ public class FileStore : IStore
 
     public OptionsList LoadOptionsFile(string filename, bool sort)
     {
-        //var supportFile = FindSupportFile(filename)
-        var supportFile = filename;
+        var supportFile = FindSupportFile(filename, false);
         var lines = File.ReadAllLines(supportFile);
 
         var optionsList = new OptionsList();
         foreach (var line in lines)
         {
-            var (optionName, optionValue, found) = line.Cut(" ");
+            var (optionName, optionValue, found) = ParseOptionLine(line);
             if (!found)
             {
                 continue;
             }
 
-            Option option;
+            var option = new Option(optionName);
             if (optionName.StartsWith("string_"))
             {
-                option = new Option(optionName, optionValue);
+                option.StringValue = optionValue;
             }
             else
             {
-                option = new Option(optionName, int.Parse(optionValue));
+                option.Value = int.Parse(optionValue);
             }
             optionsList.Add(option);
 
@@ -166,7 +166,10 @@ public class FileStore : IStore
                 (!OsIsUnix && optionName.EndsWith("_win32")))
             {
                 optionName = optionName.Remove(optionName.Length - (OsIsUnix ? 5 : 6));
-                var option2 = new Option(optionName, optionValue);
+                var option2 = new Option(optionName)
+                {
+                    StringValue = optionValue
+                };
                 optionsList.Add(option2);
             }
         }

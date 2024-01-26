@@ -28,12 +28,10 @@ public class HintsStore : IHintsStore
     public int LoadHintNumber()
     {
         var hintNumPath = HintNumPath;
-        Console.WriteLine(hintNumPath);
         if (!FileStore.Exists(HintNumPath))
         {
             return 0;
         }
-        Console.WriteLine(hintNumPath);
 
         var hintNumStr = File.ReadAllText(hintNumPath);
         if (!int.TryParse(hintNumStr, out var hintNum))
@@ -47,7 +45,6 @@ public class HintsStore : IHintsStore
     public void SaveHintNumber(int hintNum)
     {
         var hintNumPath = HintNumPath;
-        Console.WriteLine(hintNumPath);
         File.WriteAllText(hintNumPath, hintNum.ToString());
     }
 
@@ -58,13 +55,13 @@ public class HintsStore : IHintsStore
 
     private OptionsList LoadHintsFile()
     {
-        var hintsFilename = $"bygfoot_hints_{GetLanguageCode()}";
-        var hintsFilenameSup = _fileStore.FindSupportFile(hintsFilename, false);
-        if (string.IsNullOrEmpty(hintsFilenameSup))
+        var hintsFileName = $"bygfoot_hints_{GetLanguageCode()}";
+        var hintsFilePath = _fileStore.FindSupportFile(hintsFileName, false);
+        if (hintsFilePath == null)
         {
-            hintsFilename = "../support_files/hints/bygfoot_hints_en";
+            hintsFileName = "bygfoot_hints_en";
         }
 
-        return _fileStore.LoadOptionsFile(hintsFilename!, false);
+        return _fileStore.LoadOptionsFile(hintsFileName, false);
     }
 }

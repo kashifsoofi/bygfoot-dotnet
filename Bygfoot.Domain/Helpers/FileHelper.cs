@@ -151,13 +151,13 @@ public class FileHelper
             string optName = null, optValue = null;
             if (ParseOptLine(line, ref optName, ref optValue))
             {
-                optionsList.Add(new Option(optName, optValue));
+                optionsList.Add(new Option(optName) { StringValue = optValue });
 
                 if ((optName.EndsWith("_unix") && Variables.os_is_unix) ||
                     (optName.EndsWith("_win32") && !Variables.os_is_unix))
                 {
                     optName = optName.Remove(optName.IndexOf(Variables.os_is_unix ? "_unix" : "_win32"));
-                    optionsList.Add(new Option(optName, optValue));
+                    optionsList.Add(new Option(optName) { StringValue = optValue });
                 }
             }
         }
