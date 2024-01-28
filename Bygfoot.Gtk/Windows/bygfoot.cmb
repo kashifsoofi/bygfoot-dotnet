@@ -100,6 +100,9 @@
 	(1,39,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
 	(1,40,"GtkImage","file","support_files/pixmaps/bygfoot_splash.png",None,None,None,None,None,None,None,None,None),
 	(1,40,"GtkWidget","height-request","230",None,None,None,None,None,None,None,None,None),
+	(1,42,"GtkWidget","can-focus","False",None,None,None,None,None,None,None,None,None),
+	(1,42,"GtkWidget","can-target","False",None,None,None,None,None,None,None,None,None),
+	(1,42,"GtkWidget","focus-on-click","False",None,None,None,None,None,None,None,None,None),
 	(1,43,"GtkLabel","label"," ",None,None,None,None,None,None,None,None,None),
 	(1,44,"GtkLabel","label","Contributors",None,None,None,None,None,None,None,None,None)
   </object_property>

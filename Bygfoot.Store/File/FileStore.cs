@@ -188,7 +188,7 @@ public class FileStore : IStore
     {
         // _logger.Debug("FileHelper.LoadConfFiles");
 
-        string confFile = FindSupportFile("bygfoot.conf", true);
+        var confFile = FindSupportFile("bygfoot.conf", true);
         Variables.Options = LoadOptionsFile(confFile, false);
         /*//TODO 
         LoadOptFile(Option.OptStr("string_opt_constants_file"), ref Variables.Constants, true);

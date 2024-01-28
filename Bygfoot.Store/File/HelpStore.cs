@@ -14,27 +14,27 @@ public class HelpStore : IHelpStore
         _fileStore = fileStore;
     }
 
-    public List<Contributor>? GetContributors()
+    public List<Contributor> GetContributors()
     {
+        var contributors = new List<Contributor>();
+
         var helpFilePath = _fileStore.FindSupportFile(HelpFileName, true);
         if (helpFilePath == null)
         {
             // TODO game_gui_show_warning (probably in caller)
-            return null;
+            return contributors;
         }
 
         var optionsList = _fileStore.LoadOptionsFile(helpFilePath, false);
-
-        var contributors = new List<Contributor>();
         for (var i = 0; i < optionsList.Count; i++)
         {
             if (optionsList[i].Name == "string_contrib_title")
             {
-                contributors.Add(new Contributor(optionsList[i].StringValue));
+                contributors.Add(new Contributor(optionsList[i]?.StringValue));
             }
             else
             {
-                contributors[contributors.Count - 1].Entries.Add(optionsList[i].StringValue);
+                contributors[contributors.Count - 1].Entries.Add(optionsList[i]?.StringValue);
             }
         }
         return contributors;

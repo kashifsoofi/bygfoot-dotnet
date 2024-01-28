@@ -20,6 +20,6 @@ public record Contributor(string Title)
 
 public interface IHelpStore
 {
-    List<Contributor>? GetContributors();
+    List<Contributor> GetContributors();
 }
 

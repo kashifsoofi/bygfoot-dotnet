@@ -79,13 +79,16 @@ public class SplashWindow : Window
 
         var factory = SignalListItemFactory.New();
         factory.OnSetup += (_, args) => {
-            ((ListItem)args.Object).Child = Label.New("");
+            var label = Label.New("");
+            label.Halign = Align.Start;
+            label.CanTarget = false;
+            ((ListItem)args.Object).Child = label;
         };
         factory.OnBind += (_, args) => {
             var listItem = (ListItem)args.Object;
             var pos = listItem.Position;
             var label = (Label)listItem.Child;
-            label.SetLabel(stringList.GetString(pos));
+            label.SetMarkup(stringList.GetString(pos));
         };
         _listViewContributors.Factory = factory;
     }
