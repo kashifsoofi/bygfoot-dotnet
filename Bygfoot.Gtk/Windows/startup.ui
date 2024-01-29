@@ -2,7 +2,7 @@
 <!-- Created with Cambalache 0.16.0 -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_startup">
+  <object class="GtkWindow" id="StartupWindow">
     <property name="default-height">600</property>
     <property name="default-width">550</property>
     <child>
@@ -113,7 +113,6 @@
           <object class="GtkBox">
             <child>
               <object class="GtkToggleButton" id="radiobutton_team_def_load">
-                <property name="group">radiobutton_team_def_load</property>
                 <property name="label">Load team definitions</property>
               </object>
             </child>
