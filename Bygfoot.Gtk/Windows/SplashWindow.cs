@@ -20,6 +20,8 @@ public class SplashWindow : Window
     private readonly List<string> _hints;
     private int _hintNum;
 
+    public App App { get; set; }
+
     private SplashWindow(Builder builder, string name, IHelpStore helpStore, IHintsStore hintsStore)
         : base(builder.GetPointer(name), false)
     {
@@ -118,7 +120,8 @@ public class SplashWindow : Window
 
     private void OnNewGameClicked(Button sender, EventArgs args)
     {
-
+        WindowDestroy();
+        this.App.ShowStartupWindow();
     }
 
     private void OnLoadGameClicked(Button sender, EventArgs args)
