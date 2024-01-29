@@ -77,13 +77,17 @@
             </child>
             <child>
               <object class="GtkLabel" id="label_splash_hint">
+                <property name="ellipsize">end</property>
                 <property name="halign">center</property>
                 <property name="height-request">90</property>
+                <property name="lines">4</property>
                 <property name="margin-bottom">5</property>
-                <property name="margin-end">-1</property>
-                <property name="margin-start">-1</property>
+                <property name="margin-end">56</property>
+                <property name="margin-start">56</property>
                 <property name="margin-top">5</property>
+                <property name="max-width-chars">50</property>
                 <property name="valign">center</property>
+                <property name="width-request">440</property>
               </object>
             </child>
             <child>
@@ -227,7 +231,6 @@
             <property name="spacing">5</property>
             <child>
               <object class="GtkLabel" id="label_splash_progress">
-                <property name="justify">right</property>
                 <property name="label">Ready</property>
                 <property name="natural-wrap-mode">word</property>
                 <property name="width-request">400</property>
