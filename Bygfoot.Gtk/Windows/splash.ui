@@ -80,9 +80,10 @@
                 <property name="halign">center</property>
                 <property name="height-request">90</property>
                 <property name="margin-bottom">5</property>
+                <property name="margin-end">-1</property>
+                <property name="margin-start">-1</property>
                 <property name="margin-top">5</property>
                 <property name="valign">center</property>
-                <property name="wrap">True</property>
               </object>
             </child>
             <child>
@@ -141,12 +142,12 @@
         </child>
         <child>
           <object class="GtkBox">
-            <property name="homogeneous">True</property>
             <property name="spacing">3</property>
             <child>
               <object class="GtkButton" id="button_splash_new_game">
                 <child>
                   <object class="GtkBox">
+                    <property name="spacing">2</property>
                     <child>
                       <object class="GtkImage">
                         <property name="icon-name">document-new-symbolic</property>
@@ -165,6 +166,7 @@
               <object class="GtkButton" id="button_splash_load_game">
                 <child>
                   <object class="GtkBox">
+                    <property name="spacing">2</property>
                     <child>
                       <object class="GtkImage">
                         <property name="icon-name">document-open-symbolic</property>
@@ -183,6 +185,7 @@
               <object class="GtkButton" id="button_splash_resume_game">
                 <child>
                   <object class="GtkBox">
+                    <property name="spacing">2</property>
                     <child>
                       <object class="GtkImage">
                         <property name="icon-name">document-open-recent-symbolic</property>
@@ -199,8 +202,10 @@
             </child>
             <child>
               <object class="GtkButton" id="button_splash_quit">
+                <property name="hexpand">True</property>
                 <child>
                   <object class="GtkBox">
+                    <property name="spacing">2</property>
                     <child>
                       <object class="GtkImage">
                         <property name="icon-name">window-close-symbolic</property>
@@ -219,11 +224,13 @@
         </child>
         <child>
           <object class="GtkBox">
-            <property name="hexpand">True</property>
             <property name="spacing">5</property>
             <child>
               <object class="GtkLabel" id="label_splash_progress">
+                <property name="justify">right</property>
                 <property name="label">Ready</property>
+                <property name="natural-wrap-mode">word</property>
+                <property name="width-request">400</property>
               </object>
             </child>
           </object>
