@@ -20,7 +20,6 @@ public class FileStore : IStore
         var baseDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PackageDataDir);
         baseDir = Path.GetFullPath(baseDir);
         string supportFilesDir = Path.Combine(baseDir, "support_files");
-        Console.WriteLine(supportFilesDir);
 
         AddSupportDirectoryRecursive(supportFilesDir);
         AddSupportDirectoryRecursive(GetBygfootDir());
