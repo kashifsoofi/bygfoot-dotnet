@@ -1,0 +1,209 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.16.0 -->
+<interface>
+  <requires lib="gtk" version="4.12"/>
+  <object class="GtkWindow" id="StartupWindow">
+    <property name="default-height">600</property>
+    <property name="default-width">550</property>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label">Choose country</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkDropDown" id="combo_country"/>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="label">Choose team</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkPaned">
+            <child>
+              <object class="GtkScrolledWindow">
+                <child>
+                  <object class="GtkListView" id="treeview_users">
+                    <property name="model">
+                      <object class="GtkSingleSelection"/>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow">
+                <child>
+                  <object class="GtkListView" id="treeview_startup">
+                    <property name="model">
+                      <object class="GtkSingleSelection"/>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="height-request">1</property>
+            <property name="margin-bottom">5</property>
+            <property name="margin-top">5</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="label">Choose league to start in</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkDropDown" id="combobox_start_league"/>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="height-request">1</property>
+            <property name="margin-bottom">2</property>
+            <property name="margin-top">2</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="label">Choose username</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="entry_player_name"/>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <child>
+              <object class="GtkBox">
+                <property name="halign">center</property>
+                <property name="spacing">2</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="icon-name">list-add-symbolic</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label">Add user</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="height-request">1</property>
+            <property name="margin-bottom">5</property>
+            <property name="margin-top">5</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <child>
+              <object class="GtkToggleButton" id="radiobutton_team_def_load">
+                <property name="label">Load team definitions</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkToggleButton" id="radiobutton_team_def_names">
+                <property name="group">radiobutton_team_def_load</property>
+                <property name="label">Only names</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkToggleButton" id="radiobutton_team_def_dont">
+                <property name="group">radiobutton_team_def_load</property>
+                <property name="label">Don't load definitions</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSeparator">
+                <property name="height-request">1</property>
+                <property name="margin-end">5</property>
+                <property name="margin-start">5</property>
+                <property name="orientation">vertical</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="checkbutton_randomise_teams">
+                <property name="label">Randomise teams in cups</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="height-request">1</property>
+            <property name="margin-bottom">2</property>
+            <property name="margin-top">2</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="spacing">2</property>
+            <child>
+              <object class="GtkButton" id="team_selection_ok">
+                <property name="hexpand">True</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="halign">center</property>
+                    <property name="spacing">2</property>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="icon-name">object-select-symbolic</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Start</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_team_selection_back">
+                <property name="hexpand">True</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="halign">center</property>
+                    <property name="spacing">2</property>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="icon-name">go-previous-symbolic</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Back to splash</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="team_selection_cancel">
+                <property name="hexpand">True</property>
+                <property name="label">Quit</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

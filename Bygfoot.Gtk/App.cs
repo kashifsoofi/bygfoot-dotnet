@@ -25,9 +25,23 @@ public class App
 
     private void OnActivate(Gio.Application sender, EventArgs args)
     {
-        var window = new SplashWindow(_store.HelpStore, _store.HintsStore)
+        ShowSplashWindow();
+    }
+
+    public void ShowSplashWindow()
+    {
+        var window = new SplashWindow(this, _store.HelpStore, _store.HintsStore)
         {
-            Application = _application
+            Application = _application,
+        };
+        window.Show();
+    }
+
+    public void ShowStartupWindow()
+    {
+        var window = new StartupWindow(this)
+        {
+            Application = _application,
         };
         window.Show();
     }
