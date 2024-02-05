@@ -5,9 +5,9 @@ namespace Bygfoot.Gtk.Windows;
 
 public class SplashWindow : Window
 {
-    [Connect("listview_splash_contributors")] private ListView _listViewContributors;
-    [Connect("label_splash_hintcounter")] private Label _labelHintCounter;
-    [Connect("label_splash_hint")] private Label _labelHint;
+    [Connect("listview_splash_contributors")] private ListView? _listViewContributors;
+    [Connect("label_splash_hintcounter")] private Label? _labelHintCounter;
+    [Connect("label_splash_hint")] private Label? _labelHint;
     [Connect("button_splash_hint_back")] private Button _buttonHintBack;
     [Connect("button_splash_hint_next")] private Button _buttonHintNext;
     [Connect("button_splash_new_game")] private Button _buttonNewGame;
@@ -20,13 +20,14 @@ public class SplashWindow : Window
     private readonly List<string> _hints;
     private int _hintNum;
 
-    public App App { get; set; }
+    public App App { get; }
 
-    private SplashWindow(Builder builder, string name, IHelpStore helpStore, IHintsStore hintsStore)
-        : base(builder.GetPointer(name), false)
+    private SplashWindow(Builder builder, App app, IHelpStore helpStore, IHintsStore hintsStore)
+        : base(builder.GetPointer(nameof(SplashWindow)), false)
     {
         builder.Connect(this);
 
+        App = app;
         this.OnCloseRequest += OnCloseRequestHandler;
 
         _buttonHintBack!.OnClicked += OnHintBackClicked;
@@ -45,8 +46,8 @@ public class SplashWindow : Window
         ShowHint();
     }
 
-    public SplashWindow(IHelpStore helpStore, IHintsStore hintsStore)
-        : this(new Builder("splash.ui"), "SplashWindow", helpStore, hintsStore)
+    public SplashWindow(App app, IHelpStore helpStore, IHintsStore hintsStore)
+        : this(new Builder("splash.ui"), app, helpStore, hintsStore)
     { }
 
     private void WindowDestroy()
@@ -77,7 +78,7 @@ public class SplashWindow : Window
         }
 
         var selectionModel = NoSelection.New(stringList);
-        _listViewContributors.SetModel(selectionModel);
+        _listViewContributors!.SetModel(selectionModel);
 
         var factory = SignalListItemFactory.New();
         factory.OnSetup += (_, args) => {
@@ -89,8 +90,8 @@ public class SplashWindow : Window
         factory.OnBind += (_, args) => {
             var listItem = (ListItem)args.Object;
             var pos = listItem.Position;
-            var label = (Label)listItem.Child;
-            label.SetMarkup(stringList.GetString(pos));
+            var label = (Label)listItem.Child!;
+            label.SetMarkup(stringList.GetString(pos)!);
         };
         _listViewContributors.Factory = factory;
     }
@@ -100,10 +101,10 @@ public class SplashWindow : Window
         var totalHints = _hints.Count;
 
         var hint = _hints[_hintNum];
-        _labelHint.SetLabel(hint);
+        _labelHint!.SetLabel(hint);
 
         var hintCount = $"({_hintNum+1}/{totalHints})";
-        _labelHintCounter.SetLabel(hintCount);
+        _labelHintCounter!.SetLabel(hintCount);
     }
 
     private void OnHintBackClicked(Button sender, EventArgs args)

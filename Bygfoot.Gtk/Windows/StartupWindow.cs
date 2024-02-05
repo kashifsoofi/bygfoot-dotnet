@@ -8,19 +8,20 @@ public class StartupWindow : Window
     [Connect("button_team_selection_back")] private Button _buttonBack;
     [Connect("team_selection_cancel")] private Button _buttonCancel;
 
-    public App App { get; set; }
+    public App App { get; }
 
-    private StartupWindow(Builder builder, string name)
-        : base(builder.GetPointer(name), false)
+    private StartupWindow(Builder builder, App app)
+        : base(builder.GetPointer(nameof(StartupWindow)), false)
     {
         builder.Connect(this);
 
-        _buttonBack.OnClicked += OnBackClicked;
-        _buttonCancel.OnClicked += OnCancelClicked;
+        App = app;
+        _buttonBack!.OnClicked += OnBackClicked;
+        _buttonCancel!.OnClicked += OnCancelClicked;
     }
 
-    public StartupWindow()
-        : this(new Builder("startup.ui"), "StartupWindow")
+    public StartupWindow(App app)
+        : this(new Builder("startup.ui"), app)
     { }
 
     private void OnBackClicked(Button sender, EventArgs args)

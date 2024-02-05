@@ -30,20 +30,18 @@ public class App
 
     public void ShowSplashWindow()
     {
-        var window = new SplashWindow(_store.HelpStore, _store.HintsStore)
+        var window = new SplashWindow(this, _store.HelpStore, _store.HintsStore)
         {
             Application = _application,
-            App = this,
         };
         window.Show();
     }
 
     public void ShowStartupWindow()
     {
-        var window = new StartupWindow()
+        var window = new StartupWindow(this)
         {
             Application = _application,
-            App = this,
         };
         window.Show();
     }
