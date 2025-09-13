@@ -1,5 +1,6 @@
 using Bygfoot.Store;
 using Gtk;
+using WindowHandle = Gtk.Internal.WindowHandle;
 
 namespace Bygfoot.Gtk.Windows;
 
@@ -11,7 +12,7 @@ public class StartupWindow : Window
     public App App { get; }
 
     private StartupWindow(Builder builder, App app)
-        : base(builder.GetPointer(nameof(StartupWindow)), false)
+        : base(new WindowHandle(builder.GetPointer(nameof(StartupWindow)), false))
     {
         builder.Connect(this);
 

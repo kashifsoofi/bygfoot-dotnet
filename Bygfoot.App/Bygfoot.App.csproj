@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GirCore.Gtk-4.0" Version="0.5.0-preview.4" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Bygfoot.Gtk\Bygfoot.Gtk.csproj" />
   </ItemGroup>
 

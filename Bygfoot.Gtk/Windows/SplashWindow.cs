@@ -1,5 +1,6 @@
 ﻿using Bygfoot.Store;
 using Gtk;
+using WindowHandle = Gtk.Internal.WindowHandle;
 
 namespace Bygfoot.Gtk.Windows;
 
@@ -23,8 +24,9 @@ public class SplashWindow : Window
     public App App { get; }
 
     private SplashWindow(Builder builder, App app, IHelpStore helpStore, IHintsStore hintsStore)
-        : base(builder.GetPointer(nameof(SplashWindow)), false)
+        : base(new WindowHandle(builder.GetPointer(nameof(SplashWindow)), false))
     {
+        ;
         builder.Connect(this);
 
         App = app;
