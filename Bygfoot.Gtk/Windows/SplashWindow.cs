@@ -26,7 +26,6 @@ public class SplashWindow : Window
     private SplashWindow(Builder builder, App app, IHelpStore helpStore, IHintsStore hintsStore)
         : base(new WindowHandle(builder.GetPointer(nameof(SplashWindow)), false))
     {
-        ;
         builder.Connect(this);
 
         App = app;

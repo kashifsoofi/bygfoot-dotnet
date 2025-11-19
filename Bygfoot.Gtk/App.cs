@@ -39,7 +39,7 @@ public class App
 
     public void ShowStartupWindow()
     {
-        var window = new StartupWindow(this)
+        var window = new StartupWindow(this, _store.DefinitionsStore)
         {
             Application = _application,
         };

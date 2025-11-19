@@ -1,22 +1,23 @@
 using Bygfoot.Store;
 using Gio;
-using GObject.Internal;
 using Gtk;
 using Object = GObject.Object;
-using Type = GObject.Type;
 using WindowHandle = Gtk.Internal.WindowHandle;
 
 namespace Bygfoot.Gtk.Windows;
 
 public class StartupWindow : Window
 {
+    [Connect("dropdown_continent")] private DropDown? _dropdownContinent; 
     [Connect("combo_country")] private DropDown? _comboCountry; 
     [Connect("button_team_selection_back")] private Button _buttonBack;
     [Connect("team_selection_cancel")] private Button _buttonCancel;
 
+    private readonly IDefinitionsStore _definitionsStore;
+    
     public App App { get; }
 
-    private StartupWindow(Builder builder, App app)
+    private StartupWindow(Builder builder, App app, IDefinitionsStore definitionsStore)
         : base(new WindowHandle(builder.GetPointer(nameof(StartupWindow)), false))
     {
         builder.Connect(this);
@@ -25,12 +26,49 @@ public class StartupWindow : Window
         _buttonBack!.OnClicked += OnBackClicked;
         _buttonCancel!.OnClicked += OnCancelClicked;
 
-        ShowCountries();
+        _definitionsStore = definitionsStore;
+        
+        ShowContinents();
     }
 
-    public StartupWindow(App app)
-        : this(new Builder("startup.ui"), app)
+    public StartupWindow(App app, IDefinitionsStore definitionsStore)
+        : this(new Builder("startup.ui"), app, definitionsStore)
     { }
+
+    private void ShowContinents()
+    {
+        var continents = _definitionsStore.GetContinents();
+        
+        var continentList = StringList.New(continents);
+        var continentSelection = SingleSelection.New(continentList);
+        
+        _dropdownContinent!.Model = continentSelection;
+        DropDown.SelectedPropertyDefinition.Notify(
+            _dropdownContinent,
+            (_, _) =>
+            {
+                var selectedItem = (StringObject)_dropdownContinent.SelectedItem!;
+                var continent = selectedItem.GetString();
+                ShowCountries(continent);
+            });
+    }
+
+    private void ShowCountries(string continent)
+    {
+        var countryNames = _definitionsStore.GetCountryNames(continent);
+        
+        var countryNameList = StringList.New(countryNames);
+        var countryNameSelection = SingleSelection.New(countryNameList);
+        
+        _comboCountry!.Model = countryNameSelection;
+        DropDown.SelectedPropertyDefinition.Notify(
+            _comboCountry,
+            (_, _) =>
+            {
+                var selectedItem = (StringObject)_dropdownContinent.SelectedItem!;
+                var countryName = selectedItem.GetString();
+            });
+    }
 
     private void ShowCountries()
     {

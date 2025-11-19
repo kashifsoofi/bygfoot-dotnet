@@ -4,6 +4,7 @@ public interface IStore
 {
     IHintsStore HintsStore { get; }   
     IHelpStore HelpStore { get; }
+    IDefinitionsStore DefinitionsStore { get; }
 }
 
 public interface IHintsStore
@@ -23,3 +24,8 @@ public interface IHelpStore
     List<Contributor> GetContributors();
 }
 
+public interface IDefinitionsStore
+{
+    string[] GetContinents();
+    string[] GetCountryNames(string continent);
+}

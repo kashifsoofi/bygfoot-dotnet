@@ -14,6 +14,7 @@ public class FileStore : IStore
 
     public IHelpStore HelpStore { get; }
     public IHintsStore HintsStore { get; }
+    public IDefinitionsStore DefinitionsStore { get; }
 
     public FileStore()
     {
@@ -26,6 +27,7 @@ public class FileStore : IStore
 
         HelpStore = new HelpStore(this);
         HintsStore = new HintsStore(this);
+        DefinitionsStore = new DefinitionsStore(this);
     }
 
     private void AddSupportDirectoryRecursive(string directory)
@@ -98,7 +100,24 @@ public class FileStore : IStore
         }
 
         //if (warning)
-        //  Debug.PrintMessage("FindSupportFile: file '{0}' not found.", filename);
+        //  Debug.PrintMessage("FileHelper.FindSupportFile: file '{0}' not found.", filename);
+        return null;
+    }
+
+    public string? FindSupportDirectory(string directoryName, bool warning)
+    {
+        // _logger.Debug("FileHelper.FindSupportDirectory");
+
+        directoryName = Path.GetFileName(directoryName);
+        foreach (string directory in _supportDirectories)
+        {
+            string directoryPath = Path.Combine(directory, directoryName);
+            if (Directory.Exists(directoryPath))
+                return directoryPath;
+        }
+
+        //if (warning)
+        //  Debug.PrintMessage("FileHelper.FindSupportDirectory: directory '{0}' not found.", directoryName);
         return null;
     }
 
