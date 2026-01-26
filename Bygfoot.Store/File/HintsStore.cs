@@ -5,13 +5,13 @@ namespace Bygfoot.Store;
 
 public class HintsStore : IHintsStore
 {
-    private string HintNumPath => Path.Combine($"{FileStore.GetBygfootDir()}", "hint_num");
+    private string HintNumPath => Path.Combine($"{_fileHelper.GetBygfootDir()}", "hint_num");
 
-    private readonly FileStore _fileStore;
+    private readonly IFileHelper _fileHelper;
 
-    public HintsStore(FileStore fileStore)
+    public HintsStore(IFileHelper fileHelper)
     {
-        _fileStore = fileStore;
+        _fileHelper = fileHelper;
     }
 
     public List<string> GetHints()
@@ -28,7 +28,7 @@ public class HintsStore : IHintsStore
     public int LoadHintNumber()
     {
         var hintNumPath = HintNumPath;
-        if (!FileStore.Exists(HintNumPath))
+        if (!_fileHelper.Exists(HintNumPath))
         {
             return 0;
         }
@@ -56,12 +56,12 @@ public class HintsStore : IHintsStore
     private OptionsList LoadHintsFile()
     {
         var hintsFileName = $"bygfoot_hints_{GetLanguageCode()}";
-        var hintsFilePath = _fileStore.FindSupportFile(hintsFileName, false);
+        var hintsFilePath = _fileHelper.FindSupportFile(hintsFileName, false);
         if (hintsFilePath == null)
         {
             hintsFileName = "bygfoot_hints_en";
         }
 
-        return _fileStore.LoadOptionsFile(hintsFileName, false);
+        return _fileHelper.LoadOptionsFile(hintsFileName, false);
     }
 }

@@ -7,25 +7,25 @@ public class HelpStore : IHelpStore
 {
     private const string HelpFileName = "bygfoot_help";
 
-    private readonly FileStore _fileStore;
+    private readonly IFileHelper _fileHelper;
 
-    public HelpStore(FileStore fileStore)
+    public HelpStore(IFileHelper fileHelper)
     {
-        _fileStore = fileStore;
+        _fileHelper = fileHelper;
     }
 
     public List<Contributor> GetContributors()
     {
         var contributors = new List<Contributor>();
 
-        var helpFilePath = _fileStore.FindSupportFile(HelpFileName, true);
+        var helpFilePath = _fileHelper.FindSupportFile(HelpFileName, true);
         if (helpFilePath == null)
         {
             // TODO game_gui_show_warning (probably in caller)
             return contributors;
         }
 
-        var optionsList = _fileStore.LoadOptionsFile(helpFilePath, false);
+        var optionsList = _fileHelper.LoadOptionsFile(helpFilePath, false);
         for (var i = 0; i < optionsList.Count; i++)
         {
             if (optionsList[i].Name == "string_contrib_title")
@@ -42,13 +42,13 @@ public class HelpStore : IHelpStore
 
     private OptionsList? LoadHelpFile()
     {
-        var helpFilePath = _fileStore.FindSupportFile(HelpFileName, true);
+        var helpFilePath = _fileHelper.FindSupportFile(HelpFileName, true);
         if (helpFilePath == null)
         {
             // TODO game_gui_show_warning (probably in caller)
             return null;
         }
 
-        return _fileStore.LoadOptionsFile(helpFilePath!, false);
+        return _fileHelper.LoadOptionsFile(helpFilePath!, false);
     }
 }

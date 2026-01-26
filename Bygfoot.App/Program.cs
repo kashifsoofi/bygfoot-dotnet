@@ -9,7 +9,7 @@ public class Program
 
     public static void Main(string[] args)
     {
-        var app = new App(new FileStore());
+        var app = new App(new FileStore(new FileHelper()));
         app.Run();
     }
 }

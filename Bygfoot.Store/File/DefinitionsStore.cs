@@ -1,12 +1,14 @@
-﻿namespace Bygfoot.Store;
+﻿using Bygfoot.Domain;
 
-public class DefinitionsStore(FileStore fileStore) : IDefinitionsStore
+namespace Bygfoot.Store;
+
+public class DefinitionsStore(IFileHelper fileHelper) : IDefinitionsStore
 {
     private const string DefinitionsName = "definitions";
 
     public string[] GetContinents()
     {
-        var definitionsPath = fileStore.FindSupportDirectory(DefinitionsName, false);
+        var definitionsPath = fileHelper.FindSupportDirectory(DefinitionsName, false);
         if (definitionsPath == null)
         {
             return [];
@@ -17,7 +19,7 @@ public class DefinitionsStore(FileStore fileStore) : IDefinitionsStore
 
     public string[] GetCountryNames(string continent)
     {
-        var continentPath = fileStore.FindSupportDirectory(continent, false);
+        var continentPath = fileHelper.FindSupportDirectory(continent, false);
         if (continentPath == null)
         {
             return [];
