@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/SolutionItems/">
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Project Path="Bygfoot.App/Bygfoot.App.csproj" />
+  <Project Path="Bygfoot.Domain/Bygfoot.Domain.csproj" />
+  <Project Path="Bygfoot.Gtk/Bygfoot.Gtk.csproj" />
+  <Project Path="Bygfoot.Store/Bygfoot.Store.csproj" />
+</Solution>
