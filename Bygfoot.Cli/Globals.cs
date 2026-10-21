@@ -56,7 +56,6 @@ namespace Bygfoot.Cli
     // --- Placeholder Structures (These would replace the included *.h files) ---
     public class League { /* ... properties based on league_struct.h */ }
     public class Cup { /* ... properties based on cup_struct.h */ }
-    public class User { /* ... properties based on user_struct.h */ }
     public class Strategy { /* ... properties based on strategy_struct.h */ }
     public class LiveGame { /* ... properties based on live_game_struct.h */ }
     public class Transfer { /* ... properties based on transfer_struct.h */ }
