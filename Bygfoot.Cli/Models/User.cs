@@ -203,7 +203,7 @@ public class User
     public List<MemMatch> Mmatches { get; set; } = new List<MemMatch>();
 
     /// <summary>Array of current and recent bets. Corresponds to C: GArray *bets[2].</summary>
-    public List<object>[] Bets { get; set; } = new List<object>[2];
+    public List<BetUser>[] Bets { get; set; } = new List<BetUser>[2];
 
     /// <summary>An array of gint that will be used to store the default team of a user. Corresponds to C: GArray *default_team.</summary>
     public List<int> DefaultTeam { get; set; } = new List<int>();

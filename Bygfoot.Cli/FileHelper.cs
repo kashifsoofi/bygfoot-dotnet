@@ -1,3 +1,5 @@
+using Bygfoot.Cli.Models;
+
 namespace Bygfoot.Cli;
 
 /// <summary>
@@ -163,19 +165,4 @@ public static class FileHelper
         // Migration of file_remove_files(const GPtrArray *files)
         Console.WriteLine($"Removing files/directories...");
     }
-}
-
-// --- Conceptual Structures (Placeholder for complex types used in the original project) ---
-public class OptionList 
-{
-    // Represents the list structure used by the game options.
-}
-
-/// <summary>
-/// Conceptual representation of the User structure needed for file operations.
-/// </summary>
-public class User 
-{
-    public string Name { get; set; }
-    // other user properties...
 }

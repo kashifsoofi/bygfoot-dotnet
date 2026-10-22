@@ -1,3 +1,5 @@
+using Bygfoot.Cli.Models;
+
 namespace Bygfoot.Cli;
 
 using System;
@@ -23,7 +25,7 @@ public static class Globals
     public static readonly List<Transfer> TransferList = new List<Transfer>();
 
     // --- Match Simulation/Betting Data (Simulating `bets[]` array) ---
-    public static readonly List<MatchBet> BetMatches = new List<MatchBet>();
+    public static readonly List<BetMatch> BetMatches = new List<BetMatch>();
 
     // --- Simulation Control Variables ---
     public static int SeasonNumber { get; set; } = 1;
@@ -52,11 +54,3 @@ public static class Globals
         Console.WriteLine("Global resources freed.");
     }
 }
-
-// --- Placeholder Structures (These would replace the included *.h files) ---
-public class League { /* ... properties based on league_struct.h */ }
-public class Cup { /* ... properties based on cup_struct.h */ }
-public class Strategy { /* ... properties based on strategy_struct.h */ }
-public class LiveGame { /* ... properties based on live_game_struct.h */ }
-public class Transfer { /* ... properties based on transfer_struct.h */ }
-public class MatchBet { /* ... properties based on bet_match.h */ }

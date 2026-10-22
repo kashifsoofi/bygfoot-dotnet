@@ -1,6 +1,7 @@
-using System.Text;
-
 namespace Bygfoot.Cli;
+
+using System.Text;
+using Models;
 
 /// <summary>
 /// Miscellaneous helper functions.
@@ -8,16 +9,6 @@ namespace Bygfoot.Cli;
 /// </summary>
 public static class Misc
 {
-    /// <summary>Array holding string replacement tokens.
-    /// Corresponds to the C global <c>tokens</c> (OptionList) in variables.c.</summary>
-    public static Models.OptionList Tokens { get; } = new Models.OptionList();
-
-    /// <summary>The list of root defintions directories found (ending in definitions).
-    /// Corresponds to the C global <c>root_definitions_directories</c> in variables.c.</summary>
-    public static List<string> RootDefinitionsDirectories { get; } = new List<string>();
-
-    private static readonly Random RandGenerator = new Random();
-
     /// <summary>Exit when the print_error function is called on a set error.
     /// Corresponds to EXIT_PRINT_ERROR in the ExitCodes enum in bygfoot.h.</summary>
     private const int ExitPrintError = 4;
@@ -241,7 +232,7 @@ public static class Misc
     /// <returns>The path without the root definitions directory prefix, or "" if no root prefix matched.</returns>
     public static string MiscStripDefinitionsRoot(string directory)
     {
-        foreach (string prefix in RootDefinitionsDirectories)
+        foreach (string prefix in Variables.RootDefinitionsDirectories)
         {
             if (directory.StartsWith(prefix))
                 return directory.Substring(prefix.Length);
@@ -645,7 +636,7 @@ public static class Misc
     /// <param name="replacement">The string to replace the token with.</param>
     public static void MiscTokenAdd(List<List<string>> tokenRep, int tokenIdx, string replacement)
     {
-        tokenRep[0].Add(Tokens.List[tokenIdx].StringValue);
+        tokenRep[0].Add(Variables.Tokens.List[tokenIdx].StringValue);
         tokenRep[1].Add(replacement);
     }
 
@@ -656,7 +647,7 @@ public static class Misc
     /// <param name="value">The boolean value (replaced by 1 or 0).</param>
     public static void MiscTokenAddBool(List<List<string>> tokenRep, int tokenIdx, bool value)
     {
-        tokenRep[0].Add(Tokens.List[tokenIdx].StringValue);
+        tokenRep[0].Add(Variables.Tokens.List[tokenIdx].StringValue);
         tokenRep[1].Add(MiscIntToChar(value ? 1 : 0));
     }
 
@@ -668,7 +659,7 @@ public static class Misc
     {
         for (int i = tokenRep[0].Count - 1; i >= 0; i--)
         {
-            if (tokenRep[0][i] == Tokens.List[idx].StringValue)
+            if (tokenRep[0][i] == Variables.Tokens.List[idx].StringValue)
             {
                 tokenRep[0].RemoveAt(i);
                 tokenRep[1].RemoveAt(i);
@@ -736,7 +727,7 @@ public static class Misc
     /// <summary>Get a random integer in [lower, upper] (math_rndi).</summary>
     private static int MathRndi(int lower, int upper)
     {
-        return RandGenerator.Next(lower, upper + 1);
+        return Variables.RandGenerator.Next(lower, upper + 1);
     }
 
     /// <summary>Get the digit at the given place (1-based from the right) of an integer (math_get_place).</summary>
