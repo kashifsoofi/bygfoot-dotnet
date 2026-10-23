@@ -10,6 +10,8 @@ public class Program
     private static bool LoadLastSave { get; set; } = false;
     private static string[] CommandLineArguments { get; set; }
 
+    private static bool DebugMode;
+
     /// <summary>
     /// The main execution entry point of the application.
     /// Corresponds to c_main(argc, argv).
@@ -26,7 +28,7 @@ public class Program
         try
         {
             // 3. Application Startup Sequence (Equivalent to checking flags and running the game)
-            if (!Globals.IsDebuggingModeActive && Globals.Leagues.Count == 0)
+            if (!DebugMode && Variables.LiveGames.Count == 0)
             {
                 Console.WriteLine("Starting fresh application run.");
             }

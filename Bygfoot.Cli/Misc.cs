@@ -527,7 +527,7 @@ public static class Misc
             int j = s.IndexOf(']', i);
             if (j < 0)
             {
-                if (Globals.CurrentDebugLevel > 200)
+                if (Variables.DebugLevel > 200)
                     DebugPrintMessage($"misc_string_replace_expressions: found [ but no ]: {s}");
                 return s;
             }
@@ -719,19 +719,19 @@ public static class Misc
     // --- Private helpers ---
 
     /// <summary>Whether a character is an ASCII whitespace character (g_ascii_isspace).</summary>
-    private static bool IsAsciiSpace(char c)
+    public static bool IsAsciiSpace(char c)
     {
         return c is ' ' or '\t' or '\n' or '\v' or '\f' or '\r';
     }
 
     /// <summary>Get a random integer in [lower, upper] (math_rndi).</summary>
-    private static int MathRndi(int lower, int upper)
+    public static int MathRndi(int lower, int upper)
     {
         return Variables.RandGenerator.Next(lower, upper + 1);
     }
 
     /// <summary>Get the digit at the given place (1-based from the right) of an integer (math_get_place).</summary>
-    private static int MathGetPlace(int value, int place)
+    public static int MathGetPlace(int value, int place)
     {
         if (place < 10)
         {
@@ -748,7 +748,7 @@ public static class Misc
     }
 
     /// <summary>Generate a random permutation of [start, end] in the array (math_generate_permutation).</summary>
-    private static void MathGeneratePermutation(int[] array, int start, int end)
+    public static void MathGeneratePermutation(int[] array, int start, int end)
     {
         for (int i = start; i < end + 1; i++)
             array[i - start] = i;
@@ -758,7 +758,7 @@ public static class Misc
     }
 
     /// <summary>Get the index of a letter in the alphabet (non-lowercase letters map to 0, like in the C code).</summary>
-    private static int AlphabetIndex(string alphabet, char c)
+    public static int AlphabetIndex(string alphabet, char c)
     {
         for (int i = 0; i < alphabet.Length; i++)
         {
@@ -769,7 +769,7 @@ public static class Misc
     }
 
     /// <summary>Print a debug message (debug_print_message).</summary>
-    private static void DebugPrintMessage(string message)
+    public static void DebugPrintMessage(string message)
     {
         Console.WriteLine(message);
     }
