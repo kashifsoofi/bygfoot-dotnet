@@ -75,7 +75,7 @@ public static class Variables
     public static List<Team> JobTeams { get; set; } = new List<Team>();
 
     /// <summary>Some counters we use. Corresponds to C: gint counters[COUNT_END].</summary>
-    public static int[] Counters { get; set; } = new int[(int)Bygfoot.Cli.Counters.CountEnd];
+    public static int[] Counters { get; set; } = new int[(int)global::Bygfoot.Cli.Counters.CountEnd];
 
     /// <summary>These help us keep track of what's happening. Corresponds to C: gint status[6].</summary>
     public static int[] Status { get; set; } = new int[6];

@@ -41,7 +41,7 @@ public static class Misc
         if (error == null)
             return;
 
-        DebugPrintMessage($"error message: {error.Message}");
+        Debug.DebugPrintMessage($"error message: {error.Message}");
 
         if (abortProgram)
             Environment.Exit(ExitPrintError);
@@ -84,7 +84,7 @@ public static class Misc
             start++;
         if (start >= input.Length)
         {
-            DebugPrintMessage("misc_separate_strings: input string contains only white spaces");
+            Debug.DebugPrintMessage("misc_separate_strings: input string contains only white spaces");
             return result;
         }
 
@@ -528,7 +528,7 @@ public static class Misc
             if (j < 0)
             {
                 if (Variables.DebugLevel > 200)
-                    DebugPrintMessage($"misc_string_replace_expressions: found [ but no ]: {s}");
+                    Debug.DebugPrintMessage($"misc_string_replace_expressions: found [ but no ]: {s}");
                 return s;
             }
 
@@ -766,11 +766,5 @@ public static class Misc
                 return i;
         }
         return 0;
-    }
-
-    /// <summary>Print a debug message (debug_print_message).</summary>
-    public static void DebugPrintMessage(string message)
-    {
-        Console.WriteLine(message);
     }
 }

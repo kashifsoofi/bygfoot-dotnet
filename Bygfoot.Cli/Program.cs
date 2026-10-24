@@ -56,7 +56,7 @@ public class Program
         finally
         {
             // 4. Cleanup (Equivalent to main_exit_program)
-            Globals.ClearGlobals();
+            // Globals.ClearGlobals();
             Console.WriteLine("\n--- Bygfoot Application Exited Cleanly ---");
         }
     }
@@ -79,7 +79,7 @@ public class Program
         }
 
         // Set initial application state and parse internal options/settings.
-        Globals.InitializeApplication();
+        // Globals.InitializeApplication();
     }
 
     /// <summary>

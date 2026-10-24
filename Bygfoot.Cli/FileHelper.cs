@@ -80,7 +80,7 @@ public static class FileHelper
         }
 
         if (warning)
-            Misc.DebugPrintMessage($"file_find_support_file: file '{filename}' not found.");
+            Debug.DebugPrintMessage($"file_find_support_file: file '{filename}' not found.");
 
         return null;
     }
@@ -109,11 +109,11 @@ public static class FileHelper
 
         if (process.ExitCode != 0)
         {
-            Misc.DebugPrintMessage($"file_my_system: system returned -1 when executing '{command}'.");
+            Debug.DebugPrintMessage($"file_my_system: system returned -1 when executing '{command}'.");
 
             if (!Variables.OsIsUnix)
             {
-                Misc.DebugPrintMessage("Press RETURN to try to continue.");
+                Debug.DebugPrintMessage("Press RETURN to try to continue.");
                 Console.ReadKey();
             }
 
@@ -145,7 +145,7 @@ public static class FileHelper
         if (fil != null)
             return true;
 
-        Misc.DebugPrintMessage($"Could not open file '{filename}' in mode '{bits}'.");
+        Debug.DebugPrintMessage($"Could not open file '{filename}' in mode '{bits}'.");
 
         if (abortProgram)
             Environment.Exit(ExitFileOpenFailed);
