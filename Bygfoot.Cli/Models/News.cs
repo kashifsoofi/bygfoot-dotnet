@@ -1,10 +1,12 @@
 namespace Bygfoot.Cli.Models;
 
+using System;
 using System.Collections.Generic;
+using System.Xml;
 
 /// <summary>
 /// Enumeration of news article types. 
-/// Corresponds to C enum NewsArticleTypes.
+/// Corresponds to C enum NewsArticleType.
 /// </summary>
 public enum NewsArticleType
 {
@@ -42,11 +44,11 @@ public class NewsText
 /// </summary>
 public class NewsArticle
 {
-    /// <summary>Possible article titles (possibly containing tokens). Corresponds to C: GArray *titles.</summary>
-    public List<string> Titles { get; set; } = new List<string>();
+    /// <summary>Array of possible article titles. Corresponds to C: GArray *titles.</summary>
+    public List<NewsText> Titles { get; set; } = new List<NewsText>();
 
-    /// <summary>Possible article subtitles (possibly containing tokens). Corresponds to C: GArray *subtitles.</summary>
-    public List<string> Subtitles { get; set; } = new List<string>();
+    /// <summary>Array of possible article subtitles. Corresponds to C: GArray *subtitles.</summary>
+    public List<NewsText> Subtitles { get; set; } = new List<NewsText>();
 
     /// <summary>A condition (if not fulfilled, the article doesn't get shown). Corresponds to C: gchar *condition.</summary>
     public string Condition { get; set; }
@@ -106,4 +108,94 @@ public class NewsPaper
 {
     /// <summary>The array of created articles. Corresponds to C: GArray *articles.</summary>
     public List<NewsPaperArticle> Articles { get; set; } = new List<NewsPaperArticle>();
+}
+
+/// <summary>
+/// Static class to handle news loading and storage.
+/// </summary>
+public static class News
+{
+    private static int _nextTitleId = 1;
+    private static int _nextSubtitleId = 1;
+    private static int _nextArticleId = 1;
+
+    public static List<NewsArticle> Articles { get; set; } = new List<NewsArticle>();
+
+    /// <summary>
+    /// Loads news from an XML file.
+    /// </summary>
+    /// <param name="filePath">Path to the XML file.</param>
+    public static void LoadFromXml(string filePath)
+    {
+        Articles.Clear();
+
+        using (var doc = new XmlDocument())
+        {
+            doc.Load(filePath);
+            var root = doc.DocumentElement;
+            if (root == null || root.Name != "news")
+                throw new Exception("Invalid news XML format.");
+
+            foreach (XmlNode node in root.ChildNodes)
+            {
+                if (node.Name == "news_article")
+                {
+                    Articles.Add(ParseArticle(node));
+                }
+            }
+        }
+    }
+
+    private static NewsArticle ParseArticle(XmlNode node)
+    {
+        var article = new NewsArticle { Id = _nextArticleId++ };
+
+        foreach (XmlNode child in node.ChildNodes)
+        {
+            switch (child.Name.ToLower())
+            {
+                case "type":
+                    // In C, this was used to set article_idx.
+                    // For simplicity, we assume the XML structure is consistent.
+                    break;
+                case "condition":
+                    article.Condition = child.InnerText;
+                    break;
+                case "priority":
+                    article.Priority = int.Parse(child.InnerText);
+                    break;
+                case "title":
+                    article.Titles.Add(ParseText(child, ref _nextTitleId));
+                    break;
+                case "subtitle":
+                    article.Subtitles.Add(ParseText(child, ref _nextSubtitleId));
+                    break;
+            }
+        }
+        return article;
+    }
+
+    private static NewsText ParseText(XmlNode node, ref int idCounter)
+    {
+        var text = new NewsText
+        {
+            Text = node.InnerText,
+            Id = idCounter++,
+            Priority = 1,
+            Condition = "1"
+        };
+
+        if (node.Attributes != null)
+        {
+            foreach (XmlAttribute attr in node.Attributes)
+            {
+                if (attr.Name.ToLower() == "priority")
+                    text.Priority = int.Parse(attr.Value);
+                else if (attr.Name.ToLower() == "condition")
+                    text.Condition = attr.Value;
+            }
+        }
+
+        return text;
+    }
 }
