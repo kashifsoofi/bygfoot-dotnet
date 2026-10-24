@@ -1,6 +1,7 @@
 namespace Bygfoot.Cli;
 
 using Models;
+using System.Linq;
 
 /// <summary>
 /// The global variables of the game.
@@ -43,12 +44,16 @@ public static class Variables
     /// <summary>The array containing the live game commentary strings.
     /// Corresponds to C: GArray *lg_commentary[LIVE_GAME_EVENT_END].</summary>
     public static List<LgCommentary>[] LgCommentary { get; set; } =
-        new List<LgCommentary>[(int)LiveGameEventType.End];
+        Enumerable.Range(0, (int)LiveGameEventType.End)
+            .Select(_ => new List<LgCommentary>())
+            .ToArray();
 
     /// <summary>The array containing the news article strings.
     /// Corresponds to C: GArray *news[NEWS_ARTICLE_TYPE_END].</summary>
     public static List<NewsArticle>[] News { get; set; } =
-        new List<NewsArticle>[(int)NewsArticleType.End];
+        Enumerable.Range(0, (int)NewsArticleType.End)
+            .Select(_ => new List<NewsArticle>())
+            .ToArray();
 
     /// <summary>Newspaper containing the news articles. Corresponds to C: NewsPaper newspaper.</summary>
     public static NewsPaper Newspaper { get; set; } = new NewsPaper();
