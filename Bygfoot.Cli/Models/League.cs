@@ -5,7 +5,9 @@
 // Copyright (C) 2005 Gyözö Both (gyboth@bygfoot.com)
 // GPL v2 or later
 
+using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace Bygfoot.Cli.Models;
 
@@ -223,4 +225,240 @@ public class League
     /// Corresponds to C: GPtrArray *skip_weeks_with.
     /// </summary>
     public List<string> SkipWeeksWith { get; set; } = new List<string>();
+
+    /// <summary>
+    /// Loads a league from an XML file.
+    /// </summary>
+    /// <param name=\"filePath\">Path to the XML file.</param>
+    public static League LoadFromXml(string filePath)
+    {
+        var league = new League();
+        var doc = new XmlDocument();
+        doc.Load(filePath);
+        var root = doc.DocumentElement;
+        if (root == null) return league;
+        return ParseLeague(root);
+    }
+
+    public static League ParseLeague(XmlNode root)
+    {
+        var league = new League();
+        foreach (XmlNode node in root.ChildNodes)
+        {
+            switch (node.Name.ToLower())
+            {
+                case "name":
+                    league.Name = node.InnerText;
+                    break;
+                case "short_name":
+                    league.ShortName = node.InnerText;
+                    break;
+                case "sid":
+                    league.Sid = node.InnerText;
+                    break;
+                case "symbol":
+                    league.Symbol = node.InnerText;
+                    break;
+                case "names_file":
+                    league.NamesFile = node.InnerText;
+                    break;
+                case "first_week":
+                    league.FirstWeek = int.Parse(node.InnerText);
+                    break;
+                case "layer":
+                    league.Layer = int.Parse(node.InnerText);
+                    break;
+                case "week_gap":
+                    league.WeekGap = int.Parse(node.InnerText);
+                    break;
+                case "round_robins":
+                    league.RoundRobins = int.Parse(node.InnerText);
+                    break;
+                case "yellow_red":
+                    league.YellowRed = int.Parse(node.InnerText);
+                    break;
+                case "average_talent":
+                    league.AverageTalent = float.Parse(node.InnerText) / 10000f;
+                    break;
+                case "teams":
+                    ParseTeams(node, league);
+                    break;
+                case "joined_league":
+                    ParseJoinedLeagues(node, league);
+                    break;
+                case "prom_rel":
+                    ParsePromRel(node, league);
+                    break;
+                case "new_table":
+                    ParseNewTable(node, league);
+                    break;
+                case "two_match_week_start":
+                    league.TwoMatchWeeks[0].Add(int.Parse(node.InnerText));
+                    break;
+                case "two_match_week_end":
+                    league.TwoMatchWeeks[1].Add(int.Parse(node.InnerText));
+                    break;
+                case "week_break":
+                    ParseWeekBreaks(node, league);
+                    break;
+                case "prop":
+                    league.Properties.Add(node.InnerText);
+                    break;
+                case "skip_weeks_with":
+                    foreach (XmlNode child in node.ChildNodes)
+                        league.SkipWeeksWith.Add(child.InnerText);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return league;
+    }
+
+    private static void ParseTeams(XmlNode node, League league)
+    {
+        foreach (XmlNode teamNode in node.ChildNodes)
+        {
+            if (teamNode.Name.ToLower() == "team")
+            {
+                var team = new Team
+                {
+                    Name = "",
+                    Symbol = "",
+                    NamesFile = "",
+                    DefFile = "",
+                    Clid = league.Id,
+                    Id = 0,
+                    Structure = 0,
+                    Style = 0,
+                    Boost = 0,
+                    AverageTalent = 0,
+                    Luck = 1.0f
+                };
+
+                foreach (XmlNode attr in teamNode.ChildNodes)
+                {
+                    switch (attr.Name.ToLower())
+                    {
+                        case "name":
+                            team.Name = attr.InnerText;
+                            break;
+                        case "symbol":
+                            team.Symbol = attr.InnerText;
+                            break;
+                        case "names_file":
+                            team.NamesFile = attr.InnerText;
+                            break;
+                        case "def_file":
+                            team.DefFile = attr.InnerText;
+                            break;
+                        case "average_talent":
+                            team.AverageTalent = float.Parse(attr.InnerText) / 10000f;
+                            break;
+                    }
+                }
+                league.Teams.Add(team);
+            }
+        }
+    }
+
+    private static void ParsePromRel(XmlNode node, League league)
+    {
+        if (node.ChildNodes.Count == 0) return;
+
+        foreach (XmlNode elemNode in node.ChildNodes)
+        {
+            if (elemNode.Name.ToLower() == "prom_rel_element")
+            {
+                var element = new PromRelElement { Ranks = new int[2] };
+                foreach (XmlNode rankNode in elemNode.ChildNodes)
+                {
+                    switch (rankNode.Name.ToLower())
+                    {
+                        case "rank_start":
+                            element.Ranks[0] = int.Parse(rankNode.InnerText);
+                            break;
+                        case "rank_end":
+                            element.Ranks[1] = int.Parse(rankNode.InnerText);
+                            break;
+                        case "dest_sid":
+                            element.DestSid = rankNode.InnerText;
+                            break;
+                        case "from_table":
+                            element.FromTable = int.Parse(rankNode.InnerText);
+                            break;
+                        case "prom_rel_type":
+                            element.Type = rankNode.InnerText == "promotion" ? PromRelType.Promotion :
+                                          rankNode.InnerText == "relegation" ? PromRelType.Relegation : PromRelType.None;
+                            break;
+                    }
+                }
+                league.PromRel.Elements.Add(element);
+            }
+            else if (elemNode.Name.ToLower() == "prom_games")
+            {
+                var games = new PromGames();
+                foreach (XmlNode gameNode in elemNode.ChildNodes)
+                {
+                    switch (gameNode.Name.ToLower())
+                    {
+                        case "dest_sid":
+                            games.DestSid = gameNode.InnerText;
+                            break;
+                        case "loser_sid":
+                            games.LoserSid = gameNode.InnerText;
+                            break;
+                        case "number_of_advance":
+                            games.NumberOfAdvance = int.Parse(gameNode.InnerText);
+                            break;
+                        case "cup_sid":
+                            games.CupSid = gameNode.InnerText;
+                            break;
+                    }
+                }
+                league.PromRel.PromGames.Add(games);
+            }
+        }
+    }
+
+    private static void ParseJoinedLeagues(XmlNode node, League league)
+    {
+        foreach (XmlNode nodeJoined in node.ChildNodes)
+        {
+            if (nodeJoined.Name.ToLower() == "joined_league")
+            {
+                var jl = new JoinedLeague { Sid = nodeJoined.InnerText };
+                if (nodeJoined.Attributes["rr"] != null)
+                    jl.Rr = int.Parse(nodeJoined.Attributes["rr"].Value);
+                else
+                    jl.Rr = 2;
+                league.JoinedLeagues.Add(jl);
+            }
+        }
+    }
+
+    private static void ParseNewTable(XmlNode node, League league)
+    {
+        foreach (XmlNode tableNode in node.ChildNodes)
+        {
+            if (tableNode.Name.ToLower() == "new_table")
+            {
+                var nt = new NewTable { Name = tableNode.InnerText };
+                if (tableNode.Attributes["name"] != null)
+                    nt.Name = tableNode.Attributes["name"].Value;
+                league.NewTables.Add(nt);
+            }
+        }
+    }
+
+    private static void ParseWeekBreaks(XmlNode node, League league)
+    {
+        foreach (XmlNode breakNode in node.ChildNodes)
+        {
+            if (breakNode.Name.ToLower() == "break")
+            {
+                league.WeekBreaks.Add(new WeekBreak { Length = int.Parse(breakNode.InnerText) });
+            }
+        }
+    }
 }

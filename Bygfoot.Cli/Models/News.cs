@@ -129,19 +129,16 @@ public static class News
     {
         Articles.Clear();
 
-        using (var doc = new XmlDocument())
+        var doc = new XmlDocument();
+        doc.Load(filePath);
+        var root = doc.DocumentElement;
+        if (root == null || root.Name != "news")
+            throw new Exception("Invalid news XML format.");
+        foreach (XmlNode node in root.ChildNodes)
         {
-            doc.Load(filePath);
-            var root = doc.DocumentElement;
-            if (root == null || root.Name != "news")
-                throw new Exception("Invalid news XML format.");
-
-            foreach (XmlNode node in root.ChildNodes)
+            if (node.Name == "news_article")
             {
-                if (node.Name == "news_article")
-                {
-                    Articles.Add(ParseArticle(node));
-                }
+                Articles.Add(ParseArticle(node));
             }
         }
     }
