@@ -14,10 +14,6 @@ public static class FileHelper
     private const int WriteBufferSize = 8192;
     private const int MaxFilename = 256;
 
-    /// <summary>Exit when a file could not be opened.
-    /// Corresponds to EXIT_FILE_OPEN_FAILED in the ExitCodes enum in bygfoot.h.</summary>
-    private const int ExitFileOpenFailed = 3;
-
     // --- Application Startup & Path Management ---
 
     /// <summary>
@@ -28,7 +24,7 @@ public static class FileHelper
     public static void AddDefinitionsDirectory(string directory)
     {
         string[] dirSplitUp = directory.Split(Path.DirectorySeparatorChar);
-        if (dirSplitUp[dirSplitUp.Length - 1] == "definitions")
+        if (dirSplitUp.Length > 0 && dirSplitUp[dirSplitUp.Length - 1] == "definitions")
         {
             Variables.RootDefinitionsDirectories.Insert(0, directory);
         }
@@ -65,7 +61,7 @@ public static class FileHelper
     /// <summary>
     /// Search the list of support directories for a given file and return
     /// the full path name.
-    /// Corresponds to C: file_find_support_file(const gchar *filename, gboolean warning).
+    /// Corresponds to C: file_find_support_file(const Gchar *filename, gboolean warning).
     /// </summary>
     /// <param name="filename">The name of the file we look for (without path).</param>
     /// <param name="warning">Whether to show a warning if we don't find the file.</param>
@@ -148,108 +144,239 @@ public static class FileHelper
         Debug.DebugPrintMessage($"Could not open file '{filename}' in mode '{bits}'.");
 
         if (abortProgram)
-            Environment.Exit(ExitFileOpenFailed);
+            Environment.Exit(3); // Corresponds to EXIT_FILE_OPEN_FAILED (3)
 
         return false;
     }
 
     /// <summary>
-    /// Gets the primary supported directory path (e.g., user/Bygfoot/).
+    /// Creates a $HOME/.bygfoot directory and other stuff if necessary.
     /// </summary>
-    public static string GetFirstSupportDirectory()
+    public static void CheckHomeDirCreateDirs()
     {
-        // Migration of file_get_first_support_dir(void)
-        return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); // Placeholder path equivalent
-    }
+        string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        string[] dirs = new string[]
+        {
+            Path.Combine(home, ".bygfoot"),
+            Path.Combine(home, ".bygfoot", "definitions"),
+            Path.Combine(home, ".bygfoot", "saves")
+        };
 
-    // --- Configuration and Data Persistence ---
-
-    /// <summary>
-    /// Loads game options from a specified configuration file (e.g., bygfoot.conf).
-    /// </summary>
-    /// <param name="filename">Path to the configuration file.</param>
-    /// <param name="optionList">The OptionList object to populate with data.</param>
-    /// <param name="sort">Whether options should be sorted after loading.</param>
-    public static void LoadOptionFile(string filename, OptionList optionList, bool sort)
-    {
-        // Migration of file_load_opt_file(const gchar *filename, OptionList *optionlist, gboolean sort)
-        Console.WriteLine($"Loading option file: {filename}");
-    }
-
-    /// <summary>
-    /// Saves the current game options to a specified file.
-    /// </summary>
-    public static void SaveOptionFile(string filename, OptionList optionList)
-    {
-        // Migration of file_save_opt_file(const gchar *filename, OptionList *optionlist)
-        Console.WriteLine($"Saving options to file: {filename}");
+        foreach (string dir in dirs)
+        {
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+        }
     }
 
     /// <summary>
-    /// Retrieves the contents of a directory, filtering by prefix and suffix.
+    /// Adds the basic config files to the list of files to copy
+    /// into the user home dir.
     /// </summary>
-    /// <param name="directoryName">The directory path.</param>
-    /// <param name="prefix">Optional file prefix to match.</param>
-    /// <param name="suffix">Optional file suffix to match.</param>
-    /// <returns>A list of matching filenames/paths.</returns>
-    public static List<string> GetDirectoryContents(string directoryName, string prefix = null, string suffix = null)
+    public static void CheckHomeDirGetConfFiles(out List<string> filesToCopy, out List<string> targetPaths)
     {
-        // Migration of file_dir_get_contents(const gchar *dir_name, const gchar *prefix, const gchar *suffix)
-        return new List<string>(); // Placeholder
+        filesToCopy = new List<string>();
+        targetPaths = new List<string>();
+        string[] confFiles = new string[] { "bygfoot.conf", "bygfoot_user.conf" };
+        string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+        foreach (string fileName in confFiles)
+        {
+            string fullPath = Path.Combine(home, ".bygfoot", fileName);
+            if (!File.Exists(fullPath))
+            {
+                string supportFile = FindSupportFile(fileName, true);
+                if (supportFile != null)
+                {
+                    filesToCopy.Add(supportFile);
+                    targetPaths.Add(fullPath);
+                }
+            }
+        }
     }
 
-    // --- Game Data Flow Methods ---
+    /// <summary>
+    /// Step through the support dirs to find xml definition files
+    /// that get copied into the home dir.
+    /// </summary>
+    public static void CheckHomeDirGetDefinitionFiles(out List<string> sourceFiles, out List<string> targetPaths)
+    {
+        sourceFiles = new List<string>();
+        targetPaths = new List<string>();
+        // This is a complex recursive process in C. For now, we mark it as not implemented.
+        throw new NotImplementedException("CheckHomeDirGetDefinitionFiles is not yet implemented.");
+    }
 
     /// <summary>
-    /// Loads configuration files needed at startup (e.g., default settings).
+    /// Step through the support dirs to find xml definition files
+    /// that get copied into the home dir.
+    /// </summary>
+    public static void CheckHomeDirCopyFiles(List<string> sourceFiles, List<string> targetPaths)
+    {
+        if (sourceFiles.Count == 0)
+            return;
+
+        for (int i = 0; i < sourceFiles.Count; i++)
+        {
+            Console.WriteLine($"Copying {Path.GetFileName(sourceFiles[i])} to {targetPaths[i]}...");
+            File.Copy(sourceFiles[i], targetPaths[i], true);
+        }
+    }
+
+    /// <summary>
+    /// Step through the support dirs to find xml definition files
+    /// that get copied into the home dir.
+    /// </summary>
+    public static void CheckHomeDir()
+    {
+        CheckHomeDirCreateDirs();
+        CheckHomeDirGetConfFiles(out var filesToCopy, out var targetPaths);
+        CheckHomeDirGetDefinitionFiles(out var definitionFiles, out var definitionTargets);
+        
+        var allSources = filesToCopy;
+        allSources.AddRange(definitionFiles);
+        var allTargets = targetPaths;
+        allTargets.AddRange(definitionTargets);
+
+        CheckHomeDirCopyFiles(allSources, allTargets);
+    }
+
+    /// <summary>
+    /// Retrieve those files in the given directory
+    /// that start with the given prefix and suffix.
+    /// </summary>
+    public static List<string> GetDirectoryContents(string directoryName, string prefix = "", string suffix = "")
+    {
+        List<string> contents = new List<string>();
+        if (!Directory.Exists(directoryName))
+            return contents;
+
+        foreach (string file in Directory.GetFiles(directoryName))
+        {
+            string name = Path.GetFileName(file);
+            if (string.IsNullOrEmpty(prefix) || name.StartsWith(prefix))
+            {
+                if (string.IsNullOrEmpty(suffix) || name.EndsWith(suffix))
+                {
+                    contents.Add(file);
+                }
+            }
+        }
+        return contents;
+    }
+
+    /// <summary>
+    /// Return the country definition files found in the support dirs.
+    /// </summary>
+    public static List<string> GetCountryFiles()
+    {
+        throw new NotImplementedException("GetCountryFiles is not yet implemented.");
+    }
+
+    /// <summary>
+    /// Get the next option line from a file.
+    /// </summary>
+    private static bool GetNextOptLine(StreamReader reader, out string optName, out string optValue)
+    {
+        optName = "";
+        optValue = "";
+        string line = reader.ReadLine();
+        if (line == null) return false;
+
+        line = line.TrimStart();
+        if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+            return GetNextOptLine(reader, out optName, out optValue);
+
+        int commentIdx = line.IndexOf('#');
+        if (commentIdx != -1)
+            line = line.Substring(0, commentIdx).TrimEnd();
+
+        string[] parts = line.Split(new[] { ' ', '\t' }, 3, StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length >= 2)
+        {
+            optName = parts[0];
+            optValue = parts.Length > 2 ? parts[2] : "";
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Saves an optionlist to a file.
+    /// </summary>
+    public static void SaveOptFile(string filename, OptionList optionList)
+    {
+        throw new NotImplementedException("SaveOptFile is not yet implemented.");
+    }
+
+    /// <summary>
+    /// Load a file containing name - value pairs into
+    /// the specified array.
+    /// </summary>
+    public static void LoadOptFile(string filename, OptionList optionList, bool sort)
+    {
+        throw new NotImplementedException("LoadOptFile is not yet implemented.");
+    }
+
+    /// <summary>
+    /// Load the appropriate hints file.
+    /// </summary>
+    public static void LoadHintsFile()
+    {
+        throw new NotImplementedException("LoadHintsFile is not yet implemented.");
+    }
+
+    /// <summary>
+    /// Load the options at the beginning of a new game from
+    /// the configuration files.
     /// </summary>
     public static void LoadConfigFiles()
     {
-        // Migration of file_load_conf_files(void)
-        Console.WriteLine("Loading initial configuration files.");
+        throw new NotImplementedException("LoadConfigFiles is not yet implemented.");
     }
 
     /// <summary>
-    /// Loads a specific user's configuration file.
+    /// Load a user-specific conf file.
     /// </summary>
     public static void LoadUserConfFile(User user)
     {
-        // Migration of file_load_user_conf_file(User *user)
-        Console.WriteLine($"Loading user configuration for {user.Name}.");
+        throw new NotImplementedException("LoadUserConfFile is not yet implemented.");
     }
 
-    // --- Text I/O (Saves) ---
-
     /// <summary>
-    /// Saves plain text data into the designated saves directory.
+    /// Returns the path to the user's home directory for Bygfoot.
     /// </summary>
-    public static void StoreTextInSaves(string filename, string text)
+    public static string GetBygfootDir()
     {
-        // Migration of file_store_text_in_saves(const gchar *filename, const gchar *text)
-        Console.WriteLine($"Storing text data for {filename} in saves.");
+        string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        if (OsIsUnix)
+            return Path.Combine(home, ".bygfoot");
+        else
+            return Directory.GetCurrentDirectory();
     }
 
     /// <summary>
-    /// Loads plain text data from the designated saves directory.
+    /// Returns the first support directory which has the given suffix.
     /// </summary>
-    /// <returns>The loaded text, or null if the file could not be found/read.</returns>
-    public static string LoadTextFromSaves(string filename)
+    public static string GetFirstSupportDirSuffix(string suffix)
     {
-        // Migration of file_load_text_from_saves(const gchar *filename)
-        Console.WriteLine($"Loading text data from {filename}.");
-        return null; // Placeholder
+        foreach (var dir in SupportDirectories)
+        {
+            if (dir.EndsWith(suffix))
+                return dir;
+        }
+        return null;
     }
 
-
-    // --- Advanced File Operations (Advanced/Less Frequently Used) ---
-
     /// <summary>
-    /// Compresses files in a directory structure into a single archive.
+    /// Compresses the files starting with the prefix.
     /// </summary>
     public static void CompressFiles(string destZipFile, string prefix)
     {
-        // Migration of file_compress_files(const gchar *destfile, const gchar *prefix)
-        Console.WriteLine($"Compressing files into {destZipFile}...");
+        throw new NotImplementedException("CompressFiles is not yet implemented.");
     }
 
     /// <summary>
@@ -257,59 +384,91 @@ public static class FileHelper
     /// </summary>
     public static void Decompress(string filename)
     {
-        // Migration of file_decompress(const gchar *filename)
-        Console.WriteLine($"Decompressing archive: {filename}");
+        throw new NotImplementedException("Decompress is not yet implemented.");
     }
 
     /// <summary>
-    /// Copies a file from a source path to a destination path. Handles necessary directory creation if needed.
-    /// </summary>
-    public static void CopyFile(string sourceFile, string destFile)
-    {
-        // Migration of file_copy_file(const gchar *source_file, const gchar *dest_file)
-        Console.WriteLine($"Copying {sourceFile} to {destFile}");
-    }
-
-    /// <summary>
-    /// Removes files or directories referenced in the array.
+    /// Removes the files/directories specified.
     /// </summary>
     public static void RemoveFiles(List<string> filesToRemove)
     {
-        // Migration of file_remove_files(const GPtrArray *files)
-        Console.WriteLine($"Removing files/directories...");
+        foreach (var file in filesToRemove)
+        {
+            if (File.Exists(file))
+                File.Delete(file);
+            else if (Directory.Exists(file))
+                Directory.Delete(file, true);
+        }
     }
 
-    /// <summary>Open a file in the specified mode (fopen).
-    /// Corresponds to C: fopen(const char *filename, const char *mode).</summary>
-    /// <param name="filename">The name of the file to open (may be null).</param>
-    /// <param name="bits">The mode we use, e.g. "r" or "w". See fopen().</param>
-    /// <returns>The opened stream or null if the file could not be opened.</returns>
-    private static Stream Fopen(string filename, string bits)
+    /// <summary>
+    /// Copies a file from a source path to a destination path.
+    /// </summary>
+    public static void CopyFile(string sourceFile, string destFile)
     {
-        if (filename == null)
+        File.Copy(sourceFile, destFile, true);
+    }
+
+    /// <summary>
+    /// Stores text data into the designated saves directory.
+    /// </summary>
+    public static void StoreTextInSaves(string filename, string text)
+    {
+        string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        string saveDir;
+        if (OsIsUnix)
+            saveDir = Path.Combine(home, ".bygfoot", "saves");
+        else
+            saveDir = Path.Combine(Directory.GetCurrentDirectory(), "saves");
+
+        if (!Directory.Exists(saveDir))
+            Directory.CreateDirectory(saveDir);
+
+        string fullPath = Path.Combine(saveDir, filename);
+        File.WriteAllText(fullPath, text);
+    }
+
+    /// <summary>
+        /// Loads text data from the designated saves directory.
+    /// </summary>
+    public static string LoadTextFromSaves(string filename)
+    {
+        string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        string saveDir;
+        if (OsIsUnix)
+            saveDir = Path.Combine(home, ".bygfoot", "saves");
+        else
+            saveDir = Path.Combine(Directory.GetCurrentDirectory(), "saves");
+
+        string fullPath = Path.Combine(saveDir, filename);
+        if (File.Exists(fullPath))
+            return File.ReadAllText(fullPath);
+
+        return null;
+    }
+
+    /// <summary>
+    /// A custom function opening files.
+    /// </summary>
+    private static Stream Fopen(string filename, string mode)
+    {
+        if (string.IsNullOrEmpty(filename))
             return null;
 
         try
         {
-            switch (bits)
+            return mode switch
             {
-                case "r":
-                    return new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
-                case "r+":
-                    return new FileStream(filename, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
-                case "w":
-                    return new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.Read);
-                case "w+":
-                    return new FileStream(filename, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
-                case "a":
-                    return new FileStream(filename, FileMode.Append, FileAccess.Write, FileShare.Read);
-                case "a+":
-                    return new FileStream(filename, FileMode.Append, FileAccess.Write, FileShare.Read);
-                default:
-                    return null;
-            }
+                "r" => new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare. Read),
+                "r+" => new FileStream(filename, FileMode.Open, FileAccess.ReadWrite, FileShare. Read),
+                "w" => new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare. Read),
+                "w+" => new FileStream(filename, FileMode.Create, FileAccess.ReadWrite, FileShare. Read),
+                "a" => new FileStream(filename, FileMode.Append, FileAccess.Write, FileShare. Read),
+                "a+" => new FileStream(filename, FileMode.Append, FileAccess.ReadWrite, FileShare. Read),
+                _ => null
+            };
         }
-        catch (Exception)
+        catch
         {
             return null;
         }

@@ -24,19 +24,57 @@ public static class Debug
     /// Take some debug action depending on the text. Text is a prefix and a number.
     /// Corresponds to C: debug_action(const gchar *text).
     /// </summary>
+    /// <param name="text">The debug action text.</param>
     public static void DebugAction(string text)
     {
-        // Implementation would require many dependencies.
-        throw new NotImplementedException();
+        if (string.IsNullOrEmpty(text))
+            return;
+
+        // In C: sscanf(text, "%[^-0-9]%d", buf, &value);
+        // We'll look for the first digit or minus sign.
+        int firstDigitIndex = -1;
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (char.IsDigit(text[i]) || text[i] == '-')
+            {
+                firstDigitIndex = i;
+                break;
+            }
+        }
+
+        if (firstDigitIndex == -1)
+            return;
+
+        string prefix = text.Substring(0, firstDigitIndex);
+        string valueStr = text.Substring(firstDigitIndex);
+
+        if (!int.TryParse(valueStr, out int value))
+            return;
+
+        if (prefix == "deb")
+        {
+            Variables.DebugLevel = value;
+            DebugPrintMessage($"Debug value set to {value}.");
+        }
+        // Other actions require more implementation/dependencies.
+        else
+        {
+            DebugPrintMessage($"Debug action '{prefix}' with value {value} is not yet fully implemented.");
+        }
     }
 
     /// <summary>
     /// Resets a counter. Corresponds to C: debug_reset_counter(gpointer data).
     /// </summary>
+    /// <param name="data">The index of the counter to reset.</param>
     public static bool DebugResetCounter(object? data)
     {
-        // Implementation depends on the specific counter to reset.
-        throw new NotImplementedException();
+        if (data is int index && index >= 0 && index < Variables.Counters.Length)
+        {
+            Variables.Counters[index] = 0;
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
