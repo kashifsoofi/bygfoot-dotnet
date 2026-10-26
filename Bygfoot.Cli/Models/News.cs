@@ -2,7 +2,6 @@ namespace Bygfoot.Cli.Models;
 
 using System;
 using System.Collections.Generic;
-using System.Xml;
 
 /// <summary>
 /// Enumeration of news article types. 
@@ -108,91 +107,4 @@ public class NewsPaper
 {
     /// <summary>The array of created articles. Corresponds to C: GArray *articles.</summary>
     public List<NewsPaperArticle> Articles { get; set; } = new List<NewsPaperArticle>();
-}
-
-/// <summary>
-/// Static class to handle news loading and storage.
-/// </summary>
-public static class News
-{
-    private static int _nextTitleId = 1;
-    private static int _nextSubtitleId = 1;
-    private static int _nextArticleId = 1;
-
-    public static List<NewsArticle> Articles { get; set; } = new List<NewsArticle>();
-
-    /// <summary>
-    /// Loads news from an XML file.
-    /// </summary>
-    /// <param name="filePath">Path to the XML file.</param>
-    public static void LoadFromXml(string filePath)
-    {
-        Articles.Clear();
-
-        var doc = new XmlDocument();
-        doc.Load(filePath);
-        var root = doc.DocumentElement;
-        if (root == null || root.Name != "news")
-            throw new Exception("Invalid news XML format.");
-        foreach (XmlNode node in root.ChildNodes)
-        {
-            if (node.Name == "news_article")
-            {
-                Articles.Add(ParseArticle(node));
-            }
-        }
-    }
-
-    private static NewsArticle ParseArticle(XmlNode node)
-    {
-        var article = new NewsArticle { Id = _nextArticleId++ };
-
-        foreach (XmlNode child in node.ChildNodes)
-        {
-            switch (child.Name.ToLower())
-            {
-                case "type":
-                    // In C, this was used to set article_idx.
-                    // For simplicity, we assume the XML structure is consistent.
-                    break;
-                case "condition":
-                    article.Condition = child.InnerText;
-                    break;
-                case "priority":
-                    article.Priority = int.Parse(child.InnerText);
-                    break;
-                case "title":
-                    article.Titles.Add(ParseText(child, ref _nextTitleId));
-                    break;
-                case "subtitle":
-                    article.Subtitles.Add(ParseText(child, ref _nextSubtitleId));
-                    break;
-            }
-        }
-        return article;
-    }
-
-    private static NewsText ParseText(XmlNode node, ref int idCounter)
-    {
-        var text = new NewsText
-        {
-            Text = node.InnerText,
-            Id = idCounter++,
-            Priority = 1,
-            Condition = "1"
-        };
-
-        if (node.Attributes != null)
-        {
-            foreach (XmlAttribute attr in node.Attributes)
-            {
-                if (attr.Name.ToLower() == "priority")
-                    text.Priority = int.Parse(attr.Value);
-                else if (attr.Name.ToLower() == "condition")
-                    text.Condition = attr.Value;
-            }
-        }
-
-        return text;
-    }
 }
