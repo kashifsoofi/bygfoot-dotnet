@@ -63,7 +63,7 @@ public static class Variables
 
     /// <summary>Array with season statistics (updated at the end of each season).
     /// Corresponds to C: GArray *season_stats.</summary>
-    public static List<Stat> SeasonStats { get; set; } = new List<Stat>();
+    public static List<SeasonStat> SeasonStats { get; set; } = new List<SeasonStat>();
 
     /// <summary>Array of available CPU strategies. Corresponds to C: GArray *strategies.</summary>
     public static List<Strategy> Strategies { get; set; } = new List<Strategy>();

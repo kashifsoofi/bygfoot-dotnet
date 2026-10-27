@@ -61,7 +61,7 @@ public class Table
     public int Round { get; set; }
 
     /// <summary>
-    /// The elements participating in the table. (Assuming GArray maps to a collection type)
+    /// The elements participating in the table.
     /// </summary>
-    public object Elements { get; set; } 
+    public List<TableElement> Elements { get; set; } = new List<TableElement>();
 }

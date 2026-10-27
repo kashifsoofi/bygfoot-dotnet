@@ -22,6 +22,12 @@ public class YouthAcademy
     public float AvCoach { get; set; }
 
     /// <summary>
+    /// Average percentage values; these are used when a new youth comes into the academy to determine the quality of the youth.
+    /// Corresponds to C: gfloat av_percentage.
+    /// </summary>
+    public float AvPercentage { get; set; }
+
+    /// <summary>
     /// When this counter is <= 0, a new youth appears. Corresponds to C: gfloat counter_youth.
     /// </summary>
     public float CounterYouth { get; set; }
