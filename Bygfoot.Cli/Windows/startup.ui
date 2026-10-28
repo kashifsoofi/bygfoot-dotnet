@@ -1,0 +1,255 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- interface-name window_startup.ui -->
+<interface>
+  <requires lib="gtk" version="4.12"/>
+  <object class="GtkWindow" id="window_startup">
+    <property name="default-width">550</property>
+    <property name="default-height">600</property>
+    <property name="modal">1</property>
+    <signal name="close-request" handler="on_team_selection_cancel_clicked"/>
+    <child>
+      <object class="GtkBox" id="vbox2">
+        <property name="visible">1</property>
+        <property name="orientation">1</property>
+        <child>
+          <object class="GtkBox" id="vbox34">
+            <property name="visible">1</property>
+            <property name="orientation">1</property>
+            <child>
+              <object class="GtkLabel" id="label69">
+                <property name="visible">1</property>
+                <property name="label" translatable="yes">Choose country</property>
+                <property name="justify">center</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkComboBox" id="combo_country">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <signal name="changed" handler="on_combo_country_changed"/>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label121">
+            <property name="visible">1</property>
+            <property name="label" translatable="yes">Choose team</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkPaned" id="hpaned1">
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="position">200</property>
+            <child>
+              <object class="GtkScrolledWindow" id="scrolledwindow10">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="hscrollbar-policy">automatic</property>
+                <property name="vscrollbar-policy">automatic</property>
+                <child>
+                  <object class="GtkTreeView" id="treeview_users">
+                    <property name="visible">1</property>
+                    <property name="can-focus">1</property>
+                    <property name="tooltip-text">Click on a user to remove him.</property>
+                    <signal name="button-press-event" handler="on_treeview_users_button_press_event"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow" id="scrolledwindow1">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="hscrollbar-policy">automatic</property>
+                <property name="vscrollbar-policy">automatic</property>
+                <child>
+                  <object class="GtkTreeView" id="treeview_startup">
+                    <property name="visible">1</property>
+                    <property name="can-focus">1</property>
+                    <property name="focusable">1</property>
+                    <property name="reorderable">1</property>
+                    <property name="rules-hint">1</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="hseparator11">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <property name="height-request">10</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label4">
+            <property name="visible">1</property>
+            <property name="label" translatable="yes">Choose league to start in</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkComboBox" id="combobox_start_league">
+            <property name="visible">1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="hseparator12">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <property name="height-request">5</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label75">
+            <property name="visible">1</property>
+            <property name="label" translatable="yes">Choose username</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="hbox54">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <property name="spacing">5</property>
+            <child>
+              <object class="GtkEntry" id="entry_player_name">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="max-length">12</property>
+                <property name="width-chars">12</property>
+                <signal name="activate" handler="on_entry_player_name_activate"/>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="button_add_player">
+            <property name="visible">1</property>
+            <property name="sensitive">0</property>
+            <property name="can-focus">0</property>
+            <property name="receives-default">0</property>
+            <property name="label" translatable="yes">Add user</property>
+            <property name="icon-name">gtk-add</property>
+            <signal name="clicked" handler="on_button_add_player_clicked"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="hseparator13">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <property name="height-request">10</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="hbox74">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <child>
+              <object class="GtkRadioButton" id="radiobutton_team_def_load">
+                <property name="label" translatable="yes">Load team definitions</property>
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="tooltip-text" translatable="yes">Load teams from definition files (note that the official Bygfoot package doesn't contain team definition files, you have to get them from the homepage or via the bygfoot-update script)</property>
+                <property name="use-underline">1</property>
+                <property name="draw-indicator">1</property>
+                <property name="group">radiobutton_team_def_load</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkRadioButton" id="radiobutton_team_def_names">
+                <property name="label" translatable="yes">Only names</property>
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="tooltip-text" translatable="yes">Load only the player names in the definition files</property>
+                <property name="use-underline">1</property>
+                <property name="draw-indicator">1</property>
+                <property name="group">radiobutton_team_def_load</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkRadioButton" id="radiobutton_team_def_dont">
+                <property name="label" translatable="yes">Don't load definitions</property>
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="tooltip-text" translatable="yes">Don't load team definitions at all</property>
+                <property name="use-underline">1</property>
+                <property name="draw-indicator">1</property>
+                <property name="group">radiobutton_team_def_load</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSeparator" id="vseparator2">
+                <property name="visible">1</property>
+                <property name="orientation">1</property>
+                <property name="width-request">10</property>
+                <property name="height-request">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="checkbutton_randomise_teams">
+                <property name="label" translatable="yes">Randomise teams in cups</property>
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="tooltip-text" translatable="yes">Randomise the order of teams in cups. This only makes sense in supernational definitions like the World Cup where the order of teams is fixed.</property>
+                <property name="use-underline">1</property>
+                <property name="draw-indicator">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="hseparator16">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <property name="height-request">5</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="hbox3">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <child>
+              <object class="GtkButton" id="team_selection_ok">
+                <property name="visible">1</property>
+                <property name="sensitive">0</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="tooltip-text">Space</property>
+                <property name="label" translatable="yes">Start</property>
+                <property name="icon-name">gtk-apply</property>
+                <signal name="clicked" handler="on_team_selection_ok_clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_team_selection_back">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="tooltip-text">Go back to the splash screen</property>
+                <property name="label" translatable="yes">Back to splash</property>
+                <property name="icon-name">gtk-go-back</property>
+                <signal name="clicked" handler="on_button_team_selection_back_clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="team_selection_cancel">
+                <property name="label">gtk-quit</property>
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="tooltip-text">Esc</property>
+                <signal name="clicked" handler="on_team_selection_cancel_clicked"/>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

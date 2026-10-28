@@ -95,7 +95,7 @@ public static class Variables
     public static List<NameList> NameLists { get; set; } = new List<NameList>();
 
     /// <summary>The struct containing the window pointers. Corresponds to C: Windows window.</summary>
-    public static Windows Window { get; set; } = new Windows();
+    public static Models.Windows Window { get; set; } = new Models.Windows();
 
     /// <summary>The variables for non-user live games (which aren't shown). Corresponds to C: GArray *live_games.</summary>
     public static List<LiveGame> LiveGames { get; set; } = new List<LiveGame>();
