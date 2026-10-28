@@ -36,6 +36,11 @@ Converting the `window_startup` widget from `support_files/bygfoot_misc.glade` (
 - GTK3-only properties dropped for the file chooser window: `border_width`, `window_position`, `type_hint`, `show_hidden`; the button box uses a plain `GtkBox` (horizontal) since the deprecated `GtkHButtonBox` no longer exists in GTK4; buttons use translatable labels (`Cancel`, `Open`) instead of `use_stock` labels (`gtk-cancel`, `gtk-open`).
 - Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; `file_chooser.ui` validated as well-formed XML. No warnings/errors from the new files.
 
+## Session status (2026-10-29, part 3)
+- Converted next widget: `window_sponsors` (`GtkWindow` with `GtkVBox` containing label, `GtkScrolledWindow`/`GtkTreeView`, and button `GtkHBox`) → `Bygfoot.Cli/Windows/sponsors.ui` (GTK4 builder file, `GtkWindow`, GTK4 version 4.12) + `Bygfoot.Cli/Windows/SponsorsWindow.cs` (GirCore class deriving from `Gtk.Window`, Builder-based, wires `close-request`, the `Accept` (`button_sponsors`) and `Reject for now` (`button_sponsors_wait`) buttons, registers via `Variables.Window.Sponsors = this;`, shows the window).
+- Conversion notes: dropped GTK3-only properties (`border_width`, `window_position`); buttons replaced the `GtkAlignment > GtkHBox` child hierarchy with `label` + `icon-name` (`Accept` + `gtk-apply`, `Reject for now` + `gtk-go-forward`); tree (`treeview_sponsors`) keeps the deferred `row_activated` signal wiring (event controllers to be used later).
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; `sponsors.ui` validated as well-formed XML. No warnings/errors from the new files.
+
 ## Open questions / future work
 - Switch to `[Gobject.Subclass<Gtk.Window>]` and/or embedded gresource loading (`glib-compile-resources`) later.
 - Implement exact widget-level TODOs and full C→C# handler mappings for the startup flow.

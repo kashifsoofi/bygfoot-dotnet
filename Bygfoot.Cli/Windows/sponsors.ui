@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- interface-name sponsors.ui -->
+<interface>
+  <requires lib="gtk" version="4.12"/>
+  <object class="GtkWindow" id="window_sponsors">
+    <property name="default-width">450</property>
+    <property name="default-height">350</property>
+    <property name="modal">1</property>
+    <signal name="close-request" handler="on_window_sponsors_delete_event"/>
+    <child>
+      <object class="GtkBox" id="vbox48">
+        <property name="visible">1</property>
+        <property name="orientation">1</property>
+        <property name="spacing">3</property>
+        <child>
+          <object class="GtkLabel" id="label_sponsors">
+            <property name="visible">1</property>
+            <property name="label" translatable="yes">There are a few companies interested in sponsoring your team. Please select one:</property>
+            <property name="wrap">1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow" id="scrolledwindow12">
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="hscrollbar-policy">automatic</property>
+            <property name="vscrollbar-policy">automatic</property>
+            <property name="shadow-type">in</property>
+            <child>
+              <object class="GtkTreeView" id="treeview_sponsors">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <signal name="row_activated" handler="on_treeview_sponsors_row_activated"/>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="hbox71">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkButton" id="button_sponsors">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="label" translatable="yes">Accept</property>
+                <property name="icon-name">gtk-apply</property>
+                <signal name="clicked" handler="on_button_sponsors_clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_sponsors_wait">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="tooltip-text" translatable="yes">If you don't like any of the sponsors, you can go a few weeks without sponsor and wait for new offers.</property>
+                <property name="label" translatable="yes">Reject for now</property>
+                <property name="icon-name">gtk-go-forward</property>
+                <signal name="clicked" handler="on_button_sponsors_wait_clicked"/>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
