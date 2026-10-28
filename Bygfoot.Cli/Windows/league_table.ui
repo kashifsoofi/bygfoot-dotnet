@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- interface-name league_table.ui -->
+<interface>
+  <requires lib="gtk" version="4.12"/>
+  <object class="GtkWindow" id="window_league_table">
+    <property name="default-width">500</property>
+    <property name="default-height">290</property>
+    <property name="title" translatable="yes">League table</property>
+    <property name="modal">1</property>
+    <property name="resizable">0</property>
+    <property name="decorated">1</property>
+    <signal name="close-request" handler="on_window_league_table_delete_event"/>
+    <child>
+      <object class="GtkFixed" id="panel_table">
+        <property name="width-request">500</property>
+        <property name="height-request">290</property>
+        <property name="visible">1</property>
+        <child>
+          <object class="GtkLabel" id="l_headline">
+            <property name="width-request">90</property>
+            <property name="height-request">20</property>
+            <property name="visible">1</property>
+            <property name="label" translatable="yes">Headline</property>
+            <property name="justify">left</property>
+            <property name="xalign">0.5</property>
+            <property name="yalign">0.5</property>
+          </object>
+          <layout>
+            <property name="x">208</property>
+            <property name="y">32</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="hs_table2">
+            <property name="width-request">450</property>
+            <property name="height-request">16</property>
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+          </object>
+          <layout>
+            <property name="x">25</property>
+            <property name="y">88</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="hs_table1">
+            <property name="width-request">450</property>
+            <property name="height-request">16</property>
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+          </object>
+          <layout>
+            <property name="x">25</property>
+            <property name="y">235</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkButton" id="b_ok">
+            <property name="width-request">110</property>
+            <property name="height-request">25</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="label" translatable="yes">OK</property>
+            <property name="icon-name">gtk-ok</property>
+            <property name="focus-on-click">1</property>
+            <signal name="clicked" handler="on_lt_b_ok_clicked"/>
+          </object>
+          <layout>
+            <property name="x">376</property>
+            <property name="y">254</property>
+          </layout>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

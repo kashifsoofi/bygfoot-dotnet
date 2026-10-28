@@ -56,6 +56,8 @@ public class Windows
     public object Splash { get; set; }
     /// <summary>Corresponds to C: GtkWidget *training_camp.</summary>
     public object TrainingCamp { get; set; }
+    /// <summary>Corresponds to C: GtkWidget *league_table.</summary>
+    public object LeagueTable { get; set; }
     /// <summary>Corresponds to C: GtkWidget *news.</summary>
     public object News { get; set; }
     /// <summary>Corresponds to C: GtkWidget *alr.</summary>
