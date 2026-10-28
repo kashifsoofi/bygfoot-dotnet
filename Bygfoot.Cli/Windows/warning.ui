@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- interface-name warning.ui -->
+<interface>
+  <requires lib="gtk" version="4.12"/>
+  <object class="GtkWindow" id="window_warning">
+    <property name="default-width">450</property>
+    <property name="default-height">350</property>
+    <property name="modal">1</property>
+    <signal name="close-request" handler="on_button_warning_clicked"/>
+    <child>
+      <object class="GtkBox" id="vbox13">
+        <property name="visible">1</property>
+        <property name="orientation">1</property>
+        <property name="spacing">10</property>
+        <child>
+          <object class="GtkImage" id="image7">
+            <property name="visible">1</property>
+            <property name="icon-name">gtk-dialog-warning</property>
+            <property name="icon-size">6</property>
+          </object>
+          <packing>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label_warning">
+            <property name="visible">1</property>
+            <property name="wrap">1</property>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="button_warning">
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="receives-default">0</property>
+            <property name="label" translatable="yes">Close</property>
+            <property name="icon-name">gtk-close</property>
+            <signal name="clicked" handler="on_button_warning_clicked"/>
+          </object>
+          <packing>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
