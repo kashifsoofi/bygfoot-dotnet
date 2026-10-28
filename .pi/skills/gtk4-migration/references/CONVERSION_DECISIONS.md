@@ -31,6 +31,11 @@ Converting the `window_startup` widget from `support_files/bygfoot_misc.glade` (
 - Font window dialog layout uses the GTK4 `GtkDialog` buildable internal children `content_area` (font chooser) and `action_area` (button box), mirroring the GirCore `Builder` sample dialog pattern; buttons got translatable labels (`OK`, `Apply`, `Cancel`) since the source relied on action widgets without labels.
 - Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; `font_sel.ui` validated as well-formed XML. No warnings/errors from the new files.
 
+## Session status (2026-10-29, part 2)
+- Converted next widget: `window_file_chooser` (`GtkFileChooserDialog`) → `Bygfoot.Cli/Windows/file_chooser.ui` (GTK4 builder file, `GtkFileChooserDialog`, GTK4 version 4.12) + `Bygfoot.Cli/Windows/FileChooserWindow.cs` (GirCore class deriving from `Gtk.Window`, Builder-based, wires the `button1` ("Cancel") and `button2` ("Open") buttons, registers via `Variables.Window.FileChooser = this;`, shows the window; no close-request signal since the source had no `delete_event`).
+- GTK3-only properties dropped for the file chooser window: `border_width`, `window_position`, `type_hint`, `show_hidden`; the button box uses a plain `GtkBox` (horizontal) since the deprecated `GtkHButtonBox` no longer exists in GTK4; buttons use translatable labels (`Cancel`, `Open`) instead of `use_stock` labels (`gtk-cancel`, `gtk-open`).
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; `file_chooser.ui` validated as well-formed XML. No warnings/errors from the new files.
+
 ## Open questions / future work
 - Switch to `[Gobject.Subclass<Gtk.Window>]` and/or embedded gresource loading (`glib-compile-resources`) later.
 - Implement exact widget-level TODOs and full C→C# handler mappings for the startup flow.

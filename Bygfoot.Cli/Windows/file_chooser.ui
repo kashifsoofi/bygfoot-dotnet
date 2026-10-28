@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- interface-name file_chooser.ui -->
+<interface>
+  <requires lib="gtk" version="4.12"/>
+  <object class="GtkFileChooserDialog" id="window_file_chooser">
+    <property name="default-width">550</property>
+    <property name="default-height">600</property>
+    <property name="title" translatable="yes">Choose file</property>
+    <property name="modal">1</property>
+    <child internal-child="content_area">
+      <object class="GtkFileChooserWidget" id="file_sel">
+        <property name="visible">1</property>
+      </object>
+    </child>
+    <child internal-child="action_area">
+      <object class="GtkBox" id="hbox_file_chooser">
+        <property name="visible">1</property>
+        <property name="orientation">0</property>
+        <child>
+          <object class="GtkButton" id="button1">
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="label" translatable="yes">Cancel</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="button2">
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="label" translatable="yes">Open</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
