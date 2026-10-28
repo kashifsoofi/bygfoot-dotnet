@@ -1,0 +1,274 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- interface-name alr.ui -->
+<interface>
+  <requires lib="gtk" version="4.12"/>
+  <object class="GtkWindow" id="window_alr">
+    <property name="title" translatable="yes">Automatic loan repayment</property>
+    <property name="default-width">450</property>
+    <property name="default-height">400</property>
+    <property name="modal">1</property>
+    <signal name="close-request" handler="on_window_alr_delete_event"/>
+    <child>
+      <object class="GtkBox" id="vbox5">
+        <property name="visible">1</property>
+        <property name="orientation">1</property>
+        <property name="spacing">7</property>
+        <child>
+          <object class="GtkBox" id="hbox17">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkLabel" id="label26">
+                <property name="visible">1</property>
+                <property name="label" translatable="yes">Your debt:</property>
+              </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_alr_debt">
+                <property name="visible">1</property>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="hseparator7">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <property name="height-request">10</property>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label22">
+            <property name="visible">1</property>
+            <property name="xalign">0</property>
+            <property name="label" translatable="yes">Current settings:</property>
+          </object>
+          <packing>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkGrid" id="table2">
+            <child>
+              <object class="GtkLabel" id="label23">
+                <property name="visible">1</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">Start in week:</property>
+              </object>
+              <layout>
+                <property name="row">0</property>
+                <property name="column">0</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label24">
+                <property name="visible">1</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">Weekly installment:</property>
+              </object>
+              <layout>
+                <property name="row">1</property>
+                <property name="column">0</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_current_start_week">
+                <property name="visible">1</property>
+                <property name="xalign">0</property>
+              </object>
+              <layout>
+                <property name="row">0</property>
+                <property name="column">1</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_current_weekly_installment">
+                <property name="visible">1</property>
+                <property name="xalign">0</property>
+              </object>
+              <layout>
+                <property name="row">1</property>
+                <property name="column">1</property>
+              </layout>
+            </child>
+          </object>
+          <packing>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="hseparator5">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <property name="height-request">10</property>
+          </object>
+          <packing>
+            <property name="position">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label25">
+            <property name="visible">1</property>
+            <property name="xalign">0</property>
+            <property name="label" translatable="yes">New settings:</property>
+          </object>
+          <packing>
+            <property name="position">5</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkGrid" id="table1">
+            <property name="visible">1</property>
+            <property name="column-spacing">10</property>
+            <property name="row-spacing">5</property>
+            <child>
+              <object class="GtkLabel" id="label17">
+                <property name="visible">1</property>
+                <property name="xalign">1</property>
+                <property name="label" translatable="yes">Start in week</property>
+              </object>
+              <layout>
+                <property name="row">0</property>
+                <property name="column">0</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label18">
+                <property name="visible">1</property>
+                <property name="xalign">1</property>
+                <property name="label" translatable="yes">Weekly installment</property>
+              </object>
+              <layout>
+                <property name="row">1</property>
+                <property name="column">0</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_calculate_installment">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="label" translatable="yes">Calculate weekly installment</property>
+                <property name="icon-name">gtk-execute</property>
+                <property name="use-underline">1</property>
+                <signal name="clicked" handler="on_button_calculate_installment_clicked"/>
+              </object>
+              <layout>
+                <property name="row">0</property>
+                <property name="column">2</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_calculate_start_week">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="label" translatable="yes">Calculate start week</property>
+                <property name="icon-name">gtk-execute</property>
+                <property name="use-underline">1</property>
+                <signal name="clicked" handler="on_button_calculate_start_week_clicked"/>
+              </object>
+              <layout>
+                <property name="row">1</property>
+                <property name="column">2</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="spinbutton_start_week">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="adjustment">week_adjustment</property>
+                <property name="climb-rate">1</property>
+              </object>
+              <layout>
+                <property name="row">0</property>
+                <property name="column">1</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="spinbutton_weekly_installment">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="adjustment">installment_adjustment</property>
+                <property name="climb-rate">1</property>
+              </object>
+              <layout>
+                <property name="row">1</property>
+                <property name="column">1</property>
+              </layout>
+            </child>
+          </object>
+          <packing>
+            <property name="position">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="hseparator6">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <property name="height-request">10</property>
+          </object>
+          <packing>
+            <property name="position">7</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="hbox11">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <child>
+              <object class="GtkButton" id="button_alr_confirm">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="label" translatable="yes">Apply</property>
+                <property name="icon-name">gtk-apply</property>
+                <signal name="clicked" handler="on_button_alr_confirm_clicked"/>
+              </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_alr_cancel">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="label" translatable="yes">Cancel</property>
+                <property name="icon-name">gtk-cancel</property>
+                <property name="tooltip-text" translatable="yes">Esc</property>
+                <signal name="clicked" handler="on_button_alr_cancel_clicked"/>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">8</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkAdjustment" id="week_adjustment">
+    <property name="upper">52</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="installment_adjustment">
+    <property name="upper">10000000</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+</interface>
