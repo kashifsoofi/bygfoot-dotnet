@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- interface-name live.ui -->
+<interface>
+  <requires lib="gtk" version="4.12"/>
+  <object class="GtkWindow" id="window_live">
+    <property name="default-width">620</property>
+    <property name="default-height">550</property>
+    <property name="title" translatable="yes">Live game</property>
+    <property name="modal">1</property>
+    <signal name="close-request" handler="on_live_window_delete_event"/>
+    <child>
+      <object class="GtkBox" id="vbox36">
+        <property name="visible">1</property>
+        <property name="orientation">1</property>
+        <child>
+          <object class="GtkProgressBar" id="progressbar_live">
+            <property name="visible">1</property>
+            <property name="pulse-step">0.1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="hbox48">
+            <property name="visible">1</property>
+            <property name="spacing">4</property>
+            <child>
+              <object class="GtkButton" id="button_pause">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="tooltip-text" translatable="yes">Esc / Return / Space</property>
+                <property name="label" translatable="yes">_Pause</property>
+                <property name="icon-name">gtk-no</property>
+                <property name="use-underline">1</property>
+                <signal name="clicked" handler="on_button_pause_clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_resume">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="tooltip-text" translatable="yes">Return / Space</property>
+                <property name="label" translatable="yes">_Resume</property>
+                <property name="icon-name">gtk-yes</property>
+                <property name="use-underline">1</property>
+                <signal name="clicked" handler="on_button_resume_clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_live_close">
+                <property name="visible">1</property>
+                <property name="sensitive">0</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="tooltip-text" translatable="yes">Return / Space</property>
+                <property name="label" translatable="yes">Close</property>
+                <signal name="clicked" handler="on_button_live_close_clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImage" id="eventbox_lg_style">
+                <property name="visible">1</property>
+                <property name="tooltip-text" translatable="yes">Right click and left click to change your playing style</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImage" id="eventbox_lg_boost">
+                <property name="visible">1</property>
+                <property name="tooltip-text" translatable="yes">Right click and left click to change boost state</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSeparator" id="vseparator1">
+                <property name="visible">1</property>
+                <property name="orientation">1</property>
+                <property name="width-request">10</property>
+                <property name="height-request">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkGrid" id="table2">
+                <child>
+                  <object class="GtkSpinButton" id="spinbutton_speed">
+                    <property name="visible">1</property>
+                    <property name="can-focus">1</property>
+                    <property name="tooltip-text" translatable="yes">Change live game speed. The higher the value the faster the live game.</property>
+                    <property name="adjustment">speed_adjustment</property>
+                    <property name="climb-rate">1</property>
+                    <property name="numeric">1</property>
+                    <signal name="value-changed" handler="on_spinbutton_speed_value_changed"/>
+                  </object>
+                  <layout>
+                    <property name="column">0</property>
+                    <property name="row">0</property>
+                  </layout>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label112">
+                    <property name="visible">1</property>
+                    <property name="label" translatable="yes">Speed</property>
+                    <property name="justify">right</property>
+                  </object>
+                  <layout>
+                    <property name="column">1</property>
+                    <property name="row">0</property>
+                  </layout>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label113">
+                    <property name="visible">1</property>
+                    <property name="label" translatable="yes">Verbosity</property>
+                  </object>
+                  <layout>
+                    <property name="column">1</property>
+                    <property name="row">1</property>
+                  </layout>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="spinbutton_verbosity">
+                    <property name="visible">1</property>
+                    <property name="can-focus">1</property>
+                    <property name="tooltip-text" translatable="yes">Change commentary verbosity. The higher this value the more events you can see.</property>
+                    <property name="adjustment">verbosity_adjustment</property>
+                    <property name="climb-rate">1</property>
+                    <property name="numeric">1</property>
+                    <signal name="value-changed" handler="on_spinbutton_verbosity_value_changed"/>
+                  </object>
+                  <layout>
+                    <property name="column">0</property>
+                    <property name="row">1</property>
+                  </layout>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

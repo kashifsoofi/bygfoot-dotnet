@@ -46,6 +46,11 @@ Converting the `window_startup` widget from `support_files/bygfoot_misc.glade` (
 - Conversion notes: the GTK3-only `GtkTable` was replaced by the GTK4 `GtkGrid` (with `<layout>` children specifying `column`/`row`); the button `GtkAlignment > GtkHBox` hierarchies were replaced with `label` + `icon-name` (`Confirm!` + `gtk-apply`; `Cancel` instead of the `gtk-cancel` stock label, dropping `use_stock`/accelerator); buttons dropped GTK3-only `accelerator` properties and packing options.
 - Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; `stadium.ui` validated as well-formed XML. No warnings/errors from the new files.
 
+## Session status (2026-10-29, part 5)
+- Converted next widget: `window_live` (`GtkWindow` with `GtkVBox` containing `GtkProgressBar`, `GtkHBox` with buttons/event boxes/separator/`GtkGrid`, and the deferred `GtkNotebook`) → `Bygfoot.Cli/Windows/live.ui` (GTK4 builder file, `GtkWindow`, GTK4 version 4.12) + `Bygfoot.Cli/Windows/LiveWindow.cs` (GirCore class deriving from `Gtk.Window`, Builder-based, wires `close-request` and the buttons `button_pause`, `button_resume`, `button_live_close`, registers via `Variables.Window.Live = this;`, shows the window).
+- Conversion notes: deprecated widgets without GTK4 counterparts were adapted — `GtkEventBox` → `GtkImage` (interaction wiring deferred to GTK4 event controllers, as per decisions); `GtkHScale` → `GtkScale` (horizontal); `GtkTable` → `GtkGrid` (with `<layout>` children) where used; spin buttons keep their source signals (game-logic wiring deferred).
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; `live.ui` validated as well-formed XML. No warnings/errors from the new files.
+
 ## Open questions / future work
 - Switch to `[Gobject.Subclass<Gtk.Window>]` and/or embedded gresource loading (`glib-compile-resources`) later.
 - Implement exact widget-level TODOs and full C→C# handler mappings for the startup flow.
