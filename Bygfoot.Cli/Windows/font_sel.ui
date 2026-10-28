@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- interface-name font_sel.ui -->
+<interface>
+  <requires lib="gtk" version="4.12"/>
+  <object class="GtkFontChooserDialog" id="window_font_sel">
+    <property name="default-width">550</property>
+    <property name="default-height">600</property>
+    <property name="title" translatable="yes">Select font</property>
+    <property name="modal">1</property>
+    <signal name="close-request" handler="on_button_font_sel_cancel_clicked"/>
+    <child internal-child="content_area">
+      <object class="GtkFontChooserWidget" id="font_sel">
+        <property name="visible">1</property>
+      </object>
+    </child>
+    <child internal-child="action_area">
+      <object class="GtkBox" id="hbox_font_sel">
+        <property name="visible">1</property>
+        <property name="orientation">0</property>
+        <child>
+          <object class="GtkButton" id="button_font_sel_cancel">
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="label" translatable="yes">Cancel</property>
+            <signal name="clicked" handler="on_button_font_sel_cancel_clicked"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="button_font_sel_apply">
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="label" translatable="yes">Apply</property>
+            <signal name="clicked" handler="on_button_font_sel_apply_clicked"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="button_font_sel_ok">
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="label" translatable="yes">OK</property>
+            <signal name="clicked" handler="on_button_font_sel_ok_clicked"/>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

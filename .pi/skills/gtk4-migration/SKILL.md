@@ -30,7 +30,7 @@ The Bygfoot codebase still contains GTK2-era Glade files (`support_files/bygfoot
 ## Step 3 – Create the GirCore class
 - Location: a folder named `Windows` under the project (e.g. `Bygfoot.Cli/Windows/`), namespace `Bygfoot.Cli.Windows`.
 - Class: `public class <X>Window : Gtk.Window` in namespace `Bygfoot.Cli.Windows`.
-- Pattern that compiles against **GirCore.Gtk-4.0 0.6.3** (no `[Gtk.Template]` yet — use Builder):
+- Pattern that compiles against **GirCore.Gtk-4.0 0.8.1** (no `[Gtk.Template]` yet — use Builder):
   - `var builder = Gtk.Builder.NewFromFile("<name>.ui");`
   - `var window = (Gtk.Window)builder.GetObject("window_startup") ?? throw new InvalidOperationException(...);`
   - `window.Modal = true; window.DefaultWidth = 550; window.DefaultHeight = 600;`

@@ -23,6 +23,8 @@ public class StartupWindow : Gtk.Window
         window.DefaultWidth = 550;
         window.DefaultHeight = 600;
 
+        Variables.Window.Startup = this;
+
         window.OnCloseRequest += OnWindowCloseRequest;
 
         var buttonAddPlayer = (Gtk.Button)_builder.GetObject("button_add_player") ?? throw new InvalidOperationException("Could not find the widget 'button_add_player' in the UI file 'startup.ui'.");

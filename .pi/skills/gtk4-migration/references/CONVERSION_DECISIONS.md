@@ -19,7 +19,19 @@ Converting the `window_startup` widget from `support_files/bygfoot_misc.glade` (
 7. **Deprecated widgets**: migrate `GtkComboBox`, `GtkTreeView`, `GtkRadioButton`, etc. to modern equivalents (DropDown, ListView+ColumnView) later.
 8. **`.ui` loading**: file-based (`Gtk.Builder.NewFromFile`) is fine for now.
 
+## Session status (2026-10-28)
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors** (295 pre-existing nullable warnings, unrelated).
+- `Bygfoot.Cli/Windows/startup.ui` validated as well-formed XML (via Python `xml.dom.minidom`).
+- Conversion notes: GTK3-only properties (`border_width`, `window_position`, `ypad`, packing `expand/fill`, `use_stock`, `<accelerator>`) were dropped as per decisions; booleans written as `0`/`1`; enums by name; `<GtkVBox>`/`<GtkHBox` → `GtkBox` with `orientation`; separators got `orientation`; buttons use `label` + `icon-name`.
+- Known remaining conversion gaps in `startup.ui`: the `close-request` handler name in the builder (`on_team_selection_cancel_clicked`) is mirrored by the C# handler `OnWindowCloseRequest`; `GtkComboBox`/`GtkTreeView`/`GtkRadioButton` remain deprecated (to be migrated later per decisions); the `button-press-event` signal on the `treeview_users` TreeView has no GTK4 equivalent yet (event controllers to be used later).
+
+## Session status (2026-10-29)
+- Converted next widget: `window_font_sel` (`GtkFontSelectionDialog`) → `Bygfoot.Cli/Windows/font_sel.ui` (GTK4 builder file, `GtkFontChooserDialog`, GTK4 version 4.12) + `Bygfoot.Cli/Windows/FontSelWindow.cs` (GirCore class deriving from `Gtk.Window`, Builder-based, wires `close-request`, buttons and shows the window; registers itself via `Variables.Window.FontSel = this;`).
+- GTK3-only properties dropped for the font window: `border_width`, `window_position`, `type_hint`, and the inner font-selection `border_width`; the inner font chooser uses the GTK4 class `GtkFontChooserWidget` (the GTK4 replacement of the removed `GtkFontSelection`).
+- Font window dialog layout uses the GTK4 `GtkDialog` buildable internal children `content_area` (font chooser) and `action_area` (button box), mirroring the GirCore `Builder` sample dialog pattern; buttons got translatable labels (`OK`, `Apply`, `Cancel`) since the source relied on action widgets without labels.
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; `font_sel.ui` validated as well-formed XML. No warnings/errors from the new files.
+
 ## Open questions / future work
 - Switch to `[Gobject.Subclass<Gtk.Window>]` and/or embedded gresource loading (`glib-compile-resources`) later.
 - Implement exact widget-level TODOs and full C→C# handler mappings for the startup flow.
-- Wire the class into `Variables.Window` / the `Models.Windows` struct and the game logic.
+- Wire the class into `Variables.Window` / the `Models.Windows` struct and the game logic. (Partially done: `StartupWindow` registers itself via `Variables.Window.Startup = this;` in its constructor.)
