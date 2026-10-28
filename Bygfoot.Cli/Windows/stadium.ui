@@ -1,0 +1,218 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- interface-name stadium.ui -->
+<interface>
+  <requires lib="gtk" version="4.12"/>
+  <object class="GtkWindow" id="window_stadium">
+    <property name="default-width">550</property>
+    <property name="default-height">600</property>
+    <property name="modal">1</property>
+    <signal name="close-request" handler="on_window_stadium_delete_event"/>
+    <child>
+      <object class="GtkBox" id="vbox39">
+        <property name="visible">1</property>
+        <property name="orientation">1</property>
+        <property name="spacing">5</property>
+        <child>
+          <object class="GtkLabel" id="label_stadium_name">
+            <property name="visible">1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkGrid" id="table1">
+            <child>
+              <object class="GtkBox" id="hbox69">
+                <property name="visible">1</property>
+                <property name="orientation">0</property>
+                <child>
+                  <object class="GtkLabel" id="label_capacity">
+                    <property name="visible">1</property>
+                    <property name="xalign">0</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label102">
+                    <property name="visible">1</property>
+                    <property name="xalign">0</property>
+                    <property name="label" translatable="yes"> seats</property>
+                  </object>
+                </child>
+              </object>
+              <layout>
+                <property name="column">0</property>
+                <property name="row">0</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkProgressBar" id="progressbar_safety">
+                <property name="visible">1</property>
+                <property name="pulse-step">0.1</property>
+              </object>
+              <layout>
+                <property name="column">0</property>
+                <property name="row">1</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label103">
+                <property name="visible">1</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">Current safety</property>
+              </object>
+              <layout>
+                <property name="column">1</property>
+                <property name="row">1</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_average_attendance">
+                <property name="visible">1</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">Average attendance</property>
+              </object>
+              <layout>
+                <property name="column">0</property>
+                <property name="row">2</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label109">
+                <property name="visible">1</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">Average attendance</property>
+              </object>
+              <layout>
+                <property name="column">1</property>
+                <property name="row">2</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkProgressBar" id="progressbar_average_attendance">
+                <property name="visible">1</property>
+                <property name="pulse-step">0.1</property>
+              </object>
+              <layout>
+                <property name="column">0</property>
+                <property name="row">3</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label111">
+                <property name="visible">1</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">Average attendance %</property>
+              </object>
+              <layout>
+                <property name="column">1</property>
+                <property name="row">3</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label101">
+                <property name="visible">1</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">Current capacity</property>
+              </object>
+              <layout>
+                <property name="column">1</property>
+                <property name="row">0</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label106">
+                <property name="visible">1</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">Status:</property>
+              </object>
+              <layout>
+                <property name="column">0</property>
+                <property name="row">4</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_stadium_status">
+                <property name="visible">1</property>
+                <property name="xalign">0</property>
+              </object>
+              <layout>
+                <property name="column">1</property>
+                <property name="row">4</property>
+              </layout>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="hseparator15">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <property name="width-request">1</property>
+            <property name="height-request">10</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkGrid" id="table3">
+            <child>
+              <object class="GtkSpinButton" id="spin_ticket_price">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="adjustment">price_adjustment</property>
+                <property name="climb-rate">1</property>
+                <property name="digits">2</property>
+                <property name="snap-to-ticks">1</property>
+                <property name="numeric">1</property>
+              </object>
+              <layout>
+                <property name="column">0</property>
+                <property name="row">0</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label124">
+                <property name="visible">1</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">Change ticket price</property>
+                <property name="justify">center</property>
+              </object>
+              <layout>
+                <property name="column">1</property>
+                <property name="row">0</property>
+              </layout>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label123">
+                <property name="visible">1</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="label" translatable="yes">Price per ticket</property>
+              </object>
+              <layout>
+                <property name="column">1</property>
+                <property name="row">1</property>
+              </layout>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="button_stadium_ok">
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="receives-default">0</property>
+            <property name="tooltip-text" translatable="yes">Return</property>
+            <property name="label" translatable="yes">Confirm!</property>
+            <property name="icon-name">gtk-apply</property>
+            <signal name="clicked" handler="on_button_stadium_ok_clicked"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="button_stadium_cancel">
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="receives-default">0</property>
+            <property name="tooltip-text" translatable="yes">Esc</property>
+            <property name="label" translatable="yes">Cancel</property>
+            <signal name="clicked" handler="on_button_stadium_cancel_clicked"/>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

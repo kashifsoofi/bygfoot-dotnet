@@ -41,6 +41,11 @@ Converting the `window_startup` widget from `support_files/bygfoot_misc.glade` (
 - Conversion notes: dropped GTK3-only properties (`border_width`, `window_position`); buttons replaced the `GtkAlignment > GtkHBox` child hierarchy with `label` + `icon-name` (`Accept` + `gtk-apply`, `Reject for now` + `gtk-go-forward`); tree (`treeview_sponsors`) keeps the deferred `row_activated` signal wiring (event controllers to be used later).
 - Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; `sponsors.ui` validated as well-formed XML. No warnings/errors from the new files.
 
+## Session status (2026-10-29, part 4)
+- Converted next widget: `window_stadium` (`GtkWindow` with `GtkVBox`, `GtkTable` cells, `GtkProgressBar`s and buttons) → `Bygfoot.Cli/Windows/stadium.ui` (GTK4 builder file, `GtkWindow`, GTK4 version 4.12) + `Bygfoot.Cli/Windows/StadiumWindow.cs` (GirCore class deriving from `Gtk.Window`, Builder-based, wires `close-request`, the `Confirm!` (`button_stadium_ok`) and `Cancel` (`button_stadium_cancel`) buttons, registers via `Variables.Window.Stadium = this;`, shows the window).
+- Conversion notes: the GTK3-only `GtkTable` was replaced by the GTK4 `GtkGrid` (with `<layout>` children specifying `column`/`row`); the button `GtkAlignment > GtkHBox` hierarchies were replaced with `label` + `icon-name` (`Confirm!` + `gtk-apply`; `Cancel` instead of the `gtk-cancel` stock label, dropping `use_stock`/accelerator); buttons dropped GTK3-only `accelerator` properties and packing options.
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; `stadium.ui` validated as well-formed XML. No warnings/errors from the new files.
+
 ## Open questions / future work
 - Switch to `[Gobject.Subclass<Gtk.Window>]` and/or embedded gresource loading (`glib-compile-resources`) later.
 - Implement exact widget-level TODOs and full C→C# handler mappings for the startup flow.
