@@ -18,8 +18,6 @@
             <property name="wrap">1</property>
           </object>
           <packing>
-            <property name="expand">0</property>
-            <property name="fill">0</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -30,7 +28,6 @@
             <property name="visible">1</property>
           </object>
           <packing>
-            <property name="expand">0</property>
             <property name="position">1</property>
           </packing>
         </child>
@@ -48,10 +45,8 @@
                     <property name="label" translatable="yes">Name</property>
                   </object>
                   <packing>
-                    <property name="expand">0</property>
-                    <property name="fill">0</property>
-                    <property name="position">0</property>
-                  </packing>
+            <property name="position">0</property>
+          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label16">
@@ -59,10 +54,8 @@
                     <property name="label" translatable="yes">League</property>
                   </object>
                   <packing>
-                    <property name="expand">0</property>
-                    <property name="fill">0</property>
-                    <property name="position">1</property>
-                  </packing>
+            <property name="position">1</property>
+          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label17">
@@ -70,10 +63,8 @@
                     <property name="label" translatable="yes">Rank</property>
                   </object>
                   <packing>
-                    <property name="expand">0</property>
-                    <property name="fill">0</property>
-                    <property name="position">2</property>
-                  </packing>
+            <property name="position">2</property>
+          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label18">
@@ -81,10 +72,8 @@
                     <property name="label" translatable="yes">Money (approx.)</property>
                   </object>
                   <packing>
-                    <property name="expand">0</property>
-                    <property name="fill">0</property>
-                    <property name="position">3</property>
-                  </packing>
+            <property name="position">3</property>
+          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label19">
@@ -92,10 +81,8 @@
                     <property name="label" translatable="yes">Stadium capacity</property>
                   </object>
                   <packing>
-                    <property name="expand">0</property>
-                    <property name="fill">0</property>
-                    <property name="position">4</property>
-                  </packing>
+            <property name="position">4</property>
+          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label14">
@@ -103,17 +90,13 @@
                     <property name="label" translatable="yes">Stadium safety</property>
                   </object>
                   <packing>
-                    <property name="expand">0</property>
-                    <property name="fill">0</property>
-                    <property name="position">5</property>
-                  </packing>
+            <property name="position">5</property>
+          </packing>
                 </child>
               </object>
               <packing>
-                <property name="expand">0</property>
-                <property name="fill">0</property>
-                <property name="position">0</property>
-              </packing>
+            <property name="position">0</property>
+          </packing>
             </child>
             <child>
               <object class="GtkSeparator" id="vseparator3">
@@ -123,10 +106,8 @@
                 <property name="orientation">1</property>
               </object>
               <packing>
-                <property name="expand">0</property>
-                <property name="fill">0</property>
-                <property name="position">1</property>
-              </packing>
+            <property name="position">1</property>
+          </packing>
             </child>
             <child>
               <object class="GtkBox" id="vbox7">
@@ -138,72 +119,56 @@
                     <property name="visible">1</property>
                   </object>
                   <packing>
-                    <property name="expand">0</property>
-                    <property name="fill">0</property>
-                    <property name="position">0</property>
-                  </packing>
+            <property name="position">0</property>
+          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label_league">
                     <property name="visible">1</property>
                   </object>
                   <packing>
-                    <property name="expand">0</property>
-                    <property name="fill">0</property>
-                    <property name="position">1</property>
-                  </packing>
+            <property name="position">1</property>
+          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label_rank">
                     <property name="visible">1</property>
                   </object>
                   <packing>
-                    <property name="expand">0</property>
-                    <property name="fill">0</property>
-                    <property name="position">2</property>
-                  </packing>
+            <property name="position">2</property>
+          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label_money">
                     <property name="visible">1</property>
                   </object>
                   <packing>
-                    <property name="expand">0</property>
-                    <property name="fill">0</property>
-                    <property name="position">3</property>
-                  </packing>
+            <property name="position">3</property>
+          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label_cap">
                     <property name="visible">1</property>
                   </object>
                   <packing>
-                    <property name="expand">0</property>
-                    <property name="fill">0</property>
-                    <property name="position">4</property>
-                  </packing>
+            <property name="position">4</property>
+          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label_saf">
                     <property name="visible">1</property>
                   </object>
                   <packing>
-                    <property name="expand">0</property>
-                    <property name="fill">0</property>
-                    <property name="position">5</property>
-                  </packing>
+            <property name="position">5</property>
+          </packing>
                 </child>
               </object>
               <packing>
-                <property name="expand">0</property>
-                <property name="fill">0</property>
-                <property name="position">2</property>
-              </packing>
+            <property name="position">2</property>
+          </packing>
             </child>
           </object>
           <packing>
-            <property name="expand">0</property>
-            <property name="fill">0</property>
             <property name="position">2</property>
           </packing>
         </child>
@@ -214,7 +179,6 @@
             <property name="visible">1</property>
           </object>
           <packing>
-            <property name="expand">0</property>
             <property name="position">3</property>
           </packing>
         </child>
@@ -224,8 +188,6 @@
             <property name="label" translatable="yes">Player list</property>
           </object>
           <packing>
-            <property name="expand">0</property>
-            <property name="fill">0</property>
             <property name="position">4</property>
           </packing>
         </child>
@@ -239,25 +201,19 @@
                 <property name="label" translatable="yes">Average skill:</property>
               </object>
               <packing>
-                <property name="expand">0</property>
-                <property name="fill">0</property>
-                <property name="position">0</property>
-              </packing>
+            <property name="position">0</property>
+          </packing>
             </child>
             <child>
               <object class="GtkLabel" id="label_average_skill">
                 <property name="visible">1</property>
               </object>
               <packing>
-                <property name="expand">0</property>
-                <property name="fill">0</property>
-                <property name="position">1</property>
-              </packing>
+            <property name="position">1</property>
+          </packing>
             </child>
           </object>
           <packing>
-            <property name="expand">0</property>
-            <property name="fill">0</property>
             <property name="position">5</property>
           </packing>
         </child>
@@ -286,7 +242,6 @@
             <property name="visible">1</property>
           </object>
           <packing>
-            <property name="expand">0</property>
             <property name="position">7</property>
           </packing>
         </child>
@@ -295,8 +250,6 @@
             <property name="visible">1</property>
           </object>
           <packing>
-            <property name="expand">0</property>
-            <property name="fill">0</property>
             <property name="position">8</property>
           </packing>
         </child>
@@ -314,10 +267,8 @@
                 <signal name="clicked" handler="on_button_offer_ok_clicked"/>
               </object>
               <packing>
-                <property name="expand">0</property>
-                <property name="fill">0</property>
-                <property name="position">0</property>
-              </packing>
+            <property name="position">0</property>
+          </packing>
             </child>
             <child>
               <object class="GtkButton" id="button_cancel">
@@ -329,15 +280,11 @@
                 <signal name="clicked" handler="on_button_offer_cancel_clicked"/>
               </object>
               <packing>
-                <property name="expand">0</property>
-                <property name="fill">0</property>
-                <property name="position">1</property>
-              </packing>
+            <property name="position">1</property>
+          </packing>
             </child>
           </object>
           <packing>
-            <property name="expand">0</property>
-            <property name="fill">0</property>
             <property name="position">9</property>
           </packing>
         </child>
