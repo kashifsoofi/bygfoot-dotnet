@@ -1,0 +1,300 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- interface-name training_camp.ui -->
+<interface>
+  <requires lib="gtk" version="4.12"/>
+  <object class="GtkWindow" id="window_training_camp">
+    <property name="default-width">550</property>
+    <property name="default-height">600</property>
+    <property name="title" translatable="yes">Training camp</property>
+    <property name="modal">1</property>
+    <property name="resizable">0</property>
+    <signal name="close-request" handler="on_window_training_camp_delete_event"/>
+    <child>
+      <object class="GtkFixed" id="panel_camp">
+        <property name="width-request">500</property>
+        <property name="height-request">290</property>
+        <property name="visible">1</property>
+        <child>
+          <object class="GtkEntry" id="tf_costs">
+            <property name="width-request">130</property>
+            <property name="height-request">22</property>
+            <property name="visible">1</property>
+            <property name="editable">0</property>
+          </object>
+          <layout>
+            <property name="x">336</property>
+            <property name="y">40</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="hs_camp2">
+            <property name="width-request">450</property>
+            <property name="height-request">16</property>
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+          </object>
+          <layout>
+            <property name="x">25</property>
+            <property name="y">90</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkLabel" id="l_camp_points">
+            <property name="width-request">140</property>
+            <property name="height-request">20</property>
+            <property name="visible">1</property>
+            <property name="label" translatable="yes">Camp points</property>
+          </object>
+          <layout>
+            <property name="x">24</property>
+            <property name="y">192</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkButton" id="b_inc_recreation">
+            <property name="width-request">30</property>
+            <property name="height-request">26</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="receives-default">0</property>
+            <property name="label" translatable="yes">Increase</property>
+            <signal name="clicked" handler="on_b_inc_recreation_clicked"/>
+          </object>
+          <layout>
+            <property name="x">425</property>
+            <property name="y">125</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkLabel" id="l_recreation">
+            <property name="width-request">140</property>
+            <property name="height-request">20</property>
+            <property name="visible">1</property>
+            <property name="label" translatable="yes">Recreation</property>
+          </object>
+          <layout>
+            <property name="x">24</property>
+            <property name="y">128</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkLabel" id="l_costs">
+            <property name="width-request">90</property>
+            <property name="height-request">20</property>
+            <property name="visible">1</property>
+            <property name="label" translatable="yes">Costs</property>
+          </object>
+          <layout>
+            <property name="x">255</property>
+            <property name="y">41</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkButton" id="b_dec_training">
+            <property name="width-request">30</property>
+            <property name="height-request">26</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="receives-default">0</property>
+            <property name="label" translatable="yes">Decrease</property>
+            <signal name="clicked" handler="on_b_dec_training_clicked"/>
+          </object>
+          <layout>
+            <property name="x">176</property>
+            <property name="y">157</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkLabel" id="l_training">
+            <property name="width-request">140</property>
+            <property name="height-request">20</property>
+            <property name="visible">1</property>
+            <property name="label" translatable="yes">Training</property>
+          </object>
+          <layout>
+            <property name="x">24</property>
+            <property name="y">160</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkButton" id="b_inc_training">
+            <property name="width-request">30</property>
+            <property name="height-request">26</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="receives-default">0</property>
+            <property name="label" translatable="yes">Increase</property>
+            <signal name="clicked" handler="on_b_inc_training_clicked"/>
+          </object>
+          <layout>
+            <property name="x">425</property>
+            <property name="y">157</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkScale" id="hs_camp_points">
+            <property name="width-request">200</property>
+            <property name="height-request">36</property>
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+          </object>
+          <layout>
+            <property name="x">220</property>
+            <property name="y">184</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkScale" id="hs_training">
+            <property name="width-request">200</property>
+            <property name="height-request">36</property>
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+          </object>
+          <layout>
+            <property name="x">220</property>
+            <property name="y">152</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkButton" id="b_dec_recreation">
+            <property name="width-request">30</property>
+            <property name="height-request">26</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="receives-default">0</property>
+            <property name="label" translatable="yes">Decrease</property>
+            <signal name="clicked" handler="on_b_dec_recreation_clicked"/>
+          </object>
+          <layout>
+            <property name="x">176</property>
+            <property name="y">125</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkScale" id="hs_recreation">
+            <property name="width-request">200</property>
+            <property name="height-request">36</property>
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+          </object>
+          <layout>
+            <property name="x">220</property>
+            <property name="y">120</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="rb_camp1">
+            <property name="label" translatable="yes">Good Hotel</property>
+            <property name="width-request">200</property>
+            <property name="height-request">21</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="receives-default">0</property>
+            <property name="use-underline">1</property>
+            <property name="draw-indicator">1</property>
+            <signal name="clicked" handler="on_rb_camp1_clicked"/>
+          </object>
+          <layout>
+            <property name="x">24</property>
+            <property name="y">16</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="rb_camp2">
+            <property name="label" translatable="yes">First-Class Hotel</property>
+            <property name="width-request">200</property>
+            <property name="height-request">21</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="receives-default">0</property>
+            <property name="use-underline">1</property>
+            <property name="draw-indicator">1</property>
+            <property name="group">rb_camp1</property>
+            <signal name="clicked" handler="on_rb_camp2_clicked"/>
+          </object>
+          <layout>
+            <property name="x">24</property>
+            <property name="y">40</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="rb_camp3">
+            <property name="label" translatable="yes">Premium Hotel</property>
+            <property name="width-request">200</property>
+            <property name="height-request">21</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="receives-default">0</property>
+            <property name="use-underline">1</property>
+            <property name="draw-indicator">1</property>
+            <property name="group">rb_camp1</property>
+            <signal name="clicked" handler="on_rb_camp3_clicked"/>
+          </object>
+          <layout>
+            <property name="x">24</property>
+            <property name="y">64</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="hs_camp1">
+            <property name="width-request">450</property>
+            <property name="height-request">16</property>
+            <property name="visible">1</property>
+          </object>
+          <layout>
+            <property name="x">25</property>
+            <property name="y">232</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkButton" id="b_ok">
+            <property name="width-request">110</property>
+            <property name="height-request">35</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="receives-default">0</property>
+            <property name="label" translatable="yes">Apply</property>
+            <property name="icon-name">gtk-apply</property>
+            <signal name="clicked" handler="on_b_ok_clicked"/>
+          </object>
+          <layout>
+            <property name="x">256</property>
+            <property name="y">254</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkButton" id="b_cancel">
+            <property name="width-request">110</property>
+            <property name="height-request">35</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="receives-default">0</property>
+            <property name="label" translatable="yes">Cancel</property>
+            <property name="icon-name">gtk-cancel</property>
+            <signal name="clicked" handler="on_b_cancel_clicked"/>
+          </object>
+          <layout>
+            <property name="x">376</property>
+            <property name="y">254</property>
+          </layout>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="checkbutton_save">
+            <property name="label" translatable="yes">Save settings as default</property>
+            <property name="width-request">208</property>
+            <property name="height-request">21</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="receives-default">0</property>
+            <property name="use-underline">1</property>
+            <property name="draw-indicator">1</property>
+          </object>
+          <layout>
+            <property name="x">24</property>
+            <property name="y">264</property>
+          </layout>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
