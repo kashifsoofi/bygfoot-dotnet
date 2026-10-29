@@ -697,8 +697,36 @@ public class Cup
     /// <returns>The number of new teams.</returns>
     public static int CupRoundGetNewTeams(CupRound cupRound)
     {
-        // Implementation depends on the not yet converted cup functions.
-        throw new NotImplementedException();
+        int newTeams = 0;
+
+        if (cupRound.NewTeams != 0)
+            newTeams = cupRound.NewTeams;
+        else
+        {
+            foreach (CupChooseTeam chooseTeam in cupRound.ChooseTeams)
+            {
+                if (chooseTeam.NumberOfTeams != -1)
+                {
+                    newTeams += chooseTeam.NumberOfTeams;
+                }
+                else
+                {
+                    Cup cupTemp = null;
+                    League league = null;
+                    CupGetChooseTeamLeagueCup(chooseTeam, out league, out cupTemp);
+
+                    if (cupTemp == null)
+                        newTeams += league.Teams.Count;
+                    else
+                    {
+                        List<Team> teamsSorted = CupGetTeamsSorted(cupTemp);
+                        newTeams += teamsSorted.Count;
+                    }
+                }
+            }
+        }
+
+        return newTeams;
     }
 
     /// <summary>
@@ -900,8 +928,36 @@ public class Cup
     /// <returns>Whether we have to wait.</returns>
     public static bool CupRoundCheckWaits(CupRound cupRound)
     {
-        // Implementation depends on the not yet converted cup functions.
-        throw new NotImplementedException();
+        for (int i = 0; i < cupRound.Waits.Count; i++)
+        {
+            CupRoundWait wait = cupRound.Waits[i];
+            string prefix = wait.CupSid.EndsWith("*") ? wait.CupSid.Substring(0, wait.CupSid.Length - 1) : "NONAME";
+
+            foreach (Cup cup in Variables.Country.AllCups)
+            {
+                if (cup.Sid == wait.CupSid || cup.Sid.StartsWith(prefix, StringComparison.Ordinal))
+                {
+                    // Cup round we're waiting for isn't even reached.
+                    if (cup.Fixtures.Count > 0 && cup.Fixtures[cup.Fixtures.Count - 1].Round < wait.CupRound)
+                        return true;
+
+                    for (int k = cup.Fixtures.Count - 1; k >= 0; k--)
+                    {
+                        // Cup round we've been waiting for is finished, we're not waiting anymore.
+                        if (cup.Fixtures[k].Round > wait.CupRound)
+                            break;
+
+                        // Still waiting for matches to be calculated.
+                        if (cup.Fixtures[k].Round == wait.CupRound && cup.Fixtures[k].Attendance == -1)
+                            return true;
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        return false;
     }
 
     /// <summary>

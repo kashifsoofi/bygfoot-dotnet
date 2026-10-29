@@ -376,8 +376,13 @@ public class User
     /// <returns>The user or null.</returns>
     public static User FromTeam(Team tm)
     {
-        // Implementation depends on the not yet converted user functions.
-        throw new NotImplementedException();
+        foreach (User user in Variables.Users)
+        {
+            if (user.Team == tm)
+                return user;
+        }
+
+        return null;
     }
 
     /// <summary>
@@ -432,8 +437,19 @@ public class User
     /// <param name="format">The format.</param>
     public static void EventAdd(User user, int type, int value1, int value2, object valuePointer, string format, params object[] args)
     {
-        // Implementation depends on the not yet converted user and game_gui functions.
-        throw new NotImplementedException();
+        Event newEvent = EventNew();
+        newEvent.User = user;
+        newEvent.Type = (EventType)type;
+        newEvent.Value1 = value1;
+        newEvent.Value2 = value2;
+        newEvent.ValuePointer = valuePointer;
+
+        if (format != null)
+            newEvent.ValueString = string.Format(format, args);
+        else
+            newEvent.ValueString = null;
+
+        user.Events.Add(newEvent);
     }
 
     /// <summary>

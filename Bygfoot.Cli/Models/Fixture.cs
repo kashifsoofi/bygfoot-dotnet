@@ -217,8 +217,15 @@ public class Fixture
     /// <returns>The teams that advance.</returns>
     public static List<Team> GetRoundRobinAdvance(Cup cup, int round)
     {
-        // Implementation depends on the not yet converted cup functions.
-        throw new NotImplementedException();
+        CupRound cupRound = cup.Rounds.Count > 0 ? cup.Rounds[round] : new CupRound();
+
+        List<Team> teams = Cup.CupGetTeamsSorted(cup);
+        int remove = teams.Count - (cupRound.RoundRobinNumberOfGroups * cupRound.RoundRobinNumberOfAdvance) - cupRound.RoundRobinNumberOfBestAdvance;
+
+        for (int i = 0; i < remove; i++)
+            teams.RemoveAt(teams.Count - 1);
+
+        return teams;
     }
 
     /// <summary>
@@ -596,8 +603,7 @@ public class Fixture
     /// <returns>TRUE or FALSE.</returns>
     public static bool QueryFixtureHasTables(Fixture fix)
     {
-        // Implementation depends on the not yet converted cup functions.
-        throw new NotImplementedException();
+        return fix.Clid < Bygfoot.IdCupStart || Cup.CupHasTables(fix.Clid) == fix.Round;
     }
 
     /// <summary>

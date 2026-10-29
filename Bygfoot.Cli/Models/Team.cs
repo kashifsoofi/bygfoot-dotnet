@@ -379,8 +379,21 @@ public class Team
     /// <returns>A new structure.</returns>
     public static int FindAppropriateStructure(Team tm)
     {
-        // Implementation depends on the not yet converted player and maths functions.
-        throw new NotImplementedException();
+        int structure = 0;
+
+        for (int i = 0; i < 11; i++)
+        {
+            Player player = tm.Players[i];
+            if (player.Cskill > 0 && player.Cpos != PlayerPos.Goalie)
+            {
+                if (player.Pos != PlayerPos.Goalie)
+                    structure += (int)Math.Round(Math.Pow(10, (int)PlayerPos.Forward - (int)player.Pos));
+                else
+                    structure += (int)Math.Round(Math.Pow(10, (int)PlayerPos.Forward - (int)player.Cpos));
+            }
+        }
+
+        return structure;
     }
 
     /// <summary>

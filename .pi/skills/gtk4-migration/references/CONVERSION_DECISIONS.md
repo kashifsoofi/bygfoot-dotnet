@@ -116,6 +116,81 @@ Converting the `window_startup` widget from `support_files/bygfoot_misc.glade` (
 - Conversion notes: the self-contained player functions were ported from the C module and implemented in the existing player class: `player_estimate_talent` → `Player.EstimateTalent`, `player_assign_value` → `Player.AssignValue`, `player_assign_wage` → `Player.AssignWage`, `player_decrease_fitness` → `Player.DecreaseFitness` and `player_update_fitness` → `Player.UpdateFitness`; the remaining player functions keep their `NotImplementedException` stubs (they depend on not-yet-converted fixture, league/cup, user and team functions).
 - Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
 
+## Session status (2026-10-29, part 19)
+- Converted the next C module, `src/team.c` / `src/team.h`, into the existing team helper class `Bygfoot.Cli/Models/Team.cs` (no file move, per the user's instruction) — continuing the `Maths` → `MathHelper`, `Game` → `Game.cs`, and `Player` conversions (parts 16–18).
+- Conversion notes: the clean team function was ported from the C module and implemented in the existing team class: `team_find_appropriate_structure` → `Team.FindAppropriateStructure` (structure from the first 11 players' positions/skills); the remaining team functions keep their `NotImplementedException` stubs (they depend on not-yet-converted league, cup, fixture, transfer and player functions).
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
+## Session status (2026-10-29, part 20)
+- Converted the next C module, `src/cup.c` / `src/cup.h`, into the existing team helper class `Bygfoot.Cli/Models/Cup.cs` (no file move) — following the previous conversions of `src/file.c`, `src/maths.c`, `src/game.c`, `src/player.c`, `src/team.c` (parts 15–19).
+- Conversion notes: implemented the cleanly-portable cup functions: `cup_round_get_new_teams` → `CupRoundGetNewTeams`, and `cup_round_check_waits` → `CupRoundCheckWaits`. The remaining cup functions keep their `NotImplementedException` stubs (they depend on not-yet-converted league, fixture, app, and player functions).
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
+## Session status (2026-10-29, part 21)
+- Converted the next C module, `src/finance.c` / `src/finance.h`, into the existing finance helper class `Bygfoot.Cli/Models/Finance.cs` (no file move) — continuing the C-module conversion series (file, maths, game, player, team, cup, now finance).
+- Conversion notes: all cleanly-portable finance functions were implemented during earlier steps (wage unit, credit/loan calculations, stadium improvement cost/duration, current interest). The remaining finance functions (`Finance.UpdateUserWeekly`, `Finance.AssignGameMoney`, `Finance.CalculateAlrWeeklyInstallment`, `Finance.CalculateAlrStartWeek`) keep their `NotImplementedException` stubs, as they depend on not-yet-converted user, team, cup, fixture, and game functions.
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
+## Session status (2026-10-29, part 23)
+- Converted the next C module, `src/fixture.c` / `src/fixture.h`, into the existing fixture helper class `Bygfoot.Cli/Models/Fixture.cs` (no file move) — continuing the C-module conversion series (file, maths, game, player, team, cup, finance, league, now fixture).
+- Conversion notes: implemented the cleanly-portable fixture functions: `query_fixture_has_tables` → `Fixture.QueryFixtureHasTables`, and `fixture_get_round_robin_advance` → `Fixture.GetRoundRobinAdvance`. The remaining fixture functions keep their `NotImplementedException` stubs (they depend on not-yet-converted league, cup, team, and player functions).
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
+## Session status (2026-10-29, part 33)
+- Continued the C-module conversion series with the foundational player helpers requested via "lets do player_card_get/set": implemented the C functions `player_card_get` and `player_card_set` into the existing player helper class `Bygfoot.Cli/Models/Player.cs` (no file move, per the user's instruction).
+- Conversion notes: `player_card_get` → `Player.CardGet(Player pl, int clid, int cardType)` scans the player's card list and returns the yellow/red card value for the given league/cup id; `player_card_set` → `Player.CardSet(Player pl, int clid, int cardType, int value, bool diff)` updates (or creates) the card entry, applying the diff and clamping negative values to zero. The player function `player_is_banned` → `Player.IsBanned` was completed using the new card helper (it resolves the fixture via the team, reads the league/cup yellow-red threshold and the card values). The remaining player functions keep their `NotImplementedException` stubs.
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
+## Session status (2026-10-29, part 34)
+- Continued the C-module conversion series with the foundational player helpers requested via "lets do player_copy": implemented the C functions `player_copy`, `player_card_get`, `player_card_set`, `player_streak_add_to_prob`, `player_streak_reset_count`, `query_player_is_youth`, `query_player_is_in_ya`, `query_player_is_cpu`, and `player_games_goals_get/set` into the existing player helper class `Bygfoot.Cli/Models/Player.cs` (no file move, per the user's instruction).
+- Conversion notes: `player_copy` → `Player.Copy(Player pl, Team tm, int insertAt)` copies the player fields, inserts the player into the team's player list and recomputes the position/cskill; `player_card_get` → `Player.CardGet`, `player_card_set` → `Player.CardSet`, `player_streak_add_to_prob` → `Player.StreakAddToProb`, `player_streak_reset_count` → `Player.StreakResetCount`, `query_player_is_youth` → `Player.QueryIsYouth`, `query_player_is_in_ya` → `Player.QueryIsInYa`, `query_player_is_cpu` → `Player.QueryIsCpu`, and `player_games_goals_get/set` → `Player.GamesGoalsGet` / `Player.GamesGoalsSet` were implemented; the player function `player_is_banned` → `Player.IsBanned` was completed using the card helper. The remaining player functions keep their `NotImplementedException` stubs.
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
+## Session status (2026-10-29, part 35)
+- Continued the C-module conversion series with the foundational player helpers requested via "lets do player_move and player_swap": implemented the C functions `player_move` and `player_swap` into the existing player helper class `Bygfoot.Cli/Models/Player.cs` (no file move, per the user's instruction).
+- Conversion notes: `player_move` → `Player.Move(Team tm1, int playerNumber, Team tm2, int insertAt)` moves a player between team/player arrays; `player_swap` → `Player.Swap(Team tm1, int playerNumber1, Team tm2, int playerNumber2)` swaps two players (with the live-game-pause banned-player guard). The remaining player functions keep their `NotImplementedException` stubs.
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
+## Session status (2026-10-29, part 36)
+- Continued the C-module conversion series with the foundational player helpers requested via "lets do player_update_weekly, player_season_start and player_get_last_name": implemented the cleanly-portable function `player_season_start` → `Player.SeasonStart(Player pl, float skillChange)` into the existing player helper class `Bygfoot.Cli/Models/Player.cs` (no file move, per the user's instruction); `player_update_weekly` and `player_get_last_name` remain open (see status notes).
+- Conversion notes: `player_season_start` → `Player.SeasonStart` clears the games-goals/cards lists and, when `skillChange != 0`, scales talent/skill/cskill, recomputes value and talent estimate. The remaining player functions keep their `NotImplementedException` stubs.
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
+## Session status (2026-10-29, part 37)
+- Continued the C-module conversion series with the foundational player helpers requested via "lets do player_get_last_name": implemented the C function `player_get_last_name` → `Player.GetLastName(string name)` into the existing player helper class `Bygfoot.Cli/Models/Player.cs` (no file move, per the user's instruction).
+- Conversion notes: `player_get_last_name` → `Player.GetLastName` reverses the name, skips past the leading characters up to the first whitespace and reverses the remainder. The remaining player functions keep their `NotImplementedException` stubs.
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
+## Session status (2026-10-29, part 40)
+- Continued the foundational player-helper series and steered into the contract-removal path via "lets do RemoveContract": implemented the C functions `player_id_index`, `player_remove_from_team` and `player_remove_contract` into the existing player helper class `Bygfoot.Cli/Models/Player.cs` (no file move, per the user's instruction), and implemented the clean `User.FromTeam` blocker in `Bygfoot.Cli/Models/User.cs`.
+- Conversion notes: `player_remove_contract` → `Player.RemoveContract(Player pl)` adds the `EVENT_TYPE_PLAYER_LEFT` event when the debug level is below the threshold, then removes the player via the team players array; `player_remove_from_team` resets the user penalty shooter and removes the player through the transfer list. `User.EventAdd` and the remaining user helpers are still open.
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
+## Session status (2026-10-29, part 41)
+- Continued the foundational player-helper series and steered into the event layer via "User.EventAdd": implemented the C function `user_event_add` → `User.EventAdd(User user, int type, int value1, int value2, object valuePointer, string format, params object[] args)` into the existing user helper class `Bygfoot.Cli/Models/User.cs`.
+- Conversion notes: `user_event_add` → `User.EventAdd` now creates the event via `User.EventNew`, fills the fields and appends it to the user events list. Event format strings are now expected to be .NET `string.Format` style. The contract-removal path can now be wired end-to-end (`Player.RemoveContract` → `User.EventAdd` → `Player.RemoveFromTeam`).
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
+## Session status (2026-10-29, part 43)
+- Continued the foundational player-helper series and steered into the update-function trio via "lets do UpdateInjury, UpdateStreak and UpdateSkill": implemented the C functions `player_update_injury`, `player_update_streak`, `player_update_skill` and the now-unblocked parent `player_update_weekly` into the existing player helper class `Bygfoot.Cli/Models/Player.cs` (no file move, per the user's instruction).
+- Conversion notes: `player_update_weekly` → `Player.UpdateWeekly(Player pl)` now drives injury/streak updates, CPU skip, age/contract handling and skill updates. Event/option handling uses the newly implemented `User.EventAdd` and the global/user option lists. Remaining player functions keep their `NotImplementedException` stubs.
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
+## Session status (2026-10-29, part 44)
+- Continued the foundational player-helper series and steered into the new-player factory via "implement player New": surveyed the C function `player_new` (src/player.c) and the existing `Player.New(Team tm, float averageTalent, bool newId)` stub in `Bygfoot.Cli/Models/Player.cs`.
+- Conversion notes: the math, position, age, peak-age/region, talent, skill, cskill, fitness, value, wage, contract, LSU, cards/games-goals/card-status/career and streak parts of `player_new` are now mapped to the converted helpers; the function remains blocked on the not-yet-converted name subsystem (`name_get`, name lists, random name helpers) and the player-id counter is already covered via `Bygfoot.PlayerIdNew`.
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
+## Session status (2026-10-29, part 45)
+- Continued the foundational player-helper series and steered into the name module via "implement name": implemented the C functions `name_get`, `name_get_from_list`, `name_shorten_list`, `name_get_list_from_sid` and the related macros as static methods on the existing `NameList` class in `Bygfoot.Cli/Models/Name.cs` (methods added to the existing class, per the user's instruction).
+- Conversion notes: the name helpers now provide the random player-name generation needed by the `Player.New` factory. The remaining player factory fields (name assignment) can now be wired once callers use these helpers.
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
+## Session status (2026-10-29, part 46)
+- Continued the foundational player-helper series and steered into the name module via "implement name" / naming feedback: implemented the C functions `name_get`, `name_get_from_list`, `name_shorten_list`, `name_get_list_from_sid` and the related macros as static methods on the existing `NameList` class in `Bygfoot.Cli/Models/Name.cs`, using the C-derived PascalCase names (`Get`, `GetFromList`, `GetListFromSid`, `GetFromRandomList`, `ShortenList`, `GetRandomFirstName`, `GetRandomLastName`).
+- Conversion notes: the name helpers now provide the random player-name generation needed by the `Player.New` factory. The remaining player factory fields (name assignment) can now be wired once callers use these helpers.
+- Validation run: `dotnet build Bygfoot.Cli/Bygfoot.Cli.csproj` ends with **0 errors**; no errors/warnings introduced by the converted files.
+
 ## Open questions / future work
 - Migrate the deprecated widgets (`GtkComboBox`, `GtkTreeView`, `GtkCheckButton`, `GtkRadioButton`, `GtkNotebook`, `GtkPaned`) to modern equivalents (DropDown, ListView+ColumnView, etc.) later.
 - Switch to `[Gobject.Subclass<Gtk.Window>]` and/or embedded gresource loading (`glib-compile-resources`) later.
