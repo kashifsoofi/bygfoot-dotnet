@@ -1,10 +1,10 @@
-namespace Bygfoot.Cli.Models;
+namespace Bygfoot.Cli;
 
 /// <summary>
 /// Mathematical helper functions.
 /// Corresponds to the C functions in src/maths.c and the macros in src/maths.h.
 /// </summary>
-public static class Maths
+public static class MathHelper
 {
     /// <summary>Internal variable for the Gauss random generator.</summary>
     private static double gaussV1 = 0;
@@ -200,5 +200,39 @@ public static class Maths
             sum += array[i];
 
         return sum;
+    }
+
+    /// <summary>
+    /// Generate a random number in the range [lower, upper] (math_rnd).
+    /// </summary>
+    /// <param name="lower">The lower cutoff boundary.</param>
+    /// <param name="upper">The upper cutoff boundary.</param>
+    /// <returns>A random number in the given range.</returns>
+    public static double Rnd(double lower, double upper)
+    {
+        return lower + (upper - lower) * Variables.RandGenerator.NextDouble();
+    }
+
+    /// <summary>
+    /// Get a random integer in the range [lower, upper] (math_rndi).
+    /// </summary>
+    /// <param name="lower">The lower cutoff boundary.</param>
+    /// <param name="upper">The upper cutoff boundary.</param>
+    /// <returns>A random integer in the given range.</returns>
+    public static int Rndi(int lower, int upper)
+    {
+        return Misc.MathRndi(lower, upper);
+    }
+
+    /// <summary>
+    /// Generate a Gauss-distributed random number within given boundaries
+    /// (math_gauss_disti).
+    /// </summary>
+    /// <param name="lower">The lower cutoff boundary.</param>
+    /// <param name="upper">The upper cutoff boundary.</param>
+    /// <returns>The rounded Gauss-distributed number.</returns>
+    public static int GaussDisti(int lower, int upper)
+    {
+        return (int)Math.Round(GaussDist((double)lower - 0.499, (double)upper + 0.499), MidpointRounding.ToEven);
     }
 }
