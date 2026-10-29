@@ -262,8 +262,23 @@ public class Player
     /// <param name="pl">The player of which we'd like to estimate the talent.</param>
     public static void EstimateTalent(Player pl)
     {
-        // Implementation depends on the not yet converted maths and player functions.
-        throw new NotImplementedException();
+        int qualityEnd = (int)Quality.QualityEnd;
+        float[] scoutDeviance = new float[qualityEnd];
+        float[] devianceBound = new float[2];
+
+        // the maximal deviance in both directions
+        devianceBound[0] = pl.Talent - pl.Skill;
+        devianceBound[1] = Variables.Constants.GetFloat("float_player_max_skill") - pl.Talent;
+
+        for (int i = 0; i < qualityEnd; i++)
+        {
+            scoutDeviance[i] = (i + 1) * Variables.Constants.GetFloat("float_player_max_skill") * (Variables.Constants.GetFloat("float_player_etal_scout_factor") / 100);
+            // adjust deviance bounds with regard to the scout's deviance
+            for (int j = 0; j < 2; j++)
+                devianceBound[j] = Math.Min(devianceBound[j], scoutDeviance[i]);
+
+            pl.Etal[i] = (float)MathHelper.Rnd(pl.Talent - devianceBound[0], pl.Talent + devianceBound[1]);
+        }
     }
 
     /// <summary>
@@ -274,8 +289,14 @@ public class Player
     /// <returns>The value of the player.</returns>
     public static int AssignValue(Player pl)
     {
-        // Implementation depends on the not yet converted maths functions.
-        throw new NotImplementedException();
+        float value = (float)Math.Pow((Variables.Constants.GetFloat("float_player_value_skill_weight") * pl.Skill + (1 - Variables.Constants.GetFloat("float_player_value_skill_weight")) * pl.Talent * 0.7), Variables.Constants.GetFloat("float_player_value_power"));
+
+        if (pl.PeakAge > pl.Age)
+            value *= 1 + Variables.Constants.GetFloat("float_player_value_younger_factor") * (pl.PeakAge - pl.Age);
+        else
+            value *= 1 - Variables.Constants.GetFloat("float_player_value_older_factor") * (pl.Age - pl.PeakAge);
+
+        return MathHelper.RoundInteger((int)Math.Round(value), 2);
     }
 
     /// <summary>
@@ -286,8 +307,9 @@ public class Player
     /// <returns>The wage of the player.</returns>
     public static int AssignWage(Player pl)
     {
-        // Implementation depends on the not yet converted maths functions.
-        throw new NotImplementedException();
+        float wage = (float)((double)pl.Value * Variables.Constants.GetFloat("float_player_wage_value_factor") * MathHelper.Rnd(1 - Variables.Constants.GetFloat("float_player_wage_random_dev"), 1 + Variables.Constants.GetFloat("float_player_wage_random_dev")));
+
+        return MathHelper.RoundInteger((int)Math.Round(wage), 1);
     }
 
     /// <summary>
@@ -410,8 +432,27 @@ public class Player
     /// <param name="pl">The player.</param>
     public static void DecreaseFitness(Player pl)
     {
-        // Implementation depends on the not yet converted maths and team functions.
-        throw new NotImplementedException();
+        float goalieFactor = 1 - Variables.Constants.GetFloat("float_player_fitness_decrease_factor_goalie") * (pl.Cpos == PlayerPos.Goalie ? 1 : 0);
+        float boostFactor = 1 + pl.Team.Boost * Variables.Constants.GetFloat("float_player_boost_fitness_effect");
+        float streakFactor = 1 + (float)pl.Streak * Variables.Constants.GetFloat("float_player_streak_influence_fitness_decrease");
+
+        if (pl.Age < pl.PeakAge - pl.PeakRegion)
+        {
+            float youngerFactor = (pl.PeakAge - pl.PeakRegion - pl.Age) * Variables.Constants.GetFloat("float_player_fitness_decrease_younger_factor") + Variables.Constants.GetFloat("float_player_fitness_decrease_add");
+            pl.Fitness -= youngerFactor * goalieFactor * boostFactor * streakFactor;
+        }
+        else if (pl.Age > pl.PeakAge + pl.PeakRegion)
+        {
+            float olderFactor = (pl.Age - pl.PeakAge - pl.PeakRegion) * Variables.Constants.GetFloat("float_player_fitness_decrease_older_factor") + Variables.Constants.GetFloat("float_player_fitness_decrease_add");
+            pl.Fitness -= olderFactor * goalieFactor * boostFactor * streakFactor;
+        }
+        else
+        {
+            pl.Fitness -= (Variables.Constants.GetFloat("float_player_fitness_decrease_add") * goalieFactor * boostFactor * streakFactor);
+        }
+
+        if (pl.Fitness < 0)
+            pl.Fitness = 0;
     }
 
     /// <summary>
@@ -421,8 +462,31 @@ public class Player
     /// <param name="pl">The player we edit.</param>
     public static void UpdateFitness(Player pl)
     {
-        // Implementation depends on the not yet converted maths functions.
-        throw new NotImplementedException();
+        float variance = (float)MathHelper.Rnd(1 - Variables.Constants.GetFloat("float_player_fitness_increase_variance"), 1 + Variables.Constants.GetFloat("float_player_fitness_increase_variance"));
+        float streakFactor = 1 + (float)pl.Streak * Variables.Constants.GetFloat("float_player_streak_influence_fitness_increase");
+
+        if (pl.Participation)
+        {
+            pl.Participation = false;
+            return;
+        }
+
+        if (pl.Age < pl.PeakAge - pl.PeakRegion)
+        {
+            float youngerFactor = (pl.PeakAge - pl.PeakRegion - pl.Age) * Variables.Constants.GetFloat("float_player_fitness_increase_younger_factor") + Variables.Constants.GetFloat("float_player_fitness_increase_add");
+            pl.Fitness += youngerFactor * variance * streakFactor;
+        }
+        else if (pl.Age > pl.PeakAge + pl.PeakRegion)
+        {
+            float olderFactor = (pl.Age - pl.PeakAge - pl.PeakRegion) * Variables.Constants.GetFloat("float_player_fitness_increase_older_factor") + Variables.Constants.GetFloat("float_player_fitness_increase_add");
+            pl.Fitness += olderFactor * variance * streakFactor;
+        }
+        else
+        {
+            pl.Fitness += (Variables.Constants.GetFloat("float_player_fitness_increase_add") * variance * streakFactor);
+        }
+
+        pl.Fitness = Math.Min(pl.Fitness, 1);
     }
 
     /// <summary>
