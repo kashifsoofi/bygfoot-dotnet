@@ -205,8 +205,46 @@ public static class FileHelper
     {
         sourceFiles = new List<string>();
         targetPaths = new List<string>();
-        // This is a complex recursive process in C. For now, we mark it as not implemented.
-        throw new NotImplementedException("CheckHomeDirGetDefinitionFiles is not yet implemented.");
+
+        foreach (string directory in Variables.SupportDirectories)
+        {
+            if (!directory.EndsWith("definitions", StringComparison.Ordinal))
+                continue;
+
+            CheckHomeDirGetDefinitionDir(directory, "definitions", sourceFiles, targetPaths);
+        }
+    }
+
+    /// <summary>
+    /// Recursively step through a definitions directory and add the
+    /// xml files that are missing in the user's home dir to the copy lists.
+    /// Corresponds to C: file_check_home_dir_get_definition_dir().
+    /// </summary>
+    private static void CheckHomeDirGetDefinitionDir(string sourceDir, string basename, List<string> sourceFiles, List<string> targetPaths)
+    {
+        string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        string targetDir = Path.Combine(home, ".bygfoot", basename);
+
+        if (!Directory.Exists(targetDir))
+            Directory.CreateDirectory(targetDir);
+
+        List<string> dirContents = GetDirectoryContents(sourceDir, "", "");
+
+        foreach (string content in dirContents)
+        {
+            string contentName = Path.GetFileName(content);
+            string fullTarget = Path.Combine(targetDir, contentName);
+
+            if (contentName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase) && !File.Exists(fullTarget))
+            {
+                sourceFiles.Add(content);
+                targetPaths.Add(fullTarget);
+            }
+            else if (Directory.Exists(content) && !content.Contains(".svn"))
+            {
+                CheckHomeDirGetDefinitionDir(content, $"{basename}/{contentName}", sourceFiles, targetPaths);
+            }
+        }
     }
 
     /// <summary>
@@ -272,7 +310,27 @@ public static class FileHelper
     /// </summary>
     public static List<string> GetCountryFiles()
     {
-        throw new NotImplementedException("GetCountryFiles is not yet implemented.");
+        List<string> countryFiles = new List<string>();
+        List<string> countryFilesFullPath = new List<string>();
+
+        foreach (string directory in Variables.DefinitionsDirectories)
+        {
+            List<string> dirContents = GetDirectoryContents(directory, "country_", ".xml");
+            string countryStructure = Misc.MiscStripDefinitionsRoot(directory);
+
+            foreach (string content in dirContents)
+            {
+                string contentName = Path.GetFileName(content);
+                if (!Misc.QueryMiscStringInArray(contentName, countryFiles))
+                {
+                    countryFiles.Add(contentName);
+                    countryFilesFullPath.Add(Path.Combine(countryStructure, contentName));
+                }
+            }
+        }
+
+        countryFilesFullPath.Reverse();
+        return new List<string>(countryFilesFullPath);
     }
 
     /// <summary>
@@ -293,11 +351,11 @@ public static class FileHelper
         if (commentIdx != -1)
             line = line.Substring(0, commentIdx).TrimEnd();
 
-        string[] parts = line.Split(new[] { ' ', '\t' }, 3, StringSplitOptions.RemoveEmptyEntries);
+        string[] parts = line.Split(new[] { ' ', '\t' }, 2, StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length >= 2)
         {
             optName = parts[0];
-            optValue = parts.Length > 2 ? parts[2] : "";
+            optValue = parts[1];
             return true;
         }
 
@@ -309,7 +367,16 @@ public static class FileHelper
     /// </summary>
     public static void SaveOptFile(string filename, OptionList optionList)
     {
-        throw new NotImplementedException("SaveOptFile is not yet implemented.");
+        MyFopen(filename, "w", out Stream fil, true);
+        using StreamWriter writer = new StreamWriter(fil);
+
+        foreach (Option option in optionList.List)
+        {
+            if (option.Name.StartsWith("string_", StringComparison.Ordinal))
+                writer.WriteLine($"{option.Name} {option.StringValue ?? string.Empty}");
+            else
+                writer.WriteLine($"{option.Name} {option.Value}");
+        }
     }
 
     /// <summary>
@@ -318,7 +385,31 @@ public static class FileHelper
     /// </summary>
     public static void LoadOptFile(string filename, OptionList optionList, bool sort)
     {
-        throw new NotImplementedException("LoadOptFile is not yet implemented.");
+        // The C implementation frees the previous contents of the option list first.
+        optionList.Clear();
+
+        MyFopen(filename, "r", out Stream fil, true);
+
+        using StreamReader reader = new StreamReader(fil);
+        string optName = string.Empty;
+        string optValue = string.Empty;
+        while (GetNextOptLine(reader, out optName, out optValue))
+        {
+            string? stringValue = optName.StartsWith("string_", StringComparison.Ordinal) ? optValue : null;
+            int value = optName.StartsWith("string_", StringComparison.Ordinal) ? -1 : (int.TryParse(optValue, out int parsedValue) ? parsedValue : 0);
+
+            optionList.Add(optName, value, stringValue);
+
+            if ((optName.EndsWith("_unix", StringComparison.Ordinal) && Variables.OsIsUnix) ||
+                (optName.EndsWith("_win32", StringComparison.Ordinal) && !Variables.OsIsUnix))
+            {
+                string strippedName = optName.Substring(0, optName.Length - (Variables.OsIsUnix ? 5 : 6));
+                optionList.Add(strippedName, -1, optValue);
+            }
+        }
+
+        if (sort)
+            optionList.List.Sort((first, second) => string.CompareOrdinal(first.Name, second.Name));
     }
 
     /// <summary>
@@ -326,7 +417,18 @@ public static class FileHelper
     /// </summary>
     public static void LoadHintsFile()
     {
-        throw new NotImplementedException("LoadHintsFile is not yet implemented.");
+        string buf = string.Empty;
+        Language.LanguageGetCode(ref buf);
+
+        string hintsFile = $"bygfoot_hints_{buf}";
+        string hintsFileSupport = FindSupportFile(hintsFile, false);
+
+        if (hintsFileSupport != null)
+            hintsFile = hintsFileSupport;
+        else
+            hintsFile = "bygfoot_hints_en";
+
+        LoadOptFile(hintsFile, Variables.Hints, false);
     }
 
     /// <summary>
@@ -335,7 +437,16 @@ public static class FileHelper
     /// </summary>
     public static void LoadConfigFiles()
     {
-        throw new NotImplementedException("LoadConfigFiles is not yet implemented.");
+        string confFile = FindSupportFile("bygfoot.conf", true);
+        LoadOptFile(confFile, Variables.Options, false);
+
+        LoadOptFile(Variables.Options.GetString("string_opt_constants_file"), Variables.Constants, true);
+        LoadOptFile(Variables.Options.GetString("string_opt_appearance_file"), Variables.ConstantsApp, true);
+        LoadOptFile("bygfoot_tokens", Variables.Tokens, false);
+        LoadHintsFile();
+
+        for (int i = 0; i < Variables.Tokens.List.Count; i++)
+            Variables.Tokens.List[i].Value = i;
     }
 
     /// <summary>
@@ -343,7 +454,13 @@ public static class FileHelper
     /// </summary>
     public static void LoadUserConfFile(User user)
     {
-        throw new NotImplementedException("LoadUserConfFile is not yet implemented.");
+        string confFile = FindSupportFile($"bygfoot_{user.Name}.conf", false);
+
+        bool opened = confFile != null && MyFopen(confFile, "r", out Stream fil, false);
+        if (!opened)
+            confFile = FindSupportFile(Variables.Options.GetString("string_opt_default_user_conf_file"), true);
+
+        LoadOptFile(confFile, user.Options, false);
     }
 
     /// <summary>
@@ -376,7 +493,25 @@ public static class FileHelper
     /// </summary>
     public static void CompressFiles(string destZipFile, string prefix)
     {
-        throw new NotImplementedException("CompressFiles is not yet implemented.");
+        string dirname = Path.GetDirectoryName(prefix);
+        string basename = Path.GetFileName(prefix);
+        string zipbasename = Path.GetFileName(destZipFile);
+        string pwd = Directory.GetCurrentDirectory();
+
+        List<string> files = GetDirectoryContents(dirname, basename, "");
+        string filesArgument = string.Join(" ", files.Select(file => $"\"{file}\""));
+
+        Directory.SetCurrentDirectory(dirname);
+        try
+        {
+            MySystem($"zip -q \"{zipbasename}\" {filesArgument}");
+        }
+        finally
+        {
+            Directory.SetCurrentDirectory(pwd);
+        }
+
+        RemoveFiles(files);
     }
 
     /// <summary>
@@ -384,7 +519,19 @@ public static class FileHelper
     /// </summary>
     public static void Decompress(string filename)
     {
-        throw new NotImplementedException("Decompress is not yet implemented.");
+        string dirname = Path.GetDirectoryName(filename);
+        string basename = Path.GetFileName(filename);
+        string pwd = Directory.GetCurrentDirectory();
+
+        Directory.SetCurrentDirectory(dirname);
+        try
+        {
+            MySystem($"unzip -o \"{basename}\"");
+        }
+        finally
+        {
+            Directory.SetCurrentDirectory(pwd);
+        }
     }
 
     /// <summary>

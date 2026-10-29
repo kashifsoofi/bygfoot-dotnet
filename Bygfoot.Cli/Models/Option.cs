@@ -30,6 +30,16 @@ public class OptionList
     /// <summary>The lookup dictionary for quick access. Corresponds to C: GData *datalist.</summary>
     private readonly Dictionary<string, Option> _lookup = new();
 
+    /// <summary>
+    /// Removes all options from the list and resets the lookup dictionary.
+    /// Corresponds to freeing an option list in C.
+    /// </summary>
+    public void Clear()
+    {
+        List.Clear();
+        _lookup.Clear();
+    }
+
     public void Add(string name, int intValue, string? stringValue = null)
     {
         if (_lookup.TryGetValue(name, out var existing))
