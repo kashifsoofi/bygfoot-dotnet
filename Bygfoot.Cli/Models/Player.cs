@@ -187,8 +187,44 @@ public class Player
     /// <returns>A newly created player.</returns>
     public static Player New(Team tm, float averageTalent, bool newId)
     {
-        // Implementation depends on the not yet converted maths, name and player functions.
-        throw new NotImplementedException();
+        PlayerPos pos = GetPositionFromStructure(tm.Structure, tm.Players.Count);
+
+        float skillFactor = (float)MathHelper.Rnd(1 - Variables.Constants.GetFloat("float_player_average_talent_variance"), 1 + Variables.Constants.GetFloat("float_player_average_talent_variance"));
+
+        Player newPlayer = new Player();
+        newPlayer.Name = newId ? NameList.Get(tm.NamesFile) : null;
+        newPlayer.Id = newId ? Bygfoot.PlayerIdNew() : -1;
+        newPlayer.Pos = pos;
+        newPlayer.Cpos = pos;
+        newPlayer.Age = (float)MathHelper.GaussDist(Variables.Constants.GetFloat("float_player_age_lower"), Variables.Constants.GetFloat("float_player_age_upper"));
+        newPlayer.PeakAge = (float)MathHelper.Rnd(
+            Variables.Constants.GetFloat("float_player_peak_age_lower") + (pos == PlayerPos.Goalie ? Variables.Constants.GetFloat("float_player_peak_age_goalie_addition") : 0f),
+            Variables.Constants.GetFloat("float_player_peak_age_upper") + (pos == PlayerPos.Goalie ? Variables.Constants.GetFloat("float_player_peak_age_goalie_addition") : 0f));
+        newPlayer.PeakRegion = (float)MathHelper.GaussDist(Variables.Constants.GetFloat("float_player_peak_region_lower"), Variables.Constants.GetFloat("float_player_peak_region_upper"));
+        newPlayer.Talent = Math.Clamp(averageTalent * skillFactor, 0, Variables.Constants.GetFloat("float_player_max_skill"));
+        newPlayer.Skill = SkillFromTalent(newPlayer);
+        newPlayer.Cskill = newPlayer.Skill;
+        EstimateTalent(newPlayer);
+        newPlayer.Fitness = (float)MathHelper.Rnd(Variables.Constants.GetFloat("float_player_fitness_lower"), Variables.Constants.GetFloat("float_player_fitness_upper"));
+        newPlayer.Health = PlayerInjury.None;
+        newPlayer.Recovery = 0;
+        newPlayer.Value = AssignValue(newPlayer);
+        newPlayer.Wage = AssignWage(newPlayer);
+        newPlayer.Contract = (float)MathHelper.Rnd(Variables.Constants.GetFloat("float_player_contract_lower"), Variables.Constants.GetFloat("float_player_contract_upper"));
+        newPlayer.Lsu = (float)MathHelper.Rnd(Variables.Constants.GetFloat("float_player_lsu_lower"), Variables.Constants.GetFloat("float_player_lsu_upper"));
+        newPlayer.Cards = new List<PlayerCard>();
+        newPlayer.GamesGoals = new List<PlayerGamesGoals>();
+        newPlayer.CardStatus = PlayerCardStatus.None;
+        for (int i = 0; i < (int)PlayerValue.End; i++)
+            newPlayer.Career[i] = 0;
+        newPlayer.Team = tm;
+        newPlayer.Participation = false;
+        newPlayer.Offers = 0;
+        newPlayer.Streak = PlayerStreak.None;
+        newPlayer.StreakCount = 0;
+        newPlayer.StreakProb = 0;
+
+        return newPlayer;
     }
 
     /// <summary>
@@ -925,6 +961,199 @@ public class Player
     }
 
     /// <summary>
+    /// Move a player from the team to the youth academy. Corresponds to C: player_move_to_ya.
+    /// </summary>
+    /// <param name="idx">The index of the player in the team players array.</param>
+    public static void MoveToYa(int idx)
+    {
+        User user = Variables.Users[Variables.CurUser];
+        Team tm = user.Team;
+        Player pl = tm.Players[idx];
+        Player player = new Player
+        {
+            Name = pl.Name,
+            Pos = pl.Pos,
+            Cpos = pl.Cpos,
+            Health = pl.Health,
+            Recovery = pl.Recovery,
+            Id = pl.Id,
+            Value = pl.Value,
+            Wage = pl.Wage,
+            Offers = pl.Offers,
+            Streak = pl.Streak,
+            CardStatus = pl.CardStatus,
+            Skill = pl.Skill,
+            Cskill = pl.Cskill,
+            Talent = pl.Talent,
+            Etal = pl.Etal,
+            Fitness = pl.Fitness,
+            Lsu = pl.Lsu,
+            Age = pl.Age,
+            PeakAge = pl.PeakAge,
+            PeakRegion = pl.PeakRegion,
+            Contract = pl.Contract,
+            StreakProb = pl.StreakProb,
+            StreakCount = pl.StreakCount,
+            Participation = pl.Participation,
+            GamesGoals = pl.GamesGoals,
+            Cards = pl.Cards,
+            Career = pl.Career,
+            Team = pl.Team
+        };
+
+        if (Transfer.QueryTransferPlayerIsOnList(pl))
+            Transfer.TransferRemovePlayerPtr(pl);
+
+        player.Cskill = player.Skill;
+        player.Cpos = player.Pos;
+
+        tm.Players.RemoveAt(idx);
+        user.YouthAcademy.Players.Add(player);
+    }
+
+    /// <summary>
+    /// Move a player from the youth academy to the team. Corresponds to C: player_move_from_ya.
+    /// </summary>
+    /// <param name="idx">The index of the player in the youth academy players array.</param>
+    public static void MoveFromYa(int idx)
+    {
+        User user = Variables.Users[Variables.CurUser];
+        Team tm = user.Team;
+        Player pl = user.YouthAcademy.Players[idx];
+        Player player = new Player
+        {
+            Name = pl.Name,
+            Pos = pl.Pos,
+            Cpos = pl.Cpos,
+            Health = pl.Health,
+            Recovery = pl.Recovery,
+            Id = pl.Id,
+            Value = pl.Value,
+            Wage = pl.Wage,
+            Offers = pl.Offers,
+            Streak = pl.Streak,
+            CardStatus = pl.CardStatus,
+            Skill = pl.Skill,
+            Cskill = pl.Cskill,
+            Talent = pl.Talent,
+            Etal = pl.Etal,
+            Fitness = pl.Fitness,
+            Lsu = pl.Lsu,
+            Age = pl.Age,
+            PeakAge = pl.PeakAge,
+            PeakRegion = pl.PeakRegion,
+            Contract = pl.Contract,
+            StreakProb = pl.StreakProb,
+            StreakCount = pl.StreakCount,
+            Participation = pl.Participation,
+            GamesGoals = pl.GamesGoals,
+            Cards = pl.Cards,
+            Career = pl.Career,
+            Team = pl.Team
+        };
+
+        player.Contract = Variables.Constants.GetFloat("float_player_contract_youth");
+
+        user.YouthAcademy.Players.RemoveAt(idx);
+        tm.Players.Add(player);
+    }
+
+    /// <summary>
+    /// Create a pointer array with pointers to the players and return it. Corresponds to C: player_get_pointers_from_array.
+    /// </summary>
+    /// <param name="players">The players.</param>
+    /// <returns>The pointers to the players.</returns>
+    public static List<Player> GetPointersFromArray(List<Player> players)
+    {
+        List<Player> returnValue = new List<Player>();
+
+        for (int i = 0; i < players.Count; i++)
+            returnValue.Add(players[i]);
+
+        return returnValue;
+    }
+
+    /// <summary>
+    /// Return injury descriptions. Corresponds to C: player_injury_to_char.
+    /// </summary>
+    /// <param name="injuryType">The injury type.</param>
+    /// <returns>The injury description.</returns>
+    public static string InjuryToChar(int injuryType)
+    {
+        switch (injuryType)
+        {
+            case (int)PlayerInjury.None:
+                return "OK";
+            case (int)PlayerInjury.Concussion:
+                return "Concussion";
+            case (int)PlayerInjury.PulledMuscle:
+                return "Pulled muscle";
+            case (int)PlayerInjury.Hamstring:
+                return "Hamstring";
+            case (int)PlayerInjury.Groin:
+                return "Groin injury";
+            case (int)PlayerInjury.FracturedAnkle:
+                return "Fractured ankle";
+            case (int)PlayerInjury.Rib:
+                return "Broken rib";
+            case (int)PlayerInjury.Leg:
+                return "Broken leg";
+            case (int)PlayerInjury.BrokenAnkle:
+                return "Broken ankle";
+            case (int)PlayerInjury.Arm:
+                return "Broken arm";
+            case (int)PlayerInjury.Shoulder:
+                return "Broken shoulder";
+            case (int)PlayerInjury.Ligament:
+                return "Torn crucial ligament";
+            default:
+                Debug.DebugPrintMessage($"player_injury_to_char: unknown type {injuryType}");
+                return string.Empty;
+        }
+    }
+
+    /// <summary>
+    /// Replace a player by a new one in a cpu team. Corresponds to C: player_replace_by_new.
+    /// </summary>
+    /// <param name="pl">The player.</param>
+    /// <param name="freePlayer">Whether to free the memory occupied by the player.</param>
+    public static void ReplaceByNew(Player pl, bool freePlayer)
+    {
+        Team tm = pl.Team;
+        int idx = IdIndex(tm, pl.Id, true);
+        float averageTalent = Team.GetAverageTalent(tm);
+        Player newPlayer = New(tm, averageTalent, false);
+        newPlayer.Name = NameList.Get(tm.NamesFile);
+        newPlayer.Pos = pl.Pos;
+        newPlayer.Cpos = pl.Cpos;
+        newPlayer.Id = pl.Id;
+
+        if (freePlayer)
+            RemoveFromTeam(tm, idx);
+        else
+            tm.Players.RemoveAt(idx);
+
+        tm.Players.Insert(idx, newPlayer);
+    }
+
+    /// <summary>
+    /// Update players in teams. Corresponds to C: player_update_week_roundly.
+    /// </summary>
+    /// <param name="tm">The team of the player.</param>
+    /// <param name="idx">The index in the players array.</param>
+    public static void UpdateWeekRoundly(Team tm, int idx)
+    {
+        Player pl = tm.Players[idx];
+
+        bool playThisWeek = Variables.WeekRound == 1 || (Variables.WeekRound > 1 && Team.QueryTeamPlays(tm, Variables.Week, Variables.WeekRound));
+
+        if (pl.Health == PlayerInjury.None && playThisWeek)
+            UpdateFitness(pl);
+
+        pl.Cskill = (pl.Health != PlayerInjury.None || IsBanned(pl) > 0) ? 0 : GetCskill(pl, (int)pl.Cpos, true);
+    }
+
+    /// <summary>
     /// Decrement the number of weeks until recovery depending on the user's physio. Corresponds to C: player_update_injury.
     /// </summary>
     /// <param name="pl">An injured player.</param>
@@ -1140,8 +1369,35 @@ public class Player
     /// <param name="fix">The fixture.</param>
     public static void UpdatePostMatch(Player pl, Fixture fix)
     {
-        // Implementation depends on the not yet converted league/cup and player functions.
-        throw new NotImplementedException();
+        int yellowRed = fix.Clid < Bygfoot.IdCupStart ? League.LeagueFromClid(fix.Clid).YellowRed : Cup.CupFromClid(fix.Clid).YellowRed;
+        int winner = -1;
+
+        if (Player.CardGet(pl, fix.Clid, (int)PlayerValue.CardRed) > 0)
+            Player.CardSet(pl, fix.Clid, (int)PlayerValue.CardRed, -1, true);
+
+        if (Player.CardGet(pl, fix.Clid, (int)PlayerValue.CardYellow) >= yellowRed)
+        {
+            Player.CardSet(pl, fix.Clid, (int)PlayerValue.CardYellow, 0, false);
+
+            if (Player.CardGet(pl, fix.Clid, (int)PlayerValue.CardRed) == 0 && Variables.DebugLevel < 50)
+                Player.CardSet(pl, fix.Clid, (int)PlayerValue.CardRed, 1, false);
+        }
+
+        pl.CardStatus = PlayerCardStatus.None;
+
+        if (pl.Cpos == PlayerPos.Goalie && ((fix.Result[0, 0] == 0 && fix.Teams[1] == pl.Team) || (fix.Result[1, 0] == 0 && fix.Teams[0] == pl.Team)))
+            Player.StreakAddToProb(pl, Variables.Constants.GetFloat("float_player_streak_add_goalie_clean"));
+
+        if (!fix.Decisive && fix.Result[0, 0] == fix.Result[1, 0])
+            return;
+
+        Team winnerTeam = Fixture.WinnerOf(fix, true);
+        winner = winnerTeam != null ? winnerTeam.Id : -1;
+
+        if (winner == pl.Team.Id)
+            Player.StreakAddToProb(pl, Variables.Constants.GetFloat("float_player_streak_add_win"));
+        else
+            Player.StreakAddToProb(pl, Variables.Constants.GetFloat("float_player_streak_add_loss"));
     }
 }
 

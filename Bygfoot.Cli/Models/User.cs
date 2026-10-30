@@ -294,8 +294,17 @@ public class User
     /// <param name="regenerateTeam">Whether the user's team has to be regenerated.</param>
     public static void Remove(int idx, bool regenerateTeam)
     {
-        // Implementation depends on the not yet converted user, team and player functions.
-        throw new NotImplementedException();
+        User user = Variables.Users[idx];
+
+        if (regenerateTeam)
+        {
+            user.Team.Players = new List<Player>();
+            user.Team.Luck = 1;
+            Team.GeneratePlayersStadium(user.Team, 0);
+        }
+
+        Variables.Users.RemoveAt(idx);
+        Variables.CurUser = 0;
     }
 
     /// <summary>
@@ -392,8 +401,33 @@ public class User
     /// <param name="user">The user.</param>
     public static void JobOffer(User user)
     {
-        // Implementation depends on the not yet converted user, team and finance functions.
-        throw new NotImplementedException();
+        Team newTeam = null;
+
+        if ((float)MathHelper.Rnd(0, 1) > Variables.Constants.GetFloat("float_user_success_counter_check") ||
+            Math.Abs(user.Counters[(int)CounterType.Success]) < (float)Variables.Constants.GetInt("int_user_success_offer_limit") * 0.9f)
+            return;
+
+        if (user.Counters[(int)CounterType.Success] < -(float)Variables.Constants.GetInt("int_user_success_offer_limit") * 0.9 &&
+            user.Counters[(int)CounterType.Warning] == 0)
+        {
+            User.EventAdd(user, (int)EventType.Warning, -1, -1, null, $"The owners of {user.Team.Name} are not satisfied with the recent performance of the team. There are rumours they're looking for a new manager.");
+            user.Counters[(int)CounterType.Warning] = 1;
+            return;
+        }
+
+        if ((float)MathHelper.Rnd(0, 1) < Variables.Constants.GetFloat("float_user_success_base_prob") * Math.Log((float)Math.Abs(user.Counters[(int)CounterType.Success]) * Variables.Constants.GetFloat("float_user_success_prob_factor")))
+        {
+            if (user.Counters[(int)CounterType.Success] < 0)
+            {
+                newTeam = Team.GetNew(user.Team, true);
+                User.EventAdd(user, (int)EventType.FireFailure, -1, -1, newTeam, null);
+            }
+            else if (user.Options.GetInt("int_opt_user_show_job_offers") != 0)
+            {
+                newTeam = Team.GetNew(user.Team, false);
+                User.EventAdd(user, (int)EventType.JobOffer, -1, -1, newTeam, null);
+            }
+        }
     }
 
     /// <summary>
@@ -600,8 +634,20 @@ public class User
     /// </summary>
     public static void ShowSponsorContinue()
     {
-        // Implementation depends on the not yet converted user and window functions.
-        throw new NotImplementedException();
+        User user = Variables.Users[Variables.CurUser];
+        UserSponsor sponsor = User.GetSponsor(user);
+
+        List<UserSponsor> sponsors = new List<UserSponsor>();
+        sponsors.Add(sponsor);
+
+        // window_create(WINDOW_SPONSORS);
+        // treeview_show_sponsors(sponsors);
+
+        // sprintf(buf, ...);
+
+        // game_gui_show_warning(...);
+
+        User.EventRemove(user, 0);
     }
 
     /// <summary>
