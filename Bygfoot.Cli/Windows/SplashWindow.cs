@@ -10,42 +10,43 @@ using Gtk;
 /// and the widget "window_splash" of the bygfoot_misc3.glade support file, which
 /// has been converted into the GTK4 builder UI file splash.ui.
 /// </summary>
-public class SplashWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(SplashWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("CompositeBoxWidget.ui")]
+public partial class SplashWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_splash_hint_back")]
+    private Gtk.Button _buttonSplashHintBack;
 
-    public SplashWindow()
+    [Gtk.Connect("button_splash_hint_next")]
+    private Gtk.Button _buttonSplashHintNext;
+    
+    [Gtk.Connect("button_splash_new_game")]
+    private Gtk.Button _buttonSplashNewGame;
+    
+    [Gtk.Connect("button_splash_load_game")]
+    private Gtk.Button _buttonSplashLoadGame;
+    
+    [Gtk.Connect("button_splash_resume_game")]
+    private Gtk.Button _buttonSplashResumeGame;
+    
+    [Gtk.Connect("button_splash_quit")]
+    private Gtk.Button _buttonSplashQuit;
+    
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("splash.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_splash") ?? throw new InvalidOperationException("Could not find the widget 'window_splash' in the UI file 'splash.ui'.");
-
-        window.DefaultWidth = 500;
-        window.DefaultHeight = 400;
-
         Variables.Window.Splash = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
-
-        var buttonSplashHintBack = (Gtk.Button)_builder.GetObject("button_splash_hint_back") ?? throw new InvalidOperationException("Could not find the widget 'button_splash_hint_back' in the UI file 'splash.ui'.");
-        buttonSplashHintBack.OnClicked += OnButtonSplashHintBackClicked;
-
-        var buttonSplashHintNext = (Gtk.Button)_builder.GetObject("button_splash_hint_next") ?? throw new InvalidOperationException("Could not find the widget 'button_splash_hint_next' in the UI file 'splash.ui'.");
-        buttonSplashHintNext.OnClicked += OnButtonSplashHintNextClicked;
-
-        var buttonSplashNewGame = (Gtk.Button)_builder.GetObject("button_splash_new_game") ?? throw new InvalidOperationException("Could not find the widget 'button_splash_new_game' in the UI file 'splash.ui'.");
-        buttonSplashNewGame.OnClicked += OnButtonSplashNewGameClicked;
-
-        var buttonSplashLoadGame = (Gtk.Button)_builder.GetObject("button_splash_load_game") ?? throw new InvalidOperationException("Could not find the widget 'button_splash_load_game' in the UI file 'splash.ui'.");
-        buttonSplashLoadGame.OnClicked += OnButtonSplashLoadGameClicked;
-
-        var buttonSplashResumeGame = (Gtk.Button)_builder.GetObject("button_splash_resume_game") ?? throw new InvalidOperationException("Could not find the widget 'button_splash_resume_game' in the UI file 'splash.ui'.");
-        buttonSplashResumeGame.OnClicked += OnButtonSplashResumeGameClicked;
-
-        var buttonSplashQuit = (Gtk.Button)_builder.GetObject("button_splash_quit") ?? throw new InvalidOperationException("Could not find the widget 'button_splash_quit' in the UI file 'splash.ui'.");
-        buttonSplashQuit.OnClicked += OnButtonSplashQuitClicked;
-
-        window.Show();
+        DefaultWidth = 500;
+        DefaultHeight = 400;
+        
+        OnCloseRequest += OnWindowCloseRequest;
+        
+        _buttonSplashHintBack.OnClicked += OnButtonSplashHintBackClicked;
+        _buttonSplashHintNext.OnClicked += OnButtonSplashHintNextClicked;
+        _buttonSplashNewGame.OnClicked += OnButtonSplashNewGameClicked;
+        _buttonSplashLoadGame.OnClicked += OnButtonSplashLoadGameClicked;
+        _buttonSplashResumeGame.OnClicked += OnButtonSplashResumeGameClicked;
+        _buttonSplashQuit.OnClicked += OnButtonSplashQuitClicked;
     }
 
     /// <summary>
@@ -68,6 +69,7 @@ public class SplashWindow : Gtk.Window
     private void OnButtonSplashHintBackClicked(Button sender, EventArgs args)
     {
         // TODO: Call the C function on_button_splash_hint_back_clicked (which updates the hint counter and shows the hint).
+        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -78,6 +80,7 @@ public class SplashWindow : Gtk.Window
     private void OnButtonSplashHintNextClicked(Button sender, EventArgs args)
     {
         // TODO: Call the C function on_button_splash_hint_next_clicked (which updates the hint counter and shows the hint).
+        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -88,6 +91,7 @@ public class SplashWindow : Gtk.Window
     private void OnButtonSplashNewGameClicked(Button sender, EventArgs args)
     {
         // TODO: Call the C function on_button_splash_new_game_clicked (which destroys the splash window and shows the startup window).
+        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -98,6 +102,7 @@ public class SplashWindow : Gtk.Window
     private void OnButtonSplashLoadGameClicked(Button sender, EventArgs args)
     {
         // TODO: Call the C function on_button_splash_load_game_clicked (which shows the file chooser window).
+        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -108,6 +113,7 @@ public class SplashWindow : Gtk.Window
     private void OnButtonSplashResumeGameClicked(Button sender, EventArgs args)
     {
         // TODO: Call the C function on_button_splash_resume_game_clicked (which resumes the last game).
+        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -118,5 +124,6 @@ public class SplashWindow : Gtk.Window
     private void OnButtonSplashQuitClicked(Button sender, EventArgs args)
     {
         // TODO: Call the C function on_button_splash_quit_clicked (which destroys the splash window and exits the program).
+        throw new NotImplementedException();
     }
 }
