@@ -56,7 +56,3 @@ The Bygfoot codebase still contains GTK2-era Glade files (`support_files/bygfoot
 - Tree interactions to use GTK4 event controllers later.
 - Migrate deprecated widgets (ComboBox/TreeView/RadioButton) to DropDown / ListView+ColumnView later.
 - Keep file-based `.ui` loading for now.
-
-## Open questions / future work
-- Whether/when to switch to `[Gobject.Subclass<Gtk.Window>]` and embedded gresource loading.
-- Exact widget-level TODOs and C→C# handler mappings for the startup flow.

@@ -2,7 +2,7 @@
 <!-- interface-name splash.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_splash">
+  <template class="GtkWindow" id="window_splash">
     <property name="default-width">500</property>
     <property name="default-height">400</property>
     <signal name="close-request" handler="on_window_splash_delete_event"/>
@@ -42,7 +42,7 @@
                 <property name="vscrollbar-policy">automatic</property>
                 <property name="shadow-type">in</property>
                 <child>
-                  <object class="GtkTreeView" id="treeview_splash_contributors">
+                  <object class="GtkListView" id="treeview_splash_contributors">
                     <property name="visible">1</property>
                     <property name="can-focus">1</property>
                   </object>
@@ -282,5 +282,5 @@
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>

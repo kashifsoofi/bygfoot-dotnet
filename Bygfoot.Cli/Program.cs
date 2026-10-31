@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace Bygfoot.Cli;
     
 /// <summary>
@@ -21,6 +23,9 @@ public class Program
         // 1. Initialization (Equivalent to GTK_INIT and file I/O setup)
         // In a console application, we replace GTK startup with simple Console context.
         Console.WriteLine("--- Bygfoot Application Starting ---");
+        Gtk.Module.Initialize();
+        GirCore.Integration.Initialize();
+        RegisterResources();
 
         // 2. Initial Setup (main_init sequence)
         InitializeApplication(args);
@@ -100,5 +105,17 @@ public class Program
             if (tick == 3)
                 break; // Exit early for demonstration output
         }
+    }
+
+    private static void RegisterResources()
+    {
+        using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("resources.app.gresource");
+
+        var buffer = new byte[stream!.Length];
+        stream.ReadExactly(buffer);
+
+        using var bytes = GLib.Bytes.New(buffer);
+        using var resource = Gio.Resource.NewFromData(bytes);
+        resource.Register();
     }
 }
