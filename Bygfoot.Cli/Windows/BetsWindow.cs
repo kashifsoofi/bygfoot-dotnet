@@ -8,28 +8,26 @@ using Gtk;
 /// and the widget "window_bets" of the bygfoot_misc3.glade support file, which
 /// has been converted into the GTK4 builder UI file bets.ui.
 /// </summary>
-public class BetsWindow : Gtk.Window
+[Gtk.Template<Gtk.Window>(qualifiedName: nameof(BetsWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("bets.ui")]
+public partial class BetsWindow : Gtk.Window
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_bet_close")]
+    private Gtk.Button _buttonBetClose;
 
-    public BetsWindow()
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("bets.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_bets") ?? throw new InvalidOperationException("Could not find the widget 'window_bets' in the UI file 'bets.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 600;
-        window.DefaultHeight = 700;
+        DefaultWidth = 600;
+        DefaultHeight = 700;
+        Modal = true;
 
         Variables.Window.Bets = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonBetClose = (Gtk.Button)_builder.GetObject("button_bet_close") ?? throw new InvalidOperationException("Could not find the widget 'button_bet_close' in the UI file 'bets.ui'.");
-        buttonBetClose.OnClicked += OnButtonBetCloseClicked;
+        _buttonBetClose.OnClicked += OnButtonBetCloseClicked;
 
-        window.Show();
+        Show();
     }
 
     /// <summary>

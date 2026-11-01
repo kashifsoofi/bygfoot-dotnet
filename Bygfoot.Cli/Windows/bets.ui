@@ -2,11 +2,10 @@
 <!-- interface-name bets.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_bets">
+  <template class="BetsWindow" parent="GtkWindow">
     <property name="default-width">600</property>
     <property name="default-height">700</property>
     <property name="modal">1</property>
-    <signal name="close-request" handler="on_window_bets_delete_event"/>
     <child>
       <object class="GtkBox" id="vbox1">
         <property name="visible">1</property>
@@ -17,9 +16,6 @@
             <property name="visible">1</property>
             <property name="label" translatable="yes">Betting -- Left click on odd to place or remove bet</property>
           </object>
-          <packing>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkSeparator" id="hseparator1">
@@ -27,9 +23,6 @@
             <property name="height-request">10</property>
             <property name="visible">1</property>
           </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkBox" id="hbox1">
@@ -45,9 +38,6 @@
                 <property name="draw-indicator">1</property>
                 <signal name="button-press-event" handler="on_checkbutton_bet_all_leagues_button_press_event"/>
               </object>
-              <packing>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkCheckButton" id="checkbutton_bet_cups">
@@ -60,9 +50,6 @@
                 <property name="draw-indicator">1</property>
                 <signal name="button-press-event" handler="on_checkbutton_bet_cups_button_press_event"/>
               </object>
-              <packing>
-                <property name="position">1</property>
-              </packing>
             </child>
             <child>
               <object class="GtkCheckButton" id="checkbutton_bet_user_recent">
@@ -75,14 +62,8 @@
                 <property name="draw-indicator">1</property>
                 <signal name="button-press-event" handler="on_checkbutton_bet_user_recent_button_press_event"/>
               </object>
-              <packing>
-                <property name="position">2</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="position">2</property>
-          </packing>
         </child>
         <child>
           <object class="GtkSeparator" id="hseparator2">
@@ -90,9 +71,6 @@
             <property name="height-request">10</property>
             <property name="visible">1</property>
           </object>
-          <packing>
-            <property name="position">3</property>
-          </packing>
         </child>
         <child>
           <object class="GtkScrolledWindow" id="scrolledwindow1">
@@ -100,18 +78,13 @@
             <property name="can-focus">1</property>
             <property name="hscrollbar-policy">automatic</property>
             <property name="vscrollbar-policy">automatic</property>
-            <property name="shadow-type">in</property>
             <child>
-              <object class="GtkTreeView" id="treeview_bets">
+              <object class="GtkListView" id="treeview_bets">
                 <property name="visible">1</property>
                 <property name="can-focus">1</property>
-                <signal name="button-press-event" handler="on_treeview_bets_button_press_event"/>
               </object>
             </child>
           </object>
-          <packing>
-            <property name="position">4</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton" id="button_bet_close">
@@ -121,13 +94,9 @@
             <property name="label" translatable="yes">Close</property>
             <property name="icon-name">gtk-close</property>
             <property name="tooltip-text" translatable="yes">Esc</property>
-            <signal name="clicked" handler="on_button_bet_close_clicked"/>
           </object>
-          <packing>
-            <property name="position">5</property>
-          </packing>
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>
