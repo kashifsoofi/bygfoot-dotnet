@@ -7,40 +7,41 @@ using Gtk;
 /// the current and the new repayment settings and lets the user calculate and
 /// confirm a new repayment schedule.
 /// Corresponds to the C function create_window_alr and the widget
-/// "window_alr" of the bygfoot_misc3.glade support file, which has been
-/// converted into the GTK4 builder UI file alr.ui.
+/// "window_alr" of the bygfoot_misc3.glade support file, which
+/// has been converted into the GTK4 builder UI file alr.ui.
 /// </summary>
-public class AlrWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(AlrWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("alr.ui")]
+public partial class AlrWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_alr_confirm")]
+    private Gtk.Button _buttonAlrConfirm;
 
-    public AlrWindow()
+    [Gtk.Connect("button_alr_cancel")]
+    private Gtk.Button _buttonAlrCancel;
+
+    [Gtk.Connect("button_calculate_installment")]
+    private Gtk.Button _buttonCalculateInstallment;
+
+    [Gtk.Connect("button_calculate_start_week")]
+    private Gtk.Button _buttonCalculateStartWeek;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("alr.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_alr") ?? throw new InvalidOperationException("Could not find the widget 'window_alr' in the UI file 'alr.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 450;
-        window.DefaultHeight = 400;
+        DefaultWidth = 450;
+        DefaultHeight = 400;
+        Modal = true;
 
         Variables.Window.Alr = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonAlrConfirm = (Gtk.Button)_builder.GetObject("button_alr_confirm") ?? throw new InvalidOperationException("Could not find the widget 'button_alr_confirm' in the UI file 'alr.ui'.");
-        buttonAlrConfirm.OnClicked += OnButtonAlrConfirmClicked;
+        _buttonAlrConfirm.OnClicked += OnButtonAlrConfirmClicked;
+        _buttonAlrCancel.OnClicked += OnButtonAlrCancelClicked;
+        _buttonCalculateInstallment.OnClicked += OnButtonCalculateInstallmentClicked;
+        _buttonCalculateStartWeek.OnClicked += OnButtonCalculateStartWeekClicked;
 
-        var buttonAlrCancel = (Gtk.Button)_builder.GetObject("button_alr_cancel") ?? throw new InvalidOperationException("Could not find the widget 'button_alr_cancel' in the UI file 'alr.ui'.");
-        buttonAlrCancel.OnClicked += OnButtonAlrCancelClicked;
-
-        var buttonCalculateInstallment = (Gtk.Button)_builder.GetObject("button_calculate_installment") ?? throw new InvalidOperationException("Could not find the widget 'button_calculate_installment' in the UI file 'alr.ui'.");
-        buttonCalculateInstallment.OnClicked += OnButtonCalculateInstallmentClicked;
-
-        var buttonCalculateStartWeek = (Gtk.Button)_builder.GetObject("button_calculate_start_week") ?? throw new InvalidOperationException("Could not find the widget 'button_calculate_start_week' in the UI file 'alr.ui'.");
-        buttonCalculateStartWeek.OnClicked += OnButtonCalculateStartWeekClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>
@@ -86,12 +87,13 @@ public class AlrWindow : Gtk.Window
     }
 
     /// <summary>
-    /// The "Calculate start week" button was clicked. Corresponds to the C handler
-    /// on_button_calculate_start_week_clicked of the "clicked" signal, which calculates the
-    /// start week depending on the weekly installment and schedules the repayment.
+    /// The "Calculate start week" button was clicked. Corresponds to the C
+    /// handler on_button_calculate_start_week_clicked of the "clicked" signal, which
+    /// calculates the start week depending on the weekly installment and schedules the
+    /// repayment.
     /// </summary>
     private void OnButtonCalculateStartWeekClicked(Button sender, EventArgs args)
     {
-        // TODO: Call the C function on_button_calculate_start_week_clicked (which calculates the start week depending on the weekly installment and schedules the repayment).
+        // TODO: Call the C function on_button_calculate_start_week_clicked (which calculates the weekly installment depending on the start week and schedules the repayment).
     }
 }

@@ -10,7 +10,7 @@ using Gtk;
 /// </summary>
 [Gtk.Template<Gtk.Window>(qualifiedName: nameof(BetsWindow))]
 [Gtk.Template<Gtk.AssemblyResource>("bets.ui")]
-public partial class BetsWindow : Gtk.Window
+public partial class BetsWindow
 {
     [Gtk.Connect("button_bet_close")]
     private Gtk.Button _buttonBetClose;
