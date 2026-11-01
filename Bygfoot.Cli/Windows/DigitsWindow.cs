@@ -8,34 +8,34 @@ using Gtk;
 /// "window_digits" of the bygfoot_misc2.glade support file, which has been
 /// converted into the GTK4 builder UI file digits.ui.
 /// </summary>
-public class DigitsWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(DigitsWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("digits.ui")]
+public partial class DigitsWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_digits_ok")]
+    private Gtk.Button _buttonDigitsOk;
 
-    public DigitsWindow()
+    [Gtk.Connect("button_digits_alr")]
+    private Gtk.Button _buttonDigitsAlr;
+
+    [Gtk.Connect("button_digits_cancel")]
+    private Gtk.Button _buttonDigitsCancel;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("digits.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_digits") ?? throw new InvalidOperationException("Could not find the widget 'window_digits' in the UI file 'digits.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 450;
-        window.DefaultHeight = 350;
+        DefaultWidth = 450;
+        DefaultHeight = 350;
+        Modal = true;
 
         Variables.Window.Digits = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonDigitsOk = (Gtk.Button)_builder.GetObject("button_digits_ok") ?? throw new InvalidOperationException("Could not find the widget 'button_digits_ok' in the UI file 'digits.ui'.");
-        buttonDigitsOk.OnClicked += OnButtonDigitsOkClicked;
+        _buttonDigitsOk.OnClicked += OnButtonDigitsOkClicked;
+        _buttonDigitsAlr.OnClicked += OnButtonDigitsAlrClicked;
+        _buttonDigitsCancel.OnClicked += OnButtonDigitsCancelClicked;
 
-        var buttonDigitsAlr = (Gtk.Button)_builder.GetObject("button_digits_alr") ?? throw new InvalidOperationException("Could not find the widget 'button_digits_alr' in the UI file 'digits.ui'.");
-        buttonDigitsAlr.OnClicked += OnButtonDigitsAlrClicked;
-
-        var buttonDigitsCancel = (Gtk.Button)_builder.GetObject("button_digits_cancel") ?? throw new InvalidOperationException("Could not find the widget 'button_digits_cancel' in the UI file 'digits.ui'.");
-        buttonDigitsCancel.OnClicked += OnButtonDigitsCancelClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>

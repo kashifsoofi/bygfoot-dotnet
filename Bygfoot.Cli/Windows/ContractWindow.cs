@@ -6,34 +6,33 @@ using Gtk;
 /// Contract window of the game. It shows the new contract offer, lets the user
 /// choose the contract duration and make or cancel the offer.
 /// Corresponds to the C function create_window_contract and the widget
-/// "window_contract" of the bygfoot_misc2.glade support file, which has been
-/// converted into the GTK4 builder UI file contract.ui.
+/// "window_contract" of the bygfoot_misc2.glade support file, which
+/// has been converted into the GTK4 builder UI file contract.ui.
 /// </summary>
-public class ContractWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(ContractWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("contract.ui")]
+public partial class ContractWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_contract_offer")]
+    private Gtk.Button _buttonContractOffer;
 
-    public ContractWindow()
+    [Gtk.Connect("button_contract_cancel")]
+    private Gtk.Button _buttonContractCancel;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("contract.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_contract") ?? throw new InvalidOperationException("Could not find the widget 'window_contract' in the UI file 'contract.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 450;
-        window.DefaultHeight = 350;
+        DefaultWidth = 450;
+        DefaultHeight = 350;
+        Modal = true;
 
         Variables.Window.Contract = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonContractOffer = (Gtk.Button)_builder.GetObject("button_contract_offer") ?? throw new InvalidOperationException("Could not find the widget 'button_contract_offer' in the UI file 'contract.ui'.");
-        buttonContractOffer.OnClicked += OnButtonContractOfferClicked;
+        _buttonContractOffer.OnClicked += OnButtonContractOfferClicked;
+        _buttonContractCancel.OnClicked += OnButtonContractCancelClicked;
 
-        var buttonContractCancel = (Gtk.Button)_builder.GetObject("button_contract_cancel") ?? throw new InvalidOperationException("Could not find the widget 'button_contract_cancel' in the UI file 'contract.ui'.");
-        buttonContractCancel.OnClicked += OnButtonContractCancelClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>

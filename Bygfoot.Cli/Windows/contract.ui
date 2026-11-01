@@ -2,7 +2,8 @@
 <!-- interface-name contract.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_contract">
+  <template class="ContractWindow" parent="GtkWindow">
+    <property name="title" translatable="yes">Contract</property>
     <property name="default-width">450</property>
     <property name="default-height">350</property>
     <property name="modal">1</property>
@@ -18,18 +19,12 @@
             <property name="icon-name">gtk-new</property>
             <property name="icon-size">6</property>
           </object>
-          <packing>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="label_contract">
             <property name="visible">1</property>
             <property name="wrap">1</property>
           </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkGrid" id="table1">
@@ -43,11 +38,9 @@
                 <property name="receives-default">0</property>
                 <property name="use-underline">1</property>
                 <property name="draw-indicator">1</property>
-              </object>
-              <layout>
-                <property name="column">0</property>
                 <property name="row">0</property>
-              </layout>
+                <property name="column">0</property>
+              </object>
             </child>
             <child>
               <object class="GtkCheckButton" id="radiobutton_contract2">
@@ -58,12 +51,9 @@
                 <property name="use-underline">1</property>
                 <property name="active">1</property>
                 <property name="draw-indicator">1</property>
-                <property name="group">radiobutton_contract1</property>
-              </object>
-              <layout>
-                <property name="column">0</property>
                 <property name="row">1</property>
-              </layout>
+                <property name="column">0</                </property>
+              </object>
             </child>
             <child>
               <object class="GtkCheckButton" id="radiobutton_contract3">
@@ -72,12 +62,10 @@
                 <property name="can-focus">1</property>
                 <property name="receives-default">0</property>
                 <property name="use-underline">1</property>
-                <property name="draw-indicator">1</property>
-              </object>
-              <layout>
-                <property name="column">0</property>
+                <property name="drawindicator">1</property>
                 <property name="row">2</property>
-              </layout>
+                <property name="column">0</property>
+              </object>
             </child>
             <child>
               <object class="GtkCheckButton" id="radiobutton_contract4">
@@ -87,66 +75,54 @@
                 <property name="receives-default">0</property>
                 <property name="use-underline">1</property>
                 <property name="draw-indicator">1</property>
-              </object>
-              <layout>
-                <property name="column">0</property>
                 <property name="row">3</property>
-              </layout>
+                <property name="column">0</property>
+              </object>
             </child>
             <child>
               <object class="GtkSpinButton" id="spinbutton_contract1">
                 <property name="visible">1</property>
                 <property name="can-focus">1</property>
-              </object>
-              <layout>
-                <property name="column">1</property>
+                <property name="adjustment">adjustment1</property>
                 <property name="row">0</property>
-              </layout>
+                <property name="column">1</property>
+              </object>
             </child>
             <child>
               <object class="GtkSpinButton" id="spinbutton_contract2">
                 <property name="visible">1</property>
                 <property name="can-focus">1</property>
-              </object>
-              <layout>
-                <property name="column">1</property>
+                <property name="adjustment">adjustment2</property>
                 <property name="row">1</property>
-              </layout>
+                <property name="column">1</property>
+              </object>
             </child>
             <child>
               <object class="GtkSpinButton" id="spinbutton_contract3">
                 <property name="visible">1</property>
                 <property name="can-focus">1</property>
-              </object>
-              <layout>
-                <property name="column">1</property>
+                <property name="adjustment">adjustment3</property>
                 <property name="row">2</property>
-              </layout>
+                <property name="column">1</                </property>
+              </object>
             </child>
             <child>
               <object class="GtkSpinButton" id="spinbutton_contract4">
                 <property name="visible">1</property>
                 <property name="can-focus">1</property>
-              </object>
-              <layout>
-                <property name="column">1</property>
+                <property name="adjustment">adjustment4</property>
                 <property name="row">3</property>
-              </layout>
+                <property name="column">1</                </property>
+              </object>
             </child>
           </object>
-          <packing>
-            <property name="position">2</property>
-          </packing>
         </child>
         <child>
-          <object class="GtkHSeparator" id="hseparator8">
-            <property name="width-request">1</property>
-            <property name="height-request">10</property>
+          <object class="GtkSeparator" id="hseparator8">
             <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <property name="height-request">10</property>
           </object>
-          <packing>
-            <property name="position">3</property>
-          </packing>
         </child>
         <child>
           <object class="GtkBox" id="hbox19">
@@ -162,9 +138,6 @@
                 <property name="icon-name">gtk-apply</property>
                 <signal name="clicked" handler="on_button_contract_offer_clicked"/>
               </object>
-              <packing>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkButton" id="button_contract_cancel">
@@ -175,14 +148,8 @@
                 <property name="icon-name">gtk-cancel</property>
                 <signal name="clicked" handler="on_button_contract_cancel_clicked"/>
               </object>
-              <packing>
-                <property name="position">1</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="position">4</property>
-          </packing>
         </child>
       </object>
     </child>

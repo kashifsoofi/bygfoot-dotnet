@@ -10,39 +10,42 @@ using Gtk;
 /// "window_options" of the bygfoot_options.glade support file, which has been
 /// converted into the GTK4 builder UI file options.ui.
 /// </summary>
-public class OptionsWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(OptionsWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("options.ui")]
+public partial class OptionsWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_options_ok")]
+    private Gtk.Button _buttonOptionsOk;
 
-    public OptionsWindow()
+    [Gtk.Connect("button_options_cancel")]
+    private Gtk.Button _buttonOptionsCancel;
+
+    [Gtk.Connect("button_font_name")]
+    private Gtk.Button _buttonFontName;
+
+    [Gtk.Connect("button_reload_constants")]
+    private Gtk.Button _buttonReloadConstants;
+
+    [Gtk.Connect("button_edit_constants")]
+    private Gtk.Button _buttonEditConstants;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("options.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_options") ?? throw new InvalidOperationException("Could not find the widget 'window_options' in the UI file 'options.ui'.");
-
-        window.DefaultWidth = 700;
-        window.DefaultHeight = 600;
+        DefaultWidth = 700;
+        DefaultHeight = 600;
+        Modal = true;
 
         Variables.Window.Options = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonOptionsOk = (Gtk.Button)_builder.GetObject("button_options_ok") ?? throw new InvalidOperationException("Could not find the widget 'button_options_ok' in the UI file 'options.ui'.");
-        buttonOptionsOk.OnClicked += OnButtonOptionsOkClicked;
+        _buttonOptionsOk.OnClicked += OnButtonOptionsOkClicked;
+        _buttonOptionsCancel.OnClicked += OnButtonOptionsCancelClicked;
+        _buttonFontName.OnClicked += OnButtonFontNameClicked;
+        _buttonReloadConstants.OnClicked += OnButtonReloadConstantsClicked;
+        _buttonEditConstants.OnClicked += OnButtonEditConstantsClicked;
 
-        var buttonOptionsCancel = (Gtk.Button)_builder.GetObject("button_options_cancel") ?? throw new InvalidOperationException("Could not find the widget 'button_options_cancel' in the UI file 'options.ui'.");
-        buttonOptionsCancel.OnClicked += OnButtonOptionsCancelClicked;
-
-        var buttonFontName = (Gtk.Button)_builder.GetObject("button_font_name") ?? throw new InvalidOperationException("Could not find the widget 'button_font_name' in the UI file 'options.ui'.");
-        buttonFontName.OnClicked += OnButtonFontNameClicked;
-
-        var buttonReloadConstants = (Gtk.Button)_builder.GetObject("button_reload_constants") ?? throw new InvalidOperationException("Could not find the widget 'button_reload_constants' in the UI file 'options.ui'.");
-        buttonReloadConstants.OnClicked += OnButtonReloadConstantsClicked;
-
-        var buttonEditConstants = (Gtk.Button)_builder.GetObject("button_edit_constants") ?? throw new InvalidOperationException("Could not find the widget 'button_edit_constants' in the UI file 'options.ui'.");
-        buttonEditConstants.OnClicked += OnButtonEditConstantsClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>

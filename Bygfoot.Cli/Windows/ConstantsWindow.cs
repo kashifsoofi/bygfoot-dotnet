@@ -7,36 +7,37 @@ using Gtk;
 /// integer, float, string and appearance pages and the save, reload and close
 /// buttons.
 /// Corresponds to the C function create_window_constants and the widget
-/// "window_constants" of the bygfoot_options.glade support file, which has been
-/// converted into the GTK4 builder UI file constants.ui.
+/// "window_constants" of the bygfoot_options.glade support file, which
+/// has been converted into the GTK4 builder UI file constants.ui.
 /// </summary>
-public class ConstantsWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(ConstantsWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("constants.ui")]
+public partial class ConstantsWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_constants_save")]
+    private Gtk.Button _buttonConstantsSave;
 
-    public ConstantsWindow()
+    [Gtk.Connect("button_constants_reload")]
+    private Gtk.Button _buttonConstantsReload;
+
+    [Gtk.Connect("button_constants_close")]
+    private Gtk.Button _buttonConstantsClose;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("constants.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_constants") ?? throw new InvalidOperationException("Could not find the widget 'window_constants' in the UI file 'constants.ui'.");
-
-        window.DefaultWidth = 650;
-        window.DefaultHeight = 600;
+        DefaultWidth = 650;
+        DefaultHeight = 600;
+        Modal = true;
 
         Variables.Window.Constants = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonConstantsSave = (Gtk.Button)_builder.GetObject("button_constants_save") ?? throw new InvalidOperationException("Could not find the widget 'button_constants_save' in the UI file 'constants.ui'.");
-        buttonConstantsSave.OnClicked += OnButtonConstantsSaveClicked;
+        _buttonConstantsSave.OnClicked += OnButtonConstantsSaveClicked;
+        _buttonConstantsReload.OnClicked += OnButtonConstantsReloadClicked;
+        _buttonConstantsClose.OnClicked += OnButtonConstantsCloseClicked;
 
-        var buttonConstantsReload = (Gtk.Button)_builder.GetObject("button_constants_reload") ?? throw new InvalidOperationException("Could not find the widget 'button_constants_reload' in the UI file 'constants.ui'.");
-        buttonConstantsReload.OnClicked += OnButtonConstantsReloadClicked;
-
-        var buttonConstantsClose = (Gtk.Button)_builder.GetObject("button_constants_close") ?? throw new InvalidOperationException("Could not find the widget 'button_constants_close' in the UI file 'constants.ui'.");
-        buttonConstantsClose.OnClicked += OnButtonConstantsCloseClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>

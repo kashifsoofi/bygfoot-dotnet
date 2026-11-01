@@ -9,29 +9,30 @@ using Gtk;
 /// "window_file_chooser" of the bygfoot_misc.glade support file, which has been
 /// converted into the GTK4 builder UI file file_chooser.ui.
 /// </summary>
-public class FileChooserWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(FileChooserWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("file_chooser.ui")]
+public partial class FileChooserWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_file_chooser_cancel")]
+    private Gtk.Button _buttonFileChooserCancel;
 
-    public FileChooserWindow()
+    [Gtk.Connect("button_file_chooser_open")]
+    private Gtk.Button _buttonFileChooserOpen;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("file_chooser.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_file_chooser") ?? throw new InvalidOperationException("Could not find the widget 'window_file_chooser' in the UI file 'file_chooser.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 550;
-        window.DefaultHeight = 600;
+        DefaultWidth = 550;
+        DefaultHeight = 600;
+        Modal = true;
 
         Variables.Window.FileChooser = this;
 
-        var buttonFileChooserCancel = (Gtk.Button)_builder.GetObject("button1") ?? throw new InvalidOperationException("Could not find the widget 'button1' in the UI file 'file_chooser.ui'.");
-        buttonFileChooserCancel.OnClicked += OnButtonFileChooserCancelClicked;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonFileChooserOpen = (Gtk.Button)_builder.GetObject("button2") ?? throw new InvalidOperationException("Could not find the widget 'button2' in the UI file 'file_chooser.ui'.");
-        buttonFileChooserOpen.OnClicked += OnButtonFileChooserOpenClicked;
+        _buttonFileChooserCancel.OnClicked += OnButtonFileChooserCancelClicked;
+        _buttonFileChooserOpen.OnClicked += OnButtonFileChooserOpenClicked;
 
-        window.Show();
+        Show();
     }
 
     /// <summary>
@@ -50,5 +51,16 @@ public class FileChooserWindow : Gtk.Window
     private void OnButtonFileChooserOpenClicked(Button sender, EventArgs args)
     {
         // TODO: Call the C function window_show_file_sel and handle the open response (then window_destroy the file chooser window).
+    }
+
+    /// <summary>
+    /// The window was asked to be closed (GTK4 equivalent of the former
+    /// "delete_event" signal of GTK3). Corresponds to the C handler
+    /// on_window_file_chooser_delete_event.
+    /// </summary>
+    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    {
+        // TODO: Call the C function window_show_file_sel and handle the cancel response (then window_destroy the file chooser window).
+        return true;
     }
 }
