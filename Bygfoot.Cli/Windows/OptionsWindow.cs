@@ -29,6 +29,14 @@ public partial class OptionsWindow
     [Gtk.Connect("button_edit_constants")]
     private Gtk.Button _buttonEditConstants;
 
+    [Gtk.Connect("entry_font_name")]
+    private Gtk.Entry _entryFontName;
+
+    public void SetFontName(string name)
+    {
+        _entryFontName.Text = name;
+    }
+
     partial void Initialize()
     {
         DefaultWidth = 700;

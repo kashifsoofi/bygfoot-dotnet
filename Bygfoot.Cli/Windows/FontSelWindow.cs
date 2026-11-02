@@ -1,5 +1,6 @@
 namespace Bygfoot.Cli.Windows;
 
+using Bygfoot.Cli;
 using Gtk;
 
 /// <summary>
@@ -9,71 +10,74 @@ using Gtk;
 /// "window_font_sel" of the bygfoot_misc.glade support file, which has been
 /// converted into the GTK4 builder UI file font_sel.ui.
 /// </summary>
-public class FontSelWindow : Gtk.Window
+[GObject.Subclass<Gtk.FontChooserDialog>(qualifiedName: nameof(FontSelWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("font_sel.ui")]
+public partial class FontSelWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("font_sel")]
+    private Gtk.FontChooserWidget _fontSel;
 
-    public FontSelWindow()
+    [Gtk.Connect("button_font_sel_cancel")]
+    private Gtk.Button _buttonFontSelCancel;
+
+    [Gtk.Connect("button_font_sel_apply")]
+    private Gtk.Button _buttonFontSelApply;
+
+    [Gtk.Connect("button_font_sel_ok")]
+    private Gtk.Button _buttonFontSelOk;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("font_sel.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_font_sel") ?? throw new InvalidOperationException("Could not find the widget 'window_font_sel' in the UI file 'font_sel.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 550;
-        window.DefaultHeight = 600;
+        DefaultWidth = 550;
+        DefaultHeight = 600;
+        Modal = true;
 
         Variables.Window.FontSel = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonFontSelOk = (Gtk.Button)_builder.GetObject("button_font_sel_ok") ?? throw new InvalidOperationException("Could not find the widget 'button_font_sel_ok' in the UI file 'font_sel.ui'.");
-        buttonFontSelOk.OnClicked += OnButtonFontSelOkClicked;
+        _buttonFontSelCancel.OnClicked += OnButtonFontSelCancelClicked;
+        _buttonFontSelApply.OnClicked += OnButtonFontSelApplyClicked;
+        _buttonFontSelOk.OnClicked += OnButtonFontSelOkClicked;
 
-        var buttonFontSelApply = (Gtk.Button)_builder.GetObject("button_font_sel_apply") ?? throw new InvalidOperationException("Could not find the widget 'button_font_sel_apply' in the UI file 'font_sel.ui'.");
-        buttonFontSelApply.OnClicked += OnButtonFontSelApplyClicked;
-
-        var buttonFontSelCancel = (Gtk.Button)_builder.GetObject("button_font_sel_cancel") ?? throw new InvalidOperationException("Could not find the widget 'button_font_sel_cancel' in the UI file 'font_sel.ui'.");
-        buttonFontSelCancel.OnClicked += OnButtonFontSelCancelClicked;
-
-        window.Show();
+        Show();
     }
 
-    /// <summary>
-    /// The window was asked to be closed (GTK4 equivalent of the former
-    /// "delete_event" signal of GTK3). Corresponds to the C handler
-    /// on_button_font_sel_cancel_clicked of the delete_event signal.
-    /// </summary>
     private bool OnWindowCloseRequest(Window sender, EventArgs args)
     {
-        // TODO: Call the C function on_button_font_sel_cancel_clicked (which destroys the window).
+        this.Close();
         return true;
     }
 
-    /// <summary>
-    /// The "OK" button was clicked. Corresponds to the C handler
-    /// on_button_font_sel_ok_clicked of the "clicked" signal.
-    /// </summary>
     private void OnButtonFontSelOkClicked(Button sender, EventArgs args)
     {
-        // TODO: Call the C function on_button_font_sel_ok_clicked (which reads the selected font and stores it).
+        string font = _fontSel.FontName;
+        if (!string.IsNullOrEmpty(font))
+        {
+            if (Variables.Window.Options is OptionsWindow options)
+            {
+                options.SetFontName(font);
+            }
+        }
+        this.Close();
     }
 
-    /// <summary>
-    /// The "Apply" button was clicked. Corresponds to the C handler
-    /// on_button_font_sel_apply_clicked of the "clicked" signal.
-    /// </summary>
     private void OnButtonFontSelApplyClicked(Button sender, EventArgs args)
     {
-        // TODO: Call the C function on_button_font_sel_apply_clicked (which stores the selected font).
+        string font = _fontSel.FontName;
+        if (!string.IsNullOrEmpty(font))
+        {
+            Variables.Options.SetString("string_opt_font_name", font);
+            if (Variables.Window.Options is OptionsWindow options)
+            {
+                options.SetFontName(font);
+            }
+        }
+        this.Close();
     }
 
-    /// <summary>
-    /// The "Cancel" button was clicked. Corresponds to the C handler
-    /// on_button_font_sel_cancel_clicked of the "clicked" signal.
-    /// </summary>
     private void OnButtonFontSelCancelClicked(Button sender, EventArgs args)
     {
-        // TODO: Call the C function on_button_font_sel_cancel_clicked (which destroys the window).
+        this.Close();
     }
 }
