@@ -9,34 +9,34 @@ using Gtk;
 /// "window_live" of the bygfoot_misc.glade support file, which has been
 /// converted into the GTK4 builder UI file live.ui.
 /// </summary>
-public class LiveWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(LiveWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("live.ui")]
+public partial class LiveWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_pause")]
+    private Gtk.Button _buttonLivePause;
 
-    public LiveWindow()
+    [Gtk.Connect("button_resume")]
+    private Gtk.Button _buttonLiveResume;
+
+    [Gtk.Connect("button_live_close")]
+    private Gtk.Button _buttonLiveClose;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("live.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_live") ?? throw new InvalidOperationException("Could not find the widget 'window_live' in the UI file 'live.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 620;
-        window.DefaultHeight = 550;
+        DefaultWidth = 620;
+        DefaultHeight = 550;
+        Modal = true;
 
         Variables.Window.Live = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonLivePause = (Gtk.Button)_builder.GetObject("button_pause") ?? throw new InvalidOperationException("Could not find the widget 'button_pause' in the UI file 'live.ui'.");
-        buttonLivePause.OnClicked += OnButtonLivePauseClicked;
+        _buttonLivePause.OnClicked += OnButtonLivePauseClicked;
+        _buttonLiveResume.OnClicked += OnButtonLiveResumeClicked;
+        _buttonLiveClose.OnClicked += OnButtonLiveCloseClicked;
 
-        var buttonLiveResume = (Gtk.Button)_builder.GetObject("button_resume") ?? throw new InvalidOperationException("Could not find the widget 'button_resume' in the UI file 'live.ui'.");
-        buttonLiveResume.OnClicked += OnButtonLiveResumeClicked;
-
-        var buttonLiveClose = (Gtk.Button)_builder.GetObject("button_live_close") ?? throw new InvalidOperationException("Could not find the widget 'button_live_close' in the UI file 'live.ui'.");
-        buttonLiveClose.OnClicked += OnButtonLiveCloseClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>

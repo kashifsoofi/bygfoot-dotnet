@@ -2,7 +2,7 @@
 <!-- interface-name job_offer.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_job_offer">
+  <template class="JobOfferWindow" parent="GtkWindow">
     <property name="default-width">500</property>
     <property name="default-height">600</property>
     <property name="title" translatable="yes">Job offer</property>
@@ -17,9 +17,6 @@
             <property name="visible">1</property>
             <property name="wrap">1</property>
           </object>
-          <packing>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkSeparator" id="hseparator5">
@@ -27,9 +24,6 @@
             <property name="height-request">10</property>
             <property name="visible">1</property>
           </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkBox" id="hbox5">
@@ -44,59 +38,38 @@
                     <property name="visible">1</property>
                     <property name="label" translatable="yes">Name</property>
                   </object>
-                  <packing>
-            <property name="position">0</property>
-          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label16">
                     <property name="visible">1</property>
                     <property name="label" translatable="yes">League</property>
                   </object>
-                  <packing>
-            <property name="position">1</property>
-          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label17">
                     <property name="visible">1</property>
                     <property name="label" translatable="yes">Rank</property>
                   </object>
-                  <packing>
-            <property name="position">2</property>
-          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label18">
                     <property name="visible">1</property>
                     <property name="label" translatable="yes">Money (approx.)</property>
                   </object>
-                  <packing>
-            <property name="position">3</property>
-          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label19">
                     <property name="visible">1</property>
                     <property name="label" translatable="yes">Stadium capacity</property>
                   </object>
-                  <packing>
-            <property name="position">4</property>
-          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label14">
                     <property name="visible">1</property>
                     <property name="label" translatable="yes">Stadium safety</property>
                   </object>
-                  <packing>
-            <property name="position">5</property>
-          </packing>
                 </child>
               </object>
-              <packing>
-            <property name="position">0</property>
-          </packing>
             </child>
             <child>
               <object class="GtkSeparator" id="vseparator3">
@@ -105,9 +78,6 @@
                 <property name="visible">1</property>
                 <property name="orientation">1</property>
               </object>
-              <packing>
-            <property name="position">1</property>
-          </packing>
             </child>
             <child>
               <object class="GtkBox" id="vbox7">
@@ -118,59 +88,35 @@
                   <object class="GtkLabel" id="label_name">
                     <property name="visible">1</property>
                   </object>
-                  <packing>
-            <property name="position">0</property>
-          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label_league">
                     <property name="visible">1</property>
                   </object>
-                  <packing>
-            <property name="position">1</property>
-          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label_rank">
                     <property name="visible">1</property>
                   </object>
-                  <packing>
-            <property name="position">2</property>
-          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label_money">
                     <property name="visible">1</property>
                   </object>
-                  <packing>
-            <property name="position">3</property>
-          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label_cap">
                     <property name="visible">1</property>
                   </object>
-                  <packing>
-            <property name="position">4</property>
-          </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label_saf">
                     <property name="visible">1</property>
                   </object>
-                  <packing>
-            <property name="position">5</property>
-          </packing>
                 </child>
               </object>
-              <packing>
-            <property name="position">2</property>
-          </packing>
             </child>
           </object>
-          <packing>
-            <property name="position">2</property>
-          </packing>
         </child>
         <child>
           <object class="GtkSeparator" id="hseparator6">
@@ -178,18 +124,12 @@
             <property name="height-request">10</property>
             <property name="visible">1</property>
           </object>
-          <packing>
-            <property name="position">3</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="label28">
             <property name="visible">1</property>
             <property name="label" translatable="yes">Player list</property>
           </object>
-          <packing>
-            <property name="position">4</property>
-          </packing>
         </child>
         <child>
           <object class="GtkBox" id="hbox17">
@@ -200,22 +140,13 @@
                 <property name="visible">1</property>
                 <property name="label" translatable="yes">Average skill:</property>
               </object>
-              <packing>
-            <property name="position">0</property>
-          </packing>
             </child>
             <child>
               <object class="GtkLabel" id="label_average_skill">
                 <property name="visible">1</property>
               </object>
-              <packing>
-            <property name="position">1</property>
-          </packing>
             </child>
           </object>
-          <packing>
-            <property name="position">5</property>
-          </packing>
         </child>
         <child>
           <object class="GtkScrolledWindow" id="scrolledwindow1">
@@ -223,17 +154,13 @@
             <property name="can-focus">1</property>
             <property name="hscrollbar-policy">automatic</property>
             <property name="vscrollbar-policy">automatic</property>
-            <property name="shadow-type">in</property>
             <child>
-              <object class="GtkTreeView" id="treeview_players">
+              <object class="GtkListView" id="listview_players">
                 <property name="visible">1</property>
                 <property name="can-focus">1</property>
               </object>
             </child>
           </object>
-          <packing>
-            <property name="position">6</property>
-          </packing>
         </child>
         <child>
           <object class="GtkSeparator" id="hseparator7">
@@ -241,17 +168,11 @@
             <property name="height-request">10</property>
             <property name="visible">1</property>
           </object>
-          <packing>
-            <property name="position">7</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="label_text2">
             <property name="visible">1</property>
           </object>
-          <packing>
-            <property name="position">8</property>
-          </packing>
         </child>
         <child>
           <object class="GtkBox" id="hbox6">
@@ -266,9 +187,6 @@
                 <property name="icon-name">gtk-apply</property>
                 <signal name="clicked" handler="on_button_offer_ok_clicked"/>
               </object>
-              <packing>
-            <property name="position">0</property>
-          </packing>
             </child>
             <child>
               <object class="GtkButton" id="button_cancel">
@@ -279,16 +197,10 @@
                 <property name="icon-name">gtk-cancel</property>
                 <signal name="clicked" handler="on_button_offer_cancel_clicked"/>
               </object>
-              <packing>
-            <property name="position">1</property>
-          </packing>
             </child>
           </object>
-          <packing>
-            <property name="position">9</property>
-          </packing>
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>

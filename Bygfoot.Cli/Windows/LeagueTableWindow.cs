@@ -9,29 +9,27 @@ using Gtk;
 /// bygfoot_table.glade support file, which has been converted into the GTK4
 /// builder UI file league_table.ui.
 /// </summary>
-public class LeagueTableWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(LeagueTableWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("league_table.ui")]
+public partial class LeagueTableWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("b_ok")]
+    private Gtk.Button _buttonOk;
 
-    public LeagueTableWindow()
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("league_table.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_league_table") ?? throw new InvalidOperationException("Could not find the widget 'window_league_table' in the UI file 'league_table.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 500;
-        window.DefaultHeight = 290;
-        window.Resizable = false;
+        DefaultWidth = 500;
+        DefaultHeight = 290;
+        Modal = true;
+        Resizable = false;
 
         Variables.Window.LeagueTable = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonOk = (Gtk.Button)_builder.GetObject("b_ok") ?? throw new InvalidOperationException("Could not find the widget 'b_ok' in the UI file 'league_table.ui'.");
-        buttonOk.OnClicked += OnButtonOkClicked;
+        _buttonOk.OnClicked += OnButtonOkClicked;
 
-        window.Show();
+        Show();
     }
 
     /// <summary>

@@ -2,7 +2,7 @@
 <!-- interface-name league_table.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_league_table">
+  <template class="LeagueTableWindow" parent="GtkWindow">
     <property name="default-width">500</property>
     <property name="default-height">290</property>
     <property name="title" translatable="yes">League table</property>
@@ -62,7 +62,6 @@
             <property name="can-focus">1</property>
             <property name="label" translatable="yes">OK</property>
             <property name="icon-name">gtk-ok</property>
-            <property name="focus-on-click">1</property>
             <signal name="clicked" handler="on_lt_b_ok_clicked"/>
           </object>
           <layout>
@@ -72,5 +71,5 @@
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>

@@ -9,31 +9,30 @@ using Gtk;
 /// "window_job_offer" of the bygfoot_misc2.glade support file, which has been
 /// converted into the GTK4 builder UI file job_offer.ui.
 /// </summary>
-public class JobOfferWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(JobOfferWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("job_offer.ui")]
+public partial class JobOfferWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_ok")]
+    private Gtk.Button _buttonOk;
 
-    public JobOfferWindow()
+    [Gtk.Connect("button_cancel")]
+    private Gtk.Button _buttonCancel;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("job_offer.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_job_offer") ?? throw new InvalidOperationException("Could not find the widget 'window_job_offer' in the UI file 'job_offer.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 500;
-        window.DefaultHeight = 600;
+        DefaultWidth = 500;
+        DefaultHeight = 600;
+        Modal = true;
 
         Variables.Window.JobOffer = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonOk = (Gtk.Button)_builder.GetObject("button_ok") ?? throw new InvalidOperationException("Could not find the widget 'button_ok' in the UI file 'job_offer.ui'.");
-        buttonOk.OnClicked += OnButtonOfferOkClicked;
+        _buttonOk.OnClicked += OnButtonOfferOkClicked;
+        _buttonCancel.OnClicked += OnButtonOfferCancelClicked;
 
-        var buttonCancel = (Gtk.Button)_builder.GetObject("button_cancel") ?? throw new InvalidOperationException("Could not find the widget 'button_cancel' in the UI file 'job_offer.ui'.");
-        buttonCancel.OnClicked += OnButtonOfferCancelClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>

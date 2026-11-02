@@ -9,28 +9,26 @@ using Gtk;
 /// glade support file, which has been converted into the GTK4 builder UI file
 /// help.ui.
 /// </summary>
-public class HelpWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(HelpWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("help.ui")]
+public partial class HelpWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_help_close")]
+    private Gtk.Button _buttonHelpClose;
 
-    public HelpWindow()
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("help.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_help") ?? throw new InvalidOperationException("Could not find the widget 'window_help' in the UI file 'help.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 400;
-        window.DefaultHeight = 400;
+        DefaultWidth = 400;
+        DefaultHeight = 400;
+        Modal = true;
 
         Variables.Window.Help = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonHelpClose = (Gtk.Button)_builder.GetObject("button_help_close") ?? throw new InvalidOperationException("Could not find the widget 'button_help_close' in the UI file 'help.ui'.");
-        buttonHelpClose.OnClicked += OnButtonHelpCloseClicked;
+        _buttonHelpClose.OnClicked += OnButtonHelpCloseClicked;
 
-        window.Show();
+        Show();
     }
 
     /// <summary>
