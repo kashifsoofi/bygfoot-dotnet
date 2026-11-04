@@ -12,7 +12,7 @@ Use this skill when the user wants to migrate a project from GTK3 to GTK4, speci
 1.  **Analyze the `.ui` file (formerly `.glade`)**:
     -   Look for `<packing>` elements and remove them.
     -   Look for `shadow-type` properties in `GtkScrolledWindow` and remove them.
-    -   Replace `GtkTreeView` with `GtkListView`. Note: This is a structural change that requires a `GtkSelectionModel` and a `GtkListItemFactory`. If you are only doing a surface-level conversion, replace `GtkTreeView` with `GtkListView` and change the ID to `listview_[original_name]`.
+    -   Replace `GtkTreeView` with `GtkListView`. Note: This is a structural change that requires a `GtkSelectionModel` and a `GtkListItemFactory`. If you are only doing a surface-level conversion, replace `GtkTreeView` with `GtkListView` and don't change the ID.
     -   Update `GtkSeparator` and other widgets to be GTK4 compliant.
 
 2.  **Analyze the C# Class**:
@@ -21,6 +21,8 @@ Use this skill when the user wants to migrate a project from GTK3 to GTK4, speci
     -   The constructor should be removed or refactored to use `partial void Initialize()`.
     -   Update widget bindings from `_builder.GetObject("id")` to `[Gtk.Connect("id")]` or `[Gtk.Child("id")]` depending on the pattern used in the project.
     -   Ensure signals and properties are correctly mapped to GTK4.
+    -   Add private property for all fields with `[Gtk.Connect]` attribute
+    -   Connect to handlers in Initialize method
 
 3.  **Apply Changes**:
     -   Perform the edits in the `.ui` file.

@@ -9,40 +9,42 @@ using Gtk;
 /// widget "window_mmatches" of the bygfoot_misc2.glade support file, which has
 /// been converted into the GTK4 builder UI file mmatches.ui.
 /// </summary>
-public class MMatchesWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(MMatchesWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("mmatches.ui")]
+public partial class MMatchesWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_mm_file")]
+    private Gtk.Button _buttonMmFile;
 
-    public MMatchesWindow()
+    [Gtk.Connect("button_mm_reload")]
+    private Gtk.Button _buttonMmReload;
+
+    [Gtk.Connect("button_mm_import")]
+    private Gtk.Button _buttonMmImport;
+
+    [Gtk.Connect("button_mm_save_close")]
+    private Gtk.Button _buttonMmSaveClose;
+
+    [Gtk.Connect("button_mm_reload_close")]
+    private Gtk.Button _buttonMmReloadClose;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("mmatches.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_mmatches") ?? throw new InvalidOperationException("Could not find the widget 'window_mmatches' in the UI file 'mmatches.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 600;
-        window.DefaultHeight = 500;
+        DefaultWidth = 600;
+        DefaultHeight = 500;
+        Modal = true;
 
         Variables.Window.MMatches = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonMmFile = (Gtk.Button)_builder.GetObject("button_mm_file") ?? throw new InvalidOperationException("Could not find the widget 'button_mm_file' in the UI file 'mmatches.ui'.");
-        buttonMmFile.OnClicked += OnButtonMmFileClicked;
+        _buttonMmFile.OnClicked += OnButtonMmFileClicked;
+        _buttonMmReload.OnClicked += OnButtonMmReloadClicked;
+        _buttonMmImport.OnClicked += OnButtonMmImportClicked;
+        _buttonMmSaveClose.OnClicked += OnButtonMmSaveCloseClicked;
+        _buttonMmReloadClose.OnClicked += OnButtonMmReloadCloseClicked;
 
-        var buttonMmReload = (Gtk.Button)_builder.GetObject("button_mm_reload") ?? throw new InvalidOperationException("Could not find the widget 'button_mm_reload' in the UI file 'mmatches.ui'.");
-        buttonMmReload.OnClicked += OnButtonMmReloadClicked;
-
-        var buttonMmImport = (Gtk.Button)_builder.GetObject("button_mm_import") ?? throw new InvalidOperationException("Could not find the widget 'button_mm_import' in the UI file 'mmatches.ui'.");
-        buttonMmImport.OnClicked += OnButtonMmImportClicked;
-
-        var buttonMmSaveClose = (Gtk.Button)_builder.GetObject("button_mm_save_close") ?? throw new InvalidOperationException("Could not find the widget 'button_mm_save_close' in the UI file 'mmatches.ui'.");
-        buttonMmSaveClose.OnClicked += OnButtonMmSaveCloseClicked;
-
-        var buttonMmReloadClose = (Gtk.Button)_builder.GetObject("button_mm_reload_close") ?? throw new InvalidOperationException("Could not find the widget 'button_mm_reload_close' in the UI file 'mmatches.ui'.");
-        buttonMmReloadClose.OnClicked += OnButtonMmReloadCloseClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>
