@@ -2,7 +2,7 @@
 <!-- interface-name progress.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_progress">
+  <template class="ProgressWindow" parent="GtkWindow">
     <property name="default-width">300</property>
     <property name="default-height">600</property>
     <property name="modal">1</property>
@@ -14,9 +14,6 @@
           <object class="GtkImage" id="image_match">
             <property name="visible">1</property>
           </object>
-          <packing>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkProgressBar" id="progressbar">
@@ -25,11 +22,8 @@
             <property name="visible">1</property>
             <property name="pulse-step">0.1</property>
           </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>

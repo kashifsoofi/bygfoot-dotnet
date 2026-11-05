@@ -8,27 +8,25 @@ using Gtk;
 /// "window_news" of the bygfoot_misc3.glade support file, which has been
 /// converted into the GTK4 builder UI file news.ui.
 /// </summary>
-public class NewsWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(NewsWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("news.ui")]
+public partial class NewsWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_news_close")]
+    private Gtk.Button _buttonNewsClose;
 
-    public NewsWindow()
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("news.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_news") ?? throw new InvalidOperationException("Could not find the widget 'window_news' in the UI file 'news.ui'.");
-
-        window.DefaultWidth = 700;
-        window.DefaultHeight = 600;
+        DefaultWidth = 700;
+        DefaultHeight = 600;
 
         Variables.Window.News = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonNewsClose = (Gtk.Button)_builder.GetObject("button_news_close") ?? throw new InvalidOperationException("Could not find the widget 'button_news_close' in the UI file 'news.ui'.");
-        buttonNewsClose.OnClicked += OnButtonNewsCloseClicked;
+        _buttonNewsClose.OnClicked += OnButtonNewsCloseClicked;
 
-        window.Show();
+        Show();
     }
 
     /// <summary>

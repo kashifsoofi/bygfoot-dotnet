@@ -2,7 +2,7 @@
 <!-- interface-name news.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_news">
+  <template class="NewsWindow" parent="GtkWindow">
     <property name="title" translatable="yes">Bygfoot News</property>
     <property name="default-width">700</property>
     <property name="default-height">600</property>
@@ -17,26 +17,19 @@
             <property name="can-focus">1</property>
             <property name="hscrollbar-policy">automatic</property>
             <property name="vscrollbar-policy">automatic</property>
-            <property name="shadow-type">in</property>
             <child>
-              <object class="GtkTreeView" id="treeview_news">
+              <object class="GtkListView" id="treeview_news">
                 <property name="visible">1</property>
                 <property name="can-focus">1</property>
               </object>
             </child>
           </object>
-          <packing>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkSeparator" id="hseparator8">
             <property name="height-request">10</property>
             <property name="visible">1</property>
           </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton" id="button_news_close">
@@ -48,11 +41,8 @@
             <property name="tooltip-text" translatable="yes">Esc</property>
             <signal name="clicked" handler="on_button_news_close_clicked"/>
           </object>
-          <packing>
-            <property name="position">2</property>
-          </packing>
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>
