@@ -1,3 +1,5 @@
+using Bygfoot.Cli.Models;
+
 namespace Bygfoot.Cli;
 
 /// <summary>
@@ -95,8 +97,45 @@ public static class Game
     /// <param name="fix">The fixture we examine.</param>
     public static void Initialize(Models.Fixture fix)
     {
-        // Implementation depends on the not yet converted finance and player functions.
-        throw new NotImplementedException();
+        int[] userIdx = { Models.Team.IsUser(fix.Teams[0]), Models.Team.IsUser(fix.Teams[1]) };
+
+        if (fix.HomeAdvantage)
+            AssignAttendance(fix);
+        else
+            AssignAttendanceNeutral(fix);
+
+        if (OptionHelper.SettInt("int_opt_disable_finances") == 0)
+            Models.Finance.AssignGameMoney(fix);
+
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < fix.Teams[i].Players.Count; j++)
+            {
+                Models.Player player = fix.Teams[i].Players[j];
+
+                if (j < 11)
+                {
+                    if (player.Cskill > 0)
+                    {
+                        Models.Player.GamesGoalsSet(player, fix.Clid, (int)Models.PlayerValue.Games, 1);
+                        player.Career[(int)Models.PlayerValue.Games]++;
+                        player.Participation = true;
+
+                        if (Models.Player.QueryIsYouth(player))
+                            player.Lsu += OptionHelper.ConstFloat("float_youth_lsu_addition_match");
+
+                        Models.Player.StreakAddToProb(player, OptionHelper.ConstFloat("float_player_streak_add_startup"));
+                    }
+                }
+                else
+                {
+                    Models.Player.StreakAddToProb(player, OptionHelper.ConstFloat("float_player_streak_add_no_startup"));
+                }
+            }
+
+            if (userIdx[i] != -1)
+                Variables.Users[userIdx[i]].Counters[(int)Models.CounterType.ShowResult] = 1;
+        }
     }
 
     /// <summary>

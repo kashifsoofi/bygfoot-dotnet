@@ -121,3 +121,34 @@ public class OptionList
         SetInt(name, (int)Math.Round(newValue * FloatDivisor));
     }
 }
+
+public static class OptionHelper
+{
+    public static string OptStr(string name) => Variables.Options.GetString(name);
+    public static string? OptStrp(string name) => Variables.Options.GetStringPointer(name);
+    public static int OptInt(string name) => Variables.Options.GetInt(name);
+    public static int? OptIntp(string name) => Variables.Options.GetIntPointer(name);
+    public static float OptFloat(string name) => Variables.Options.GetFloat(name);
+    
+    public static void OptSetInt(string name, int newValue) => Variables.Options.SetInt(name, newValue);
+    public static void OptSetStr(string name, string newValue) => Variables.Options.SetString(name, newValue);
+    public static void OptSetFloat(string name, float newValue) => Variables.Options.SetFloat(name, newValue);
+    
+    public static string OptUserStr(string name) => Variables.Users[Variables.CurUser].Options.GetString(name);
+    public static string? OptUserStrp(string name) => Variables.Users[Variables.CurUser].Options.GetStringPointer(name);
+    public static int OptUserInt(string name) => Variables.Users[Variables.CurUser].Options.GetInt(name);
+    public static int? OptUserIntp(string name) => Variables.Users[Variables.CurUser].Options.GetIntPointer(name);
+    public static float OptUserFloat(string name) => Variables.Users[Variables.CurUser].Options.GetFloat(name);
+    
+    public static void OptUserSetInt(string name, int newValue) => Variables.Users[Variables.CurUser].Options.SetInt(name, newValue);
+    public static void OptUserSetStr(string name, string newValue) => Variables.Users[Variables.CurUser].Options.SetString(name, newValue);
+    public static void OptUserSetFloat(string name, float newValue) => Variables.Users[Variables.CurUser].Options.SetFloat(name, newValue);
+    
+    public static string ConstApp(string name) => Variables.ConstantsApp.GetString(name);
+    public static string ConstStr(string name) => Variables.Constants.GetString(name);
+    public static int ConstInt(string name) => Variables.Constants.GetInt(name);
+    public static float ConstFloat(string name) => Variables.Constants.GetFloat(name);
+    
+    public static int SettInt(string name) => Variables.Settings.GetInt(name); 
+    public static void SettSetInt(string name, int newValue) => Variables.Settings.SetInt(name, newValue);
+}
