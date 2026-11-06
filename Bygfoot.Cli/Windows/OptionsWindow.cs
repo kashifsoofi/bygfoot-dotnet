@@ -14,10 +14,10 @@ using Gtk;
 [Gtk.Template<Gtk.AssemblyResource>("options.ui")]
 public partial class OptionsWindow
 {
-    [Gtk.Connect("button_options_ok")]
+    [Gtk.Connect("button_ok")]
     private Gtk.Button _buttonOptionsOk;
 
-    [Gtk.Connect("button_options_cancel")]
+    [Gtk.Connect("button_cancel")]
     private Gtk.Button _buttonOptionsCancel;
 
     [Gtk.Connect("button_font_name")]
@@ -34,7 +34,7 @@ public partial class OptionsWindow
 
     public void SetFontName(string name)
     {
-        _entryFontName.Text = name;
+        _entryFontName.SetText(name);
     }
 
     partial void Initialize()

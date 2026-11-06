@@ -2,7 +2,7 @@
 <!-- interface-name yesno.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_yesno">
+  <template class="YesNoWindow" parent="GtkWindow">
     <property name="default-width">450</property>
     <property name="default-height">350</property>
     <property name="modal">1</property>
@@ -18,18 +18,12 @@
             <property name="icon-name">gtk-dialog-question</property>
             <property name="icon-size">6</property>
           </object>
-          <packing>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="label_yesno">
             <property name="visible">1</property>
             <property name="wrap">1</property>
           </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkBox" id="hbox18">
@@ -44,9 +38,6 @@
                 <property name="icon-name">gtk-yes</property>
                 <signal name="clicked" handler="on_button_yesno_yes_clicked"/>
               </object>
-              <packing>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkButton" id="button_yesno_no">
@@ -58,16 +49,10 @@
                 <property name="tooltip-text" translatable="yes">Esc</property>
                 <signal name="clicked" handler="on_button_yesno_no_clicked"/>
               </object>
-              <packing>
-                <property name="position">1</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="position">2</property>
-          </packing>
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>

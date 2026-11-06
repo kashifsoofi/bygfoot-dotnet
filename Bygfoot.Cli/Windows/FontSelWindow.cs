@@ -1,6 +1,5 @@
 namespace Bygfoot.Cli.Windows;
 
-using Bygfoot.Cli;
 using Gtk;
 
 /// <summary>
@@ -51,7 +50,7 @@ public partial class FontSelWindow
 
     private void OnButtonFontSelOkClicked(Button sender, EventArgs args)
     {
-        string font = _fontSel.FontName;
+        var font = _fontSel.Font;
         if (!string.IsNullOrEmpty(font))
         {
             if (Variables.Window.Options is OptionsWindow options)
@@ -64,7 +63,7 @@ public partial class FontSelWindow
 
     private void OnButtonFontSelApplyClicked(Button sender, EventArgs args)
     {
-        string font = _fontSel.FontName;
+        var font = _fontSel.Font;
         if (!string.IsNullOrEmpty(font))
         {
             Variables.Options.SetString("string_opt_font_name", font);

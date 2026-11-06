@@ -2,7 +2,7 @@
 <!-- interface-name sponsors.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_sponsors">
+  <template class="SponsorsWindow" parent="GtkWindow">
     <property name="default-width">450</property>
     <property name="default-height">350</property>
     <property name="modal">1</property>
@@ -25,9 +25,8 @@
             <property name="can-focus">1</property>
             <property name="hscrollbar-policy">automatic</property>
             <property name="vscrollbar-policy">automatic</property>
-            <property name="shadow-type">in</property>
             <child>
-              <object class="GtkTreeView" id="treeview_sponsors">
+              <object class="GtkListView" id="treeview_sponsors">
                 <property name="visible">1</property>
                 <property name="can-focus">1</property>
                 <signal name="row_activated" handler="on_treeview_sponsors_row_activated"/>
@@ -65,5 +64,5 @@
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>

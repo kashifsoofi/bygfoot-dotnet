@@ -2,7 +2,7 @@
 <!-- interface-name user_management.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_user_management">
+  <template class="UserManagementWindow" parent="GtkWindow">
     <property name="default-width">600</property>
     <property name="default-height">550</property>
     <property name="modal">1</property>
@@ -24,9 +24,6 @@
                     <property name="visible">1</property>
                     <property name="label" translatable="yes">Users -- click to remove</property>
                   </object>
-                  <packing>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkScrolledWindow" id="scrolledwindow2">
@@ -34,9 +31,8 @@
                     <property name="can-focus">1</property>
                     <property name="hscrollbar-policy">automatic</property>
                     <property name="vscrollbar-policy">automatic</property>
-                    <property name="shadow-type">in</property>
                     <child>
-                      <object class="GtkTreeView" id="treeview_user_management_users">
+                      <object class="GtkListView" id="treeview_user_management_users">
                         <property name="visible">1</property>
                         <property name="can-focus">1</property>
                         <property name="tooltip-text" translatable="yes">Click on a user to remove him from the game.</property>
@@ -44,14 +40,8 @@
                       </object>
                     </child>
                   </object>
-                  <packing>
-                    <property name="position">1</property>
-                  </packing>
                 </child>
               </object>
-              <packing>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkBox" id="vbox21">
@@ -62,9 +52,6 @@
                     <property name="visible">1</property>
                     <property name="label" translatable="yes">Available teams</property>
                   </object>
-                  <packing>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkScrolledWindow" id="scrolledwindow3">
@@ -72,28 +59,18 @@
                     <property name="can-focus">1</property>
                     <property name="hscrollbar-policy">automatic</property>
                     <property name="vscrollbar-policy">automatic</property>
-                    <property name="shadow-type">in</property>
                     <child>
-                      <object class="GtkTreeView" id="treeview_user_management_teams">
+                      <object class="GtkListView" id="treeview_user_management_teams">
                         <property name="visible">1</property>
                         <property name="can-focus">1</property>
                         <signal name="row-activated" handler="on_treeview_user_management_teams_row_activated"/>
                       </object>
                     </child>
                   </object>
-                  <packing>
-                    <property name="position">1</property>
-                  </packing>
                 </child>
               </object>
-              <packing>
-                <property name="position">1</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkHBox" id="hbox21">
@@ -105,9 +82,6 @@
                 <property name="can-focus">1</property>
                 <signal name="activate" handler="on_entry_user_management_activate"/>
               </object>
-              <packing>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkButton" id="button_user_management_add">
@@ -119,14 +93,8 @@
                 <property name="icon-name">gtk-add</property>
                 <signal name="clicked" handler="on_button_user_management_add_clicked"/>
               </object>
-              <packing>
-                <property name="position">1</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkSeparator" id="hseparator9">
@@ -134,9 +102,6 @@
             <property name="height-request">10</property>
             <property name="visible">1</property>
           </object>
-          <packing>
-            <property name="position">2</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton" id="button_user_management_close">
@@ -147,11 +112,8 @@
             <property name="icon-name">gtk-close</property>
             <signal name="clicked" handler="on_button_user_management_close_clicked"/>
           </object>
-          <packing>
-            <property name="position">3</property>
-          </packing>
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>

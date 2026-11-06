@@ -2,7 +2,7 @@
 <!-- interface-name training_camp.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_training_camp">
+  <template class="TrainingCampWindow" parent="GtkWindow">
     <property name="default-width">550</property>
     <property name="default-height">600</property>
     <property name="title" translatable="yes">Training camp</property>
@@ -296,5 +296,5 @@
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>

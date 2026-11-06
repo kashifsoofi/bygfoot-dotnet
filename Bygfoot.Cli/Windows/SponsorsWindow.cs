@@ -9,31 +9,30 @@ using Gtk;
 /// "window_sponsors" of the bygfoot_misc.glade support file, which has been
 /// converted into the GTK4 builder UI file sponsors.ui.
 /// </summary>
-public class SponsorsWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(SponsorsWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("sponsors.ui")]
+public partial class SponsorsWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_sponsors")]
+    private Gtk.Button _buttonSponsors;
 
-    public SponsorsWindow()
+    [Gtk.Connect("button_sponsors_wait")]
+    private Gtk.Button _buttonSponsorsWait;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("sponsors.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_sponsors") ?? throw new InvalidOperationException("Could not find the widget 'window_sponsors' in the UI file 'sponsors.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 450;
-        window.DefaultHeight = 350;
+        DefaultWidth = 450;
+        DefaultHeight = 350;
+        Modal = true;
 
         Variables.Window.Sponsors = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonSponsors = (Gtk.Button)_builder.GetObject("button_sponsors") ?? throw new InvalidOperationException("Could not find the widget 'button_sponsors' in the UI file 'sponsors.ui'.");
-        buttonSponsors.OnClicked += OnButtonSponsorsClicked;
+        _buttonSponsors.OnClicked += OnButtonSponsorsClicked;
+        _buttonSponsorsWait.OnClicked += OnButtonSponsorsWaitClicked;
 
-        var buttonSponsorsWait = (Gtk.Button)_builder.GetObject("button_sponsors_wait") ?? throw new InvalidOperationException("Could not find the widget 'button_sponsors_wait' in the UI file 'sponsors.ui'.");
-        buttonSponsorsWait.OnClicked += OnButtonSponsorsWaitClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>

@@ -9,44 +9,47 @@ using Gtk;
 /// "window_training_camp" of the bygfoot_training.glade support file, which has
 /// been converted into the GTK4 builder UI file training_camp.ui.
 /// </summary>
-public class TrainingCampWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(TrainingCampWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("training_camp.ui")]
+public partial class TrainingCampWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("b_ok")]
+    private Gtk.Button _buttonOk;
 
-    public TrainingCampWindow()
+    [Gtk.Connect("b_cancel")]
+    private Gtk.Button _buttonCancel;
+
+    [Gtk.Connect("b_inc_recreation")]
+    private Gtk.Button _buttonIncRecreation;
+
+    [Gtk.Connect("b_dec_training")]
+    private Gtk.Button _buttonDecTraining;
+
+    [Gtk.Connect("b_inc_training")]
+    private Gtk.Button _buttonIncTraining;
+
+    [Gtk.Connect("b_dec_recreation")]
+    private Gtk.Button _buttonDecRecreation;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("training_camp.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_training_camp") ?? throw new InvalidOperationException("Could not find the widget 'window_training_camp' in the UI file 'training_camp.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 550;
-        window.DefaultHeight = 600;
-        window.Resizable = false;
+        DefaultWidth = 550;
+        DefaultHeight = 600;
+        Modal = true;
+        Resizable = false;
 
         Variables.Window.TrainingCamp = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonOk = (Gtk.Button)_builder.GetObject("b_ok") ?? throw new InvalidOperationException("Could not find the widget 'b_ok' in the UI file 'training_camp.ui'.");
-        buttonOk.OnClicked += OnButtonOkClicked;
+        _buttonOk.OnClicked += OnButtonOkClicked;
+        _buttonCancel.OnClicked += OnButtonCancelClicked;
+        _buttonIncRecreation.OnClicked += OnBIncRecreationClicked;
+        _buttonDecTraining.OnClicked += OnBDecTrainingClicked;
+        _buttonIncTraining.OnClicked += OnBIncTrainingClicked;
+        _buttonDecRecreation.OnClicked += OnBDecRecreationClicked;
 
-        var buttonCancel = (Gtk.Button)_builder.GetObject("b_cancel") ?? throw new InvalidOperationException("Could not find the widget 'b_cancel' in the UI file 'training_camp.ui'.");
-        buttonCancel.OnClicked += OnButtonCancelClicked;
-
-        var buttonIncRecreation = (Gtk.Button)_builder.GetObject("b_inc_recreation") ?? throw new InvalidOperationException("Could not find the widget 'b_inc_recreation' in the UI file 'training_camp.ui'.");
-        buttonIncRecreation.OnClicked += OnBIncRecreationClicked;
-
-        var buttonDecTraining = (Gtk.Button)_builder.GetObject("b_dec_training") ?? throw new InvalidOperationException("Could not find the widget 'b_dec_training' in the UI file 'training_camp.ui'.");
-        buttonDecTraining.OnClicked += OnBDecTrainingClicked;
-
-        var buttonIncTraining = (Gtk.Button)_builder.GetObject("b_inc_training") ?? throw new InvalidOperationException("Could not find the widget 'b_inc_training' in the UI file 'training_camp.ui'.");
-        buttonIncTraining.OnClicked += OnBIncTrainingClicked;
-
-        var buttonDecRecreation = (Gtk.Button)_builder.GetObject("b_dec_recreation") ?? throw new InvalidOperationException("Could not find the widget 'b_dec_recreation' in the UI file 'training_camp.ui'.");
-        buttonDecRecreation.OnClicked += OnBDecRecreationClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>
@@ -120,4 +123,3 @@ public class TrainingCampWindow : Gtk.Window
         // TODO: Call the C function on_b_dec_recreation_clicked (which updates the recreation and camp points values).
     }
 }
-

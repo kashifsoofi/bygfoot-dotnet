@@ -2,7 +2,7 @@
 <!-- interface-name transfer_dialog.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_transfer_dialog">
+  <template class="TransferDialogWindow" parent="GtkWindow">
     <property name="default-width">450</property>
     <property name="default-height">350</property>
     <property name="modal">1</property>
@@ -18,18 +18,12 @@
             <property name="icon-name">gtk-dialog-question</property>
             <property name="icon-size">6</property>
           </object>
-          <packing>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="label_transfer_dialog">
             <property name="visible">1</property>
             <property name="wrap">1</property>
           </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkBox" id="hbox25">
@@ -45,9 +39,6 @@
                 <property name="tooltip-text" translatable="yes">Return</property>
                 <signal name="clicked" handler="on_button_transfer_yes_clicked"/>
               </object>
-              <packing>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkButton" id="button_transfer_no">
@@ -58,9 +49,6 @@
                 <property name="icon-name">gtk-no</property>
                 <signal name="clicked" handler="on_button_transfer_no_clicked"/>
               </object>
-              <packing>
-                <property name="position">1</property>
-              </packing>
             </child>
             <child>
               <object class="GtkButton" id="button_transfer_later">
@@ -73,16 +61,10 @@
                 <property name="tooltip-text" translatable="yes">Esc</property>
                 <signal name="clicked" handler="on_button_transfer_later_clicked"/>
               </object>
-              <packing>
-                <property name="position">2</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="position">2</property>
-          </packing>
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>

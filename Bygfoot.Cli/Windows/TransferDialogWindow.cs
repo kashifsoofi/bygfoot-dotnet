@@ -9,34 +9,34 @@ using Gtk;
 /// of the bygfoot_misc2.glade support file, which has been converted into the
 /// GTK4 builder UI file transfer_dialog.ui.
 /// </summary>
-public class TransferDialogWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(TransferDialogWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("transfer_dialog.ui")]
+public partial class TransferDialogWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_transfer_yes")]
+    private Gtk.Button _buttonTransferYes;
 
-    public TransferDialogWindow()
+    [Gtk.Connect("button_transfer_no")]
+    private Gtk.Button _buttonTransferNo;
+
+    [Gtk.Connect("button_transfer_later")]
+    private Gtk.Button _buttonTransferLater;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("transfer_dialog.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_transfer_dialog") ?? throw new InvalidOperationException("Could not find the widget 'window_transfer_dialog' in the UI file 'transfer_dialog.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 450;
-        window.DefaultHeight = 350;
+        DefaultWidth = 450;
+        DefaultHeight = 350;
+        Modal = true;
 
         Variables.Window.TransferDialog = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonTransferYes = (Gtk.Button)_builder.GetObject("button_transfer_yes") ?? throw new InvalidOperationException("Could not find the widget 'button_transfer_yes' in the UI file 'transfer_dialog.ui'.");
-        buttonTransferYes.OnClicked += OnButtonTransferYesClicked;
+        _buttonTransferYes.OnClicked += OnButtonTransferYesClicked;
+        _buttonTransferNo.OnClicked += OnButtonTransferNoClicked;
+        _buttonTransferLater.OnClicked += OnButtonTransferLaterClicked;
 
-        var buttonTransferNo = (Gtk.Button)_builder.GetObject("button_transfer_no") ?? throw new InvalidOperationException("Could not find the widget 'button_transfer_no' in the UI file 'transfer_dialog.ui'.");
-        buttonTransferNo.OnClicked += OnButtonTransferNoClicked;
-
-        var buttonTransferLater = (Gtk.Button)_builder.GetObject("button_transfer_later") ?? throw new InvalidOperationException("Could not find the widget 'button_transfer_later' in the UI file 'transfer_dialog.ui'.");
-        buttonTransferLater.OnClicked += OnButtonTransferLaterClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>

@@ -10,31 +10,30 @@ using Gtk;
 /// "window_stadium" of the bygfoot_misc.glade support file, which has been
 /// converted into the GTK4 builder UI file stadium.ui.
 /// </summary>
-public class StadiumWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(StadiumWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("stadium.ui")]
+public partial class StadiumWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_stadium_ok")]
+    private Gtk.Button _buttonStadiumOk;
 
-    public StadiumWindow()
+    [Gtk.Connect("button_stadium_cancel")]
+    private Gtk.Button _buttonStadiumCancel;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("stadium.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_stadium") ?? throw new InvalidOperationException("Could not find the widget 'window_stadium' in the UI file 'stadium.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 550;
-        window.DefaultHeight = 600;
+        DefaultWidth = 550;
+        DefaultHeight = 600;
+        Modal = true;
 
         Variables.Window.Stadium = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonStadiumOk = (Gtk.Button)_builder.GetObject("button_stadium_ok") ?? throw new InvalidOperationException("Could not find the widget 'button_stadium_ok' in the UI file 'stadium.ui'.");
-        buttonStadiumOk.OnClicked += OnButtonStadiumOkClicked;
+        _buttonStadiumOk.OnClicked += OnButtonStadiumOkClicked;
+        _buttonStadiumCancel.OnClicked += OnButtonStadiumCancelClicked;
 
-        var buttonStadiumCancel = (Gtk.Button)_builder.GetObject("button_stadium_cancel") ?? throw new InvalidOperationException("Could not find the widget 'button_stadium_cancel' in the UI file 'stadium.ui'.");
-        buttonStadiumCancel.OnClicked += OnButtonStadiumCancelClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>

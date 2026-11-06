@@ -10,31 +10,30 @@ using Gtk;
 /// "window_user_management" of the bygfoot_misc2.glade support file, which has
 /// been converted into the GTK4 builder UI file user_management.ui.
 /// </summary>
-public class UserManagementWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(UserManagementWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("user_management.ui")]
+public partial class UserManagementWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_user_management_add")]
+    private Gtk.Button _buttonUserManagementAdd;
 
-    public UserManagementWindow()
+    [Gtk.Connect("button_user_management_close")]
+    private Gtk.Button _buttonUserManagementClose;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("user_management.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_user_management") ?? throw new InvalidOperationException("Could not find the widget 'window_user_management' in the UI file 'user_management.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 600;
-        window.DefaultHeight = 550;
+        DefaultWidth = 600;
+        DefaultHeight = 550;
+        Modal = true;
 
         Variables.Window.UserManagement = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonUserManagementAdd = (Gtk.Button)_builder.GetObject("button_user_management_add") ?? throw new InvalidOperationException("Could not find the widget 'button_user_management_add' in the UI file 'user_management.ui'.");
-        buttonUserManagementAdd.OnClicked += OnButtonUserManagementAddClicked;
+        _buttonUserManagementAdd.OnClicked += OnButtonUserManagementAddClicked;
+        _buttonUserManagementClose.OnClicked += OnButtonUserManagementCloseClicked;
 
-        var buttonUserManagementClose = (Gtk.Button)_builder.GetObject("button_user_management_close") ?? throw new InvalidOperationException("Could not find the widget 'button_user_management_close' in the UI file 'user_management.ui'.");
-        buttonUserManagementClose.OnClicked += OnButtonUserManagementCloseClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>

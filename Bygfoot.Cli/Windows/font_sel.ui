@@ -2,7 +2,7 @@
 <!-- interface-name font_sel.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <tempate class="GtkFontChooserDialog" id="window_font_sel">
+  <template class="FontSelWindow" parent="GtkFontChooserDialog">
     <property name="default-width">550</property>
     <property name="default-height">600</property>
     <property name="title" translatable="yes">Select font</property>

@@ -8,31 +8,30 @@ using Gtk;
 /// "window_yesno" of the bygfoot_misc2.glade support file, which has been
 /// converted into the GTK4 builder UI file yesno.ui.
 /// </summary>
-public class YesNoWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(YesNoWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("yesno.ui")]
+public partial class YesNoWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_yesno_yes")]
+    private Gtk.Button _buttonYesnoYes;
 
-    public YesNoWindow()
+    [Gtk.Connect("button_yesno_no")]
+    private Gtk.Button _buttonYesnoNo;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("yesno.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_yesno") ?? throw new InvalidOperationException("Could not find the widget 'window_yesno' in the UI file 'yesno.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 450;
-        window.DefaultHeight = 350;
+        DefaultWidth = 450;
+        DefaultHeight = 350;
+        Modal = true;
 
         Variables.Window.Yesno = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonYesnoYes = (Gtk.Button)_builder.GetObject("button_yesno_yes") ?? throw new InvalidOperationException("Could not find the widget 'button_yesno_yes' in the UI file 'yesno.ui'.");
-        buttonYesnoYes.OnClicked += OnButtonYesnoYesClicked;
+        _buttonYesnoYes.OnClicked += OnButtonYesnoYesClicked;
+        _buttonYesnoNo.OnClicked += OnButtonYesnoNoClicked;
 
-        var buttonYesnoNo = (Gtk.Button)_builder.GetObject("button_yesno_no") ?? throw new InvalidOperationException("Could not find the widget 'button_yesno_no' in the UI file 'yesno.ui'.");
-        buttonYesnoNo.OnClicked += OnButtonYesnoNoClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>

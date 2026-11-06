@@ -8,28 +8,26 @@ using Gtk;
 /// "window_warning" of the bygfoot_misc2.glade support file, which has been
 /// converted into the GTK4 builder UI file warning.ui.
 /// </summary>
-public class WarningWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(WarningWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("warning.ui")]
+public partial class WarningWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_warning")]
+    private Gtk.Button _buttonWarning;
 
-    public WarningWindow()
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("warning.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_warning") ?? throw new InvalidOperationException("Could not find the widget 'window_warning' in the UI file 'warning.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 450;
-        window.DefaultHeight = 350;
+        DefaultWidth = 450;
+        DefaultHeight = 350;
+        Modal = true;
 
         Variables.Window.Warning = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonWarning = (Gtk.Button)_builder.GetObject("button_warning") ?? throw new InvalidOperationException("Could not find the widget 'button_warning' in the UI file 'warning.ui'.");
-        buttonWarning.OnClicked += OnButtonWarningClicked;
+        _buttonWarning.OnClicked += OnButtonWarningClicked;
 
-        window.Show();
+        Show();
     }
 
     /// <summary>

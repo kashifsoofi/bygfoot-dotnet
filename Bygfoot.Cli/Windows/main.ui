@@ -2,7 +2,7 @@
 <!-- interface-name main.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="main_window">
+  <template class="MainWindow" parent="GtkWindow">
     <property name="visible">1</property>
     <property name="default-width">300</property>
     <property name="default-height">600</property>
@@ -1292,7 +1292,6 @@
                         <property name="can-focus">1</property>
                         <property name="hscrollbar-policy">automatic</property>
                         <property name="vscrollbar-policy">automatic</property>
-                        <property name="shadow-type">in</property>
                         <child>
                           <object class="GtkViewport" id="viewport1">
                             <property name="visible">1</property>
@@ -1302,7 +1301,7 @@
                                 <property name="can-focus">1</property>
                                 <property name="show-border">0</property>
                                 <child>
-                                  <object class="GtkTreeView" id="player_list1">
+                                  <object class="GtkListView" id="player_list1">
                                     <property name="visible">1</property>
                                     <property name="can-focus">1</property>
                                     <signal name="button-press-event" handler="on_player_list1_button_press_event"/>
@@ -1316,7 +1315,7 @@
                                   </object>
                                 </child>
                                 <child>
-                                  <object class="GtkTreeView" id="player_list2">
+                                  <object class="GtkListView" id="player_list2">
                                     <property name="visible">1</property>
                                     <property name="can-focus">1</property>
                                     <signal name="button-press-event" handler="on_player_list1_button_press_event"/>
@@ -1430,9 +1429,8 @@
                         <property name="can-focus">1</property>
                         <property name="hscrollbar-policy">automatic</property>
                         <property name="vscrollbar-policy">automatic</property>
-                        <property name="shadow-type">in</property>
                         <child>
-                          <object class="GtkTreeView" id="treeview_right">
+                          <object class="GtkListView" id="treeview_right">
                             <property name="visible">1</property>
                             <property name="can-focus">1</property>
                             <property name="enable-search">0</property>
@@ -1449,5 +1447,5 @@
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>

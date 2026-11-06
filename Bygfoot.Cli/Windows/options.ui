@@ -2,7 +2,7 @@
 <!-- interface-name options.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_options">
+  <template class="OptionsWindow" parent="GtkWindow">
     <signal name="close-request" handler="on_window_options_delete_event"/>
     <child>
       <object class="GtkVBox" id="vbox1">
@@ -31,9 +31,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">0</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_conf_unfit">
                         <property name="label" translatable="yes">Confirm when unfit</property>
@@ -45,9 +42,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">1</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_save_overwrite">
                         <property name="label" translatable="yes">Save overwrites</property>
@@ -59,19 +53,13 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">2</property>
-                    </packing>
                     <child>
-                      <object class="GtkHSeparator" id="hseparator5">
+                      <object class="GtkSeparator" id="hseparator5">
                         <property name="width-request">1</property>
                         <property name="height-request">10</property>
                         <property name="visible">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">3</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_maximize">
                         <property name="label" translatable="yes">Maximize main window</property>
@@ -83,9 +71,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">4</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_pref_mess">
                         <property name="label" translatable="yes">Prefer messages</property>
@@ -97,9 +82,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">5</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_show_progress_pics">
                         <property name="label" translatable="yes">Show progressbar pictures</property>
@@ -111,19 +93,13 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">6</property>
-                    </packing>
                     <child>
-                      <object class="GtkHSeparator" id="hseparator6">
+                      <object class="GtkSeparator" id="hseparator6">
                         <property name="width-request">1</property>
                         <property name="height-request">10</property>
                         <property name="visible">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">7</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_skip">
                         <property name="label" translatable="yes">Skip weeks without user matches</property>
@@ -135,29 +111,19 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">8</property>
-                    </packing>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">0</property>
-                </packing>
                 <child>
-                  <object class="GtkVSeparator" id="vseparator1">
+                  <object class="GtkSeparator" id="vseparator1">
+                    <property name="orientation">vertical</property>
                     <property name="width-request">10</property>
                     <property name="height-request">1</property>
                     <property name="visible">1</property>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">1</property>
-                </packing>
                 <child>
-                  <object class="GtkTable" id="table1">
+                  <object class="GtkGrid" id="table1">
                     <property name="visible">1</property>
-                    <property name="n-rows">6</property>
-                    <property name="n-columns">2</property>
                     <property name="column-spacing">5</property>
                     <property name="row-spacing">1</property>
                     <child>
@@ -169,9 +135,6 @@
                             <property name="label" translatable="yes">Autosave interval </property>
                           </object>
                         </child>
-                        <packing>
-                          <property name="position">0</property>
-                        </packing>
                         <child>
                           <object class="GtkSpinButton" id="spinbutton_autosave">
                             <property name="visible">1</property>
@@ -182,18 +145,12 @@
                             <property name="numeric">1</property>
                           </object>
                         </child>
-                        <packing>
-                          <property name="position">1</property>
-                        </packing>
                         <child>
                           <object class="GtkLabel" id="label36">
                             <property name="visible">1</property>
                             <property name="label" translatable="yes"> Autosave files </property>
                           </object>
                         </child>
-                        <packing>
-                          <property name="position">2</property>
-                        </packing>
                         <child>
                           <object class="GtkSpinButton" id="spinbutton_autosave_files">
                             <property name="visible">1</property>
@@ -203,9 +160,6 @@
                             <property name="climb-rate">1</property>
                           </object>
                         </child>
-                        <packing>
-                          <property name="position">3</property>
-                        </packing>
                       </object>
                     </child>
                     <child>
@@ -237,30 +191,19 @@
                         <property name="tooltip-text" translatable="yes">Font used in treeviews</property>
                         <signal name="clicked" handler="on_button_font_name_clicked"/>
                         <child>
-                          <object class="GtkAlignment" id="alignment1">
+                          <object class="GtkHBox" id="hbox7">
                             <property name="visible">1</property>
+                            <property name="spacing">2</property>
                             <child>
-                              <object class="GtkHBox" id="hbox7">
+                              <object class="GtkImage" id="image1">
                                 <property name="visible">1</property>
-                                <property name="spacing">2</property>
-                                <child>
-                                  <object class="GtkImage" id="image1">
-                                    <property name="visible">1</property>
-                                  </object>
-                                </child>
-                                <packing>
-                                  <property name="position">0</property>
-                                </packing>
-                                <child>
-                                  <object class="GtkLabel" id="label34">
-                                    <property name="visible">1</property>
-                                    <property name="label" translatable="yes">Font name</property>
-                                    <property name="use-underline">1</property>
-                                  </object>
-                                </child>
-                                <packing>
-                                  <property name="position">1</property>
-                                </packing>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="label34">
+                                <property name="visible">1</property>
+                                <property name="label" translatable="yes">Font name</property>
+                                <property name="use-underline">1</property>
                               </object>
                             </child>
                           </object>
@@ -278,9 +221,6 @@
                             <property name="tooltip-text" translatable="yes">File containing settings which determine a lot of aspects of the game behaviour. DON'T CHANGE THIS UNLESS YOU REALLY KNOW WHAT YOU ARE DOING.</property>
                           </object>
                         </child>
-                        <packing>
-                          <property name="position">0</property>
-                        </packing>
                         <child>
                           <object class="GtkButton" id="button_reload_constants">
                             <property name="visible">1</property>
@@ -289,39 +229,25 @@
                             <property name="tooltip-text" translatable="yes">Reload the constants file</property>
                             <signal name="clicked" handler="on_button_reload_constants_clicked"/>
                             <child>
-                              <object class="GtkAlignment" id="alignment2">
+                              <object class="GtkHBox" id="hbox9">
                                 <property name="visible">1</property>
+                                <property name="spacing">2</property>
                                 <child>
-                                  <object class="GtkHBox" id="hbox9">
+                                  <object class="GtkImage" id="image2">
                                     <property name="visible">1</property>
-                                    <property name="spacing">2</property>
-                                    <child>
-                                      <object class="GtkImage" id="image2">
-                                        <property name="visible">1</property>
-                                      </object>
-                                    </child>
-                                    <packing>
-                                      <property name="position">0</property>
-                                    </packing>
-                                    <child>
-                                      <object class="GtkLabel" id="label35">
-                                        <property name="visible">1</property>
-                                        <property name="label" translatable="yes">Reload</property>
-                                        <property name="use-underline">1</property>
-                                      </object>
-                                    </child>
-                                    <packing>
-                                      <property name="position">1</property>
-                                    </packing>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="label35">
+                                    <property name="visible">1</property>
+                                    <property name="label" translatable="yes">Reload</property>
+                                    <property name="use-underline">1</property>
                                   </object>
                                 </child>
                               </object>
                             </child>
                           </object>
                         </child>
-                        <packing>
-                          <property name="position">1</property>
-                        </packing>
                         <child>
                           <object class="GtkButton" id="button_edit_constants">
                             <property name="visible">1</property>
@@ -330,39 +256,25 @@
                             <property name="tooltip-text" translatable="yes">Edit the constants used in the game</property>
                             <signal name="clicked" handler="on_button_edit_constants_clicked"/>
                             <child>
-                              <object class="GtkAlignment" id="alignment3">
+                              <object class="GtkHBox" id="hbox19">
                                 <property name="visible">1</property>
+                                <property name="spacing">2</property>
                                 <child>
-                                  <object class="GtkHBox" id="hbox19">
+                                  <object class="GtkImage" id="image3">
                                     <property name="visible">1</property>
-                                    <property name="spacing">2</property>
-                                    <child>
-                                      <object class="GtkImage" id="image3">
-                                        <property name="visible">1</property>
-                                        </object>
-                                    </child>
-                                    <packing>
-                                      <property name="position">0</property>
-                                    </packing>
-                                    <child>
-                                      <object class="GtkLabel" id="label49">
-                                        <property name="visible">1</property>
-                                        <property name="label" translatable="yes">Edit</property>
-                                        <property name="use-underline">1</property>
-                                      </object>
-                                    </child>
-                                    <packing>
-                                      <property name="position">1</property>
-                                    </packing>
+                                    </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="label49">
+                                    <property name="visible">1</property>
+                                    <property name="label" translatable="yes">Edit</property>
+                                    <property name="use-underline">1</property>
                                   </object>
                                 </child>
                               </object>
                             </child>
                           </object>
                         </child>
-                        <packing>
-                          <property name="position">2</property>
-                        </packing>
                       </object>
                     </child>
                     <child>
@@ -417,14 +329,8 @@
                     </child>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">2</property>
-                </packing>
               </object>
             </child>
-            <packing>
-              <property name="tab-fill">False</property>
-            </packing>
             <child type="tab">
               <object class="GtkLabel" id="label1">
                 <property name="visible">1</property>
@@ -449,9 +355,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">0</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_show_job">
                         <property name="label" translatable="yes">Show job offers</property>
@@ -463,9 +366,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">1</property>
-                    </packing>
                     <child>
                       <object class="GtkHBox" id="hbox10">
                         <property name="visible">1</property>
@@ -475,9 +375,6 @@
                             <property name="label" translatable="yes">Show warning if a player contract gets below </property>
                           </object>
                         </child>
-                        <packing>
-                          <property name="position">0</property>
-                        </packing>
                         <child>
                           <object class="GtkSpinButton" id="spinbutton_contract">
                             <property name="visible">1</property>
@@ -487,23 +384,14 @@
                             <property name="numeric">1</property>
                           </object>
                         </child>
-                        <packing>
-                          <property name="position">1</property>
-                        </packing>
                         <child>
                           <object class="GtkLabel" id="label38">
                             <property name="visible">1</property>
                             <property name="label" translatable="yes"> months</property>
                           </object>
                         </child>
-                        <packing>
-                          <property name="position">2</property>
-                        </packing>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">2</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_show_all_leagues">
                         <property name="label" translatable="yes">Show all leagues in the fixture view</property>
@@ -515,85 +403,57 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">3</property>
-                    </packing>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">0</property>
-                </packing>
                 <child>
-                  <object class="GtkVSeparator" id="vseparator3">
+                  <object class="GtkSeparator" id="vseparator3">
+                    <property name="orientation">vertical</property>
                     <property name="width-request">10</property>
                     <property name="height-request">1</property>
                     <property name="visible">1</property>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">1</property>
-                </packing>
                 <child>
-                  <object class="GtkAlignment" id="alignment7">
+                  <object class="GtkVBox" id="vbox7">
                     <property name="visible">1</property>
+                    <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkVBox" id="vbox7">
+                      <object class="GtkCheckButton" id="checkbutton_swap_adapts">
+                        <property name="label" translatable="yes">Swap adapts structure</property>
                         <property name="visible">1</property>
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <object class="GtkCheckButton" id="checkbutton_swap_adapts">
-                            <property name="label" translatable="yes">Swap adapts structure</property>
-                            <property name="visible">1</property>
-                            <property name="can-focus">1</property>
-                            <property name="receives-default">0</property>
-                            <property name="tooltip-text" translatable="yes">Whether swapping two players automatically adapts the team structure to the player positions</property>
-                            <property name="use-underline">1</property>
-                            <property name="draw-indicator">1</property>
-                          </object>
-                        </child>
-                        <packing>
-                          <property name="position">0</property>
-                        </packing>
-                        <child>
-                          <object class="GtkCheckButton" id="checkbutton_show_overall">
-                            <property name="label" translatable="yes">Show overall games/goals</property>
-                            <property name="visible">1</property>
-                            <property name="can-focus">1</property>
-                            <property name="receives-default">0</property>
-                            <property name="tooltip-text" translatable="yes">Whether to show the player games/goals value in all competitions</property>
-                            <property name="use-underline">1</property>
-                            <property name="draw-indicator">1</property>
-                          </object>
-                        </child>
-                        <packing>
-                          <property name="position">1</property>
-                        </packing>
-                        <child>
-                          <object class="GtkCheckButton" id="checkbutton_store_restore_default_team">
-                            <property name="label" translatable="yes">Always store/restore your default team</property>
-                            <property name="visible">1</property>
-                            <property name="can-focus">1</property>
-                            <property name="receives-default">0</property>
-                            <property name="tooltip-text" translatable="yes">Always store/restore your default team before/after a match</property>
-                            <property name="use-underline">1</property>
-                            <property name="draw-indicator">1</property>
-                          </object>
-                        </child>
-                        <packing>
-                          <property name="position">2</property>
-                        </packing>
+                        <property name="can-focus">1</property>
+                        <property name="receives-default">0</property>
+                        <property name="tooltip-text" translatable="yes">Whether swapping two players automatically adapts the team structure to the player positions</property>
+                        <property name="use-underline">1</property>
+                        <property name="draw-indicator">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="checkbutton_show_overall">
+                        <property name="label" translatable="yes">Show overall games/goals</property>
+                        <property name="visible">1</property>
+                        <property name="can-focus">1</property>
+                        <property name="receives-default">0</property>
+                        <property name="tooltip-text" translatable="yes">Whether to show the player games/goals value in all competitions</property>
+                        <property name="use-underline">1</property>
+                        <property name="draw-indicator">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="checkbutton_store_restore_default_team">
+                        <property name="label" translatable="yes">Always store/restore your default team</property>
+                        <property name="visible">1</property>
+                        <property name="can-focus">1</property>
+                        <property name="receives-default">0</property>
+                        <property name="tooltip-text" translatable="yes">Always store/restore your default team before/after a match</property>
+                        <property name="use-underline">1</property>
+                        <property name="draw-indicator">1</property>
                       </object>
                     </child>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">2</property>
-                </packing>
               </object>
             </child>
-            <packing>
-              <property name="position">1</property>
-            </packing>
             <child type="tab">
               <object class="GtkLabel" id="label3">
                 <property name="visible">1</property>
@@ -617,9 +477,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">0</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_show_tendency">
                         <property name="label" translatable="yes">Show tendency bar</property>
@@ -630,14 +487,9 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">1</property>
-                    </packing>
                     <child>
-                      <object class="GtkTable" id="table3">
+                      <object class="GtkGrid" id="table3">
                         <property name="visible">1</property>
-                        <property name="n-rows">2</property>
-                        <property name="n-columns">2</property>
                         <property name="column-spacing">2</property>
                         <child>
                           <object class="GtkLabel" id="label12">
@@ -673,9 +525,6 @@
                         </child>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">2</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_auto_sub">
                         <property name="label" translatable="yes">Automatic substitutions</property>
@@ -686,24 +535,16 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">3</property>
-                    </packing>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">0</property>
-                </packing>
                 <child>
-                  <object class="GtkVSeparator" id="vseparator2">
+                  <object class="GtkSeparator" id="vseparator2">
+                    <property name="orientation">vertical</property>
                     <property name="width-request">10</property>
                     <property name="height-request">1</property>
                     <property name="visible">1</property>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">1</property>
-                </packing>
                 <child>
                   <object class="GtkVBox" id="vbox5">
                     <property name="visible">1</property>
@@ -718,9 +559,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">0</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_pause_red">
                         <property name="label" translatable="yes">Pause when red card</property>
@@ -731,9 +569,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">1</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_pause_break">
                         <property name="label" translatable="yes">Pause when break</property>
@@ -744,19 +579,10 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">2</property>
-                    </packing>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">2</property>
-                </packing>
               </object>
             </child>
-            <packing>
-              <property name="position">2</property>
-            </packing>
             <child type="tab">
               <object class="GtkLabel" id="label2">
                 <property name="visible">1</property>
@@ -764,10 +590,8 @@
               </object>
             </child>
             <child>
-              <object class="GtkTable" id="table2">
+              <object class="GtkGrid" id="table2">
                 <property name="visible">1</property>
-                <property name="n-rows">20</property>
-                <property name="n-columns">3</property>
                 <child>
                   <object class="GtkLabel" id="label13">
                     <property name="visible">1</property>
@@ -1219,14 +1043,14 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkHSeparator" id="hseparator3">
+                  <object class="GtkSeparator" id="hseparator3">
                     <property name="width-request">1</property>
                     <property name="height-request">10</property>
                     <property name="visible">1</property>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkHSeparator" id="hseparator4">
+                  <object class="GtkSeparator" id="hseparator4">
                     <property name="width-request">1</property>
                     <property name="height-request">10</property>
                     <property name="visible">1</property>
@@ -1254,7 +1078,7 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkHSeparator" id="hseparator2">
+                  <object class="GtkSeparator" id="hseparator2">
                     <property name="width-request">1</property>
                     <property name="height-request">10</property>
                     <property name="visible">1</property>
@@ -1262,9 +1086,6 @@
                 </child>
               </object>
             </child>
-            <packing>
-              <property name="position">3</property>
-            </packing>
             <child type="tab">
               <object class="GtkLabel" id="label4">
                 <property name="visible">1</property>
@@ -1288,9 +1109,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">0</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_bet_show_cups">
                         <property name="label" translatable="yes">Show matches from cups</property>
@@ -1302,9 +1120,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">1</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_bet_show_only_recent">
                         <property name="label" translatable="yes">Show only my recent bets</property>
@@ -1315,9 +1130,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">2</property>
-                    </packing>
                     <child>
                       <object class="GtkHBox" id="hbox12">
                         <property name="visible">1</property>
@@ -1328,9 +1140,6 @@
                             <property name="label" translatable="yes">Default wager</property>
                           </object>
                         </child>
-                        <packing>
-                          <property name="position">0</property>
-                        </packing>
                         <child>
                           <object class="GtkSpinButton" id="spinbutton_bet_wager">
                             <property name="visible">1</property>
@@ -1340,24 +1149,12 @@
                             <property name="numeric">1</property>
                           </object>
                         </child>
-                        <packing>
-                          <property name="position">1</property>
-                        </packing>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">3</property>
-                    </packing>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">0</property>
-                </packing>
               </object>
             </child>
-            <packing>
-              <property name="position">4</property>
-            </packing>
             <child type="tab">
               <object class="GtkLabel" id="label41">
                 <property name="visible">1</property>
@@ -1378,35 +1175,23 @@
                         <property name="label" translatable="yes">Default hotel</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">0</property>
-                    </packing>
                     <child>
                       <object class="GtkComboBox" id="combobox_hotel">
                         <property name="visible">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">1</property>
-                    </packing>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">0</property>
-                </packing>
                 <child>
                   <object class="GtkVBox" id="vbox10">
                     <property name="visible">1</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkHSeparator" id="hseparator7">
+                      <object class="GtkSeparator" id="hseparator7">
                         <property name="height-request">10</property>
                         <property name="visible">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">0</property>
-                    </packing>
                     <child>
                       <object class="GtkHBox" id="hbox15">
                         <property name="visible">1</property>
@@ -1417,9 +1202,6 @@
                             <property name="label" translatable="yes">Default recreation:</property>
                           </object>
                         </child>
-                        <packing>
-                          <property name="position">0</property>
-                        </packing>
                         <child>
                           <object class="GtkSpinButton" id="spinbutton_recreation">
                             <property name="visible">1</property>
@@ -1429,28 +1211,16 @@
                             <signal name="value-changed" handler="on_spinbutton_recreation_value_changed"/>
                           </object>
                         </child>
-                        <packing>
-                          <property name="position">1</property>
-                        </packing>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">1</property>
-                    </packing>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">1</property>
-                </packing>
                 <child>
-                  <object class="GtkHSeparator" id="hseparator8">
+                  <object class="GtkSeparator" id="hseparator8">
                     <property name="height-request">10</property>
                     <property name="visible">1</property>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">2</property>
-                </packing>
                 <child>
                   <object class="GtkHBox" id="hbox16">
                     <property name="visible">1</property>
@@ -1461,27 +1231,15 @@
                         <property name="label" translatable="yes">Default training:</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">0</property>
-                    </packing>
                     <child>
                       <object class="GtkLabel" id="label_training">
                         <property name="visible">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">1</property>
-                    </packing>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">3</property>
-                </packing>
               </object>
             </child>
-            <packing>
-              <property name="tab-fill">False</property>
-            </packing>
             <child type="tab">
               <object class="GtkLabel" id="label43">
                 <property name="visible">1</property>
@@ -1507,9 +1265,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">0</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_news_cup">
                         <property name="label" translatable="yes">Create cup news</property>
@@ -1520,9 +1275,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">1</property>
-                    </packing>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_news_league">
                         <property name="label" translatable="yes">Create league news</property>
@@ -1533,14 +1285,8 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">2</property>
-                    </packing>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">0</property>
-                </packing>
                 <child>
                   <object class="GtkCheckButton" id="checkbutton_news_recent">
                     <property name="label" translatable="yes">Show only recent news</property>
@@ -1551,9 +1297,6 @@
                     <property name="draw-indicator">1</property>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">1</property>
-                </packing>
                 <child>
                   <object class="GtkHBox" id="hbox18">
                     <property name="visible">1</property>
@@ -1568,9 +1311,6 @@
                         <property name="draw-indicator">1</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">0</property>
-                    </packing>
                     <child>
                       <object class="GtkRadioButton" id="radiobutton_news_popup_user">
                         <property name="label" translatable="yes">Popup for user news</property>
@@ -1582,9 +1322,6 @@
                         <property name="group">radiobutton_news_popup_no</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">1</property>
-                    </packing>
                     <child>
                       <object class="GtkRadioButton" id="radiobutton_news_popup_always">
                         <property name="label" translatable="yes">Automatic popup</property>
@@ -1596,19 +1333,10 @@
                         <property name="group">radiobutton_news_popup_no</property>
                       </object>
                     </child>
-                    <packing>
-                      <property name="position">2</property>
-                    </packing>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">2</property>
-                </packing>
               </object>
             </child>
-            <packing>
-              <property name="position">6</property>
-            </packing>
             <child type="tab">
               <object class="GtkLabel" id="label48">
                 <property name="visible">1</property>
@@ -1617,19 +1345,13 @@
             </child>
           </object>
         </child>
-        <packing>
-          <property name="position">0</property>
-        </packing>
         <child>
-          <object class="GtkHSeparator" id="hseparator1">
+          <object class="GtkSeparator" id="hseparator1">
             <property name="width-request">1</property>
             <property name="height-request">10</property>
             <property name="visible">1</property>
           </object>
         </child>
-        <packing>
-          <property name="position">1</property>
-        </packing>
         <child>
           <object class="GtkHBox" id="hbox1">
             <property name="visible">1</property>
@@ -1648,9 +1370,6 @@
                     <property name="draw-indicator">1</property>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">0</property>
-                </packing>
                 <child>
                   <object class="GtkCheckButton" id="checkbutton_save_user">
                     <property name="label" translatable="yes">Save user settings to file</property>
@@ -1661,14 +1380,8 @@
                     <property name="draw-indicator">1</property>
                   </object>
                 </child>
-                <packing>
-                  <property name="position">1</property>
-                </packing>
               </object>
             </child>
-            <packing>
-              <property name="position">0</property>
-            </packing>
             <child>
               <object class="GtkButton" id="button_ok">
                 <property name="label" translatable="yes">Apply</property>
@@ -1679,9 +1392,6 @@
                 <signal name="clicked" handler="on_button_options_ok_clicked"/>
               </object>
             </child>
-            <packing>
-              <property name="position">1</property>
-            </packing>
             <child>
               <object class="GtkButton" id="button_cancel">
                 <property name="label" translatable="yes">Cancel</property>
@@ -1693,15 +1403,9 @@
                 <signal name="clicked" handler="on_button_options_cancel_clicked"/>
               </object>
             </child>
-            <packing>
-              <property name="position">2</property>
-            </packing>
           </object>
         </child>
-        <packing>
-          <property name="position">2</property>
-        </packing>
       </object>
     </child>
-  </object>
+  </template>
 </interface>

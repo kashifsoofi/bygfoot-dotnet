@@ -9,43 +9,46 @@ using Gtk;
 /// "window_startup" of the bygfoot_misc.glade support file, which has been
 /// converted into the GTK4 builder UI file startup.ui.
 /// </summary>
-public class StartupWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(StartupWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("startup.ui")]
+public partial class StartupWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_add_player")]
+    private Gtk.Button _buttonAddPlayer;
 
-    public StartupWindow()
+    [Gtk.Connect("team_selection_ok")]
+    private Gtk.Button _teamSelectionOk;
+
+    [Gtk.Connect("button_team_selection_back")]
+    private Gtk.Button _buttonTeamSelectionBack;
+
+    [Gtk.Connect("team_selection_cancel")]
+    private Gtk.Button _teamSelectionCancel;
+
+    [Gtk.Connect("combo_country")]
+    private Gtk.ComboBox _comboCountry;
+
+    [Gtk.Connect("entry_player_name")]
+    private Gtk.Entry _entryPlayerName;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("startup.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("window_startup") ?? throw new InvalidOperationException("Could not find the widget 'window_startup' in the UI file 'startup.ui'.");
-
-        window.Modal = true;
-        window.DefaultWidth = 550;
-        window.DefaultHeight = 600;
+        DefaultWidth = 550;
+        DefaultHeight = 600;
+        Modal = true;
 
         Variables.Window.Startup = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonAddPlayer = (Gtk.Button)_builder.GetObject("button_add_player") ?? throw new InvalidOperationException("Could not find the widget 'button_add_player' in the UI file 'startup.ui'.");
-        buttonAddPlayer.OnClicked += OnButtonAddPlayerClicked;
+        _buttonAddPlayer.OnClicked += OnButtonAddPlayerClicked;
+        _teamSelectionOk.OnClicked += OnTeamSelectionOkClicked;
+        _buttonTeamSelectionBack.OnClicked += OnButtonTeamSelectionBackClicked;
+        _teamSelectionCancel.OnClicked += OnTeamSelectionCancelClicked;
+        _comboCountry.OnChanged += OnComboCountryChanged;
+        _entryPlayerName.OnActivate += OnEntryPlayerNameActivate;
 
-        var teamSelectionOk = (Gtk.Button)_builder.GetObject("team_selection_ok") ?? throw new InvalidOperationException("Could not find the widget 'team_selection_ok' in the UI file 'startup.ui'.");
-        teamSelectionOk.OnClicked += OnTeamSelectionOkClicked;
-
-        var teamSelectionBack = (Gtk.Button)_builder.GetObject("button_team_selection_back") ?? throw new InvalidOperationException("Could not find the widget 'button_team_selection_back' in the UI file 'startup.ui'.");
-        teamSelectionBack.OnClicked += OnButtonTeamSelectionBackClicked;
-
-        var teamSelectionCancel = (Gtk.Button)_builder.GetObject("team_selection_cancel") ?? throw new InvalidOperationException("Could not find the widget 'team_selection_cancel' in the UI file 'startup.ui'.");
-        teamSelectionCancel.OnClicked += OnTeamSelectionCancelClicked;
-
-        var comboCountry = (Gtk.ComboBox)_builder.GetObject("combo_country") ?? throw new InvalidOperationException("Could not find the widget 'combo_country' in the UI file 'startup.ui'.");
-        comboCountry.OnChanged += OnComboCountryChanged;
-
-        var entryPlayerName = (Gtk.Entry)_builder.GetObject("entry_player_name") ?? throw new InvalidOperationException("Could not find the widget 'entry_player_name' in the UI file 'startup.ui'.");
-        entryPlayerName.OnActivate += OnEntryPlayerNameActivate;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>

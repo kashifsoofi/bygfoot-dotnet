@@ -2,7 +2,7 @@
 <!-- interface-name window_startup.ui -->
 <interface>
   <requires lib="gtk" version="4.12"/>
-  <object class="GtkWindow" id="window_startup">
+  <template class="StartupWindow" parent="GtkWindow">
     <property name="default-width">550</property>
     <property name="default-height">600</property>
     <property name="modal">1</property>
@@ -49,7 +49,7 @@
                 <property name="hscrollbar-policy">automatic</property>
                 <property name="vscrollbar-policy">automatic</property>
                 <child>
-                  <object class="GtkTreeView" id="treeview_users">
+                  <object class="GtkListView" id="treeview_users">
                     <property name="visible">1</property>
                     <property name="can-focus">1</property>
                     <property name="tooltip-text">Click on a user to remove him.</property>
@@ -65,7 +65,7 @@
                 <property name="hscrollbar-policy">automatic</property>
                 <property name="vscrollbar-policy">automatic</property>
                 <child>
-                  <object class="GtkTreeView" id="treeview_startup">
+                  <object class="GtkListView" id="treeview_startup">
                     <property name="visible">1</property>
                     <property name="can-focus">1</property>
                     <property name="focusable">1</property>
@@ -251,5 +251,5 @@
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>

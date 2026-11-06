@@ -9,57 +9,65 @@ using Gtk;
 /// "main_window" of the bygfoot.glade support file, which has been
 /// converted into the GTK4 builder UI file main.ui.
 /// </summary>
-public class MainWindow : Gtk.Window
+[GObject.Subclass<Gtk.Window>(qualifiedName: nameof(MainWindow))]
+[Gtk.Template<Gtk.AssemblyResource>("main.ui")]
+public partial class MainWindow
 {
-    private readonly Gtk.Builder _builder;
+    [Gtk.Connect("button_load")]
+    private Gtk.Button _buttonLoad;
 
-    public MainWindow()
+    [Gtk.Connect("button_save")]
+    private Gtk.Button _buttonSave;
+
+    [Gtk.Connect("button_quit")]
+    private Gtk.Button _buttonQuit;
+
+    [Gtk.Connect("button_back_to_main")]
+    private Gtk.Button _buttonBackToMain;
+
+    [Gtk.Connect("button_transfers")]
+    private Gtk.Button _buttonTransfers;
+
+    [Gtk.Connect("button_new_week")]
+    private Gtk.Button _buttonNewWeek;
+
+    [Gtk.Connect("button_reset_players")]
+    private Gtk.Button _buttonResetPlayers;
+
+    [Gtk.Connect("button_cl_back")]
+    private Gtk.Button _buttonClBack;
+
+    [Gtk.Connect("button_cl_forward")]
+    private Gtk.Button _buttonClForward;
+
+    [Gtk.Connect("button_browse_back")]
+    private Gtk.Button _buttonBrowseBack;
+
+    [Gtk.Connect("button_browse_forward")]
+    private Gtk.Button _buttonBrowseForward;
+
+    partial void Initialize()
     {
-        _builder = Gtk.Builder.NewFromFile("main.ui");
-
-        var window = (Gtk.Window)_builder.GetObject("main_window") ?? throw new InvalidOperationException("Could not find the widget 'main_window' in the UI file 'main.ui'.");
-
-        window.DefaultWidth = 300;
-        window.DefaultHeight = 600;
+        DefaultWidth = 300;
+        DefaultHeight = 600;
 
         Variables.Window.Main = this;
 
-        window.OnCloseRequest += OnWindowCloseRequest;
+        OnCloseRequest += OnWindowCloseRequest;
 
-        var buttonLoad = (Gtk.Button)_builder.GetObject("button_load") ?? throw new InvalidOperationException("Could not find the widget 'button_load' in the UI file 'main.ui'.");
-        buttonLoad.OnClicked += OnButtonLoadClicked;
+        _buttonLoad.OnClicked += OnButtonLoadClicked;
+        _buttonSave.OnClicked += OnButtonSaveClicked;
+        _buttonQuit.OnClicked += OnButtonQuitClicked;
+        _buttonBackToMain.OnClicked += OnButtonBackToMainClicked;
+        _buttonTransfers.OnClicked += OnButtonTransfersClicked;
+        _buttonNewWeek.OnClicked += OnButtonNewWeekClicked;
+        _buttonResetPlayers.OnClicked += OnButtonResetPlayersClicked;
+        _buttonClBack.OnClicked += OnButtonClBackClicked;
+        _buttonClForward.OnClicked += OnButtonClForwardClicked;
+        _buttonBrowseBack.OnClicked += OnButtonBrowseBackClicked;
+        _buttonBrowseForward.OnClicked += OnButtonBrowseForwardClicked;
 
-        var buttonSave = (Gtk.Button)_builder.GetObject("button_save") ?? throw new InvalidOperationException("Could not find the widget 'button_save' in the UI file 'main.ui'.");
-        buttonSave.OnClicked += OnButtonSaveClicked;
-
-        var buttonQuit = (Gtk.Button)_builder.GetObject("button_quit") ?? throw new InvalidOperationException("Could not find the widget 'button_quit' in the UI file 'main.ui'.");
-        buttonQuit.OnClicked += OnButtonQuitClicked;
-
-        var buttonBackToMain = (Gtk.Button)_builder.GetObject("button_back_to_main") ?? throw new InvalidOperationException("Could not find the widget 'button_back_to_main' in the UI file 'main.ui'.");
-        buttonBackToMain.OnClicked += OnButtonBackToMainClicked;
-
-        var buttonTransfers = (Gtk.Button)_builder.GetObject("button_transfers") ?? throw new InvalidOperationException("Could not find the widget 'button_transfers' in the UI file 'main.ui'.");
-        buttonTransfers.OnClicked += OnButtonTransfersClicked;
-
-        var buttonNewWeek = (Gtk.Button)_builder.GetObject("button_new_week") ?? throw new InvalidOperationException("Could not find the widget 'button_new_week' in the UI file 'main.ui'.");
-        buttonNewWeek.OnClicked += OnButtonNewWeekClicked;
-
-        var buttonResetPlayers = (Gtk.Button)_builder.GetObject("button_reset_players") ?? throw new InvalidOperationException("Could not find the widget 'button_reset_players' in the UI file 'main.ui'.");
-        buttonResetPlayers.OnClicked += OnButtonResetPlayersClicked;
-
-        var buttonClBack = (Gtk.Button)_builder.GetObject("button_cl_back") ?? throw new InvalidOperationException("Could not find the widget 'button_cl_back' in the UI file 'main.ui'.");
-        buttonClBack.OnClicked += OnButtonClBackClicked;
-
-        var buttonClForward = (Gtk.Button)_builder.GetObject("button_cl_forward") ?? throw new InvalidOperationException("Could not find the widget 'button_cl_forward' in the UI file 'main.ui'.");
-        buttonClForward.OnClicked += OnButtonClForwardClicked;
-
-        var buttonBrowseBack = (Gtk.Button)_builder.GetObject("button_browse_back") ?? throw new InvalidOperationException("Could not find the widget 'button_browse_back' in the UI file 'main.ui'.");
-        buttonBrowseBack.OnClicked += OnButtonBrowseBackClicked;
-
-        var buttonBrowseForward = (Gtk.Button)_builder.GetObject("button_browse_forward") ?? throw new InvalidOperationException("Could not find the widget 'button_browse_forward' in the UI file 'main.ui'.");
-        buttonBrowseForward.OnClicked += OnButtonBrowseForwardClicked;
-
-        window.Show();
+        Show();
     }
 
     /// <summary>
