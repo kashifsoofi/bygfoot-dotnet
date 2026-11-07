@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using Bygfoot.Cli.Models;
 
 namespace Bygfoot.Cli;
 

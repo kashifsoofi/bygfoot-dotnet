@@ -1,1 +1,31 @@
-<gresource><source><file>Windows/startup.ui</file></source></gresource>
+<?xml version="1.0" encoding="UTF-8" ?>
+<gresources>
+    <gresource prefix="/org/gir/core/">
+        <file preprocess="xml-stripblanks">Resources/alr.ui</file>
+        <file preprocess="xml-stripblanks">Resources/bets.ui</file>
+        <file preprocess="xml-stripblanks">Resources/constants.ui</file>
+        <file preprocess="xml-stripblanks">Resources/contract.ui</file>
+        <file preprocess="xml-stripblanks">Resources/debug.ui</file>
+        <file preprocess="xml-stripblanks">Resources/digits.ui</file>
+        <file preprocess="xml-stripblanks">Resources/file_chooser.ui</file>
+        <file preprocess="xml-stripblanks">Resources/font_sel.ui</file>
+        <file preprocess="xml-stripblanks">Resources/help.ui</file>
+        <file preprocess="xml-stripblanks">Resources/job_offer.ui</file>
+        <file preprocess="xml-stripblanks">Resources/league_table.ui</file>
+        <file preprocess="xml-stripblanks">Resources/live.ui</file>
+        <file preprocess="xml-stripblanks">Resources/main.ui</file>
+        <file preprocess="xml-stripblanks">Resources/mmatches.ui</file>
+        <file preprocess="xml-stripblanks">Resources/news.ui</file>
+        <file preprocess="xml-stripblanks">Resources/options.ui</file>
+        <file preprocess="xml-stripblanks">Resources/progress.ui</file>
+        <file preprocess="xml-stripblanks">Resources/splash.ui</file>
+        <file preprocess="xml-stripblanks">Resources/sponsors.ui</file>
+        <file preprocess="xml-stripblanks">Resources/stadium.ui</file>
+        <file preprocess="xml-stripblanks">Resources/startup.ui</file>
+        <file preprocess="xml-stripblanks">Resources/training_camp.ui</file>
+        <file preprocess="xml-stripblanks">Resources/transfer_dialog.ui</file>
+        <file preprocess="xml-stripblanks">Resources/user_management.ui</file>
+        <file preprocess="xml-stripblanks">Resources/warning.ui</file>
+        <file preprocess="xml-stripblanks">Resources/yesno.ui</file>
+    </gresource>
+</gresources>

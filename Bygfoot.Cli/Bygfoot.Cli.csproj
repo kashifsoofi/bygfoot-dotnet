@@ -14,11 +14,11 @@
 
     <Target Name="CompileGlibResourcesForBuild" BeforeTargets="CoreCompile">
         <Message Importance="high" Text="Compiling GResources..." />
-        <Exec WorkingDirectory="$(MSBuildProjectDirectory)" Command="glib-compile-resources --sourcedir &quot;.&quot; &quot;./resources.gresource.xml&quot; --target=&quot;$(TargetDir)resources.app.gresource&quot;" />
+        <Exec WorkingDirectory="$(MSBuildProjectDirectory)" Command="glib-compile-resources --sourcedir &quot;.&quot; &quot;./Resources/resources.gresource.xml&quot; --target=&quot;$(TargetDir)resources.app.gresource&quot;" />
     </Target>
 
     <ItemGroup>
-        <EmbeddedResource Include="Windows\*.ui">
+        <EmbeddedResource Include="Resources\*.ui">
             <LogicalName>%(Filename)%(Extension)</LogicalName>
         </EmbeddedResource>
         <EmbeddedResource Include="$(TargetDir)resources.app.gresource">

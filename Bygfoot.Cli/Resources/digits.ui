@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- interface-name digits.ui -->
+<interface>
+  <requires lib="gtk" version="4.12"/>
+  <template class="DigitsWindow" parent="GtkWindow">
+    <property name="title" translatable="yes">Debug</property>
+    <property name="default-width">450</property>
+    <property name="default-height">350</property>
+    <property name="modal">1</property>
+    <signal name="close-request" handler="on_window_digits_delete_event"/>
+    <child>
+      <object class="GtkBox" id="vbox22">
+        <property name="visible">1</property>
+        <property name="orientation">1</property>
+        <property name="spacing">10</property>
+        <child>
+          <object class="GtkLabel" id="label_main">
+            <property name="visible">1</property>
+            <property name="wrap">1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="hbox15">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkBox" id="vbox15">
+                <property name="visible">1</property>
+                <property name="orientation">1</property>
+                <child>
+                  <object class="GtkLabel" id="label_1">
+                    <property name="visible">1</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="spinbutton1">
+                    <property name="visible">1</property>
+                    <property name="can-focus">1</property>
+                    <signal name="activate" handler="on_spinbutton1_activate"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="vbox16">
+                <property name="visible">1</property>
+                <property name="orientation">1</property>
+                <child>
+                  <object class="GtkLabel" id="label_2">
+                    <property name="visible">1</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="spinbutton2">
+                    <property name="visible">1</property>
+                    <property name="can-focus">1</property>
+                    <signal name="activate" handler="on_spinbutton2_activate"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="hseparator10">
+            <property name="visible">1</property>
+            <property name="orientation">0</property>
+            <property name="height-request">10</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="vbox29">
+            <property name="visible">1</property>
+            <property name="orientation">1</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkButton" id="button_digits_ok">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="label" translatable="yes">OK</property>
+                <property name="icon-name">gtk-ok</property>
+                <signal name="clicked" handler="on_button_digits_ok_clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_digits_alr">
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="label" translatable="yes">Confirm &amp; schedule repayment</property>
+                <property name="use-underline">1</property>
+                <property name="icon-name">gtk-jump-to</property>
+                <signal name="clicked" handler="on_button_digits_alr_clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_digits_cancel">
+                <property name="visible">1</property>
+                <property name="can-focus">1</property>
+                <property name="receives-default">0</property>
+                <property name="label" translatable="yes">Cancel</property>
+                <property name="icon-name">gtk-cancel</property>
+                <property name="tooltip-text" translatable="yes">Esc</property>
+                <signal name="clicked" handler="on_button_digits_cancel_clicked"/>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

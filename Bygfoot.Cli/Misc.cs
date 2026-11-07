@@ -1,7 +1,6 @@
 namespace Bygfoot.Cli;
 
 using System.Text;
-using Models;
 
 /// <summary>
 /// Miscellaneous helper functions.

@@ -1,7 +1,6 @@
 namespace Bygfoot.Cli;
 
 using System;
-using Models;
 
 public static class Bygfoot
 {

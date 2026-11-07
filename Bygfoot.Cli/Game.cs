@@ -1,5 +1,3 @@
-using Bygfoot.Cli.Models;
-
 namespace Bygfoot.Cli;
 
 /// <summary>
@@ -7,9 +5,9 @@ namespace Bygfoot.Cli;
 /// </summary>
 public enum GamePlayerType
 {
-    Defend = (int)Models.LiveGameUnitArea.Defend,     // GAME_PLAYER_TYPE_DEFEND
-    Midfield = (int)Models.LiveGameUnitArea.Midfield, // GAME_PLAYER_TYPE_MIDFIELD
-    Attack = (int)Models.LiveGameUnitArea.Attack,     // GAME_PLAYER_TYPE_ATTACK
+    Defend = (int)LiveGameUnitArea.Defend,     // GAME_PLAYER_TYPE_DEFEND
+    Midfield = (int)LiveGameUnitArea.Midfield, // GAME_PLAYER_TYPE_MIDFIELD
+    Attack = (int)LiveGameUnitArea.Attack,     // GAME_PLAYER_TYPE_ATTACK
     Penalty,                                          // GAME_PLAYER_TYPE_PENALTY
     End                                               // GAME_PLAYER_TYPE_END
 }
@@ -32,19 +30,19 @@ public static class Game
     /// <param name="fix">The fixture we calculate.</param>
     /// <param name="teamValues">The place to store the values.</param>
     /// <param name="homeAdvantage">The home advantage factor.</param>
-    public static void GetValues(Models.Fixture fix, float[,] teamValues, float homeAdvantage)
+    public static void GetValues(Fixture fix, float[,] teamValues, float homeAdvantage)
     {
-        Models.Team[] tm = { fix.Teams[0], fix.Teams[1] };
+        Team[] tm = { fix.Teams[0], fix.Teams[1] };
         float styleFactor;
 
         for (int i = 0; i < 2; i++)
         {
-            for (int j = 0; j < (int)Models.GameTeamValue.End; j++)
+            for (int j = 0; j < (int)GameTeamValue.End; j++)
                 teamValues[i, j] = 0;
 
             styleFactor = tm[i].Style * OptionHelper.ConstFloat("float_game_style_factor");
 
-            teamValues[i, (int)Models.GameTeamValue.Goalie] =
+            teamValues[i, (int)GameTeamValue.Goalie] =
                 Player.GetGameSkill(tm[i].Players[0], false, true) *
                 (1 + homeAdvantage * (i == 0 ? 1 : 0));
 
@@ -52,20 +50,20 @@ public static class Game
             {
                 if (tm[i].Players[j].Cskill > 0)
                 {
-                    teamValues[i, (int)Models.GameTeamValue.Attack] +=
-                        GetPlayerContribution(tm[i].Players[j], (int)Models.GameTeamValue.Attack, true);
-                    teamValues[i, (int)Models.GameTeamValue.Midfield] +=
-                        GetPlayerContribution(tm[i].Players[j], (int)Models.GameTeamValue.Midfield, true);
-                    teamValues[i, (int)Models.GameTeamValue.Defend] +=
-                        GetPlayerContribution(tm[i].Players[j], (int)Models.GameTeamValue.Defend, true);
+                    teamValues[i, (int)GameTeamValue.Attack] +=
+                        GetPlayerContribution(tm[i].Players[j], (int)GameTeamValue.Attack, true);
+                    teamValues[i, (int)GameTeamValue.Midfield] +=
+                        GetPlayerContribution(tm[i].Players[j], (int)GameTeamValue.Midfield, true);
+                    teamValues[i, (int)GameTeamValue.Defend] +=
+                        GetPlayerContribution(tm[i].Players[j], (int)GameTeamValue.Defend, true);
                 }
             }
 
-            for (int j = (int)Models.GameTeamValue.Defend; j < (int)Models.GameTeamValue.Defend + 3; j++)
+            for (int j = (int)GameTeamValue.Defend; j < (int)GameTeamValue.Defend + 3; j++)
                 teamValues[i, j] *= (1 + homeAdvantage * (i == 0 ? 1 : 0));
 
-            teamValues[i, (int)Models.GameTeamValue.Defend] *= (1 - styleFactor);
-            teamValues[i, (int)Models.GameTeamValue.Attack] *= (1 + styleFactor);
+            teamValues[i, (int)GameTeamValue.Defend] *= (1 - styleFactor);
+            teamValues[i, (int)GameTeamValue.Attack] *= (1 + styleFactor);
         }
     }
 
@@ -77,7 +75,7 @@ public static class Game
     /// <param name="type">Whether we have defend, midfield or attack value.</param>
     /// <param name="special">Whether to count special influence like boost and streak.</param>
     /// <returns>The player's contribution depending on position and fitness.</returns>
-    public static float GetPlayerContribution(Models.Player pl, int type, bool special)
+    public static float GetPlayerContribution(Player pl, int type, bool special)
     {
         // How the cskill of field players get weighted for the team values in
         // a match. Rows are player position, columns value type.
@@ -95,7 +93,7 @@ public static class Game
             };
 
         return Player.GetGameSkill(pl, false, special) *
-            playerWeights[(int)pl.Cpos - 1, type - (int)Models.GameTeamValue.Defend];
+            playerWeights[(int)pl.Cpos - 1, type - (int)GameTeamValue.Defend];
     }
 
     /// <summary>
@@ -109,7 +107,7 @@ public static class Game
     /// <param name="notThisOne">A player to exclude.</param>
     /// <param name="skills">Whether to weight with skills, too.</param>
     /// <returns>A player index.</returns>
-    public static int GetPlayer(Models.Team tm, int playerType, int lastPenalty, int notThisOne, bool skills)
+    public static int GetPlayer(Team tm, int playerType, int lastPenalty, int notThisOne, bool skills)
     {
         int player = notThisOne;
         float[] weights = new float[3];
@@ -183,7 +181,7 @@ public static class Game
     /// <param name="probs">Array with probabilities that gets filled.</param>
     /// <param name="weights">How to weight the players depending on their position.</param>
     /// <param name="skills">Whether to weight with skills, too.</param>
-    public static void GetPlayerProbs(List<Models.Player> players, float[] probs, float[] weights, bool skills)
+    public static void GetPlayerProbs(List<Player> players, float[] probs, float[] weights, bool skills)
     {
         probs[0] = (skills) ?
             Player.GetGameSkill(players[1], false, true) *
@@ -215,16 +213,16 @@ public static class Game
     /// <param name="tm">The team that has the penalty.</param>
     /// <param name="lastPenalty">The player that shot the last penalty.</param>
     /// <returns>A player id.</returns>
-    public static int GetPenaltyTaker(Models.Team tm, int lastPenalty)
+    public static int GetPenaltyTaker(Team tm, int lastPenalty)
     {
         int returnValue = -1;
-        List<Models.Player> players = new List<Models.Player>();
+        List<Player> players = new List<Player>();
 
         for (int i = 0; i < 11; i++)
             if (tm.Players[i].Cskill != 0)
                 players.Add(tm.Players[i]);
 
-        players.Sort((pl1, pl2) => Models.Player.CompareFunc(pl1, pl2, (int)Models.PlayerCompareAttrib.GameSkill));
+        players.Sort((pl1, pl2) => Player.CompareFunc(pl1, pl2, (int)PlayerCompareAttrib.GameSkill));
 
         if (lastPenalty == -1 ||
             lastPenalty == players[players.Count - 1].Id)
@@ -246,9 +244,9 @@ public static class Game
     /// Corresponds to C: game_initialize.
     /// </summary>
     /// <param name="fix">The fixture we examine.</param>
-    public static void Initialize(Models.Fixture fix)
+    public static void Initialize(Fixture fix)
     {
-        int[] userIdx = { Models.Team.IsUser(fix.Teams[0]), Models.Team.IsUser(fix.Teams[1]) };
+        int[] userIdx = { Team.IsUser(fix.Teams[0]), Team.IsUser(fix.Teams[1]) };
 
         if (fix.HomeAdvantage)
             AssignAttendance(fix);
@@ -256,36 +254,36 @@ public static class Game
             AssignAttendanceNeutral(fix);
 
         if (OptionHelper.SettInt("int_opt_disable_finances") == 0)
-            Models.Finance.AssignGameMoney(fix);
+            Finance.AssignGameMoney(fix);
 
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < fix.Teams[i].Players.Count; j++)
             {
-                Models.Player player = fix.Teams[i].Players[j];
+                Player player = fix.Teams[i].Players[j];
 
                 if (j < 11)
                 {
                     if (player.Cskill > 0)
                     {
-                        Models.Player.GamesGoalsSet(player, fix.Clid, (int)Models.PlayerValue.Games, 1);
-                        player.Career[(int)Models.PlayerValue.Games]++;
+                        Player.GamesGoalsSet(player, fix.Clid, (int)PlayerValue.Games, 1);
+                        player.Career[(int)PlayerValue.Games]++;
                         player.Participation = true;
 
-                        if (Models.Player.QueryIsYouth(player))
+                        if (Player.QueryIsYouth(player))
                             player.Lsu += OptionHelper.ConstFloat("float_youth_lsu_addition_match");
 
-                        Models.Player.StreakAddToProb(player, OptionHelper.ConstFloat("float_player_streak_add_startup"));
+                        Player.StreakAddToProb(player, OptionHelper.ConstFloat("float_player_streak_add_startup"));
                     }
                 }
                 else
                 {
-                    Models.Player.StreakAddToProb(player, OptionHelper.ConstFloat("float_player_streak_add_no_startup"));
+                    Player.StreakAddToProb(player, OptionHelper.ConstFloat("float_player_streak_add_no_startup"));
                 }
             }
 
             if (userIdx[i] != -1)
-                Variables.Users[userIdx[i]].Counters[(int)Models.CounterType.ShowResult] = 1;
+                Variables.Users[userIdx[i]].Counters[(int)CounterType.ShowResult] = 1;
         }
     }
 
@@ -331,7 +329,7 @@ public static class Game
     /// <param name="tm">The team we work on.</param>
     /// <param name="playerNumber">The index of the player.</param>
     /// <returns>The substitute player id.</returns>
-    public static int SubstitutePlayer(Models.Team tm, int playerNumber)
+    public static int SubstitutePlayer(Team tm, int playerNumber)
     {
         // Implementation depends on the not yet converted player, team and
         // finance functions.
@@ -343,7 +341,7 @@ public static class Game
     /// Corresponds to C: game_player_injury.
     /// </summary>
     /// <param name="pl">The player that gets injured.</param>
-    public static void PlayerInjury(Models.Player pl)
+    public static void PlayerInjury(Player pl)
     {
         // Implementation depends on the not yet converted maths and player functions.
         throw new NotImplementedException();
@@ -356,7 +354,7 @@ public static class Game
     /// <param name="liveGame">The live game.</param>
     /// <param name="unit">The live game unit.</param>
     /// <returns>The foul probability.</returns>
-    public static float GetFoulProb(Models.LiveGame liveGame, Models.LiveGameUnit unit)
+    public static float GetFoulProb(LiveGame liveGame, LiveGameUnit unit)
     {
         float prob;
         int i;
@@ -367,7 +365,7 @@ public static class Game
             Math.Min(1, (float)(unit.Minute) / 90);
 
         // Add possible boost influence of the team not in possession.
-        Models.Team teamNotInPossession = unit.Possession == 0 ? liveGame.Fix.Teams[1] : liveGame.Fix.Teams[0];
+        Team teamNotInPossession = unit.Possession == 0 ? liveGame.Fix.Teams[1] : liveGame.Fix.Teams[0];
         prob *= 1 + teamNotInPossession.Boost * Variables.Constants.GetFloat("float_team_boost_foul_factor");
 
         // Reduce probability depending on the current cards of
@@ -376,10 +374,10 @@ public static class Game
         {
             for (i = 0; i < teamNotInPossession.Players.Count; i++)
             {
-                Models.Player player = teamNotInPossession.Players[i];
-                if (player.CardStatus == Models.PlayerCardStatus.Yellow)
+                Player player = teamNotInPossession.Players[i];
+                if (player.CardStatus == PlayerCardStatus.Yellow)
                     prob *= 1 - Variables.Constants.GetFloat("float_live_game_foul_prob_reduction_yellow");
-                else if (player.CardStatus == Models.PlayerCardStatus.Red)
+                else if (player.CardStatus == PlayerCardStatus.Red)
                     prob *= 1 - Variables.Constants.GetFloat("float_live_game_foul_prob_reduction_red");
             }
         }
@@ -416,7 +414,7 @@ public static class Game
     /// <param name="clid">The cup/league id of the fixture.</param>
     /// <param name="tm">The team.</param>
     /// <returns>A player index or -1 if we don't substitute.</returns>
-    public static int FindToSubstitute(int clid, Models.Team tm)
+    public static int FindToSubstitute(int clid, Team tm)
     {
         // Implementation depends on the not yet converted player and sorting functions.
         throw new NotImplementedException();
@@ -438,7 +436,7 @@ public static class Game
     /// Corresponds to C: game_post_match.
     /// </summary>
     /// <param name="fix">The match we examine.</param>
-    public static void PostMatch(Models.Fixture fix)
+    public static void PostMatch(Fixture fix)
     {
         // Implementation depends on the not yet converted team and user functions.
         throw new NotImplementedException();
@@ -450,10 +448,10 @@ public static class Game
     /// </summary>
     /// <param name="stadium">The stadium.</param>
     /// <param name="type">The event type.</param>
-    public static void StadiumEvent(Models.Stadium stadium, int type)
+    public static void StadiumEvent(Stadium stadium, int type)
     {
         float[,] reduceFactor = new float[3, 2];
-        int eventType = type - (int)Models.LiveGameEventType.StadiumBreakdown;
+        int eventType = type - (int)LiveGameEventType.StadiumBreakdown;
 
         reduceFactor[0, 0] = Variables.Constants.GetFloat("float_game_stadium_safety_reduce_breakdown_lower");
         reduceFactor[0, 1] = Variables.Constants.GetFloat("float_game_stadium_safety_reduce_breakdown_upper");
@@ -488,7 +486,7 @@ public static class Game
     /// </summary>
     /// <param name="tm">The team.</param>
     /// <returns>A player id or -1.</returns>
-    public static int GetDefaultPenaltyShooter(Models.Team tm)
+    public static int GetDefaultPenaltyShooter(Team tm)
     {
         // Implementation depends on the option and player functions that are yet to be converted.
         throw new NotImplementedException();
@@ -509,7 +507,7 @@ public static class Game
     /// Corresponds to C: game_decrease_fitness.
     /// </summary>
     /// <param name="fix">The match being played.</param>
-    public static void DecreaseFitness(Models.Fixture fix)
+    public static void DecreaseFitness(Fixture fix)
     {
         // Implementation depends on the not yet converted player functions.
         throw new NotImplementedException();
@@ -521,7 +519,7 @@ public static class Game
     /// </summary>
     /// <param name="lg">The live game.</param>
     /// <param name="unit">The live game unit.</param>
-    public static void UpdateStats(Models.LiveGame lg, Models.LiveGameUnit unit)
+    public static void UpdateStats(LiveGame lg, LiveGameUnit unit)
     {
         // Implementation depends on the not yet converted live game and player functions.
         throw new NotImplementedException();
@@ -533,7 +531,7 @@ public static class Game
     /// </summary>
     /// <param name="lg">The live game.</param>
     /// <param name="unit">The live game unit.</param>
-    public static void UpdateStatsPlayer(Models.LiveGame lg, Models.LiveGameUnit unit)
+    public static void UpdateStatsPlayer(LiveGame lg, LiveGameUnit unit)
     {
         // Implementation depends on the not yet converted live game and player functions.
         throw new NotImplementedException();
@@ -544,7 +542,7 @@ public static class Game
     /// Corresponds to C: game_assign_attendance.
     /// </summary>
     /// <param name="fix">The match we examine.</param>
-    public static void AssignAttendance(Models.Fixture fix)
+    public static void AssignAttendance(Fixture fix)
     {
         // Implementation depends on the not yet converted league and maths functions.
         throw new NotImplementedException();
@@ -555,7 +553,7 @@ public static class Game
     /// Corresponds to C: game_assign_attendance_neutral.
     /// </summary>
     /// <param name="fix">The match we examine.</param>
-    public static void AssignAttendanceNeutral(Models.Fixture fix)
+    public static void AssignAttendanceNeutral(Fixture fix)
     {
         // Implementation depends on the not yet converted league functions.
         throw new NotImplementedException();
@@ -580,7 +578,7 @@ public static class Game
     /// <param name="player">The player index.</param>
     /// <param name="toSubstitute">The return location for the index of the player to substitute.</param>
     /// <param name="substitute">The return location for the player who comes into the game.</param>
-    public static void SubstitutePlayerSendOff(int clid, Models.Team tm, int player, out int toSubstitute, out int substitute)
+    public static void SubstitutePlayerSendOff(int clid, Team tm, int player, out int toSubstitute, out int substitute)
     {
         // Implementation depends on the not yet converted player, team and user functions.
         throw new NotImplementedException();

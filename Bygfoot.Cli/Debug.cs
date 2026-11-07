@@ -3,7 +3,6 @@ namespace Bygfoot.Cli;
 using System;
 using System.IO;
 using System.Linq;
-using Models;
 
 /// <summary>
 /// Debug output options. Corresponds to C enum DebugOutput.
