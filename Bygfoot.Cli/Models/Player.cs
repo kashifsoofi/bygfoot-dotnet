@@ -70,6 +70,17 @@ public enum PlayerCardStatus
 }
 
 /// <summary>
+/// Attributes to compare players by. Corresponds to C enum PlayerCompareAttrib.
+/// </summary>
+public enum PlayerCompareAttrib
+{
+    GameSkill = 0,        // PLAYER_COMPARE_ATTRIBUTE_GAME_SKILL
+    Pos,                  // PLAYER_COMPARE_ATTRIBUTE_POS
+    LeagueGoals,          // PLAYER_COMPARE_ATTRIBUTE_LEAGUE_GOALS
+    End                   // PLAYER_COMPARE_ATTRIBUTE_END
+}
+
+/// <summary>
 /// Card tracking for a specific league or cup. Corresponds to C struct PlayerCard.
 /// </summary>
 public class PlayerCard
@@ -562,6 +573,59 @@ public class Player
             return (float)(pl.Skill * boost * streak * Math.Pow(pl.Fitness, Variables.Constants.GetFloat("float_player_fitness_exponent")));
 
         return (float)(pl.Cskill * boost * streak * Math.Pow(pl.Fitness, Variables.Constants.GetFloat("float_player_fitness_exponent")));
+    }
+
+    /// <summary>
+    /// Compare two players in a (pointer) array. Corresponds to C: player_compare_func.
+    /// </summary>
+    /// <param name="pl1">The first player.</param>
+    /// <param name="pl2">The second player.</param>
+    /// <param name="data">Coded integer that tells us which attribute to compare.</param>
+    /// <returns>1, 0 or -1 (see the C qsort() function).</returns>
+    public static int CompareFunc(Player pl1, Player pl2, int data)
+    {
+        int dataInt = Math.Abs(data);
+        int dataInt2 = data;
+        int type = dataInt % 100;
+        int returnValue = 0;
+
+        if (type == (int)PlayerCompareAttrib.GameSkill)
+            returnValue = Misc.MiscFloatCompare(GetGameSkill(pl1, false, true), GetGameSkill(pl2, false, true));
+        else if (type == (int)PlayerCompareAttrib.Pos)
+        {
+            if (Math.Min(IdIndex(pl1.Team, pl1.Id, true), IdIndex(pl2.Team, pl2.Id, true)) < 11 &&
+                Math.Max(IdIndex(pl1.Team, pl1.Id, true), IdIndex(pl2.Team, pl2.Id, true)) >= 11)
+                returnValue = (IdIndex(pl1.Team, pl1.Id, true) > IdIndex(pl2.Team, pl2.Id, true)) ? 1 : -1;
+            else if (pl1.Cskill == 0)
+                returnValue = (pl2.Cskill == 0) ? 0 : 1;
+            else if (pl2.Cskill == 0)
+                returnValue = (pl1.Cskill == 0) ? 0 : -1;
+            else if (pl2.Pos != pl1.Pos)
+                returnValue = Misc.MiscIntCompare((int)pl2.Pos, (int)pl1.Pos);
+            else
+                returnValue = 0;
+        }
+        else if (type == (int)PlayerCompareAttrib.LeagueGoals)
+        {
+            int goals1 = GamesGoalsGet(pl1, pl1.Team.Clid, (int)PlayerValue.Goals),
+                games1 = GamesGoalsGet(pl1, pl1.Team.Clid, (int)PlayerValue.Games),
+                shots1 = GamesGoalsGet(pl1, pl1.Team.Clid, (int)PlayerValue.Shots),
+                goals2 = GamesGoalsGet(pl2, pl2.Team.Clid, (int)PlayerValue.Goals),
+                games2 = GamesGoalsGet(pl2, pl2.Team.Clid, (int)PlayerValue.Games),
+                shots2 = GamesGoalsGet(pl2, pl2.Team.Clid, (int)PlayerValue.Shots);
+
+            if (goals1 != goals2)
+                returnValue = Misc.MiscIntCompare(goals1, goals2);
+            else if (games1 != games2)
+                returnValue = Misc.MiscIntCompare(games2, games1);
+            else
+                returnValue = Misc.MiscIntCompare(shots2, shots1);
+        }
+
+        if (dataInt2 != 0)
+            returnValue *= (dataInt / dataInt2);
+
+        return returnValue;
     }
 
     /// <summary>

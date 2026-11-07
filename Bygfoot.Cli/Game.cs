@@ -3,6 +3,18 @@ using Bygfoot.Cli.Models;
 namespace Bygfoot.Cli;
 
 /// <summary>
+/// Player types. Corresponds to C enum GamePlayerType.
+/// </summary>
+public enum GamePlayerType
+{
+    Defend = (int)Models.LiveGameUnitArea.Defend,     // GAME_PLAYER_TYPE_DEFEND
+    Midfield = (int)Models.LiveGameUnitArea.Midfield, // GAME_PLAYER_TYPE_MIDFIELD
+    Attack = (int)Models.LiveGameUnitArea.Attack,     // GAME_PLAYER_TYPE_ATTACK
+    Penalty,                                          // GAME_PLAYER_TYPE_PENALTY
+    End                                               // GAME_PLAYER_TYPE_END
+}
+
+/// <summary>
 /// Static class to handle the game logic functions. Corresponds to the C module src/game.h and src/game.c
 /// (the game_get_values, game_get_player_contribution, game_get_player, game_get_player_probs, game_get_penalty_taker,
 /// game_initialize, game_save_team_states, game_check_live_game_resume_state, game_get_subs, game_substitute_player,
@@ -22,9 +34,39 @@ public static class Game
     /// <param name="homeAdvantage">The home advantage factor.</param>
     public static void GetValues(Models.Fixture fix, float[,] teamValues, float homeAdvantage)
     {
-        // Implementation depends on the not yet converted player_get_game_skill and
-        // game_get_player_contribution functions.
-        throw new NotImplementedException();
+        Models.Team[] tm = { fix.Teams[0], fix.Teams[1] };
+        float styleFactor;
+
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < (int)Models.GameTeamValue.End; j++)
+                teamValues[i, j] = 0;
+
+            styleFactor = tm[i].Style * OptionHelper.ConstFloat("float_game_style_factor");
+
+            teamValues[i, (int)Models.GameTeamValue.Goalie] =
+                Player.GetGameSkill(tm[i].Players[0], false, true) *
+                (1 + homeAdvantage * (i == 0 ? 1 : 0));
+
+            for (int j = 1; j < 11; j++)
+            {
+                if (tm[i].Players[j].Cskill > 0)
+                {
+                    teamValues[i, (int)Models.GameTeamValue.Attack] +=
+                        GetPlayerContribution(tm[i].Players[j], (int)Models.GameTeamValue.Attack, true);
+                    teamValues[i, (int)Models.GameTeamValue.Midfield] +=
+                        GetPlayerContribution(tm[i].Players[j], (int)Models.GameTeamValue.Midfield, true);
+                    teamValues[i, (int)Models.GameTeamValue.Defend] +=
+                        GetPlayerContribution(tm[i].Players[j], (int)Models.GameTeamValue.Defend, true);
+                }
+            }
+
+            for (int j = (int)Models.GameTeamValue.Defend; j < (int)Models.GameTeamValue.Defend + 3; j++)
+                teamValues[i, j] *= (1 + homeAdvantage * (i == 0 ? 1 : 0));
+
+            teamValues[i, (int)Models.GameTeamValue.Defend] *= (1 - styleFactor);
+            teamValues[i, (int)Models.GameTeamValue.Attack] *= (1 + styleFactor);
+        }
     }
 
     /// <summary>
@@ -37,8 +79,23 @@ public static class Game
     /// <returns>The player's contribution depending on position and fitness.</returns>
     public static float GetPlayerContribution(Models.Player pl, int type, bool special)
     {
-        // Implementation depends on the not yet converted player_get_game_skill function.
-        throw new NotImplementedException();
+        // How the cskill of field players get weighted for the team values in
+        // a match. Rows are player position, columns value type.
+        float[,] playerWeights =
+            {
+                { OptionHelper.ConstFloat("float_player_team_weight_defender_defense"),
+                  OptionHelper.ConstFloat("float_player_team_weight_defender_midfield"),
+                  OptionHelper.ConstFloat("float_player_team_weight_defender_attack") },
+                { OptionHelper.ConstFloat("float_player_team_weight_midfielder_defense"),
+                  OptionHelper.ConstFloat("float_player_team_weight_midfielder_midfield"),
+                  OptionHelper.ConstFloat("float_player_team_weight_midfielder_attack") },
+                { OptionHelper.ConstFloat("float_player_team_weight_forward_defense"),
+                  OptionHelper.ConstFloat("float_player_team_weight_forward_midfield"),
+                  OptionHelper.ConstFloat("float_player_team_weight_forward_attack") }
+            };
+
+        return Player.GetGameSkill(pl, false, special) *
+            playerWeights[(int)pl.Cpos - 1, type - (int)Models.GameTeamValue.Defend];
     }
 
     /// <summary>
@@ -54,9 +111,66 @@ public static class Game
     /// <returns>A player index.</returns>
     public static int GetPlayer(Models.Team tm, int playerType, int lastPenalty, int notThisOne, bool skills)
     {
-        // Implementation depends on the not yet converted game_get_player_probs and
-        // game_get_penalty_taker functions.
-        throw new NotImplementedException();
+        int player = notThisOne;
+        float[] weights = new float[3];
+        float[] probs = new float[10];
+        double rndom;
+
+        if (playerType == (int)GamePlayerType.Attack)
+        {
+            weights[0] = OptionHelper.ConstFloat("float_game_player_weight_attack_def");
+            weights[1] = OptionHelper.ConstFloat("float_game_player_weight_attack_mid");
+            weights[2] = OptionHelper.ConstFloat("float_game_player_weight_attack_fwd");
+        }
+        else if (playerType == (int)GamePlayerType.Midfield)
+        {
+            weights[0] = OptionHelper.ConstFloat("float_game_player_weight_midfield_def");
+            weights[1] = OptionHelper.ConstFloat("float_game_player_weight_midfield_mid");
+            weights[2] = OptionHelper.ConstFloat("float_game_player_weight_midfield_fwd");
+        }
+        else if (playerType == (int)GamePlayerType.Defend)
+        {
+            weights[0] = OptionHelper.ConstFloat("float_game_player_weight_defend_def");
+            weights[1] = OptionHelper.ConstFloat("float_game_player_weight_defend_mid");
+            weights[2] = OptionHelper.ConstFloat("float_game_player_weight_defend_fwd");
+        }
+        else if (playerType == (int)GamePlayerType.Penalty)
+            return GetPenaltyTaker(tm, lastPenalty);
+        else
+            throw new Exception($"game_get_player: unknown player type {playerType}");
+
+        GetPlayerProbs(tm.Players, probs, weights, skills);
+
+        if (probs[9] > 0)
+        {
+            while (player == notThisOne)
+            {
+                rndom = MathHelper.Rnd(0, probs[9]);
+
+                if (rndom < probs[0])
+                    player = tm.Players[1].Id;
+                else
+                    for (int i = 1; i < 10; i++)
+                        if (rndom < probs[i] && rndom > probs[i - 1])
+                            player = tm.Players[i + 1].Id;
+            }
+        }
+        else
+        {
+            Debug.DebugPrintMessage("game_get_player: All players injured or banned, apparently.");
+            // The C version also prints the league/cup name (league_cup_get_name_string),
+            // which is not converted yet.
+            Console.WriteLine($"{tm.Name} player list:");
+            for (int i = 0; i < tm.Players.Count; i++)
+            {
+                if (i < 10)
+                    Console.Write($"prob {probs[i]:0.000}  ");
+                Console.WriteLine($"{i} {tm.Players[i].Name,20} health {(int)tm.Players[i].Health} cskill {tm.Players[i].Cskill:0.00}");
+            }
+            throw new Exception("game_get_player: All players injured or banned, apparently.");
+        }
+
+        return player;
     }
 
     /// <summary>
@@ -71,8 +185,26 @@ public static class Game
     /// <param name="skills">Whether to weight with skills, too.</param>
     public static void GetPlayerProbs(List<Models.Player> players, float[] probs, float[] weights, bool skills)
     {
-        // Implementation depends on the not yet converted player_get_game_skill function.
-        throw new NotImplementedException();
+        probs[0] = (skills) ?
+            Player.GetGameSkill(players[1], false, true) *
+            weights[(int)players[1].Cpos - 1] :
+            weights[(int)players[1].Cpos - 1] *
+            (players[1].Cskill != 0 ? 1 : 0);
+
+        probs[0] *= (1 + (float)players[1].Streak *
+            OptionHelper.ConstFloat("float_player_streak_influence_skill"));
+
+        for (int i = 1; i < 10; i++)
+        {
+            probs[i] = probs[i - 1] +
+                ((skills) ?
+                    Player.GetGameSkill(players[i + 1], false, true) *
+                    weights[(int)players[i + 1].Cpos - 1] :
+                    weights[(int)players[i + 1].Cpos - 1] *
+                    (players[i + 1].Cskill != 0 ? 1 : 0));
+            probs[i] *= (1 + (float)players[i + 1].Streak *
+                OptionHelper.ConstFloat("float_player_streak_influence_skill"));
+        }
     }
 
     /// <summary>
@@ -85,8 +217,27 @@ public static class Game
     /// <returns>A player id.</returns>
     public static int GetPenaltyTaker(Models.Team tm, int lastPenalty)
     {
-        // Implementation depends on the player and sorting functions that are yet to be converted.
-        throw new NotImplementedException();
+        int returnValue = -1;
+        List<Models.Player> players = new List<Models.Player>();
+
+        for (int i = 0; i < 11; i++)
+            if (tm.Players[i].Cskill != 0)
+                players.Add(tm.Players[i]);
+
+        players.Sort((pl1, pl2) => Models.Player.CompareFunc(pl1, pl2, (int)Models.PlayerCompareAttrib.GameSkill));
+
+        if (lastPenalty == -1 ||
+            lastPenalty == players[players.Count - 1].Id)
+            returnValue = players[0].Id;
+
+        for (int i = 0; i < players.Count - 1; i++)
+            if (lastPenalty == players[i].Id)
+            {
+                returnValue = players[i + 1].Id;
+                break;
+            }
+
+        return returnValue;
     }
 
     /// <summary>

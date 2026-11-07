@@ -5,35 +5,35 @@ using System.Collections.Generic;
 /// <summary>
 /// Indices for the money_in array. Corresponds to C enum MonIn.
 /// </summary>
-public enum MoneyInType
+public enum MonIn
 {
-    Prize = 0,
-    Ticket,
-    Sponsor,
-    Bets,
-    Transfers,
-    End
+    MonInPrize = 0,        // MON_IN_PRIZE
+    MonInTicket,           // MON_IN_TICKET
+    MonInSponsor,          // MON_IN_SPONSOR
+    MonInBets,             // MON_IN_BETS
+    MonInTransfers,        // MON_IN_TRANSFERS
+    MonInEnd               // MON_IN_END
 }
 
 /// <summary>
 /// Indices for the money_out array. Corresponds to C enum MonOut.
 /// </summary>
-public enum MoneyOutType
+public enum MonOut
 {
-    Wage = 0,
-    Physio,
-    Scout,
-    YellowCard,
-    YouthAcademy,
-    Journey,
-    Compensations,
-    Bets,
-    Boost,
-    Transfers,
-    StadiumImprovement,
-    StadiumBills,
-    TrainingCamp,
-    End
+    MonOutWage = 0,                    // MON_OUT_WAGE
+    MonOutPhysio,                      // MON_OUT_PHYSIO
+    MonOutScout,                       // MON_OUT_SCOUT
+    MonOutYc,                          // MON_OUT_YC
+    MonOutYa,                          // MON_OUT_YA
+    MonOutJourney,                     // MON_OUT_JOURNEY
+    MonOutCompensations,               // MON_OUT_COMPENSATIONS
+    MonOutBets,                        // MON_OUT_BETS
+    MonOutBoost,                       // MON_OUT_BOOST
+    MonOutTransfers,                   // MON_OUT_TRANSFERS
+    MonOutStadiumImprovement,          // MON_OUT_STADIUM_IMPROVEMENT
+    MonOutStadiumBills,                // MON_OUT_STADIUM_BILLS
+    MonOutTrainingCamp,                // MON_OUT_TRAINING_CAMP
+    MonOutEnd                          // MON_OUT_END
 }
 
 /// <summary>
