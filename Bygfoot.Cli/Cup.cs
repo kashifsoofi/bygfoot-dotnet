@@ -172,7 +172,7 @@ public class Cup
     public List<Fixture> Fixtures { get; set; } = new List<Fixture>();
 
     /// <summary>Array of custom breaks in schedule. Corresponds to C: GArray *week_breaks.</summary>
-    public List<int> WeekBreaks { get; set; } = new List<int>();
+    public List<WeekBreak> WeekBreaks { get; set; } = new List<WeekBreak>();
 
     /// <summary>Pointer array with the sids of competitions. Corresponds to C: GPtrArray *skip_weeks_with.</summary>
     public List<string> SkipWeeksWith { get; set; } = new List<string>();
@@ -205,7 +205,7 @@ public class Cup
         newCup.Teams = new List<int>();
         newCup.TeamNames = new List<string>();
         newCup.Fixtures = new List<Fixture>();
-        newCup.WeekBreaks = new List<int>();
+        newCup.WeekBreaks = new List<WeekBreak>();
         newCup.SkipWeeksWith = new List<string>();
 
         return newCup;
