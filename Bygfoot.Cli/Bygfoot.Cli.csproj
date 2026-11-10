@@ -12,6 +12,7 @@
         <PackageReference Include="GirCore.Gtk-4.0" />
         <PackageReference Include="Serilog" />
         <PackageReference Include="Serilog.Sinks.Console" />
+        <PackageReference Include="Serilog.Sinks.File" />
     </ItemGroup>
 
     <Target Name="CompileGlibResourcesForBuild" BeforeTargets="CoreCompile">

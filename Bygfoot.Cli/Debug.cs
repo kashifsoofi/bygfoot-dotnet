@@ -3,6 +3,9 @@ namespace Bygfoot.Cli;
 using System;
 using System.IO;
 using System.Linq;
+using Serilog;
+using Serilog.Core;
+using Serilog.Events;
 
 /// <summary>
 /// Debug output options. Corresponds to C enum DebugOutput.
@@ -19,6 +22,55 @@ public enum DebugOutput
 /// </summary>
 public static class Debug
 {
+    /// <summary>
+    /// The level switch controlling the global Serilog logger's minimum level.
+    /// Kept in sync with <see cref="Variables.DebugLevel"/>.
+    /// </summary>
+    private static readonly LoggingLevelSwitch LevelSwitch = new(LogEventLevel.Information);
+
+    /// <summary>
+    /// Configures the global Serilog logger with a console sink (stdout) and/or a
+    /// file sink appending to $HOME/.bygfoot/bygfoot.log, depending on the current
+    /// <see cref="Variables.DebugOutput"/> mode. Corresponds to the output behavior
+    /// of C's debug_print_message (src/debug.c): stdout via g_warning and an
+    /// ISO8601-timestamped append to the log file.
+    /// </summary>
+    public static void InitializeLogging()
+    {
+        var configuration = new LoggerConfiguration()
+            .MinimumLevel.ControlledBy(LevelSwitch);
+
+        if (Variables.DebugOutput != (int)DebugOutput.DebugOutLogfile)
+            configuration = configuration.WriteTo.Console(
+                outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}");
+
+        if (Variables.DebugOutput != (int)DebugOutput.DebugOutStdout)
+        {
+            string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string logDir = Path.Combine(home, Bygfoot.HomeDirName);
+            Directory.CreateDirectory(logDir);
+            configuration = configuration.WriteTo.File(
+                Path.Combine(logDir, "bygfoot.log"),
+                outputTemplate: "{Timestamp:o} {Message:lj}{NewLine}{Exception}");
+        }
+
+        Log.Logger = configuration.CreateLogger();
+        SyncMinimumLevel();
+    }
+
+    /// <summary>
+    /// Synchronizes the global logger's minimum level with <see cref="Variables.DebugLevel"/>:
+    /// 0-1 = Information, 2 = Debug, 3 or more = Verbose.
+    /// </summary>
+    public static void SyncMinimumLevel()
+    {
+        LevelSwitch.MinimumLevel = Variables.DebugLevel switch
+        {
+            <= 1 => LogEventLevel.Information,
+            2 => LogEventLevel.Debug,
+            _ => LogEventLevel.Verbose
+        };
+    }
     /// <summary>
     /// Take some debug action depending on the text. Text is a prefix and a number.
     /// Corresponds to C: debug_action(const gchar *text).
@@ -53,6 +105,7 @@ public static class Debug
         if (prefix == "deb")
         {
             Variables.DebugLevel = value;
+            SyncMinimumLevel();
             DebugPrintMessage($"Debug value set to {value}.");
         }
         // Other actions require more implementation/dependencies.
@@ -115,32 +168,14 @@ public static class Debug
     }
 
     /// <summary>
-    /// Prints a formatted message to the console and/or a log file.
-    /// Corresponds to C: debug_print_message(gchar *format, ...).
+    /// Prints a formatted message to the console and/or a log file, depending on the
+    /// current <see cref="Variables.DebugOutput"/> mode (see <see cref="InitializeLogging"/>).
+    /// Corresponds to C: debug_print_message(gchar *format, ...), which writes to stdout
+    /// via g_warning and appends to the log file; the C# equivalent routes the message
+    /// through the global Serilog logger at Warning level.
     /// </summary>
     public static void DebugPrintMessage(string format, params object?[] args)
     {
-        string message = string.Format(format, args);
-
-        if (Variables.DebugOutput != (int)DebugOutput.DebugOutLogfile)
-        {
-            Console.WriteLine(message);
-        }
-
-        if (Variables.DebugOutput != (int)DebugOutput.DebugOutStdout)
-        {
-            string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            string logFilePath = Path.Combine(home, "bygfoot.log");
-
-            try
-            {
-                string logEntry = $"{DateTime.Now:yyyy-MM-ddTHH:mm:ss.fffK} {message}{Environment.NewLine}";
-                File.AppendAllText(logFilePath, logEntry);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Couldn't open log file: {ex.Message}");
-            }
-        }
+        Log.Warning(string.Format(format, args));
     }
 }

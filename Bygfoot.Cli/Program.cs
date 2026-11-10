@@ -23,11 +23,7 @@ public class Program
     {
         // 1. Initialization (Equivalent to GTK_INIT and file I/O setup)
         // In a console application, we replace GTK startup with simple Console context.
-        Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Information()
-            .WriteTo.Console(
-                outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
-            .CreateLogger();
+        Debug.InitializeLogging();
 
         try
         {
