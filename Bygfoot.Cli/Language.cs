@@ -29,7 +29,7 @@ public static class Language
         if (code == "en")
             localCode = "C";
 
-        List<string> codes = Misc.MiscSeparateStrings(Variables.Options.GetString("string_language_codes"));
+        List<string> codes = Misc.MiscSeparateStrings(OptionHelper.ConstStr("string_language_codes"));
         int returnValue = -1;
 
         for (int i = 0; i < codes.Count; i++)
@@ -109,8 +109,8 @@ public static class Language
     /// <param name="countryFiles">The country files.</param>
     public static void LanguagePickCountry(List<string> countryFiles)
     {
-        List<string> codes = Misc.MiscSeparateStrings(Variables.Options.GetString("string_language_codes"));
-        List<string> defs = Misc.MiscSeparateStrings(Variables.Options.GetString("string_language_defs"));
+        List<string> codes = Misc.MiscSeparateStrings(OptionHelper.ConstStr("string_language_codes"));
+        List<string> defs = Misc.MiscSeparateStrings(OptionHelper.ConstStr("string_language_defs"));
         string prefdef = null;
         string lang = Environment.GetEnvironmentVariable("LANGUAGE");
 

@@ -357,6 +357,13 @@ public static class FileHelper
             optValue = parts[1];
             return true;
         }
+        if (parts.Length == 1)
+        {
+            // C: name-only lines (e.g. "string_opt_language_code") yield an
+            // empty value — sscanf leaves opt_value as "".
+            optName = parts[0];
+            return true;
+        }
 
         return false;
     }
