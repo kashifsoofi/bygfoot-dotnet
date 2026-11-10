@@ -361,6 +361,19 @@ public class League
     }
 
     /// <summary>
+    /// Return the name of the league or cup with the given id.
+    /// Corresponds to C macro: league_cup_get_name_string.
+    /// </summary>
+    /// <param name="clid">The league or cup id.</param>
+    /// <returns>The name of the league or cup.</returns>
+    public static string LeagueCupGetNameString(int clid)
+    {
+        return clid < Bygfoot.IdCupStart
+            ? LeagueFromClid(clid).Name
+            : Cup.CupFromClid(clid).Name;
+    }
+
+    /// <summary>
     /// Return the id of the next league (or cup if we are at the end of the leagues array).
     /// Corresponds to C: league_cup_get_next_clid.
     /// </summary>

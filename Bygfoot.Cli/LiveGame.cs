@@ -196,6 +196,59 @@ public class LiveGame
     }
 
     /// <summary>
+    /// Reset the live game variable before we begin a new live game.
+    /// Corresponds to C: live_game_reset.
+    /// </summary>
+    /// <param name="liveGame">The pointer to the live game.</param>
+    /// <param name="fix">The fixture we'll show.</param>
+    /// <param name="freeVariable">Whether or not to free the variable before resetting (a no-op in C#).</param>
+    public static void Reset(LiveGame liveGame, Fixture fix, bool freeVariable)
+    {
+        if (freeVariable)
+            Free.FreeLiveGame(liveGame);
+
+        liveGame.StartedGame = -1;
+        liveGame.Units = new List<LiveGameUnit>();
+        liveGame.ActionIds[0] = new List<List<int>>();
+        liveGame.ActionIds[1] = new List<List<int>>();
+
+        for (int i = 0; i < (int)LiveGameStatArray.End; i++)
+        {
+            liveGame.Stats.Players[0, i] = new List<object>();
+            liveGame.Stats.Players[1, i] = new List<object>();
+        }
+        liveGame.Stats.Possession = 0;
+        for (int i = 0; i < (int)LiveGameStatValue.End; i++)
+            liveGame.Stats.Values[0, i] = liveGame.Stats.Values[1, i] = 0;
+
+        liveGame.Fix = fix;
+        if (fix != null)
+        {
+            liveGame.FixId = fix.Id;
+            liveGame.TeamNames[0] = fix.Teams[0].Name;
+            liveGame.TeamNames[1] = fix.Teams[1].Name;
+        }
+        else
+        {
+            liveGame.FixId = -1;
+            liveGame.Attendance = -1;
+            liveGame.TeamNames[0] = null;
+            liveGame.TeamNames[1] = null;
+        }
+
+        liveGame.SubsLeft[0] = 3;
+        liveGame.SubsLeft[1] = 3;
+        liveGame.StadiumEvent = -1;
+
+        if (fix != null && fix.HomeAdvantage)
+            liveGame.HomeAdvantage = (float)MathHelper.Rnd(
+                OptionHelper.ConstFloat("float_game_home_advantage_lower"),
+                OptionHelper.ConstFloat("float_game_home_advantage_upper"));
+        else
+            liveGame.HomeAdvantage = 0;
+    }
+
+    /// <summary>
     /// Initialize a few things at the beginning of a live game.
     /// Corresponds to C: live_game_initialize.
     /// </summary>
