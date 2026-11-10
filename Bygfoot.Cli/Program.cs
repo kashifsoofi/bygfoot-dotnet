@@ -1,4 +1,5 @@
 using System.Reflection;
+using Serilog;
 
 namespace Bygfoot.Cli;
     
@@ -22,47 +23,54 @@ public class Program
     {
         // 1. Initialization (Equivalent to GTK_INIT and file I/O setup)
         // In a console application, we replace GTK startup with simple Console context.
-        Console.WriteLine("--- Bygfoot Application Starting ---");
-        Gtk.Module.Initialize();
-        GirCore.Integration.Initialize();
-        RegisterResources();
-
-        // 2. Initial Setup (main_init sequence)
-        InitializeApplication(args);
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Information()
+            .WriteTo.Console(
+                outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
+            .CreateLogger();
 
         try
         {
+            Log.Information("--- Bygfoot Application Starting ---");
+
+            Gtk.Module.Initialize();
+            GirCore.Integration.Initialize();
+            RegisterResources();
+
+            // 2. Initial Setup (main_init sequence)
+            InitializeApplication(args);
+
             // 3. Application Startup Sequence (Equivalent to checking flags and running the game)
             if (!DebugMode && Variables.LiveGames.Count == 0)
             {
-                Console.WriteLine("Starting fresh application run.");
+                Log.Information("Starting fresh application run.");
             }
 
             // Load game if requested or necessary data is missing/being simulated
             if (LoadLastSave || !CommandLineArguments.Any())
             {
-                Console.WriteLine("Loading game state or starting new simulation...");
+                Log.Information("Loading game state or starting new simulation...");
                 // In a real conversion, this calls load_game_from_command_line() logic
                 // and determines the initial status (STATUS_SPLASH or STATUS_TEAM_SELECTION).
             }
 
             // --- Game Loop Equivalent (gtk_main()) ---
-            Console.WriteLine("\n--- Application Running. Waiting for commands or simulation ticks... ---");
+            Log.Information("--- Application Running. Waiting for commands or simulation ticks... ---");
 
             // Simulate running the game until quit signal is received
             RunGameLoop();
-
         }
         catch (Exception ex)
         {
             // Handle errors gracefully, replacing misc_print_error() calls.
-            Console.WriteLine($"[FATAL ERROR] An unexpected error occurred: {ex.Message}");
+            Log.Fatal(ex, "An unexpected error occurred.");
         }
         finally
         {
             // 4. Cleanup (Equivalent to main_exit_program)
             // Globals.ClearGlobals();
-            Console.WriteLine("\n--- Bygfoot Application Exited Cleanly ---");
+            Log.Information("--- Bygfoot Application Exited Cleanly ---");
+            Log.CloseAndFlush();
         }
     }
 
@@ -73,14 +81,14 @@ public class Program
     private static void InitializeApplication(string[] args)
     {
         // Equivalent to main_parse_debug_cl_arguments and setting up support directories.
-        Console.WriteLine("Parsing command line arguments...");
+        Log.Information("Parsing command line arguments...");
 
         // --- Complex CL Argument Parsing (main_parse_cl_arguments) ---
         if (args.Length > 0)
         {
             // Simplified check: if any args exist, we are in a non-default run mode.
             // A full implementation would map args to fields like country_sid, lang, etc.
-            Console.WriteLine($"Received {args.Length} arguments.");
+            Log.Information("Received {ArgumentCount} arguments.", args.Length);
         }
 
         // Set initial application state and parse internal options/settings.
@@ -96,7 +104,7 @@ public class Program
         int tick = 0;
         while (tick < 5) // Arbitrary limit for simulation display
         {
-            Console.WriteLine($"\n--- Game Tick {++tick} ---");
+            Log.Information("--- Game Tick {Tick} ---", ++tick);
             // In a real application, this involves:
             // 1. Processing Input (User enters command)
             // 2. Advancing Game State (e.g., Simulation tick advances time/matches)
