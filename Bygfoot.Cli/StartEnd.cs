@@ -275,8 +275,7 @@ public static class StartEnd
                     Fixture.ResultToBuf(fix, ref buf, false);
                     string buf2 = $"{fix.Teams[0].Name} {buf} {fix.Teams[1].Name}";
 
-                    // gui_show_progress(done / numMatches, buf2, PIC_TYPE_MATCHPIC);
-                    // TODO: Call the C function gui_show_progress (not yet converted).
+                    Gui.GuiShowProgress((float)done / numMatches, buf2, PicType.PicTypeMatchpic);
 
                     if (Variables.DebugLevel > 120)
                         Console.WriteLine($"{buf2} ");
@@ -309,8 +308,7 @@ public static class StartEnd
                     Fixture.ResultToBuf(fix, ref buf, false);
                     string buf2 = $"{fix.Teams[0].Name} {buf} {fix.Teams[1].Name}";
 
-                    // gui_show_progress(done / numMatches, buf2, PIC_TYPE_MATCHPIC);
-                    // TODO: Call the C function gui_show_progress (not yet converted).
+                    Gui.GuiShowProgress((float)done / numMatches, buf2, PicType.PicTypeMatchpic);
 
                     if (Variables.DebugLevel > 120)
                         Console.WriteLine($"{buf2} ");
@@ -318,8 +316,7 @@ public static class StartEnd
             }
         }
 
-        // gui_show_progress(-1, "", PIC_TYPE_MATCHPIC);
-        // TODO: Call the C function gui_show_progress (not yet converted).
+        Gui.GuiShowProgress(-1, "", PicType.PicTypeMatchpic);
     }
 
     /// <summary>Sort league and cup tables.</summary>

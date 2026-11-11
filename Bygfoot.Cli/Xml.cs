@@ -164,6 +164,12 @@ public static class Xml
         League league = new League();
         LeagueXmlLoadSave.LeagueXmlLoadSaveRead(leagueFile, teamFile, league);
 
+        string buf = $"Loading league: {league.Name}";
+        Gui.GuiShowProgress((float)Gui.GuiGetProgressBarFraction(), buf, PicType.PicTypeLoad);
+
+        if (Variables.DebugLevel > 80)
+            Debug.DebugPrintMessage($"{buf}\n");
+
         string fixturesFile = Path.Combine(dirname, prefix + "_fixtures.xml");
         FixturesXmlLoadSave.FixturesXmlLoadSaveRead(fixturesFile, league.Fixtures);
 
@@ -188,6 +194,13 @@ public static class Xml
 
         Cup cup = new Cup();
         CupXml.XmlCupRead(basename, new List<Cup>());
+
+        string buf = $"Loading cup: {cup.Name}";
+        Gui.GuiShowProgress((float)Gui.GuiGetProgressBarFraction(), buf, PicType.PicTypeLoad);
+
+        if (Variables.DebugLevel > 80)
+            Debug.DebugPrintMessage($"{buf}\n");
+
         FixturesXmlLoadSave.FixturesXmlLoadSaveRead(Path.Combine(dirname, prefix + "_fixtures.xml"), cup.Fixtures);
     }
 

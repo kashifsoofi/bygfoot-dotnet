@@ -28,7 +28,7 @@ public static class LoadSave
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_save options\n");
 
-        // TODO: Call the C function gui_show_progress(0, "Saving options...", PIC_TYPE_SAVE) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress(0, "Saving options...", PicType.PicTypeSave);
 
         FileHelper.SaveOptFile(prefix + "___options", Variables.Options);
         FileHelper.SaveOptFile(prefix + "___settings", Variables.Settings);
@@ -36,64 +36,64 @@ public static class LoadSave
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_save leagues/cups \n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Saving leagues and cups...", PIC_TYPE_SAVE) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Saving leagues and cups...", PicType.PicTypeSave);
 
         LeaguesCupsXmlLoadSave.LeaguesCupsXmlLoadSaveWrite(prefix);
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_save users \n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Saving users...", PIC_TYPE_SAVE) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Saving users...", PicType.PicTypeSave);
 
         UsersXmlLoadSave.UsersXmlLoadSaveWrite(prefix);
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_save transfers \n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Saving transfer list...", PIC_TYPE_SAVE) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Saving transfer list...", PicType.PicTypeSave);
 
         TransfersXmlLoadSave.TransfersXmlLoadSaveWrite(prefix);
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_save stats \n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Saving season stats...", PIC_TYPE_SAVE) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Saving season stats...", PicType.PicTypeSave);
 
         SeasonStatsXmlLoadSave.SeasonStatsXmlLoadSaveWrite(prefix);
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_save jobs \n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Saving job exchange...", PIC_TYPE_SAVE) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Saving job exchange...", PicType.PicTypeSave);
 
         JobsXmlLoadSave.JobsXmlLoadSaveWrite(prefix);
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_save newspaper \n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Saving newspaper...", PIC_TYPE_SAVE) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Saving newspaper...", PicType.PicTypeSave);
 
         NewspaperXmlLoadSave.NewspaperXmlLoadSaveWrite(prefix);
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_save misc \n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Saving miscellaneous...", PIC_TYPE_SAVE) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Saving miscellaneous...", PicType.PicTypeSave);
 
         MiscXmlLoadSave.MiscXmlLoadSaveWrite(prefix);
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Compressing savegame...", PIC_TYPE_SAVE) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Compressing savegame...", PicType.PicTypeSave);
 
         FileHelper.CompressFiles(fullname, prefix + "___");
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_save done \n");
 
-        // TODO: Call the C function gui_show_progress(1, "Done.", PIC_TYPE_SAVE) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress(1, "Done.", PicType.PicTypeSave);
 
         FileHelper.StoreTextInSaves("last_save", fullname);
 
-        // TODO: Call the C function gui_show_progress(-1, "", PIC_TYPE_SAVE) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress(-1, "", PicType.PicTypeSave);
         // TODO: Apply the setsav1 macro (disables the save button and save menu of the main window; src/game_gui.h is not yet converted).
     }
 
@@ -131,14 +131,14 @@ public static class LoadSave
 
         // TODO: Hide the main window if it is shown (window.main != NULL -> gtk_widget_hide(window.main)); (src/window.c is not yet converted).
 
-        // TODO: Call the C function gui_show_progress(0, "Uncompressing savegame...", PIC_TYPE_LOAD) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress(0, "Uncompressing savegame...", PicType.PicTypeLoad);
 
         FileHelper.Decompress(fullname);
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_load options\n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Loading options...", PIC_TYPE_LOAD) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Loading options...", PicType.PicTypeLoad);
 
         FileHelper.LoadOptFile(Path.Combine(dirname, prefix + "___options"), Variables.Options, false);
         FileHelper.LoadOptFile(Path.Combine(dirname, prefix + "___settings"), Variables.Settings, false);
@@ -147,56 +147,56 @@ public static class LoadSave
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_load leagues \n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Loading leagues and cups...", PIC_TYPE_LOAD) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Loading leagues and cups...", PicType.PicTypeLoad);
 
         LeaguesCupsXmlLoadSave.LeaguesCupsXmlLoadSaveRead(dirname, prefix);
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_load users \n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Loading users...", PIC_TYPE_LOAD) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Loading users...", PicType.PicTypeLoad);
 
         Xml.XmlLoadUsers(dirname, prefix);
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_load transfers \n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Loading transfer list...", PIC_TYPE_LOAD) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Loading transfer list...", PicType.PicTypeLoad);
 
         Xml.XmlLoadTransfers(dirname, prefix);
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_load stats \n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Loading season stats...", PIC_TYPE_LOAD) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Loading season stats...", PicType.PicTypeLoad);
 
         SeasonStatsXmlLoadSave.SeasonStatsXmlLoadSaveRead(dirname, prefix);
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_load jobs \n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Loading job exchange...", PIC_TYPE_LOAD) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Loading job exchange...", PicType.PicTypeLoad);
 
         JobsXmlLoadSave.JobsXmlLoadSaveRead(dirname, prefix);
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_load newspaper \n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Loading newspaper...", PIC_TYPE_LOAD) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Loading newspaper...", PicType.PicTypeLoad);
 
         NewspaperXmlLoadSave.NewspaperXmlLoadSaveRead(dirname, prefix);
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_load misc \n");
 
-        // TODO: Call the C function gui_show_progress(((PROGRESS_MAX * gui_get_progress_bar_fraction()) + 1) / PROGRESS_MAX, "Loading miscellaneous...", PIC_TYPE_LOAD) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress((float)((ProgressMax * Gui.GuiGetProgressBarFraction()) + 1) / ProgressMax, "Loading miscellaneous...", PicType.PicTypeLoad);
 
         MiscXmlLoadSave.MiscXmlLoadSaveRead(dirname, prefix);
 
         if (Variables.DebugLevel > 60)
             Debug.DebugPrintMessage("load_save_load done \n");
 
-        // TODO: Call the C function gui_show_progress(1, "Done.", PIC_TYPE_LOAD) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress(1, "Done.", PicType.PicTypeLoad);
 
         Directory.SetCurrentDirectory(dirname);
         List<string> files = FileHelper.GetDirectoryContents(dirname, prefix, "");
@@ -215,7 +215,7 @@ public static class LoadSave
 
         FileHelper.StoreTextInSaves("last_save", fullname);
 
-        // TODO: Call the C function gui_show_progress(-1, "", PIC_TYPE_LOAD) (src/gui.c is not yet converted).
+        Gui.GuiShowProgress(-1, "", PicType.PicTypeLoad);
 
         if (createMainWindow)
         {
