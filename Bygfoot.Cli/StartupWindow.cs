@@ -56,7 +56,7 @@ public partial class StartupWindow
     /// "delete_event" signal of GTK3). Corresponds to the C handler
     /// on_team_selection_cancel_clicked of the delete_event signal.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function main_exit_program(EXIT_OK, NULL).
         return true;

@@ -36,7 +36,7 @@ public partial class WarningWindow
     /// to the C handler on_button_warning_clicked). Corresponds to the C handler
     /// on_button_warning_clicked of the close-request signal.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function on_button_warning_clicked (which destroys the warning window and shows the next event).
         return true;

@@ -50,7 +50,7 @@ public partial class AlrWindow
     /// on_window_alr_delete_event of the close-request signal, which itself
     /// calls on_button_alr_cancel_clicked and destroys the alr window.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function on_window_alr_delete_event (which calls on_button_alr_cancel_clicked and destroys the alr window).
         return true;

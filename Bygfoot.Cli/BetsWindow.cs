@@ -36,7 +36,7 @@ public partial class BetsWindow
     /// on_window_bets_delete_event of the close-request signal, which itself
     /// calls on_button_bet_close_clicked and destroys the bets window.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function on_window_bets_delete_event (which calls on_button_bet_close_clicked and destroys the bets window).
         return true;

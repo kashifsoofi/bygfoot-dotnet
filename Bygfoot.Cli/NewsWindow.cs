@@ -35,7 +35,7 @@ public partial class NewsWindow
     /// on_window_news_delete_event of the close-request signal, which itself
     /// destroys the news window.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function on_window_news_delete_event (which destroys the news window).
         return true;

@@ -58,7 +58,7 @@ public partial class TrainingCampWindow
     /// on_window_training_camp_delete_event of the close-request signal, which
     /// itself calls on_b_cancel_clicked.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function on_window_training_camp_delete_event (which calls on_b_cancel_clicked and destroys the training camp window).
         return true;

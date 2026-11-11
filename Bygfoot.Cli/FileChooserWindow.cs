@@ -58,7 +58,7 @@ public partial class FileChooserWindow
     /// "delete_event" signal of GTK3). Corresponds to the C handler
     /// on_window_file_chooser_delete_event.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function window_show_file_sel and handle the cancel response (then window_destroy the file chooser window).
         return true;

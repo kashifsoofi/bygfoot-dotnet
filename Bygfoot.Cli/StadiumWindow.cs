@@ -41,7 +41,7 @@ public partial class StadiumWindow
     /// "delete_event" signal of GTK3). Corresponds to the C handler
     /// on_window_stadium_delete_event of the delete_event signal.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function on_window_stadium_delete_event (which closes the stadium window).
         return true;

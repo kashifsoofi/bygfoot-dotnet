@@ -40,7 +40,7 @@ public partial class YesNoWindow
     /// on_window_yesno_delete_event of the close-request signal, which itself
     /// calls on_button_yesno_no_clicked and shows the next event.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function on_window_yesno_delete_event (which calls on_button_yesno_no_clicked and shows the next event).
         return true;

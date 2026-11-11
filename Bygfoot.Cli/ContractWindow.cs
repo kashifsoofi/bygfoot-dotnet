@@ -40,7 +40,7 @@ public partial class ContractWindow
     /// "delete_event" signal of GTK3). Corresponds to the C handler
     /// on_window_contract_delete_event of the close-request signal.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function on_window_contract_delete_event (which destroys the contract window).
         return true;

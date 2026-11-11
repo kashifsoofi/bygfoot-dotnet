@@ -75,7 +75,7 @@ public partial class MainWindow
     /// "delete_event" signal of GTK3). Corresponds to the C handler
     /// on_button_quit_clicked of the delete_event signal of the main window.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function on_button_quit_clicked (which exits the program).
         return true;

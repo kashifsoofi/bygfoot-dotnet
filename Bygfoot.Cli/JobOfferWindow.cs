@@ -41,7 +41,7 @@ public partial class JobOfferWindow
     /// on_window_job_offer_delete_event of the close-request signal, which
     /// itself calls on_button_offer_cancel_clicked.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function on_window_job_offer_delete_event (which calls on_button_offer_cancel_clicked and destroys the job offer window).
         return true;

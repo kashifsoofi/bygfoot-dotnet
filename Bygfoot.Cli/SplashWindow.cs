@@ -55,7 +55,7 @@ public partial class SplashWindow
     /// on_window_splash_delete_event of the close-request signal, which ignores
     /// the close event and does nothing.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function on_window_splash_delete_event (which ignores the close event and does nothing).
         return true;

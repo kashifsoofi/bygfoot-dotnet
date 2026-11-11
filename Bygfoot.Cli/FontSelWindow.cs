@@ -42,7 +42,7 @@ public partial class FontSelWindow
         Show();
     }
 
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         this.Close();
         return true;

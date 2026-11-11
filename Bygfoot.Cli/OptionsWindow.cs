@@ -62,7 +62,7 @@ public partial class OptionsWindow
     /// on_window_options_delete_event of the close-request signal, which itself
     /// calls on_button_options_cancel_clicked and destroys the options window.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function on_window_options_delete_event (which calls on_button_options_cancel_clicked and destroys the options window).
         return true;

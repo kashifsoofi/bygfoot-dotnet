@@ -45,7 +45,7 @@ public partial class TransferDialogWindow
     /// on_window_transfer_dialog_delete_event of the close-request signal, which
     /// itself calls on_button_transfer_later_clicked.
     /// </summary>
-    private bool OnWindowCloseRequest(Window sender, EventArgs args)
+    private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
         // TODO: Call the C function on_window_transfer_dialog_delete_event (which calls on_button_transfer_later_clicked and destroys the transfer dialog window).
         return true;
