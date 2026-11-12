@@ -607,8 +607,69 @@ public class League
     /// <param name="league">The league.</param>
     public static void SeasonStart(League league)
     {
-        // Implementation depends on the not yet converted team, table and player functions.
-        throw new NotImplementedException();
+        int i, j;
+        int idx = LeagueIndexFromSid(league.Sid);
+
+        League league0 = Bygfoot.GetLeague(0);
+        Table league0Table = league0.Tables[league0.Tables.Count - 1];
+        Team championTeam = Team.OfId(league0Table.Elements[0].TeamId);
+
+        bool userChamp = Team.IsUser(championTeam) != -1;
+        bool leagueAboveTalent =
+            Team.GetAverageTalents(league.Teams) >
+            league.AverageTalent * OptionHelper.ConstFloat("float_season_end_league_above_talent_factor") &&
+            !userChamp;
+
+        float teamChangeLower = OptionHelper.ConstFloat("float_season_end_team_change_lower");
+        float userChampAddition = OptionHelper.ConstFloat("float_season_end_user_champ_addition");
+        float userChampBestTeamsAddition = OptionHelper.ConstFloat("float_season_end_user_champ_best_teams_addition");
+        float teamChangeUpper = OptionHelper.ConstFloat("float_season_end_team_change_upper");
+        int userChampBestTeamsLimit = OptionHelper.ConstInt("int_season_end_user_champ_best_teams_limit");
+        float teamChangeFactor = 0;
+
+        if (userChamp)
+            championTeam.Luck = Math.Max(
+                championTeam.Luck * OptionHelper.ConstFloat("float_season_end_user_champ_luck_factor"),
+                OptionHelper.ConstFloat("float_luck_limit"));
+        else
+        {
+            for (i = 0; i < Variables.Users.Count; i++)
+                if (Variables.Users[i].Team.Luck < 1)
+                    Variables.Users[i].Team.Luck =
+                        Math.Min(
+                            Variables.Users[i].Team.Luck * OptionHelper.ConstFloat("float_season_end_user_champ_luck_factor_regen"),
+                            1);
+        }
+
+        /** Reset tables */
+        league.Tables.Clear();
+        AddTable(league);
+
+        for (i = 0; i < league.Teams.Count; i++)
+        {
+            bool teamIsTop =
+                Team.GetLeagueRank(league.Teams[i], -1) <= userChampBestTeamsLimit &&
+                idx == 0 && userChamp;
+
+            teamChangeFactor =
+                (Team.IsUser(league.Teams[i]) == -1 ? 1f : 0f) *
+                (float)MathHelper.Rnd(
+                    teamChangeLower +
+                    (userChamp ? 1f : 0f) * userChampAddition +
+                    (teamIsTop ? 1f : 0f) * userChampBestTeamsAddition -
+                    (leagueAboveTalent ? 1f : 0f) * (userChampAddition / 2),
+                    teamChangeUpper +
+                    (userChamp ? 1f : 0f) * userChampAddition +
+                    (teamIsTop ? 1f : 0f) * userChampBestTeamsAddition -
+                    (leagueAboveTalent ? 1f : 0f) * (userChampAddition / 2));
+
+            for (j = 0; j < league.Teams[i].Players.Count; j++)
+                Player.SeasonStart(league.Teams[i].Players[j], teamChangeFactor);
+
+            league.Teams[i].Stadium.AverageAttendance = 0;
+            league.Teams[i].Stadium.Games = 0;
+            league.Teams[i].Stadium.PossibleAttendance = 0;
+        }
     }
 
     /// <summary>
@@ -620,8 +681,36 @@ public class League
     /// <returns>Whether the rank is in the promotion games.</returns>
     public static bool QueryLeagueRankInPromGames(League league, int rank)
     {
-        // Implementation depends on the not yet converted cup and league functions.
-        throw new NotImplementedException();
+        int i, j, k, l;
+
+        for (i = 0; i < Variables.Country.Leagues.Count; i++)
+        {
+            League currentLeague = Bygfoot.GetLeague(i);
+            if (currentLeague.PromRel.PromGames.Count > 0)
+            {
+                for (l = 0; l < currentLeague.PromRel.PromGames.Count; l++)
+                {
+                    Cup cup = Cup.CupFromSid(currentLeague.PromRel.PromGames[l].CupSid);
+                    for (k = 0; k < cup.Rounds.Count; k++)
+                    {
+                        CupRound cupRound = cup.Rounds[k];
+                        for (j = 0; j < cupRound.ChooseTeams.Count; j++)
+                        {
+                            CupChooseTeam chooseTeam = cupRound.ChooseTeams[j];
+                            if (chooseTeam.Sid == league.Sid &&
+                               ((rank >= chooseTeam.StartIdx &&
+                                 rank <= chooseTeam.EndIdx && chooseTeam.Randomly) ||
+                                (rank >= chooseTeam.StartIdx &&
+                                 rank < chooseTeam.StartIdx + chooseTeam.NumberOfTeams &&
+                                 !chooseTeam.Randomly)))
+                                return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -649,8 +738,35 @@ public class League
     /// <param name="teamMovements">The team movements.</param>
     public static void GetTeamMovementsPromRel(League league, List<TeamMove> teamMovements)
     {
-        // Implementation depends on the not yet converted misc and maths functions.
-        throw new NotImplementedException();
+        int i, j, k;
+        List<PromRelElement> elements = league.PromRel.Elements;
+
+        for (i = 0; i < elements.Count; i++)
+        {
+            PromRelElement elem = elements[i];
+            List<string> destSids = Misc.MiscSeparateStrings(elem.DestSid);
+            int[] destIdcsInt = new int[destSids.Count];
+            int[] destIdcsOrder = new int[destSids.Count];
+
+            for (j = 0; j < destSids.Count; j++)
+                destIdcsInt[j] = LeagueIndexFromSid(destSids[j]);
+
+            for (j = elem.Ranks[0]; j <= elem.Ranks[1]; j++)
+            {
+                List<int> destIdcs = new List<int>();
+                MathHelper.GeneratePermutation(destIdcsOrder, 0, destSids.Count - 1);
+
+                for (k = 0; k < destSids.Count; k++)
+                    destIdcs.Add(destIdcsInt[destIdcsOrder[k]]);
+
+                TeamMove newMove = new TeamMove();
+                newMove.Tm = league.Tables[elem.FromTable].Elements[j - 1].Team;
+                newMove.PromRelType = elem.Type;
+                newMove.DestIdcs = destIdcs;
+                newMove.DestAssigned = false;
+                teamMovements.Add(newMove);
+            }
+        }
     }
 
     /// <summary>
@@ -663,8 +779,38 @@ public class League
     /// <param name="up">Whether the movement is an upgrade.</param>
     public static void GetTeamMovementsPromGames(League league, PromGames promGames, List<TeamMove> teamMovements, List<Team> promGamesTeams, bool up)
     {
-        // Implementation depends on the not yet converted cup and team functions.
-        throw new NotImplementedException();
+        int i, j;
+        List<string> destSids = up ? Misc.MiscSeparateStrings(promGames.DestSid) : Misc.MiscSeparateStrings(promGames.LoserSid);
+        int[] destIdcsInt = new int[destSids.Count];
+        int[] destIdcsOrder = new int[destSids.Count];
+        int startIdx = 0;
+        int endIdx = promGames.NumberOfAdvance;
+        PromRelType promType = PromRelType.Promotion;
+
+        if (!up)
+        {
+            startIdx = promGames.NumberOfAdvance;
+            endIdx = promGamesTeams.Count;
+            promType = PromRelType.Relegation;
+        }
+
+        for (i = 0; i < destSids.Count; i++)
+            destIdcsInt[i] = LeagueIndexFromSid(destSids[i]);
+
+        for (i = startIdx; i < endIdx; i++)
+        {
+            List<int> destIdcs = new List<int>();
+            MathHelper.GeneratePermutation(destIdcsOrder, 0, destSids.Count - 1);
+            for (j = 0; j < destSids.Count; j++)
+                destIdcs.Add(destIdcsInt[destIdcsOrder[j]]);
+
+            TeamMove newMove = new TeamMove();
+            newMove.Tm = promGamesTeams[i];
+            newMove.PromRelType = promType;
+            newMove.DestIdcs = destIdcs;
+            newMove.DestAssigned = false;
+            teamMovements.Add(newMove);
+        }
     }
 
     /// <summary>
@@ -675,8 +821,26 @@ public class League
     /// <param name="teamMovements">The team movements.</param>
     public static void GetTeamMovements(League league, List<TeamMove> teamMovements)
     {
-        // Implementation depends on the not yet converted cup and team functions.
-        throw new NotImplementedException();
+        int i;
+
+        GetTeamMovementsPromRel(league, teamMovements);
+
+        if (league.PromRel.PromGames.Count > 0)
+        {
+            for (i = 0; i < league.PromRel.PromGames.Count; i++)
+            {
+                Cup promCup = Cup.CupFromSid(league.PromRel.PromGames[i].CupSid);
+                List<Team> promGamesTeams = Cup.CupGetTeamsSorted(promCup);
+
+                GetTeamMovementsPromGames(league, league.PromRel.PromGames[i], teamMovements, promGamesTeams, true);
+
+                if (league.PromRel.PromGames[i].LoserSid != null)
+                    GetTeamMovementsPromGames(league, league.PromRel.PromGames[i], teamMovements, promGamesTeams, false);
+            }
+        }
+
+        /** Sort the teams by their league rank (C: team_compare_func with TEAM_COMPARE_LEAGUE_RANK). */
+        league.Teams.Sort((tm1, tm2) => Team.CompareFunc(tm1, tm2, 0));
     }
 
     /// <summary>
@@ -719,8 +883,28 @@ public class League
     /// <param name="leagueCurSize">The current size of all leagues.</param>
     public static void TeamMovementsPrint(List<TeamMove> teamMovements, int[] leagueSize, int[] leagueCurSize)
     {
-        // Implementation depends on the not yet converted team, league and debug functions.
-        throw new NotImplementedException();
+        int i, j;
+
+        Console.WriteLine("{0,-25} Dest \t\t Possible\n", "Team");
+        for (i = 0; i < teamMovements.Count; i++)
+        {
+            TeamMove tmove = teamMovements[i];
+            if (tmove.DestAssigned)
+                Console.Write("{0,-25} ({1}) {2} \t\t", tmove.Tm.Name,
+                    LeagueFromClid(tmove.Tm.Clid).Layer,
+                    Variables.Country.Leagues[tmove.DestIdcs[0]].Name);
+            else
+                Console.Write("{0,-25} ({1}) UNASSIGNED \t\t", tmove.Tm.Name,
+                    LeagueFromClid(tmove.Tm.Clid).Layer);
+            for (j = 0; j < tmove.DestIdcs.Count; j++)
+                Console.Write("{0} ", tmove.DestIdcs[j]);
+            Console.WriteLine();
+        }
+
+        Console.WriteLine("{0,-20} Size Cursize", "League");
+        for (i = 0; i < Variables.Country.Leagues.Count; i++)
+            Console.WriteLine("{0,-20} {1} {2}",
+                Variables.Country.Leagues[i].Name, leagueSize[i], leagueCurSize[i]);
     }
 
     /// <summary>
@@ -733,8 +917,16 @@ public class League
     /// <returns>The comparison result.</returns>
     public static int TeamMovementsCompareDestIdcs(object a, object b, object data)
     {
-        // Implementation depends on the not yet converted league and maths functions.
-        throw new NotImplementedException();
+        int leagueIdx1 = (int)a;
+        int leagueIdx2 = (int)b;
+        int[] leagueCurSize = (int[])data;
+
+        if (leagueCurSize[leagueIdx1] < leagueCurSize[leagueIdx2])
+            return -1;
+        else if (leagueCurSize[leagueIdx1] > leagueCurSize[leagueIdx2])
+            return 1;
+
+        return 0;
     }
 
     /// <summary>
@@ -747,8 +939,64 @@ public class League
     /// <param name="leagueCurSize">The current size of all leagues.</param>
     public static void TeamMovementsAssignDest(List<TeamMove> teamMovements, int idx, int[] leagueSize, int[] leagueCurSize)
     {
-        // Implementation depends on the not yet converted team and league functions.
-        throw new NotImplementedException();
+        int i, j, destIdx;
+        TeamMove tmove = teamMovements[idx];
+
+        if (Variables.DebugLevel > 60)
+            Debug.DebugPrintMessage($"league_team_movements_assign_dest {tmove.Tm.Name}");
+
+        if (tmove.DestIdcs.Count == 1)
+            destIdx = tmove.DestIdcs[0];
+        else
+        {
+            tmove.DestIdcs.Sort((a, b) => TeamMovementsCompareDestIdcs(a, b, leagueCurSize));
+            destIdx = tmove.DestIdcs[0];
+        }
+
+        leagueCurSize[destIdx]++;
+
+        if (leagueCurSize[destIdx] > leagueSize[destIdx])
+            Main.MainExitProgram(Bygfoot.ExitCode.PromRel,
+                "league_team_movements_assign_dest: no room in league {0} for team {1}.",
+                Variables.Country.Leagues[destIdx].Name, tmove.Tm.Name);
+
+        tmove.DestAssigned = true;
+
+        if (Variables.DebugLevel > 60)
+            Debug.DebugPrintMessage($"{tmove.Tm.Name}  {LeagueFromClid(tmove.Tm.Clid).Layer} -> {LeagueFromClid(Variables.Country.Leagues[destIdx].Id).Layer}");
+
+        if (leagueCurSize[destIdx] == leagueSize[destIdx])
+        {
+            for (i = 0; i < teamMovements.Count; i++)
+            {
+                if (!teamMovements[i].DestAssigned)
+                {
+                    tmove = teamMovements[i];
+                    for (j = tmove.DestIdcs.Count - 1; j >= 0; j--)
+                    {
+                        if (tmove.DestIdcs[j] == destIdx)
+                            tmove.DestIdcs.RemoveAt(j);
+                    }
+
+                    if (tmove.DestIdcs.Count == 0)
+                        Main.MainExitProgram(Bygfoot.ExitCode.PromRel,
+                            "league_team_movements_assign_dest: no destinations left for team {0}.",
+                            tmove.Tm.Name);
+                }
+            }
+        }
+
+        if (Team.IsUser(tmove.Tm) != -1)
+        {
+            if (tmove.PromRelType == PromRelType.Promotion)
+                User.HistoryAdd(Variables.Users[Team.IsUser(tmove.Tm)],
+                    (int)UserHistoryType.Promoted, tmove.Tm.Name,
+                    Variables.Country.Leagues[tmove.DestIdcs[0]].Name, null, null);
+            else
+                User.HistoryAdd(Variables.Users[Team.IsUser(tmove.Tm)],
+                    (int)UserHistoryType.Relegated, tmove.Tm.Name,
+                    Variables.Country.Leagues[tmove.DestIdcs[0]].Name, null, null);
+        }
     }
 
     /// <summary>
@@ -760,8 +1008,17 @@ public class League
     /// <param name="leagueCurSize">The current size of all leagues.</param>
     public static void TeamMovementsPrune(List<TeamMove> teamMovements, int[] leagueSize, int[] leagueCurSize)
     {
-        // Implementation depends on the not yet converted team and league functions.
-        throw new NotImplementedException();
+        int i;
+
+        if (Variables.DebugLevel > 60)
+            Debug.DebugPrintMessage("league_team_movements_prune\n");
+
+        while (QueryLeagueTeamMovementsUnassignedSingle(teamMovements))
+        {
+            for (i = 0; i < teamMovements.Count; i++)
+                if (!teamMovements[i].DestAssigned && teamMovements[i].DestIdcs.Count == 1)
+                    TeamMovementsAssignDest(teamMovements, i, leagueSize, leagueCurSize);
+        }
     }
 
     /// <summary>
@@ -772,8 +1029,28 @@ public class League
     /// <param name="leagueSize">The size of all leagues.</param>
     public static void TeamMovementsDestinations(List<TeamMove> teamMovements, int[] leagueSize)
     {
-        // Implementation depends on the not yet converted team and league functions.
-        throw new NotImplementedException();
+        int i;
+        int[] leagueCurSize = new int[Variables.Country.Leagues.Count];
+
+        if (Variables.DebugLevel > 60)
+            Debug.DebugPrintMessage("league_team_movements_destinations\n");
+
+        for (i = 0; i < Variables.Country.Leagues.Count; i++)
+            leagueCurSize[i] = Variables.Country.Leagues[i].Teams.Count;
+
+        if (Variables.DebugLevel > 65)
+            TeamMovementsPrint(teamMovements, leagueSize, leagueCurSize);
+
+        while (QueryLeagueTeamMovementsUnassigned(teamMovements))
+        {
+            TeamMovementsPrune(teamMovements, leagueSize, leagueCurSize);
+            for (i = 0; i < teamMovements.Count; i++)
+                if (!teamMovements[i].DestAssigned)
+                    TeamMovementsAssignDest(teamMovements, i, leagueSize, leagueCurSize);
+        }
+
+        if (Variables.DebugLevel > 65)
+            TeamMovementsPrint(teamMovements, leagueSize, leagueCurSize);
     }
 
     /// <summary>
@@ -817,8 +1094,24 @@ public class League
     /// <param name="league">The league.</param>
     public static void CheckNewTables(League league)
     {
-        // Implementation depends on the not yet converted table and misc functions.
-        throw new NotImplementedException();
+        int i;
+
+        for (i = 0; i < league.NewTables.Count; i++)
+        {
+            if (league.NewTables[i].AddWeek == Variables.Week)
+            {
+                /** Create cumulative table if necessary. */
+                if (league.Tables.Count == 1 && Variables.Week > 1)
+                {
+                    Table newTable = Table.Copy(league.Tables[league.Tables.Count - 1]);
+                    league.Tables.Add(newTable);
+                }
+
+                AddTable(league);
+                if (league.NewTables[i].Name != null)
+                    league.Tables[league.Tables.Count - 1].Name = league.NewTables[i].Name;
+            }
+        }
     }
 
     /// <summary>

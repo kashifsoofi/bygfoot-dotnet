@@ -15,8 +15,139 @@ public static class Finance
     /// <param name="user">The user.</param>
     public static void UpdateUserWeekly(User user)
     {
-        // Implementation depends on the not yet converted user, team, finance and user_event functions.
-        throw new NotImplementedException();
+        int i;
+        Team tm = user.Team;
+        Team newTeam = null;
+        float[] physioFactor =
+        {
+            Variables.Constants.GetFloat("float_finance_physio_factor1"),
+            Variables.Constants.GetFloat("float_finance_physio_factor2"),
+            Variables.Constants.GetFloat("float_finance_physio_factor3"),
+            Variables.Constants.GetFloat("float_finance_physio_factor4")
+        };
+        float[] scoutFactor =
+        {
+            Variables.Constants.GetFloat("float_finance_scout_factor1"),
+            Variables.Constants.GetFloat("float_finance_scout_factor2"),
+            Variables.Constants.GetFloat("float_finance_scout_factor3"),
+            Variables.Constants.GetFloat("float_finance_scout_factor4")
+        };
+        float[] ycFactor =
+        {
+            Variables.Constants.GetFloat("float_finance_yc_factor1"),
+            Variables.Constants.GetFloat("float_finance_yc_factor2"),
+            Variables.Constants.GetFloat("float_finance_yc_factor3"),
+            Variables.Constants.GetFloat("float_finance_yc_factor4")
+        };
+
+        if (user.Money > int.MaxValue - 50000000)
+        {
+            User.EventAdd(user, (int)EventType.Charity, -1, -1, null, null);
+            user.Money = (user.Money - user.Money % 2) / 2;
+        }
+
+        if (Variables.Week % 2 == 1)
+        {
+            for (i = 0; i < (int)MonOut.MonOutEnd; i++)
+            {
+                user.MoneyOut[0, i] = user.MoneyOut[1, i];
+                user.MoneyOut[1, i] = 0;
+            }
+            for (i = 0; i < (int)MonIn.MonInEnd; i++)
+            {
+                user.MoneyIn[0, i] = user.MoneyIn[1, i];
+                user.MoneyIn[1, i] = 0;
+            }
+        }
+
+        user.Money += user.Sponsor.Benefit;
+        user.MoneyIn[1, (int)MonIn.MonInSponsor] += user.Sponsor.Benefit;
+        user.Sponsor.Contract = Math.Max(user.Sponsor.Contract - 1, 0);
+
+        user.Money -= (int)Math.Round((double)user.Sponsor.Benefit *
+            user.YouthAcademy.Percentage / 100);
+        user.MoneyOut[1, (int)MonOut.MonOutYa] -= (int)Math.Round((double)user.Sponsor.Benefit *
+            user.YouthAcademy.Percentage / 100);
+
+        if (user.Counters[(int)CounterType.NewSponsor] > 1)
+            user.Counters[(int)CounterType.NewSponsor]--;
+        else if (user.Sponsor.Contract == 4 &&
+            MathHelper.Rnd(0, 1) < ((1 - Variables.Constants.GetFloat("float_sponsor_continue_prob")) /
+            (2 * Variables.Constants.GetInt("int_user_success_offer_limit")) *
+            user.Counters[(int)CounterType.Success]) +
+            (1 - (1 - Variables.Constants.GetFloat("float_sponsor_continue_prob")) / 2))
+            user.Counters[(int)CounterType.NewSponsor] = -1;
+        else if (user.Sponsor.Contract == 0)
+            user.Counters[(int)CounterType.NewSponsor] = 1;
+
+        if (Team.QueryTeamPlays(tm, Variables.Week - 1, 1))
+            for (i = 0; i < tm.Players.Count; i++)
+            {
+                user.MoneyOut[1, (int)MonOut.MonOutWage] -= tm.Players[i].Wage;
+                user.Money -= tm.Players[i].Wage;
+
+                if (tm.Players[i].Health != PlayerInjury.None)
+                {
+                    int physioCost = (int)Math.Round(WageUnit(tm) * physioFactor[user.Physio % 10]);
+                    user.Money -= physioCost;
+                    user.MoneyOut[1, (int)MonOut.MonOutPhysio] -= physioCost;
+                }
+            }
+
+        int scoutCost = (int)Math.Round(WageUnit(tm) * scoutFactor[user.Scout % 10]);
+        user.MoneyOut[1, (int)MonOut.MonOutScout] -= scoutCost;
+        user.Money -= scoutCost;
+
+        if (user.YouthAcademy.Players.Count > 0)
+        {
+            int ycCost = (int)Math.Round(WageUnit(tm) * ycFactor[user.YouthAcademy.Coach % 10]);
+            user.MoneyOut[1, (int)MonOut.MonOutYc] -= ycCost;
+            user.Money -= ycCost;
+        }
+
+        user.Debt = (int)Math.Round((double)user.Debt * (1 + user.DebtInterest));
+
+        if (user.AlrStartWeek != 0 && Variables.Week >= user.AlrStartWeek)
+        {
+            PayLoan(user, user.AlrWeeklyInstallment);
+            if (user.Debt == 0)
+            {
+                user.AlrStartWeek =
+                    user.AlrWeeklyInstallment = 0;
+            }
+        }
+
+        if (user.Money < -TeamDrawingCreditLoan(user.Team, false) &&
+            user.Counters[(int)CounterType.Positive] == -1 && Variables.DebugLevel < 50)
+        {
+            user.Counters[(int)CounterType.Overdrawn]++;
+            if (user.Counters[(int)CounterType.Overdrawn] <=
+                Variables.Constants.GetInt("int_finance_overdraw_limit"))
+            {
+                User.EventAdd(user, (int)EventType.Overdraw, user.Counters[(int)CounterType.Overdrawn], -1, null, null);
+                user.Counters[(int)CounterType.Positive] =
+                    Variables.Constants.GetInt("int_finance_overdraw_positive");
+            }
+        }
+        else if (user.Counters[(int)CounterType.Positive] > -1)
+            user.Counters[(int)CounterType.Positive]--;
+
+        if (user.Counters[(int)CounterType.Loan] > -1)
+            user.Counters[(int)CounterType.Loan]--;
+
+        if (user.Counters[(int)CounterType.Loan] == 0 && Variables.DebugLevel < 50)
+            User.EventAdd(user, (int)EventType.Warning, -1, -1, null, "You have to pay back your loan this week.");
+
+        if (user.Counters[(int)CounterType.Positive] == 0 && Variables.DebugLevel < 50)
+            User.EventAdd(user, (int)EventType.Warning, -1, -1, null, "Your bank account has to be above your drawing credit limit next week.");
+
+        if (((user.Counters[(int)CounterType.Loan] == -1 && user.Debt != 0) ||
+            (user.Counters[(int)CounterType.Positive] == -1 &&
+            user.Money < -TeamDrawingCreditLoan(user.Team, false))) && Variables.DebugLevel < 50)
+        {
+            newTeam = Team.GetNew(tm, true);
+            User.EventAdd(user, (int)EventType.FireFinance, -1, -1, newTeam, null);
+        }
     }
 
     /// <summary>
@@ -174,8 +305,53 @@ public static class Finance
     /// <param name="fix">The fixture being examined.</param>
     public static void AssignGameMoney(Fixture fix)
     {
-        // Implementation depends on the not yet converted user, team, cup and finance functions.
-        throw new NotImplementedException();
+        int[] userIdx = { Team.IsUser(fix.Teams[0]), Team.IsUser(fix.Teams[1]) };
+        float journeyFactor =
+            (fix.Clid < Bygfoot.IdCupStart ||
+             (fix.Clid >= Bygfoot.IdCupStart &&
+              League.QueryLeagueCupHasProperty(fix.Clid, "national")))
+            ? Variables.Constants.GetFloat("float_game_finance_journey_factor_national")
+            : Variables.Constants.GetFloat("float_game_finance_journey_factor_international");
+        int[] ticketIncome = { 0, 0 };
+
+        if (fix.Clid >= Bygfoot.IdCupStart &&
+            !Cup.CupFromClid(fix.Clid).Rounds[fix.Round].HomeAway)
+        {
+            ticketIncome[0] =
+                ticketIncome[1] = (int)Math.Round((double)(fix.Attendance * fix.Teams[0].Stadium.TicketPrice / 2));
+        }
+        else
+            ticketIncome[0] = (int)Math.Round((double)(fix.Attendance * fix.Teams[0].Stadium.TicketPrice));
+
+        for (int i = 0; i < 2; i++)
+        {
+            if (userIdx[i] != -1)
+            {
+                User user = Variables.Users[userIdx[i]];
+                user.Money += ticketIncome[i];
+                user.MoneyIn[1, (int)MonIn.MonInTicket] += ticketIncome[i];
+
+                user.Money -=
+                    (int)Math.Round((double)ticketIncome[i] * user.YouthAcademy.Percentage / 100);
+                user.MoneyOut[1, (int)MonOut.MonOutYa] -=
+                    (int)Math.Round((double)ticketIncome[i] * user.YouthAcademy.Percentage / 100);
+
+                if (i == 0 && Variables.DebugLevel < 50)
+                {
+                    fix.Teams[0].Stadium.Safety -=
+                        (float)MathHelper.Rnd(Variables.Constants.GetFloat("float_game_stadium_safety_deterioration_lower"),
+                                              Variables.Constants.GetFloat("float_game_stadium_safety_deterioration_upper"));
+                    fix.Teams[0].Stadium.Safety = Math.Clamp(fix.Teams[0].Stadium.Safety, 0, 1);
+                }
+
+                if (i == 1 || !fix.HomeAdvantage)
+                {
+                    int journeyCost = (int)Math.Round(WageUnit(fix.Teams[i]) * journeyFactor);
+                    user.MoneyOut[1, (int)MonOut.MonOutJourney] -= journeyCost;
+                    user.Money -= journeyCost;
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -198,8 +374,22 @@ public static class Finance
     /// <returns>The weekly installment.</returns>
     public static int CalculateAlrWeeklyInstallment(int startWeek)
     {
-        // Implementation depends on the not yet converted fixture and finance functions.
-        throw new NotImplementedException();
+        User user = Variables.Users[Variables.CurUser];
+        float debtEnd;
+        float interestFactor;
+        float maxStartWeek;
+        float installment;
+        int weeklyInstallment;
+
+        maxStartWeek = Math.Min(Variables.Week + user.Counters[(int)CounterType.Loan], Fixture.GetLastScheduledWeek());
+        debtEnd = user.Debt * (float)Math.Pow(1 + user.DebtInterest, maxStartWeek - 1);
+        interestFactor =
+            ((float)Math.Pow(1 + user.DebtInterest, maxStartWeek - startWeek + 1) - 1) / user.DebtInterest;
+
+        installment = -debtEnd / interestFactor;
+        weeklyInstallment = (int)Math.Round((double)installment);
+
+        return (weeklyInstallment > installment) ? weeklyInstallment : weeklyInstallment + 1;
     }
 
     /// <summary>
@@ -209,7 +399,22 @@ public static class Finance
     /// <returns>The start week.</returns>
     public static int CalculateAlrStartWeek(int weeklyInstallment)
     {
-        // Implementation depends on the not yet converted fixture and finance functions.
-        throw new NotImplementedException();
+        User user = Variables.Users[Variables.CurUser];
+        int upper;
+        int startWeek;
+        int installment;
+
+        upper = Math.Min(Variables.Week + user.Counters[(int)CounterType.Loan], Fixture.GetLastScheduledWeek());
+
+        for (startWeek = Variables.Week + 1; startWeek <= upper; startWeek++)
+        {
+            installment = CalculateAlrWeeklyInstallment(startWeek);
+            if (installment > weeklyInstallment)
+                return startWeek - 1;
+            else if (installment == weeklyInstallment)
+                return startWeek;
+        }
+
+        return startWeek;
     }
 }

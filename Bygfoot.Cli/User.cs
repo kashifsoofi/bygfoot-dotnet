@@ -435,8 +435,57 @@ public class User
     /// <param name="user">The user.</param>
     public static void WeeklyUpdateCounters(User user)
     {
-        // Implementation depends on the not yet converted league and user functions.
-        throw new NotImplementedException();
+        int rank = Team.GetLeagueRank(user.Team, -1);
+        int teamsLen = League.LeagueCupGetTeams(user.Team.Clid).Count;
+        int[] rankBounds =
+        {
+            (int)Math.Round((double)Variables.Constants.GetFloat("float_user_success_table_bound_upper") * teamsLen),
+            (int)Math.Round((double)Variables.Constants.GetFloat("float_user_success_table_bound_lower") * teamsLen)
+        };
+        int[] cnts = user.Counters;
+        int increaseCapacity;
+        float increaseSafety;
+
+        cnts[(int)CounterType.TrainingCampThisWeek] = 0;
+
+        if (cnts[(int)CounterType.StadiumCapacity] > 0)
+        {
+            increaseCapacity = MathHelper.Rndi(Variables.Constants.GetInt("int_stadium_improvement_base_seats") -
+                Variables.Constants.GetInt("int_stadium_improvement_seats_variance"),
+                Variables.Constants.GetInt("int_stadium_improvement_base_seats") +
+                Variables.Constants.GetInt("int_stadium_improvement_seats_variance"));
+            user.Team.Stadium.Capacity += Math.Min(cnts[(int)CounterType.StadiumCapacity], increaseCapacity);
+            cnts[(int)CounterType.StadiumCapacity] =
+                Math.Max(cnts[(int)CounterType.StadiumCapacity] - increaseCapacity, 0);
+        }
+
+        if (cnts[(int)CounterType.StadiumSafety] > 0)
+        {
+            increaseSafety = (float)MathHelper.Rnd(Variables.Constants.GetFloat("float_stadium_improvement_base_safety") -
+                Variables.Constants.GetFloat("float_stadium_improvement_safety_variance"),
+                Variables.Constants.GetFloat("float_stadium_improvement_base_safety") +
+                Variables.Constants.GetFloat("float_stadium_improvement_safety_variance"));
+            user.Team.Stadium.Safety += Math.Min((float)cnts[(int)CounterType.StadiumSafety] / 100, increaseSafety);
+            user.Team.Stadium.Safety = Math.Min(user.Team.Stadium.Safety, 1);
+
+            cnts[(int)CounterType.StadiumSafety] =
+                Math.Max(cnts[(int)CounterType.StadiumSafety] - (int)Math.Round((double)increaseSafety * 100), 0);
+        }
+
+        if (League.QueryLeagueMatchesInWeek(League.LeagueFromClid(user.Team.Clid), Variables.Week))
+        {
+            if (rank < rankBounds[0])
+                user.Counters[(int)CounterType.Success] += (rankBounds[0] - rank);
+            else if (rank > rankBounds[1])
+                user.Counters[(int)CounterType.Success] -= (rank - rankBounds[1]);
+            else
+            {
+                if (user.Counters[(int)CounterType.Success] > 0)
+                    user.Counters[(int)CounterType.Success] -= Variables.Constants.GetInt("int_user_success_mediocre_rank_change");
+                else
+                    user.Counters[(int)CounterType.Success] += Variables.Constants.GetInt("int_user_success_mediocre_rank_change");
+            }
+        }
     }
 
     /// <summary>
@@ -545,8 +594,71 @@ public class User
     /// <param name="string2">The string2.</param>
     public static void HistoryAdd(User user, int type, string teamName, string string0, string string1, string string2)
     {
-        // Implementation depends on the not yet converted user and misc functions.
-        throw new NotImplementedException();
+        int i;
+        UserHistory his = new UserHistory();
+        bool replace = false;
+        int historyType = (int)type;
+
+        his.TeamName = his.ContextStrings[0] =
+            his.ContextStrings[1] = his.ContextStrings[2] = null;
+
+        if (historyType == (int)UserHistoryType.WinFinal ||
+            historyType == (int)UserHistoryType.LoseFinal ||
+            historyType == (int)UserHistoryType.ReachCupRound)
+        {
+            for (i = 0; i < user.History.Count; i++)
+            {
+                int hisType = (int)user.History[i].Type;
+                if ((hisType == (int)UserHistoryType.WinFinal ||
+                    hisType == (int)UserHistoryType.LoseFinal ||
+                    hisType == (int)UserHistoryType.ReachCupRound) &&
+                    user.History[i].Season == Variables.Season &&
+                    string.Equals(user.History[i].TeamName, teamName) &&
+                    string.Equals(user.History[i].ContextStrings[0], string0))
+                {
+                    if (historyType == (int)UserHistoryType.ReachCupRound && string2 != null &&
+                        string.Equals(user.History[i].ContextStrings[2], string2))
+                        return;
+
+                    his = user.History[i];
+                    replace = true;
+                    break;
+                }
+            }
+        }
+
+        if (historyType == (int)UserHistoryType.Promoted)
+            user.Counters[(int)CounterType.Success] += Variables.Constants.GetInt("int_user_success_promotion");
+        else if (historyType == (int)UserHistoryType.Relegated)
+            user.Counters[(int)CounterType.Success] -= Variables.Constants.GetInt("int_user_success_relegation");
+
+        his.Season = Variables.Season;
+        his.Week = Variables.Week;
+        his.Type = (UserHistoryType)historyType;
+
+        if (replace)
+        {
+            if (string0 != null)
+                Misc.MiscStringAssign(ref his.ContextStrings[0], string0);
+            if (string1 != null)
+                Misc.MiscStringAssign(ref his.ContextStrings[1], string1);
+            if (string2 != null)
+                Misc.MiscStringAssign(ref his.ContextStrings[2], string2);
+            user.History.Sort(HistoryCompare);
+        }
+        else
+        {
+            his.TeamName = teamName;
+
+            if (string0 != null)
+                his.ContextStrings[0] = string0;
+            if (string1 != null)
+                his.ContextStrings[1] = string1;
+            if (string2 != null)
+                his.ContextStrings[2] = string2;
+
+            user.History.Insert(0, his);
+        }
     }
 
     /// <summary>
@@ -557,8 +669,45 @@ public class User
     /// <param name="buf">The buffer.</param>
     public static void HistoryToString(UserHistory history, ref string buf)
     {
-        // Implementation depends on the not yet converted user and misc functions.
-        throw new NotImplementedException();
+        switch (history.Type)
+        {
+            case UserHistoryType.StartGame:
+                buf = $"You start the game with {history.TeamName} in the {history.ContextStrings[0]}.";
+                break;
+            case UserHistoryType.FireFinance:
+                buf = $"{history.TeamName} fires you because of financial mismanagement.\nYou find a new job with {history.ContextStrings[0]} in the {history.ContextStrings[1]}.";
+                break;
+            case UserHistoryType.FireFailure:
+                buf = $"{history.TeamName} fires you because of unsuccessfulness.\nYou find a new job with {history.ContextStrings[0]} in the {history.ContextStrings[1]}.";
+                break;
+            case UserHistoryType.JobOfferAccepted:
+                buf = $"{history.ContextStrings[0]} offer you a job in the {history.ContextStrings[1]}.\nYou accept the challenge and leave {history.TeamName}.";
+                break;
+            case UserHistoryType.EndSeason:
+                buf = $"You finish the season in the {history.ContextStrings[0]} on rank {history.ContextStrings[1]}.";
+                break;
+            case UserHistoryType.Promoted:
+                buf = $"You get promoted to the {history.ContextStrings[0]}.";
+                break;
+            case UserHistoryType.Relegated:
+                buf = $"You get relegated to the {history.ContextStrings[0]}.";
+                break;
+            case UserHistoryType.WinFinal:
+                buf = $"You win the {history.ContextStrings[0]} final against {history.ContextStrings[1]}.";
+                break;
+            case UserHistoryType.LoseFinal:
+                buf = $"You lose in the {history.ContextStrings[0]} final against {history.ContextStrings[1]}.";
+                break;
+            case UserHistoryType.ReachCupRound:
+                buf = $"You reach the {history.ContextStrings[1]} (round {history.ContextStrings[2]}) of the {history.ContextStrings[0]}.";
+                break;
+            case UserHistoryType.Champion:
+                buf = $"You are champion of the {history.ContextStrings[0]}!";
+                break;
+            default:
+                Debug.DebugPrintMessage($"user_history_to_string: unknown history type {(int)history.Type}.\n");
+                goto case UserHistoryType.StartGame;
+        }
     }
 
     /// <summary>
@@ -570,8 +719,20 @@ public class User
     /// <returns>The comparison result.</returns>
     public static int HistoryCompare(object a, object b)
     {
-        // Implementation depends on the not yet converted user functions.
-        throw new NotImplementedException();
+        int returnValue = 0;
+        UserHistory his1 = (UserHistory)a;
+        UserHistory his2 = (UserHistory)b;
+
+        if (his1.Season < his2.Season)
+            returnValue = 1;
+        else if (his1.Season > his2.Season)
+            returnValue = -1;
+        else if (his1.Week < his2.Week)
+            returnValue = 1;
+        else if (his1.Week > his2.Week)
+            returnValue = -1;
+
+        return returnValue;
     }
 
     /// <summary>
@@ -584,8 +745,41 @@ public class User
     /// <param name="type">The history type.</param>
     public static void AddCupSuccess(User user, Cup cup, int round, int type)
     {
-        // Implementation depends on the not yet converted league, cup and user functions.
-        throw new NotImplementedException();
+        int historyType = (int)type;
+        bool international = League.QueryLeagueCupHasProperty(cup.Id, "international");
+        bool national = League.QueryLeagueCupHasProperty(cup.Id, "national");
+
+        if (historyType == (int)UserHistoryType.WinFinal)
+        {
+            if (international)
+                user.Counters[(int)CounterType.Success] += Variables.Constants.GetInt("int_user_success_international_winner");
+            else if (national)
+                user.Counters[(int)CounterType.Success] += Variables.Constants.GetInt("int_user_success_national_winner");
+        }
+        else if (historyType == (int)UserHistoryType.LoseFinal)
+        {
+            if (international)
+                user.Counters[(int)CounterType.Success] += Variables.Constants.GetInt("int_user_success_international_final");
+            else if (national)
+                user.Counters[(int)CounterType.Success] += Variables.Constants.GetInt("int_user_success_national_final");
+        }
+        else if (historyType == (int)UserHistoryType.ReachCupRound)
+        {
+            if (round == Cup.CupFromClid(cup.Id).Rounds.Count - 2)
+            {
+                if (international)
+                    user.Counters[(int)CounterType.Success] += Variables.Constants.GetInt("int_user_success_international_semis");
+                else if (national)
+                    user.Counters[(int)CounterType.Success] += Variables.Constants.GetInt("int_user_success_national_semis");
+            }
+            else if (round == Cup.CupFromClid(cup.Id).Rounds.Count - 3)
+            {
+                if (international)
+                    user.Counters[(int)CounterType.Success] += Variables.Constants.GetInt("int_user_success_international_quarter");
+                else if (national)
+                    user.Counters[(int)CounterType.Success] += Variables.Constants.GetInt("int_user_success_national_quarter");
+            }
+        }
     }
 
     /// <summary>

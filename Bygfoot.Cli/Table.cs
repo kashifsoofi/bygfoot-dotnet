@@ -109,34 +109,45 @@ public class Table
         int idx = fix.Result[0, 0] < fix.Result[1, 0] ? 1 : 0;
         int end = fix.Clid < Bygfoot.IdCupStart ? 2 : 1;
 
+        TableElement[] elements = new TableElement[2];
+
         for (int j = 0; j < end; j++)
         {
-            TableElement element = null;
-            TableUpdateGetElements(ref element, fix, j == 1);
+            elements[0] = elements[1] = null;
+            TableUpdateGetElements(elements, fix, j == 1);
 
-            if (element == null)
-                continue;
-
-            element.Values[(int)TableElementValues.TablePlayed]++;
-            element.Values[(int)TableElementValues.TableGf] += fix.Result[j, 0];
-            element.Values[(int)TableElementValues.TableGa] += fix.Result[1 - j, 0];
-            element.Values[(int)TableElementValues.TableGd] = element.Values[(int)TableElementValues.TableGf] - element.Values[(int)TableElementValues.TableGa];
+            for (int i = 0; i < 2; i++)
+            {
+                if (elements[i] != null)
+                {
+                    elements[i].Values[(int)TableElementValues.TablePlayed]++;
+                    elements[i].Values[(int)TableElementValues.TableGf] += fix.Result[i, 0];
+                    elements[i].Values[(int)TableElementValues.TableGa] += fix.Result[1 - i, 0];
+                    elements[i].Values[(int)TableElementValues.TableGd] =
+                        elements[i].Values[(int)TableElementValues.TableGf] - elements[i].Values[(int)TableElementValues.TableGa];
+                }
+            }
 
             if (fix.Result[0, 0] == fix.Result[1, 0])
-            {
-                element.Values[(int)TableElementValues.TableDraw]++;
-                element.Values[(int)TableElementValues.TablePts] += 1;
-            }
+                for (int i = 0; i < 2; i++)
+                {
+                    if (elements[i] != null)
+                    {
+                        elements[i].Values[(int)TableElementValues.TableDraw]++;
+                        elements[i].Values[(int)TableElementValues.TablePts] += 1;
+                    }
+                }
             else
             {
-                if (j == idx)
+                if (elements[idx] != null)
                 {
-                    element.Values[(int)TableElementValues.TableWon]++;
-                    element.Values[(int)TableElementValues.TablePts] += 3;
+                    elements[idx].Values[(int)TableElementValues.TableWon]++;
+                    elements[idx].Values[(int)TableElementValues.TablePts] += 3;
                 }
-                else
+
+                if (elements[1 - idx] != null)
                 {
-                    element.Values[(int)TableElementValues.TableLost]++;
+                    elements[1 - idx].Values[(int)TableElementValues.TableLost]++;
                 }
             }
         }
@@ -146,13 +157,52 @@ public class Table
     /// Get the pointers to the table entries representing the two teams from the fixture.
     /// Corresponds to C: table_update_get_elements.
     /// </summary>
-    /// <param name="elements">The table elements.</param>
+    /// <param name="elements">The table entries.</param>
     /// <param name="fix">The fixture.</param>
     /// <param name="nonCumulative">Whether to return the last non-cumulative table.</param>
-    public static void TableUpdateGetElements(ref TableElement elements, Fixture fix, bool nonCumulative)
+    public static void TableUpdateGetElements(TableElement[] elements, Fixture fix, bool nonCumulative)
     {
-        // Implementation depends on the not yet converted league and cup functions.
-        throw new NotImplementedException();
+        if (fix.Clid < Bygfoot.IdCupStart)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                League league = League.LeagueFromClid(fix.Teams[j].Clid);
+
+                if (nonCumulative && league.Tables.Count == 1)
+                {
+                    elements[j] = null;
+                    continue;
+                }
+
+                Table table = (nonCumulative)
+                    ? league.Tables[league.Tables.Count - 1]
+                    : league.Tables[0];
+
+                for (int i = 0; i < table.Elements.Count; i++)
+                {
+                    if (table.Elements[i].Team == fix.Teams[j])
+                        elements[j] = table.Elements[i];
+                }
+            }
+        }
+        else
+        {
+            List<Table> lastTables = Cup.CupFromClid(fix.Clid).Rounds[Cup.CupHasTables(fix.Clid)].Tables;
+
+            for (int i = 0; i < lastTables.Count; i++)
+            {
+                Table table = lastTables[i];
+
+                if (elements[0] == null || elements[1] == null)
+                    for (int j = 0; j < table.Elements.Count; j++)
+                    {
+                        if (table.Elements[j].Team == fix.Teams[0])
+                            elements[0] = table.Elements[j];
+                        else if (table.Elements[j].Team == fix.Teams[1])
+                            elements[1] = table.Elements[j];
+                    }
+            }
+        }
     }
 
     /// <summary>
@@ -161,12 +211,67 @@ public class Table
     /// </summary>
     /// <param name="element1">The first table element.</param>
     /// <param name="element2">The second table element.</param>
-    /// <param name="clidPointer">The clid and the cup round of the table encoded as a pointer.</param>
+    /// <param name="clid">The clid of the league or cup.</param>
     /// <returns>The comparison result.</returns>
-    public static int TableElementCompareFunc(TableElement element1, TableElement element2, object clidPointer)
+    public static int TableElementCompareFunc(TableElement element1, TableElement element2, int clid)
     {
-        // Implementation depends on the not yet converted league, cup and maths functions.
-        throw new NotImplementedException();
+        if (element1.TeamId == element2.TeamId)
+            return 0;
+
+        List<Fixture> fixtures = clid < Bygfoot.IdCupStart
+            ? League.LeagueFromClid(clid).Fixtures
+            : Cup.CupFromClid(clid).Fixtures;
+        int cupRound = clid < Bygfoot.IdCupStart ? -1 : Cup.CupHasTables(clid);
+        int value;
+
+        if (element1.Values[(int)TableElementValues.TablePts] != element2.Values[(int)TableElementValues.TablePts])
+            value = Misc.MiscIntCompare(element1.Values[(int)TableElementValues.TablePts],
+                                        element2.Values[(int)TableElementValues.TablePts]);
+        else if (element1.Values[(int)TableElementValues.TableGf] - element1.Values[(int)TableElementValues.TableGa] !=
+                 element2.Values[(int)TableElementValues.TableGf] - element2.Values[(int)TableElementValues.TableGa])
+            value = Misc.MiscIntCompare(element1.Values[(int)TableElementValues.TableGf] - element1.Values[(int)TableElementValues.TableGa],
+                                        element2.Values[(int)TableElementValues.TableGf] - element2.Values[(int)TableElementValues.TableGa]);
+        else if (element1.Values[(int)TableElementValues.TableGa] != element2.Values[(int)TableElementValues.TableGa])
+            value = Misc.MiscIntCompare(element1.Values[(int)TableElementValues.TableGa],
+                                        element2.Values[(int)TableElementValues.TableGa]);
+        else
+        {
+            Fixture fix0 = null;
+            Fixture fix1 = null;
+
+            for (int i = 0; i < fixtures.Count; i++)
+            {
+                if (fixtures[i].Round == cupRound &&
+                   fixtures[i].WeekNumber <= Variables.Week &&
+                   fixtures[i].WeekRoundNumber <= Variables.WeekRound)
+                {
+                    if (fixtures[i].TeamIds[0] == element1.TeamId &&
+                       fixtures[i].TeamIds[1] == element2.TeamId)
+                        fix0 = fixtures[i];
+                    else if (fixtures[i].TeamIds[1] == element1.TeamId &&
+                             fixtures[i].TeamIds[0] == element2.TeamId)
+                        fix1 = fixtures[i];
+                }
+            }
+
+            if (fix0 == null || fix1 == null)
+                value = 0;
+            else
+            {
+                if (fix0.Result[0, 0] + fix1.Result[1, 0] >
+                    fix0.Result[1, 0] + fix1.Result[0, 0])
+                    value = -1;
+                else if (fix0.Result[0, 0] + fix1.Result[1, 0] <
+                         fix0.Result[1, 0] + fix1.Result[0, 0])
+                    value = 1;
+                else if (fix1.Result[1, 0] > fix0.Result[1, 0])
+                    value = -1;
+                else
+                    value = 1;
+            }
+        }
+
+        return value;
     }
 
     /// <summary>
@@ -246,7 +351,12 @@ public class Table
     /// <returns>Whether the cup has tables.</returns>
     private static bool CupHasTables(Cup cup)
     {
-        // Implementation depends on the not yet converted cup functions.
-        throw new NotImplementedException();
+        for (int i = cup.Rounds.Count - 1; i >= 0; i--)
+        {
+            if (cup.Rounds[i].Tables.Count > 0)
+                return true;
+        }
+
+        return false;
     }
 }

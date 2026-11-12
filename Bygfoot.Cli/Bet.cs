@@ -61,8 +61,18 @@ public static class Bet
     /// <returns>The bet or null.</returns>
     public static BetMatch FromFixture(int fixId)
     {
-        // Implementation depends on the not yet converted fixtures and bets functions.
-        throw new NotImplementedException();
+        for (int i = 1; i >= 0; i--)
+        {
+            for (int j = 0; j < Variables.Bets[i].Count; j++)
+            {
+                if (Variables.Bets[i][j].FixId == fixId)
+                    return Variables.Bets[i][j];
+            }
+        }
+
+        Main.MainExitProgram(Bygfoot.ExitCode.BetError,
+            "bet_from_fixture: bet going with fixture %d not found", fixId);
+        return null;
     }
 
     /// <summary>
@@ -112,8 +122,48 @@ public static class Bet
     /// <param name="bet">The bet.</param>
     public static void GetOdds(BetMatch bet)
     {
-        // Implementation depends on the not yet converted fixture, player and maths functions.
-        throw new NotImplementedException();
+        Fixture fix = Fixture.FromId(bet.FixId, true);
+        float homeAdvantage = (fix.HomeAdvantage)
+            ? (Variables.Constants.GetFloat("float_game_home_advantage_lower") +
+               Variables.Constants.GetFloat("float_game_home_advantage_upper")) / 2
+            : 0;
+        float[] avSkill = new float[] { 0, 0 };
+        float skilldiff;
+        int i, j, betterIdx;
+
+        for (i = 0; i < 2; i++)
+        {
+            for (j = 0; j < 11; j++)
+                avSkill[i] += Player.GetGameSkill(fix.Teams[i].Players[j], false, true);
+
+            avSkill[i] /= 11;
+        }
+
+        avSkill[0] *= (1 + homeAdvantage);
+
+        skilldiff = Math.Abs(avSkill[0] - avSkill[1]);
+
+        betterIdx = 2 * ((avSkill[0] < avSkill[1]) ? 1 : 0);
+
+        bet.Odds[betterIdx] =
+            0.33f + skilldiff * Variables.Constants.GetFloat("float_bet_better_factor");
+        bet.Odds[2 - betterIdx] =
+            0.33f + skilldiff * Variables.Constants.GetFloat("float_bet_worse_factor");
+
+        for (i = 0; i < 2; i++)
+            bet.Odds[i * 2] = Math.Clamp(bet.Odds[i * 2],
+                Variables.Constants.GetFloat("float_bet_lower_limit"),
+                1 - Variables.Constants.GetFloat("float_bet_lower_limit"));
+
+        bet.Odds[1] = (1 - bet.Odds[0] - bet.Odds[2]);
+        bet.Odds[1] = Math.Clamp(bet.Odds[1],
+            Variables.Constants.GetFloat("float_bet_lower_limit"),
+            1 - Variables.Constants.GetFloat("float_bet_lower_limit"));
+
+        for (i = 0; i < 3; i++)
+            bet.Odds[i] =
+                RoundOdd((1 / bet.Odds[i]) *
+                         (1 - Variables.Constants.GetFloat("float_bet_commission_decrease")));
     }
 
     /// <summary>
@@ -121,8 +171,27 @@ public static class Bet
     /// </summary>
     public static void Update()
     {
-        // Implementation depends on the not yet converted fixture functions.
-        throw new NotImplementedException();
+        List<Fixture> fixtures = Fixture.GetWeekList(Variables.Week, Variables.WeekRound);
+
+        UpdateUserBets();
+
+        Variables.Bets[0] = new List<BetMatch>();
+
+        for (int i = 0; i < Variables.Bets[1].Count; i++)
+            Variables.Bets[0].Add(Variables.Bets[1][i]);
+
+        Variables.Bets[1] = new List<BetMatch>();
+
+        for (int i = 0; i < fixtures.Count; i++)
+        {
+            if (Fixture.UserTeamInvolved(fixtures[i]) == -1)
+            {
+                BetMatch newBet = new BetMatch();
+                newBet.FixId = fixtures[i].Id;
+                GetOdds(newBet);
+                Variables.Bets[1].Add(newBet);
+            }
+        }
     }
 
     /// <summary>
@@ -155,8 +224,36 @@ public static class Bet
     /// <returns>TRUE on success, FALSE otherwise.</returns>
     public static bool Place(int fixId, int outcome, int wager)
     {
-        // Implementation depends on the not yet converted finance, game gui and user functions.
-        throw new NotImplementedException();
+        User user = Variables.Users[Variables.CurUser];
+        int maxWager = (int)Math.Round(Finance.WageUnit(user.Team) *
+            Variables.Constants.GetFloat("float_bet_wager_limit_factor"));
+
+        if (wager <= 0)
+            return true;
+
+        if (wager > Finance.TeamDrawingCreditLoan(user.Team, false) + user.Money)
+        {
+            // game_gui_show_warning(_("You don't have the money."));
+            return false;
+        }
+
+        if (wager > maxWager)
+        {
+            // misc_print_grouped_int(maxWager, buf);
+            // game_gui_show_warning(_("The betting office doesn't allow you to wager more than %s."), buf);
+            return false;
+        }
+
+        BetUser newBet = new BetUser();
+        newBet.FixId = fixId;
+        newBet.Outcome = outcome;
+        newBet.Wager = wager;
+
+        user.Bets[1].Add(newBet);
+
+        // C: if (window.bets != null) treeview2_show_bets();
+
+        return true;
     }
 
     /// <summary>

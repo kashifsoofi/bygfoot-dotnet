@@ -620,8 +620,37 @@ public class Cup
     /// <returns>The first week.</returns>
     public static int CupGetFirstWeekOfCupRound(Cup cup, int cupRound, bool withDelay)
     {
-        // Implementation depends on the not yet converted cup and maths functions.
-        throw new NotImplementedException();
+        int weekNumber;
+
+        if (cupRound == cup.Rounds.Count - 1)
+            weekNumber = cup.LastWeek -
+                (CupGetMatchdaysInCupRound(cup, cupRound) - 1) * cup.WeekGap;
+        else
+            weekNumber = CupGetFirstWeekOfCupRound(cup, cupRound + 1, false) -
+                CupGetMatchdaysInCupRound(cup, cupRound) * cup.WeekGap;
+
+        if (withDelay)
+            weekNumber += cup.Rounds[cupRound].Delay;
+
+        if (weekNumber <= 0)
+        {
+            Debug.DebugPrintMessage($"cup_get_first_week_of_cup_round: First week of cup {cup.Name}, cup round {cupRound} is not positive ({weekNumber}). Please correct the cup definition file!!!\n");
+
+            if (cup.WeekGap > 1)
+            {
+                cup.WeekGap--;
+                Debug.DebugPrintMessage($"Lowering week gap to {cup.WeekGap} and trying again.\n");
+            }
+            else
+            {
+                cup.LastWeek++;
+                Debug.DebugPrintMessage($"Increasing last week to {cup.LastWeek} and trying again.\n");
+            }
+
+            return CupGetFirstWeekOfCupRound(cup, cupRound, withDelay);
+        }
+
+        return weekNumber;
     }
 
     /// <summary>
@@ -654,8 +683,36 @@ public class Cup
     /// <returns>The number of matchdays.</returns>
     public static int CupGetMatchdaysInCupRound(Cup cup, int round)
     {
-        // Implementation depends on the not yet converted cup and maths functions.
-        throw new NotImplementedException();
+        CupRound cupRound = cup.Rounds[round];
+        int numberOfTeams = -1;
+        int numberOfMatchdays = -1;
+        int diff;
+
+        if (cupRound.RoundRobinNumberOfGroups > 0)
+        {
+            numberOfTeams = CupRoundGetNumberOfTeams(cup, round);
+            numberOfTeams += cupRound.RoundRobinNumberOfGroups - 1;
+            numberOfTeams /= cupRound.RoundRobinNumberOfGroups;
+            /* Now, numberOfTeams = number of teams in largest group */
+            if (numberOfTeams % 2 == 0)
+                numberOfMatchdays = numberOfTeams - 1;
+            else
+                numberOfMatchdays = numberOfTeams;
+
+            numberOfMatchdays *= cupRound.RoundRobins;
+
+            for (int i = 0; i < cupRound.TwoMatchWeeks[0].Count; i++)
+            {
+                diff = cupRound.TwoMatchWeeks[1][i] - cupRound.TwoMatchWeeks[0][i];
+                numberOfMatchdays -= ((diff + diff % 2) / 2);
+            }
+        }
+        else if (cupRound.HomeAway)
+            numberOfMatchdays = 2 - (cupRound.TwoMatchWeek ? 1 : 0);
+        else
+            numberOfMatchdays = 1;
+
+        return numberOfMatchdays;
     }
 
     /// <summary>
@@ -669,8 +726,24 @@ public class Cup
     /// <returns>The number of teams.</returns>
     public static int CupRoundGetNumberOfTeams(Cup cup, int round)
     {
-        // Implementation depends on the not yet converted cup functions.
-        throw new NotImplementedException();
+        CupRound cupRound = cup.Rounds[round];
+        int numberOfTeams = 0;
+
+        if (round == 0)
+            numberOfTeams = CupRoundGetNewTeams(cupRound);
+        else if (cup.Rounds[round - 1].RoundRobinNumberOfGroups > 0)
+        {
+            numberOfTeams =
+                (cup.Rounds[round - 1].RoundRobinNumberOfGroups *
+                 cup.Rounds[round - 1].RoundRobinNumberOfAdvance) +
+                cup.Rounds[round - 1].RoundRobinNumberOfBestAdvance +
+                CupRoundGetNewTeams(cupRound) + CupRoundGetByes(cup, round - 1);
+        }
+        else
+            numberOfTeams = CupRoundGetNumberOfTeams(cup, round - 1) / 2 +
+                CupRoundGetNewTeams(cupRound) + CupRoundGetByes(cup, round - 1);
+
+        return numberOfTeams;
     }
 
     /// <summary>
@@ -682,8 +755,25 @@ public class Cup
     /// <returns>The number of byes.</returns>
     public static int CupRoundGetByes(Cup cup, int round)
     {
-        // Implementation depends on the not yet converted maths and cup functions.
-        throw new NotImplementedException();
+        CupRound cupRound = cup.Rounds[round];
+        int numberOfByes = 0;
+        int newTeams = 0;
+
+        if (cupRound.Byes != -1)
+            numberOfByes = cupRound.Byes;
+        else
+        {
+            if (round == 0)
+                newTeams = CupRoundGetNewTeams(cupRound);
+            else
+                newTeams = CupRoundGetNumberOfTeams(cup, round);
+
+            numberOfByes = (cupRound.RoundRobinNumberOfGroups == 0)
+                ? MathHelper.GetByeLen(newTeams)
+                : 0;
+        }
+
+        return numberOfByes;
     }
 
     /// <summary>
@@ -870,8 +960,31 @@ public class Cup
     /// <returns>Whether the cup begins.</returns>
     public static bool QueryCupBegins(Cup cup)
     {
-        // Implementation depends on the not yet converted league, fixture and cup functions.
-        throw new NotImplementedException();
+        for (int j = 0; j < cup.Rounds.Count; j++)
+        {
+            CupRound cupRound = cup.Rounds[j];
+
+            for (int i = 0; i < cupRound.ChooseTeams.Count; i++)
+            {
+                if (!cupRound.ChooseTeams[i].Generate)
+                {
+                    Cup cupTemp = null;
+                    League league = null;
+                    CupGetChooseTeamLeagueCup(cupRound.ChooseTeams[i], out league, out cupTemp);
+
+                    if ((cupTemp == null &&
+                        League.QueryLeagueActive(league) &&
+                        league.Fixtures[league.Fixtures.Count - 1].Attendance == -1) ||
+                        (league == null &&
+                        ((cupTemp.Fixtures.Count > 0 &&
+                          cupTemp.Fixtures[cupTemp.Fixtures.Count - 1].Attendance == -1) ||
+                         cupTemp.Fixtures.Count == 0)))
+                        return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -881,8 +994,13 @@ public class Cup
     /// <returns>Whether there are international cups.</returns>
     public static bool QueryCupTransfer()
     {
-        // Implementation depends on the not yet converted cup functions.
-        throw new NotImplementedException();
+        foreach (Cup cup in Variables.Country.AllCups)
+        {
+            if (cup.Teams.Count > 0)
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -893,8 +1011,16 @@ public class Cup
     /// <returns>The highlight colour.</returns>
     public static string CupGetHighlightColour(Cup cup)
     {
-        // Implementation depends on the not yet converted app functions.
-        throw new NotImplementedException();
+        for (int i = 0; i < cup.Properties.Count; i++)
+        {
+            if (cup.Properties[i].StartsWith("highlight", StringComparison.Ordinal))
+            {
+                string name = "string_cup_" + cup.Properties[i];
+                return OptionHelper.ConstApp(name);
+            }
+        }
+
+        return null;
     }
 
     /// <summary>

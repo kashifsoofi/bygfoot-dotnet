@@ -340,8 +340,32 @@ public class Team
     /// <returns>The rank.</returns>
     public static int GetLeagueRank(Team tm, int clid)
     {
-        // Implementation depends on the not yet converted league and table functions.
-        throw new NotImplementedException();
+        int i;
+        int clidLocal = (clid == -1) ? GetTableClid(tm) : clid;
+
+        if (clidLocal < Bygfoot.IdCupStart)
+        {
+            League league = LeagueFromClidStatic(clidLocal);
+            if (league == null || !QueryLeagueActiveStatic(league))
+                return 0;
+
+            List<TableElement> elements = league.Tables[league.Tables.Count - 1].Elements;
+            for (i = 0; i < elements.Count; i++)
+                if (elements[i].TeamId == tm.Id)
+                    return i + 1;
+
+            Main.MainExitProgram(Bygfoot.ExitCode.IntNotFound,
+                "team_get_league_rank: no rank found for team {0} in league {1}. \n",
+                tm.Name, League.LeagueCupGetNameString(tm.Clid));
+
+            return -1;
+        }
+
+        if (Cup.CupHasTables(clidLocal) == -1)
+            return 0;
+
+        int rank = GetCupRank(tm, Cup.CupFromClid(clidLocal).Rounds[Cup.CupHasTables(clidLocal)], false);
+        return (rank == -1) ? 0 : rank;
     }
 
     /// <summary>
@@ -364,7 +388,8 @@ public class Team
         }
 
         if (abort)
-            throw new NotImplementedException();
+            Main.MainExitProgram(Bygfoot.ExitCode.IntNotFound,
+                "team_get_cup_rank: no rank found for team {0}. \n ", tm.Name);
 
         return -1;
     }
@@ -464,7 +489,9 @@ public class Team
                 }
                 break;
             default:
-                throw new NotImplementedException();
+                Main.MainExitProgram(Bygfoot.ExitCode.IntNotFound,
+                    "team_attribute_to_char: unknown attribute {0}\n", attribute);
+                break;
         }
 
         return string.Empty;
@@ -564,8 +591,29 @@ public class Team
     /// <returns>The sorted teams.</returns>
     public static List<Team> GetSorted(Func<Team, Team, int> compareFunction, int type, bool cup)
     {
-        // Implementation depends on the not yet converted team functions.
-        throw new NotImplementedException();
+        int i, j;
+        List<Team> teams = new List<Team>();
+
+        if (!cup)
+        {
+            for (i = 0; i < Variables.Country.Leagues.Count; i++)
+                for (j = 0; j < Variables.Country.Leagues[i].Teams.Count; j++)
+                    teams.Add(Variables.Country.Leagues[i].Teams[j]);
+        }
+        else
+        {
+            for (i = 0; i < Variables.Country.AllCups.Count; i++)
+                for (j = 0; j < Variables.Country.AllCups[i].Teams.Count; j++)
+                {
+                    Team cupTeam = Team.OfId(Variables.Country.AllCups[i].Teams[j]);
+                    if (cupTeam != null)
+                        teams.Add(cupTeam);
+                }
+        }
+
+        teams.Sort(compareFunction);
+
+        return teams;
     }
 
     /// <summary>
@@ -578,8 +626,72 @@ public class Team
     /// <returns>The comparison result.</returns>
     public static int CompareFunc(Team tm1, Team tm2, int type)
     {
-        // Implementation depends on the not yet converted team and league functions.
-        throw new NotImplementedException();
+        int returnValue = 0;
+
+        if (type == 0)
+        {
+            /** TEAM_COMPARE_LEAGUE_RANK */
+            if (tm1.Clid == tm2.Clid)
+                returnValue = Misc.MiscIntCompare(GetLeagueRank(tm2, -1), GetLeagueRank(tm1, -1));
+            else
+                returnValue = Misc.MiscIntCompare(LeagueFromClidStatic(tm2.Clid).Layer, LeagueFromClidStatic(tm1.Clid).Layer);
+        }
+        else if (type == 1)
+        {
+            /** TEAM_COMPARE_LEAGUE_LAYER */
+            returnValue = (tm1.Clid >= Bygfoot.IdCupStart || tm2.Clid >= Bygfoot.IdCupStart) ?
+                0 : Misc.MiscIntCompare(LeagueFromClidStatic(tm2.Clid).Layer, LeagueFromClidStatic(tm1.Clid).Layer);
+        }
+        else if (type == 4)
+        {
+            /** TEAM_COMPARE_OFFENSIVE */
+            int gf1 = GetTableValue(tm1, (int)TableElementValues.TableGf);
+            int gf2 = GetTableValue(tm2, (int)TableElementValues.TableGf);
+            int ga1 = GetTableValue(tm1, (int)TableElementValues.TableGa);
+            int ga2 = GetTableValue(tm2, (int)TableElementValues.TableGa);
+
+            if (gf1 > gf2)
+                returnValue = -1;
+            else if (gf1 < gf2)
+                returnValue = 1;
+            else if (ga1 < ga2)
+                returnValue = -1;
+            else if (ga1 > ga2)
+                returnValue = 1;
+            else
+                returnValue = 0;
+        }
+        else if (type == 5)
+        {
+            /** TEAM_COMPARE_DEFENSE */
+            int gf1 = GetTableValue(tm1, (int)TableElementValues.TableGf);
+            int gf2 = GetTableValue(tm2, (int)TableElementValues.TableGf);
+            int ga1 = GetTableValue(tm1, (int)TableElementValues.TableGa);
+            int ga2 = GetTableValue(tm2, (int)TableElementValues.TableGa);
+
+            if (ga1 > ga2)
+                returnValue = 1;
+            else if (ga1 < ga2)
+                returnValue = -1;
+            else if (gf1 > gf2)
+                returnValue = -1;
+            else if (gf1 < gf2)
+                returnValue = 1;
+            else
+                returnValue = 0;
+        }
+        else if (type == 2)
+        {
+            /** TEAM_COMPARE_UNSORTED */
+            returnValue = 0;
+        }
+        else if (type == 3)
+        {
+            /** TEAM_COMPARE_AV_SKILL */
+            returnValue = Misc.MiscFloatCompare(GetAverageSkill(tm1, false), GetAverageSkill(tm2, false));
+        }
+
+        return returnValue;
     }
 
     /// <summary>
@@ -590,8 +702,17 @@ public class Team
     /// <returns>The index.</returns>
     public static int GetIndex(Team tm)
     {
-        // Implementation depends on the not yet converted league and cup functions.
-        throw new NotImplementedException();
+        int i;
+        List<Team> teams = LeagueCupGetTeams(tm.Clid);
+
+        for (i = 0; i < teams.Count; i++)
+            if (ReferenceEquals(teams[i], tm))
+                return i;
+
+        Main.MainExitProgram(Bygfoot.ExitCode.IntNotFound,
+            "team_get_index: team {0} not found.\n", tm.Name);
+
+        return -1;
     }
 
     /// <summary>
@@ -670,8 +791,24 @@ public class Team
     /// <returns>The value.</returns>
     public static int GetTableValue(Team tm, int type)
     {
-        // Implementation depends on the not yet converted league and table functions.
-        throw new NotImplementedException();
+        int i;
+
+        if (tm.Clid >= Bygfoot.IdCupStart)
+            Main.MainExitProgram(Bygfoot.ExitCode.IntNotFound,
+                "team_get_table_value: team is not a league team: {0} \n", tm.Name);
+
+        League league = LeagueFromClidStatic(tm.Clid);
+        List<TableElement> elements = league.Tables[league.Tables.Count - 1].Elements;
+
+        for (i = 0; i < elements.Count; i++)
+            if (elements[i].TeamId == tm.Id)
+                break;
+
+        if (i == elements.Count)
+            Main.MainExitProgram(Bygfoot.ExitCode.IntNotFound,
+                "team_get_table_value: table entry not found for team {0} \n", tm.Name);
+
+        return elements[i].Values[type];
     }
 
     /// <summary>
