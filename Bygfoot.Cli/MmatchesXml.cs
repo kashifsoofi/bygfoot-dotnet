@@ -257,4 +257,40 @@ public static class MmatchesXml
                 break;
         }
     }
+
+    /// <summary>
+    /// Write the current user's MMs to file.
+    /// Corresponds to C: xml_mmatches_write.
+    /// </summary>
+    /// <param name="prefix">The prefix of the file (w/o ".bmm.zip").</param>
+    /// <param name="mmatches">The array of memorable matches to write.</param>
+    public static void MmatchesWrite(string prefix, List<MemMatch> mmatches)
+    {
+        string basename = Path.GetFileName(prefix);
+        string filename = prefix + "mmatches";
+
+        using (var fil = new StreamWriter(filename))
+        {
+            fil.WriteLine($"<_{TagMmMatches}>");
+
+            for (int i = 0; i < mmatches.Count; i++)
+            {
+                MemMatch mm = mmatches[i];
+
+                fil.WriteLine($"<_{TagMatch}>");
+                Xml.XmlWriteString(fil, mm.CompetitionName, TagMmMatchesCompName, "\t");
+                Xml.XmlWriteString(fil, mm.CountryName, TagMmMatchesCountryName, "\t");
+                Xml.XmlWriteInt(fil, mm.Neutral ? 1 : 0, TagMmMatchesNeutral, "\t");
+                Xml.XmlWriteInt(fil, mm.UserTeam, TagMmMatchesUserTeam, "\t");
+
+                string lgFile = $"{basename}lg{i:D3}";
+                Xml.XmlWriteString(fil, lgFile, TagMmMatchesLgFile, "\t");
+                LiveGameXmlLoadSave.LiveGameXmlLoadSaveWrite($"{prefix}lg{i:D3}", mm.LiveGame);
+
+                fil.WriteLine($"</_{TagMatch}>");
+            }
+
+            fil.WriteLine($"</_{TagMmMatches}>");
+        }
+    }
 }

@@ -907,7 +907,7 @@ public class User
             " &amp; Sons", " &amp; Daughters", " Bros."
         };
 
-        newSponsor.Name = Name.GetRandomLastName(Name.GetListFromSid(user.Team.NamesFile));
+        newSponsor.Name = NameList.GetRandomLastName(NameList.GetListFromSid(user.Team.NamesFile));
         if ((float)MathHelper.Rnd(0, 1) < 0.2)
             newSponsor.Name += nameAdd[MathHelper.Rndi(0, 2)];
         newSponsor.Name += names[MathHelper.Rndi(0, 17)];
@@ -926,7 +926,7 @@ public class User
                 (1 + sucFactor * ((float)newSponsor.Contract / 52 - 1) *
                 OptionHelper.ConstFloat("float_sponsor_contract_length_factor")) *
                 (Finance.WageUnit(Variables.Users[Variables.CurUser].Team) *
-                Variables.Users[Variables.CurUser].Team.Players.Count));
+                Variables.Users[Variables.CurUser].Team.Players.Count)));
         benefit = MathHelper.RoundInteger(benefit, 2);
         newSponsor.Benefit = benefit;
 
@@ -1000,8 +1000,38 @@ public class User
     /// <param name="mmatches">The matches.</param>
     public static void MMLoadFile(string filename, List<MemMatch> mmatches)
     {
-        // Implementation depends on the not yet converted mmatches and file functions.
-        throw new NotImplementedException();
+        User user = Variables.Users[Variables.CurUser];
+
+        string prefix = filename.Substring(0, filename.Length - 8);
+        string matchesFile = prefix + "___mmatches";
+
+        FileHelper.Decompress(filename);
+
+        if (mmatches == null)
+        {
+            Free.FreeMmatches(user.Mmatches, true);
+            user.Mmatches = new List<MemMatch>();
+            mmatches = user.Mmatches;
+        }
+
+        MmatchesXml.MmatchesRead(matchesFile, mmatches);
+
+        string dirname = Directory.GetCurrentDirectory();
+        List<string> files = FileHelper.GetDirectoryContents(dirname, prefix, "");
+
+        // Remove the zipfile from the list.
+        for (int i = files.Count - 1; i >= 0; i--)
+        {
+            if (Path.GetFileName(files[i]) == Path.GetFileName(filename))
+                files.RemoveAt(i);
+        }
+
+        FileHelper.RemoveFiles(files);
+
+        if (mmatches == null)
+            user.MmatchesFile = filename;
+
+        user.Mmatches = mmatches;
     }
 
     /// <summary>
@@ -1012,8 +1042,38 @@ public class User
     /// <param name="saveFile">Whether to save the MM array to file afterwards.</param>
     public static void MMAddLastMatch(bool loadFile, bool saveFile)
     {
-        // Implementation depends on the not yet converted mmatches, game and user functions.
-        throw new NotImplementedException();
+        User user = Variables.Users[Variables.CurUser];
+        MemMatch newMatch = new MemMatch();
+        Fixture fix = user.LiveGame.Fix;
+        string buf = null;
+
+        if (fix.Clid < Bygfoot.IdCupStart)
+            newMatch.CompetitionName = League.LeagueCupGetNameString(fix.Clid);
+        else
+        {
+            Fixture.GetCupRoundName(fix, ref buf);
+            newMatch.CompetitionName =
+                string.Format("{0} {1}", League.LeagueCupGetNameString(fix.Clid), buf);
+        }
+
+        newMatch.CountryName = Variables.Country.Name;
+        newMatch.Neutral = !fix.HomeAdvantage;
+        newMatch.UserTeam = fix.TeamIds[0] != user.TeamId ? 1 : 0;
+        newMatch.LiveGame = user.LiveGame;
+
+        // This tells the free function NOT to free the user live game.
+        user.LiveGame.StartedGame = -1;
+        user.LiveGame.Units = new List<LiveGameUnit>();
+
+        if (loadFile)
+            MMLoadFile(user.MmatchesFile, null);
+
+        user.Mmatches.Add(newMatch);
+
+        // game_gui_print_message(_("Memorable match added.")); -- not yet converted
+
+        if (saveFile)
+            MMSaveFile(user.MmatchesFile, user.Mmatches);
     }
 
     /// <summary>
@@ -1024,8 +1084,12 @@ public class User
     /// <param name="mmatches">The matches.</param>
     public static void MMSaveFile(string filename, List<MemMatch> mmatches)
     {
-        // Implementation depends on the not yet converted mmatches and file functions.
-        throw new NotImplementedException();
+        // Strip the ".bmm.zip" suffix (last 8 chars) and append "___".
+        string prefix = filename.Substring(0, filename.Length - 8) + "___";
+
+        MmatchesXml.MmatchesWrite(prefix, mmatches);
+
+        FileHelper.CompressFiles(filename, prefix);
     }
 
     /// <summary>
@@ -1034,10 +1098,28 @@ public class User
     /// </summary>
     /// <param name="filename">The filename.</param>
     /// <param name="dest">The destination.</param>
-    public static void MMSetFilename(string filename, string dest)
+    public static void MMSetFilename(string filename, ref string dest)
     {
-        // Implementation depends on the not yet converted misc functions.
-        throw new NotImplementedException();
+        User user = Variables.Users[Variables.CurUser];
+
+        if (filename.EndsWith(".bmm.zip"))
+        {
+            if (dest == null)
+                user.MmatchesFile = filename;
+            else
+                dest = filename;
+            return;
+        }
+
+        string buf = filename;
+
+        while (buf.EndsWith(".bmm") || buf.EndsWith(".zip"))
+            buf = buf.Substring(0, buf.Length - 4);
+
+        if (dest == null)
+            user.MmatchesFile = buf + ".bmm.zip";
+        else
+            dest = $"{buf}.bmm.zip";
     }
 
     /// <summary>
@@ -1047,8 +1129,13 @@ public class User
     /// <param name="filename">The filename.</param>
     public static void MMImportFile(string filename)
     {
-        // Implementation depends on the not yet converted mmatches and file functions.
-        throw new NotImplementedException();
+        List<MemMatch> mmArray = new List<MemMatch>();
+        User user = Variables.Users[Variables.CurUser];
+
+        MMLoadFile(filename, mmArray);
+
+        foreach (MemMatch mm in mmArray)
+            user.Mmatches.Add(mm);
     }
 
     /// <summary>
@@ -1058,8 +1145,14 @@ public class User
     /// <param name="filename">The filename.</param>
     public static void MMExportFile(string filename)
     {
-        // Implementation depends on the not yet converted mmatches and file functions.
-        throw new NotImplementedException();
+        string dest = null;
+        List<MemMatch> mmatches = new List<MemMatch>();
+
+        MMSetFilename(filename, ref dest);
+
+        mmatches.Add(Variables.Users[Variables.CurUser].Mmatches[Bygfoot.Stat4]);
+
+        MMSaveFile(dest, mmatches);
     }
 
     /// <summary>
@@ -1090,14 +1183,28 @@ public class User
     {
         for (int i = 0; i < user.Team.Players.Count; i++)
         {
-            // Implementation depends on the not yet converted player and team functions.
+            int player1 = user.DefaultTeam[i];
+            int player2 = user.Team.Players[i].Id;
+
+            if (player1 != player2)
+            {
+                // We don't want to stop because a player has been removed from your team.
+                int player1Index = Player.IdIndex(user.Team, player1, false);
+                int player2Index = Player.IdIndex(user.Team, player2, false);
+
+                if (player1Index == -1 || player2Index == -1)
+                    return;
+
+                Player.Swap(user.Team, player1Index, user.Team, player2Index);
+            }
         }
 
-        // team_change_structure(user->tm, user->default_structure);
-        // team_change_attribute_with_message(user->tm, TEAM_ATTRIBUTE_STYLE, user->default_style);
-        // team_change_attribute_with_message(user->tm, TEAM_ATTRIBUTE_BOOST, user->default_boost);
-        // game_gui_write_meters(current_user.tm);
-        // game_gui_write_radio_items;
+        Team.ChangeStructure(user.Team, user.DefaultStructure);
+        Team.ChangeAttributeWithMessage(user.Team, (int)TeamAttribute.Style, user.DefaultStyle);
+        Team.ChangeAttributeWithMessage(user.Team, (int)TeamAttribute.Boost, user.DefaultBoost);
+
+        // game_gui_write_meters(current_user.tm); -- not yet converted
+        // game_gui_write_radio_items(); -- not yet converted
     }
 }
 
