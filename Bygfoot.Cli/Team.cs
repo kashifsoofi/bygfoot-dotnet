@@ -138,8 +138,59 @@ public class Team
     /// <param name="avTalent">The average talent.</param>
     public static void GeneratePlayersStadium(Team tm, float avTalent)
     {
-        // Implementation depends on the not yet converted strategy, player and xml functions.
-        throw new NotImplementedException();
+        int i;
+        float skillFactor = (float)MathHelper.Rnd(1 - Variables.Constants.GetFloat("float_team_skill_variance"),
+                                                  1 + Variables.Constants.GetFloat("float_team_skill_variance"));
+        float wages = 0, averageTalent, leagueAvTalent;
+        string defFile = TeamHasDefFile(tm);
+
+        tm.StrategySid = Strategy.GetRandom();
+
+        tm.Stadium.AverageAttendance = tm.Stadium.PossibleAttendance =
+            tm.Stadium.Games = 0;
+        tm.Stadium.Safety =
+            (float)MathHelper.Rnd(Variables.Constants.GetFloat("float_team_stadium_safety_lower"),
+                                  Variables.Constants.GetFloat("float_team_stadium_safety_upper"));
+        tm.Stadium.TicketPrice = Variables.Constants.GetInt("int_team_stadium_ticket_price");
+
+        if (tm.Clid < Bygfoot.IdCupStart)
+        {
+            League league = LeagueFromClidStatic(tm.Clid);
+            leagueAvTalent = (avTalent > 0) ?
+                avTalent : (league != null ? league.AverageTalent : 0f);
+            averageTalent = (tm.AverageTalent == 0) ?
+                skillFactor * leagueAvTalent :
+                tm.AverageTalent;
+        }
+        else
+        {
+            Cup cup = Cup.CupFromClid(tm.Clid);
+            averageTalent = (tm.AverageTalent == 0) ?
+                GetAverageTalents(Variables.Country.Leagues[0].Teams) *
+                (1 + cup.TalentDiff) :
+                tm.AverageTalent;
+            averageTalent *= skillFactor;
+        }
+
+        averageTalent = Math.Clamp((float)averageTalent, 0, Variables.Constants.GetFloat("float_player_max_skill"));
+        tm.AverageTalent = averageTalent;
+
+        if (defFile == null)
+        {
+            for (i = 0; i < Variables.Constants.GetInt("int_team_cpu_players"); i++)
+                tm.Players.Add(Player.New(tm, averageTalent, true));
+        }
+        else
+        {
+            // xml_team_read(tm, def_file);  // not yet converted
+        }
+
+        for (i = 0; i < Variables.Constants.GetInt("int_team_cpu_players") - 2; i++)
+            wages += tm.Players[i].Wage;
+
+        tm.Stadium.Capacity =
+            MathHelper.RoundInteger((int)Math.Round((wages / (float)Variables.Constants.GetInt("int_team_stadium_ticket_price")) *
+                            Variables.Constants.GetFloat("float_team_stadium_size_wage_factor")), 2);
     }
 
     /// <summary>
@@ -242,8 +293,105 @@ public class Team
     /// <returns>The fixture or null.</returns>
     public static Fixture GetFixture(Team tm, bool lastFixture)
     {
-        // Implementation depends on the not yet converted fixture, league and team functions.
-        throw new NotImplementedException();
+        int i, j;
+        Fixture fix = null;
+
+        LiveGame liveGame = Variables.Statp as LiveGame;
+        if (!lastFixture &&
+            (Bygfoot.Stat0 == (int)Status0Value.StatusLiveGamePause ||
+             Bygfoot.Stat0 == (int)Status0Value.StatusShowLiveGame) &&
+            liveGame != null && liveGame.Fix != null &&
+            (liveGame.Fix.Teams[0] == tm || liveGame.Fix.Teams[1] == tm))
+            return liveGame.Fix;
+
+        if (!lastFixture)
+        {
+            for (i = 0; i < Variables.Country.Leagues.Count; i++)
+            {
+                League league = Variables.Country.Leagues[i];
+                if (QueryLeagueActiveStatic(league))
+                {
+                    for (j = 0; j < league.Fixtures.Count; j++)
+                    {
+                        Fixture fixture = league.Fixtures[j];
+                        if (fixture.Attendance == -1 &&
+                            Fixture.FixtureTeamInvolved(fixture, tm) &&
+                            (fix == null || Fixture.QueryFixtureIsEarlier(fixture, fix)))
+                        {
+                            fix = fixture;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            for (i = 0; i < Variables.Country.AllCups.Count; i++)
+            {
+                Cup cup = Variables.Country.AllCups[i];
+                if (fix == null || fix.WeekNumber != Variables.Week || fix.WeekRoundNumber != Variables.WeekRound)
+                {
+                    if (QueryLeagueCupHasPropertyStatic(cup.Id, "national") || QueryTeamIsInCup(tm, cup))
+                    {
+                        for (j = 0; j < cup.Fixtures.Count; j++)
+                        {
+                            Fixture fixture = cup.Fixtures[j];
+                            if (fixture.Attendance == -1 &&
+                                Fixture.FixtureTeamInvolved(fixture, tm) &&
+                                (fix == null || Fixture.QueryFixtureIsEarlier(fixture, fix)))
+                            {
+                                fix = fixture;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (i = 0; i < Variables.Country.Leagues.Count; i++)
+            {
+                League league = Variables.Country.Leagues[i];
+                if (QueryLeagueActiveStatic(league))
+                {
+                    for (j = league.Fixtures.Count - 1; j >= 0; j--)
+                    {
+                        Fixture fixture = league.Fixtures[j];
+                        if (fixture.Attendance != -1 &&
+                            Fixture.FixtureTeamInvolved(fixture, tm) &&
+                            (fix == null || Fixture.QueryFixtureIsLater(fixture, fix)))
+                        {
+                            fix = fixture;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            for (i = 0; i < Variables.Country.AllCups.Count; i++)
+            {
+                Cup cup = Variables.Country.AllCups[i];
+                if (fix == null || fix.WeekNumber != Variables.Week || fix.WeekRoundNumber != Variables.WeekRound - 1)
+                {
+                    if (QueryLeagueCupHasPropertyStatic(cup.Id, "national") || QueryTeamIsInCup(tm, cup))
+                    {
+                        for (j = cup.Fixtures.Count - 1; j >= 0; j--)
+                        {
+                            Fixture fixture = cup.Fixtures[j];
+                            if (fixture.Attendance != -1 &&
+                                Fixture.FixtureTeamInvolved(fixture, tm) &&
+                                (fix == null || Fixture.QueryFixtureIsLater(fixture, fix)))
+                            {
+                                fix = fixture;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return fix;
     }
 
     /// <summary>
@@ -447,8 +595,20 @@ public class Team
     /// <param name="tm">The team we rearrange.</param>
     public static void Rearrange(Team tm)
     {
-        // Implementation depends on the not yet converted player and team functions.
-        throw new NotImplementedException();
+        int i;
+        int compareData = 100 + (int)PlayerCompareAttrib.Pos;
+
+        tm.Players.Sort((a, b) => Player.CompareFunc(a, b, compareData));
+
+        for (i = 0; i < tm.Players.Count; i++)
+        {
+            Player player = tm.Players[i];
+            player.Cpos = (i < 11) ?
+                Player.GetPositionFromStructure(tm.Structure, i) : player.Pos;
+            if (player.Cskill > 0)
+                player.Cskill = (i < 11) ?
+                    Player.GetCskill(player, (int)player.Cpos, true) : player.Skill;
+        }
     }
 
     /// <summary>
@@ -506,8 +666,31 @@ public class Team
     /// <param name="newValue">The new value.</param>
     public static void ChangeAttributeWithMessage(Team tm, int attribute, int newValue)
     {
-        // Implementation depends on the not yet converted game_gui, finance and user functions.
-        throw new NotImplementedException();
+        Team userTeam = Variables.Users[Variables.CurUser].Team;
+
+        switch (attribute)
+        {
+            case (int)TeamAttribute.Style:
+                userTeam.Style = newValue;
+                // game_gui_print_message("Team style changed to %s.", AttributeToChar(attribute, newValue));
+                break;
+            case (int)TeamAttribute.Boost:
+                userTeam.Boost = newValue;
+                if (newValue == 1)
+                {
+                    // game_gui_print_message("Boost changed to %s (costs %d per minute).",
+                    //     AttributeToChar(attribute, newValue),
+                    //     (int)Math.Round(Finance.WageUnit(userTeam) * Variables.Constants.GetFloat("float_boost_cost_factor")));
+                }
+                else
+                {
+                    // game_gui_print_message("Boost changed to %s.", AttributeToChar(attribute, newValue));
+                }
+                break;
+            default:
+                Debug.DebugPrintMessage($"team_attribute_to_char: unknown attribute {attribute}\n");
+                break;
+        }
     }
 
     /// <summary>
@@ -517,8 +700,19 @@ public class Team
     /// <param name="tm">The team.</param>
     public static void UpdateCpuNewPlayers(Team tm)
     {
-        // Implementation depends on the not yet converted maths, player and transfer functions.
-        throw new NotImplementedException();
+        int i;
+        int numberOfNew = Misc.MathRndi(Variables.Constants.GetInt("int_team_new_players_lower"),
+                                        Variables.Constants.GetInt("int_team_new_players_upper"));
+        int[] playerNumbers = new int[tm.Players.Count];
+
+        MathHelper.GeneratePermutation(playerNumbers, 0, tm.Players.Count - 1);
+
+        for (i = 0; i < numberOfNew; i++)
+        {
+            Player player = tm.Players[playerNumbers[i]];
+            if (!Transfer.QueryTransferPlayerIsOnList(player))
+                Player.ReplaceByNew(player, true);
+        }
     }
 
     /// <summary>
@@ -577,8 +771,43 @@ public class Team
     /// <returns>The new team.</returns>
     public static Team GetNew(Team tm, bool fire)
     {
-        // Implementation depends on the not yet converted team, league and maths functions.
-        throw new NotImplementedException();
+        int i;
+        int lower = 0, upper = 0;
+        int bound1 = fire ? Variables.Constants.GetInt("int_team_new_bound_upper") :
+                            Variables.Constants.GetInt("int_team_new_bound_lower");
+        int bound2 = fire ? Variables.Constants.GetInt("int_team_new_bound_lower") :
+                            Variables.Constants.GetInt("int_team_new_bound_upper");
+        int idx = -1;
+        List<Team> teams = GetSorted((a, b) => CompareFunc(a, b, 0), 0, false);
+        Team returnValue;
+
+        for (i = 0; i < teams.Count; i++)
+        {
+            if (teams[i] != tm)
+                upper++;
+            else
+            {
+                idx = i;
+                break;
+            }
+        }
+
+        for (i = teams.Count - 1; i >= 0; i--)
+        {
+            if (teams[i] != tm)
+                lower++;
+            else
+                break;
+        }
+
+        bound1 = Math.Min(bound1, upper);
+        bound2 = Math.Min(bound2, lower);
+
+        returnValue = teams[Misc.MathRndi(i - bound1, i + bound2)];
+        while (returnValue == tm)
+            returnValue = teams[Misc.MathRndi(i - bound1, i + bound2)];
+
+        return returnValue;
     }
 
     /// <summary>
@@ -611,7 +840,7 @@ public class Team
                 }
         }
 
-        teams.Sort(compareFunction);
+        teams.Sort((a, b) => compareFunction(a, b));
 
         return teams;
     }
@@ -703,7 +932,7 @@ public class Team
     public static int GetIndex(Team tm)
     {
         int i;
-        List<Team> teams = LeagueCupGetTeams(tm.Clid);
+        List<Team> teams = League.LeagueCupGetTeams(tm.Clid);
 
         for (i = 0; i < teams.Count; i++)
             if (ReferenceEquals(teams[i], tm))
@@ -818,10 +1047,38 @@ public class Team
     /// <param name="tm">The team we find the results for.</param>
     /// <param name="resultBuf">The buffer we print the results into.</param>
     /// <param name="goalsBuf">The buffer we print the goals into.</param>
-    public static void WriteResults(Team tm, string resultBuf, string goalsBuf)
+    public static void WriteResults(Team tm, ref string resultBuf, ref string goalsBuf)
     {
-        // Implementation depends on the not yet converted fixture and maths functions.
-        throw new NotImplementedException();
+        int i;
+        List<Fixture> latestFixtures = Fixture.GetLatest(tm, true);
+        int[] res = new int[2];
+        int[] goals = new int[2];
+        int endIdx = latestFixtures.Count - Variables.Constants.GetInt("int_treeview_latest_results");
+
+        resultBuf = string.Empty;
+        endIdx = Math.Max(0, endIdx);
+        for (i = latestFixtures.Count - 1; i >= endIdx; i--)
+        {
+            Fixture fixture = latestFixtures[i];
+            res[0] = fixture.Result[0, 0] + fixture.Result[0, 1] + fixture.Result[0, 2];
+            res[1] = fixture.Result[1, 0] + fixture.Result[1, 1] + fixture.Result[1, 2];
+
+            bool userIsHome = fixture.Teams[0] == tm;
+            int myIdx = userIsHome ? 0 : 1;
+            int oppIdx = userIsHome ? 1 : 0;
+
+            goals[0] += fixture.Result[myIdx, 0] + fixture.Result[myIdx, 1];
+            goals[1] += fixture.Result[oppIdx, 0] + fixture.Result[oppIdx, 1];
+
+            if (res[0] == res[1])
+                resultBuf += "Dw ";
+            else if (res[oppIdx] > res[myIdx])
+                resultBuf += "L  ";
+            else
+                resultBuf += "W  ";
+        }
+
+        goalsBuf = $"{goals[0]} : {goals[1]}";
     }
 
     /// <summary>
@@ -831,10 +1088,46 @@ public class Team
     /// <param name="tm">The team.</param>
     /// <param name="clid">The competition id.</param>
     /// <param name="results">The buffer.</param>
-    public static void WriteOverallResults(Team tm, int clid, string results)
+    public static void WriteOverallResults(Team tm, int clid, ref string results)
     {
-        // Implementation depends on the not yet converted league and cup functions.
-        throw new NotImplementedException();
+        int i, idx;
+        int won = 0, lost = 0, drawn = 0, gf = 0, ga = 0;
+        List<Fixture> fixtures;
+
+        if (clid < Bygfoot.IdCupStart)
+        {
+            League league = LeagueFromClidStatic(clid);
+            fixtures = league != null ? league.Fixtures : new List<Fixture>();
+        }
+        else
+        {
+            Cup cup = GetCupStatic(clid);
+            fixtures = cup != null ? cup.Fixtures : new List<Fixture>();
+        }
+
+        for (i = 0; i < fixtures.Count; i++)
+        {
+            Fixture fix = fixtures[i];
+            if (fix.Attendance == -1)
+                break;
+
+            if (fix.Teams[0] != tm && fix.Teams[1] != tm)
+                continue;
+
+            idx = fix.Teams[0] != tm ? 1 : 0;
+
+            if (fix.Result[0, 0] == fix.Result[1, 0])
+                drawn++;
+            else if (fix.Result[idx, 0] > fix.Result[1 - idx, 0])
+                won++;
+            else
+                lost++;
+
+            gf += fix.Result[idx, 0];
+            ga += fix.Result[1 - idx, 0];
+        }
+
+        results = $"{won}-{lost}-{drawn}, {gf}:{ga}";
     }
 
     /// <summary>
@@ -845,10 +1138,75 @@ public class Team
     /// <param name="buf">The buffer to fill with the results.</param>
     /// <param name="sort">Whether to sort the results according to home/away.</param>
     /// <param name="cupMatches">Whether to take cup matches into account as well.</param>
-    public static void WriteOwnResults(Team tm, string buf, bool sort, bool cupMatches)
+    public static void WriteOwnResults(Team tm, ref string buf, bool sort, bool cupMatches)
     {
-        // Implementation depends on the not yet converted fixture, maths and user functions.
-        throw new NotImplementedException();
+        int i;
+        int[] res = new int[2];
+        Team userTeam = Variables.Users[Variables.CurUser].Team;
+        List<Fixture> matches = Fixture.GetMatches(userTeam, tm);
+
+        string buf4 = string.Empty;
+        string neutral = string.Empty;
+
+        for (i = 0; i < matches.Count; i++)
+        {
+            Fixture fixture = matches[i];
+            if (!cupMatches && fixture.Clid >= Bygfoot.IdCupStart)
+                continue;
+
+            res[0] = fixture.Result[0, 0] + fixture.Result[0, 1];
+            res[1] = fixture.Result[1, 0] + fixture.Result[1, 1];
+
+            bool userIsHome = fixture.Teams[0] == userTeam;
+            int myIdx = userIsHome ? 0 : 1;
+            int oppIdx = userIsHome ? 1 : 0;
+
+            string buf2;
+            if (res[myIdx] > res[oppIdx])
+                buf2 = "W  " + res[myIdx] + " : " + res[oppIdx];
+            else if (res[myIdx] < res[oppIdx])
+                buf2 = "L  " + res[myIdx] + " : " + res[oppIdx];
+            else
+                buf2 = "Dw " + res[myIdx] + " : " + res[oppIdx];
+
+            string buf3;
+            int place;
+            if (fixture.HomeAdvantage)
+            {
+                if (fixture.Teams[0] == userTeam)
+                {
+                    buf3 = buf2 + " (H) ";
+                    place = 0;
+                }
+                else
+                {
+                    string awayBg = Variables.ConstantsApp.GetString("string_treeview_live_game_commentary_away_bg");
+                    string awayFg = Variables.ConstantsApp.GetString("string_treeview_live_game_commentary_away_fg");
+                    buf3 = "<span background='" + awayBg + "' foreground='" + awayFg + "'>" + buf2 + " (A) </span> ";
+                    place = 1;
+                }
+            }
+            else
+            {
+                buf3 = buf2 + " (N) ";
+                place = -1;
+            }
+
+            if (!sort || place == 1)
+                buf4 += buf3;
+            else
+            {
+                if (place == 0)
+                {
+                    string oldBuf4 = buf4;
+                    buf4 = buf3 + oldBuf4;
+                }
+                else if (place == -1)
+                    neutral += buf3;
+            }
+        }
+
+        buf = buf4 + neutral;
     }
 
     /// <summary>
@@ -896,8 +1254,41 @@ public class Team
     /// <param name="tm">The team.</param>
     public static void CompleteDef(Team tm)
     {
-        // Implementation depends on the not yet converted player and team functions.
-        throw new NotImplementedException();
+        int i, newPos, posSum;
+        int[] positions = { 0, 0, 0, 0 };
+        int add = Variables.Constants.GetInt("int_team_cpu_players") - tm.Players.Count;
+        bool isUser = IsUser(tm) != -1;
+
+        for (i = 0; i < tm.Players.Count; i++)
+        {
+            Player.CompleteDef(tm.Players[i], tm.AverageTalent);
+            positions[(int)tm.Players[i].Pos]++;
+
+            if (isUser)
+                tm.Players[i].Recovery = 1;
+        }
+
+        for (i = 0; i < add; i++)
+        {
+            posSum = MathHelper.SumIntArray(positions, 4);
+            Player newPlayer = Player.New(tm, tm.AverageTalent, true);
+
+            if (positions[0] < 2)
+                newPos = 0;
+            else if ((float)positions[1] / posSum < Variables.Constants.GetFloat("float_player_pos_bound1"))
+                newPos = 1;
+            else if ((float)positions[2] / posSum < Variables.Constants.GetFloat("float_player_pos_bound1"))
+                newPos = 2;
+            else
+                newPos = 3;
+
+            newPlayer.Pos = newPlayer.Cpos = (PlayerPos)newPos;
+            positions[newPos]++;
+
+            tm.Players.Add(newPlayer);
+        }
+
+        CompleteDefSort(tm);
     }
 
     /// <summary>
@@ -907,8 +1298,92 @@ public class Team
     /// <param name="tm">The team.</param>
     public static void CompleteDefSort(Team tm)
     {
-        // Implementation depends on the not yet converted team and player functions.
-        throw new NotImplementedException();
+        int i, j;
+        int[] positions = { 0, 0, 0, 0 };
+        int[] structure = { 1, Misc.MathGetPlace(tm.Structure, 3), Misc.MathGetPlace(tm.Structure, 2), Misc.MathGetPlace(tm.Structure, 1) };
+        Player playerTmp = new Player();
+        Player playerTmp2 = new Player();
+
+        for (i = 0; i < 11; i++)
+            positions[(int)tm.Players[i].Pos]++;
+
+        for (i = 0; i < 4; i++)
+        {
+            while (positions[i] > structure[i])
+            {
+                for (j = 0; j < 11; j++)
+                {
+                    if ((int)tm.Players[j].Pos == i)
+                    {
+                        playerTmp = tm.Players[j];
+                        tm.Players.RemoveAt(j);
+                        break;
+                    }
+                }
+
+                for (j = 10; j < tm.Players.Count; j++)
+                {
+                    if ((int)tm.Players[j].Pos != i)
+                    {
+                        playerTmp2 = tm.Players[j];
+                        tm.Players.RemoveAt(j);
+                        break;
+                    }
+                }
+
+                if (j == tm.Players.Count)
+                    Main.MainExitProgram(Bygfoot.ExitCode.DefSort,
+                        "team_complete_def_sort (1): cannot sort according to structure {0} (team {1}).",
+                        tm.Structure, tm.Name);
+
+                positions[i]--;
+                positions[(int)playerTmp2.Pos]++;
+
+                tm.Players.Add(playerTmp);
+                tm.Players.Insert(0, playerTmp2);
+            }
+
+            while (positions[i] < structure[i])
+            {
+                for (j = 0; j < 11; j++)
+                {
+                    if ((int)tm.Players[j].Pos > i)
+                    {
+                        playerTmp = tm.Players[j];
+                        tm.Players.RemoveAt(j);
+                        break;
+                    }
+                }
+
+                if (j == 11)
+                    Main.MainExitProgram(Bygfoot.ExitCode.DefSort,
+                        "team_complete_def_sort (2): cannot sort according to structure {0} (team {1}).",
+                        tm.Structure, tm.Name);
+
+                for (j = 10; j < tm.Players.Count; j++)
+                {
+                    if ((int)tm.Players[j].Pos == i)
+                    {
+                        playerTmp2 = tm.Players[j];
+                        tm.Players.RemoveAt(j);
+                        break;
+                    }
+                }
+
+                if (j == tm.Players.Count)
+                    Main.MainExitProgram(Bygfoot.ExitCode.DefSort,
+                        "team_complete_def_sort (3): cannot sort according to structure {0} (team {1}).",
+                        tm.Structure, tm.Name);
+
+                positions[i]++;
+                positions[(int)playerTmp.Pos]--;
+
+                tm.Players.Add(playerTmp);
+                tm.Players.Insert(0, playerTmp2);
+            }
+        }
+
+        Rearrange(tm);
     }
 
     /// <summary>

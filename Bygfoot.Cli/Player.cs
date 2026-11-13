@@ -237,6 +237,56 @@ public class Player
     }
 
     /// <summary>
+    /// Complete the player structure (some values have been read
+    /// from a team def file). Corresponds to C: player_complete_def.
+    /// </summary>
+    /// <param name="pl">The player to complete.</param>
+    /// <param name="averageTalent">The average talent of the team.</param>
+    public static void CompleteDef(Player pl, float averageTalent)
+    {
+        int i;
+        float skillFactor = (float)MathHelper.Rnd(1 - Variables.Constants.GetFloat("float_player_average_talent_variance"),
+                                                  1 + Variables.Constants.GetFloat("float_player_average_talent_variance"));
+
+        pl.PeakAge = (float)MathHelper.Rnd(
+            Variables.Constants.GetFloat("float_player_peak_age_lower") + (pl.Pos == PlayerPos.Goalie ? Variables.Constants.GetFloat("float_player_peak_age_goalie_addition") : 0f),
+            Variables.Constants.GetFloat("float_player_peak_age_upper") + (pl.Pos == PlayerPos.Goalie ? Variables.Constants.GetFloat("float_player_peak_age_goalie_addition") : 0f));
+
+        if (Variables.Options.GetInt("int_opt_load_defs") == 2)
+        {
+            pl.Age = (float)MathHelper.GaussDist(Variables.Constants.GetFloat("float_player_age_lower"), Variables.Constants.GetFloat("float_player_age_upper"));
+            pl.PeakAge = (float)MathHelper.Rnd(
+                Variables.Constants.GetFloat("float_player_peak_age_lower") + (pl.Pos == PlayerPos.Goalie ? Variables.Constants.GetFloat("float_player_peak_age_goalie_addition") : 0f),
+                Variables.Constants.GetFloat("float_player_peak_age_upper") + (pl.Pos == PlayerPos.Goalie ? Variables.Constants.GetFloat("float_player_peak_age_goalie_addition") : 0f));
+
+            pl.PeakRegion = (float)MathHelper.GaussDist(Variables.Constants.GetFloat("float_player_peak_region_lower"), Variables.Constants.GetFloat("float_player_peak_region_upper"));
+            pl.Talent = Math.Clamp((float)(averageTalent * skillFactor), 0, Variables.Constants.GetFloat("float_player_max_skill"));
+            pl.Skill = SkillFromTalent(pl);
+        }
+
+        pl.Cpos = pl.Pos;
+        EstimateTalent(pl);
+
+        pl.Cskill = pl.Skill;
+        pl.Fitness = (float)MathHelper.Rnd(Variables.Constants.GetFloat("float_player_fitness_lower"), Variables.Constants.GetFloat("float_player_fitness_upper"));
+
+        pl.Health = PlayerInjury.None;
+        pl.Recovery = 0;
+        pl.Value = AssignValue(pl);
+        pl.Wage = AssignWage(pl);
+        pl.Contract = (float)MathHelper.Rnd(Variables.Constants.GetFloat("float_player_contract_lower"), Variables.Constants.GetFloat("float_player_contract_upper"));
+        pl.Lsu = (float)MathHelper.Rnd(Variables.Constants.GetFloat("float_player_lsu_lower"), Variables.Constants.GetFloat("float_player_lsu_upper"));
+        pl.Cards = new List<PlayerCard>();
+        pl.GamesGoals = new List<PlayerGamesGoals>();
+
+        for (i = 0; i < (int)PlayerValue.End; i++)
+            pl.Career[i] = 0;
+
+        pl.Participation = false;
+        pl.Offers = 0;
+    }
+
+    /// <summary>
     /// Return the appropriate position for the player with the given number.
     /// The position depends on the team structure if the player number is < 11
     /// and on some constants otherwise.
