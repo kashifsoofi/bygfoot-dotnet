@@ -312,10 +312,17 @@ public class User
     /// <param name="user">The user.</param>
     /// <param name="attribute">The player list attributes.</param>
     /// <param name="listNumber">The list number.</param>
-    public static void SetPlayerListAttributes(User user, PlayerListAttribute[] attribute, int listNumber)
+    public static void SetPlayerListAttributes(User user, bool[] onOff, int listNumber)
     {
-        // Implementation depends on the not yet converted option and user functions.
-        throw new NotImplementedException();
+        int cnt = 0;
+        string prefix = $"int_opt_user_pl{listNumber}_att";
+
+        for (int i = 0; i < user.Options.List.Count; i++)
+            if (user.Options.List[i].Name.StartsWith(prefix))
+            {
+                onOff[cnt] = user.Options.List[i].Value != 0;
+                cnt++;
+            }
     }
 
     /// <summary>
@@ -550,8 +557,67 @@ public class User
     /// </summary>
     public static void EventShowNext()
     {
-        // Implementation depends on the not yet converted user and game_gui functions.
-        throw new NotImplementedException();
+        User user = Variables.Users[Variables.CurUser];
+
+        if (user.Events.Count == 0)
+            return;
+
+        Bygfoot.Stat4 = (int)Status0Value.StatusShowEvent;
+
+        Event @event = user.Events[0];
+
+        switch (@event.Type)
+        {
+            default:
+                Debug.DebugPrintMessage($"user_event_show_next: unknown event type {(int)@event.Type}\n");
+                break;
+            case EventType.PlayerLeft:
+                // game_gui_show_warning(_("%s has left your team because his contract expired."),
+                //     @event.ValueString);
+                break;
+            case EventType.Warning:
+                // game_gui_show_warning(@event.ValueString, null);
+                break;
+            case EventType.FireFinance:
+                // game_gui_show_job_offer((Team)@event.ValuePointer, null,
+                //     STATUS_JOB_OFFER_FIRE_FINANCE);
+                break;
+            case EventType.FireFailure:
+                // game_gui_show_job_offer((Team)@event.ValuePointer, null,
+                //     STATUS_JOB_OFFER_FIRE_FAILURE);
+                break;
+            case EventType.JobOffer:
+                // game_gui_show_job_offer((Team)@event.ValuePointer, null,
+                //     STATUS_JOB_OFFER_SUCCESS);
+                break;
+            case EventType.Overdraw:
+                // game_gui_show_warning(...); // depends on int_finance_overdraw_positive
+                break;
+            case EventType.TransferOfferUser:
+                // game_gui_show_warning(..., @event.ValueString);
+                break;
+            case EventType.TransferOfferCpu:
+                // game_gui_show_warning(..., @event.ValueString);
+                break;
+            case EventType.TransferOfferRejectedBetterOffer:
+            case EventType.TransferOfferRejectedWage:
+            case EventType.TransferOfferRejectedFee:
+            case EventType.TransferOfferRejectedStars:
+                // misc_print_grouped_int + game_gui_show_warning(...) -- not yet converted
+                break;
+            case EventType.TransferOfferMoney:
+            case EventType.TransferOfferRoster:
+                // game_gui_show_warning(...) -- not yet converted
+                break;
+            case EventType.PlayerCareerStop:
+                // player_replace_by_new / player_remove_from_team + treeview_show_user_player_list()
+                break;
+            case EventType.Charity:
+                // game_gui_show_warning(...)
+                break;
+        }
+
+        EventRemove(user, 0);
     }
 
     /// <summary>
@@ -578,8 +644,25 @@ public class User
     /// <param name="tm">The team.</param>
     public static void ChangeTeam(User user, Team tm)
     {
-        // Implementation depends on the not yet converted user, team and game_gui functions.
-        throw new NotImplementedException();
+        int success = user.Counters[(int)CounterType.Success];
+
+        // Reset the ticketprice of the old team to the default value
+        user.Team.Stadium.TicketPrice = OptionHelper.ConstInt("int_team_stadium_ticket_price");
+
+        user.Team = tm;
+        user.TeamId = tm.Id;
+
+        // user_set_up_team(user, false); -- not yet converted
+
+        user.Counters[(int)CounterType.NewSponsor] = 0;
+        user.Counters[(int)CounterType.Success] = (success < 0)
+            ? 0
+            : (int)Math.Round((double)success / 2);
+
+        user.Sponsor = GetSponsor(user);
+
+        for (int i = user.Events.Count - 1; i >= 0; i--)
+            EventRemove(user, i);
     }
 
     /// <summary>
@@ -806,8 +889,48 @@ public class User
     /// <returns>The sponsor.</returns>
     public static UserSponsor GetSponsor(User user)
     {
-        // Implementation depends on the not yet converted finance, maths and name functions.
-        throw new NotImplementedException();
+        UserSponsor newSponsor = new UserSponsor();
+        int sucFactor = (Variables.Users[Variables.CurUser].Counters[(int)CounterType.Success] < 0) ? -1 : 1;
+        string[] names =
+        {
+            " Systems", " Communications", " Holdings", " Industries", " Company",
+            " Telecommunications", " Labs", " Technologies", " Chemicals", " Energy",
+            " Bank", " Products", " Software", " Scientific", " Financial",
+            " Petroleum", " Restaurants", " Data Systems"
+        };
+        string[] shortNames =
+        {
+            " Ltd.", " Assoc.", " Co.", " Ent.", " &amp; Co.", " Corp.", " Group"
+        };
+        string[] nameAdd =
+        {
+            " &amp; Sons", " &amp; Daughters", " Bros."
+        };
+
+        newSponsor.Name = Name.GetRandomLastName(Name.GetListFromSid(user.Team.NamesFile));
+        if ((float)MathHelper.Rnd(0, 1) < 0.2)
+            newSponsor.Name += nameAdd[MathHelper.Rndi(0, 2)];
+        newSponsor.Name += names[MathHelper.Rndi(0, 17)];
+        if ((float)MathHelper.Rnd(0, 1) < 0.7)
+            newSponsor.Name += shortNames[MathHelper.Rndi(0, 6)];
+
+        newSponsor.Contract = 4 * MathHelper.Rndi(9, 36);
+
+        int benefit = (int)Math.Round((double)
+            ((((OptionHelper.ConstFloat("float_sponsor_wage_percentage_upper") -
+                OptionHelper.ConstFloat("float_sponsor_wage_percentage_lower")) /
+                (2 * (float)OptionHelper.ConstInt("int_user_success_offer_limit"))) *
+                (float)Variables.Users[Variables.CurUser].Counters[(int)CounterType.Success]
+                + ((OptionHelper.ConstFloat("float_sponsor_wage_percentage_upper") -
+                    OptionHelper.ConstFloat("float_sponsor_wage_percentage_lower")) / 2)) *
+                (1 + sucFactor * ((float)newSponsor.Contract / 52 - 1) *
+                OptionHelper.ConstFloat("float_sponsor_contract_length_factor")) *
+                (Finance.WageUnit(Variables.Users[Variables.CurUser].Team) *
+                Variables.Users[Variables.CurUser].Team.Players.Count));
+        benefit = MathHelper.RoundInteger(benefit, 2);
+        newSponsor.Benefit = benefit;
+
+        return newSponsor;
     }
 
     /// <summary>
@@ -816,8 +939,35 @@ public class User
     /// </summary>
     public static void ShowSponsors()
     {
-        // Implementation depends on the not yet converted user, treeview and window functions.
-        throw new NotImplementedException();
+        int numOffers;
+        List<UserSponsor> sponsors = new List<UserSponsor>();
+        UserSponsor sponsor;
+
+        if (Math.Abs(Variables.Users[Variables.CurUser].Counters[(int)CounterType.Success]) >=
+            OptionHelper.ConstInt("int_user_success_offer_limit"))
+            numOffers = (Variables.Users[Variables.CurUser].Counters[(int)CounterType.Success] < 0)
+                ? OptionHelper.ConstInt("int_sponsor_offers_lower")
+                : OptionHelper.ConstInt("int_sponsor_offers_upper");
+        else
+            numOffers = (int)Math.Round((double)((OptionHelper.ConstInt("int_sponsor_offers_upper") -
+                OptionHelper.ConstInt("int_sponsor_offers_lower")) /
+                (2 * (float)OptionHelper.ConstInt("int_user_success_offer_limit"))) *
+                Variables.Users[Variables.CurUser].Counters[(int)CounterType.Success]
+                + ((OptionHelper.ConstInt("int_sponsor_offers_upper") -
+                    OptionHelper.ConstInt("int_sponsor_offers_lower")) / 2) + 1);
+
+        numOffers += MathHelper.Rndi(-1, 1);
+        if (numOffers <= 0)
+            numOffers = 1;
+
+        for (int i = 0; i < numOffers; i++)
+        {
+            sponsor = GetSponsor(Variables.Users[Variables.CurUser]);
+            sponsors.Add(sponsor);
+        }
+
+        // window_create(WINDOW_SPONSORS);
+        // treeview_show_sponsors(sponsors);
     }
 
     /// <summary>

@@ -128,7 +128,7 @@ public class NameList
     /// </summary>
     /// <param name="namelist">The name list.</param>
     /// <returns>The last name.</returns>
-    private static string GetRandomLastName(NameList namelist)
+    public static string GetRandomLastName(NameList namelist)
     {
         int idx = MathHelper.Rndi(0, namelist.LastNames.Count - 1);
         return namelist.LastNames[idx];
