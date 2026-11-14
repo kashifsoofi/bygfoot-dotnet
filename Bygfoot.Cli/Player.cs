@@ -677,6 +677,71 @@ public class Player
     }
 
     /// <summary>
+    /// Check whether substituting a player to a given position keeps the team
+    /// in an accepted structure.
+    /// Corresponds to C: player_substitution_good_structure.
+    /// </summary>
+    /// <param name="oldStructure">The team's current structure, e.g. 442.</param>
+    /// <param name="oldPos">The position the spot is currently filled by.</param>
+    /// <param name="playerPos">The position of the player that takes over.</param>
+    /// <returns>Whether the resulting structure is still accepted.</returns>
+    public static bool SubstitutionGoodStructure(int oldStructure, int oldPos, int playerPos)
+    {
+        int[] acceptedStructures = { 532, 442, 352, 433, 343 };
+        int newStructure =
+            oldStructure - (int)Math.Round(Math.Pow(10, (int)PlayerPos.Forward - oldPos)) +
+            (int)Math.Round(Math.Pow(10, (int)PlayerPos.Forward - playerPos));
+
+        return Misc.QueryIntegerIsInArray(newStructure, acceptedStructures, 5);
+    }
+
+    /// <summary>
+    /// Compare two possible substitutes for a substitution, weighted towards
+    /// the position we're looking for.
+    /// Corresponds to C: player_compare_substitute_func.
+    /// </summary>
+    /// <param name="pl1">The first player.</param>
+    /// <param name="pl2">The second player.</param>
+    /// <param name="position">The position we're looking for.</param>
+    /// <returns>1, 0 or -1 (see the C qsort() function).</returns>
+    public static int CompareSubstituteFunc(Player pl1, Player pl2, int position)
+    {
+        float skillForPos1 = GetCskill(pl1, position, false) *
+            (float)Math.Pow(pl1.Fitness, Variables.Constants.GetFloat("float_player_fitness_exponent"));
+        float skillForPos2 = GetCskill(pl2, position, false) *
+            (float)Math.Pow(pl2.Fitness, Variables.Constants.GetFloat("float_player_fitness_exponent"));
+        float gameSkill1 = GetGameSkill(pl1, false, true);
+        float gameSkill2 = GetGameSkill(pl2, false, true);
+        bool goodStructure1 =
+            SubstitutionGoodStructure(pl1.Team.Structure, position, (int)pl1.Pos);
+        bool goodStructure2 =
+            SubstitutionGoodStructure(pl2.Team.Structure, position, (int)pl2.Pos);
+        int returnValue = 0;
+
+        if ((int)pl1.Pos == position && (int)pl2.Pos == position)
+            returnValue = Misc.MiscFloatCompare(gameSkill1, gameSkill2);
+        else if ((int)pl1.Pos == position)
+            returnValue = -1;
+        else if ((int)pl2.Pos == position)
+            returnValue = 1;
+        else if (position != (int)PlayerPos.Goalie)
+        {
+            if (goodStructure1 && goodStructure2)
+                returnValue = Misc.MiscFloatCompare(gameSkill1, gameSkill2);
+            else if (goodStructure1)
+                returnValue = Misc.MiscFloatCompare(gameSkill1, skillForPos2);
+            else if (goodStructure2)
+                returnValue = Misc.MiscFloatCompare(skillForPos1, gameSkill2);
+            else
+                returnValue = Misc.MiscFloatCompare(skillForPos1, skillForPos2);
+        }
+        else
+            returnValue = Misc.MiscFloatCompare(skillForPos1, skillForPos2);
+
+        return returnValue;
+    }
+
+    /// <summary>
     /// Decrease a player's fitness during a match. Corresponds to C: player_decrease_fitness.
     /// </summary>
     /// <param name="pl">The player.</param>

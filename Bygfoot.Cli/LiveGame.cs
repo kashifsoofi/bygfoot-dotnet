@@ -179,7 +179,7 @@ public class LiveGame
     public float HomeAdvantage { get; set; }
     public List<LiveGameUnit> Units { get; set; } = new List<LiveGameUnit>();
     public LiveGameStats Stats { get; set; } = new LiveGameStats();
-    public List<LiveGameTeamState> TeamState { get; set; } = new List<LiveGameTeamState>();
+    public List<LiveGameTeamState> TeamState { get; set; } = new List<LiveGameTeamState> { new LiveGameTeamState(), new LiveGameTeamState() };
     public List<List<int>>[] ActionIds { get; set; } = new List<List<int>>[2];
     public List<string>[] Waivers { get; set; } = new List<string>[2]; // For completeness
 
@@ -566,5 +566,41 @@ public class LiveGame
             return null;
 
         return liveGame.Units[liveGame.Units.Count - 1];
+    }
+
+    /// <summary>
+    /// Return the live game unit 'gap' places before or after a given one.
+    /// Corresponds to C: live_game_unit_before.
+    /// </summary>
+    /// <param name="liveGame">The live game.</param>
+    /// <param name="unit">The unit we start from.</param>
+    /// <param name="gap">The number of places to move (positive: earlier, negative: later).</param>
+    /// <returns>The neighbour unit or null if it's out of bounds.</returns>
+    public static LiveGameUnit UnitBefore(LiveGame liveGame, LiveGameUnit unit, int gap)
+    {
+        int i;
+
+        for (i = liveGame.Units.Count - 1; i >= 0; i--)
+        {
+            if (!ReferenceEquals(liveGame.Units[i], unit))
+                continue;
+
+            if (gap > 0)
+            {
+                if (i - gap > 0)
+                    return liveGame.Units[i - gap];
+
+                Debug.DebugPrintMessage("live_game_unit_before: no unit found for gap {0}", gap);
+            }
+            else
+            {
+                if (i + gap < liveGame.Units.Count - 1)
+                    return liveGame.Units[i + gap];
+
+                Debug.DebugPrintMessage("live_game_unit_before: no unit found for gap {0}", gap);
+            }
+        }
+
+        return null;
     }
 }

@@ -294,8 +294,19 @@ public static class Game
     /// </summary>
     public static void SaveTeamStates()
     {
-        // Implementation depends on the not yet converted user and team functions.
-        throw new NotImplementedException();
+        LiveGame liveGame = Variables.Users[Bygfoot.Stat2].LiveGame;
+        Team[] teams = { liveGame.Fix.Teams[0], liveGame.Fix.Teams[1] };
+
+        for (int i = 0; i < 2; i++)
+        {
+            LiveGameTeamState teamState = liveGame.TeamState[i];
+            teamState.Structure = teams[i].Structure;
+            teamState.Style = teams[i].Style;
+            teamState.Boost = teams[i].Boost != 0;
+
+            for (int j = 0; j < 11; j++)
+                teamState.PlayerIds[j] = teams[i].Players[j].Id;
+        }
     }
 
     /// <summary>
@@ -305,8 +316,25 @@ public static class Game
     /// </summary>
     public static bool CheckLiveGameResumeState()
     {
-        // Implementation depends on the not yet converted team and player functions.
-        throw new NotImplementedException();
+        int[] subs = { 0, 0 };
+        LiveGame liveGame = Variables.Users[Bygfoot.Stat2].LiveGame;
+        Team[] teams = { liveGame.Fix.Teams[0], liveGame.Fix.Teams[1] };
+        bool returnValue = true;
+
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 11; j++)
+                if (!Misc.QueryIntegerIsInArray(teams[i].Players[j].Id, liveGame.TeamState[i].PlayerIds, 11))
+                    subs[i]++;
+
+            if (subs[i] > liveGame.SubsLeft[i])
+            {
+                ResetPlayers(i);
+                returnValue = false;
+            }
+        }
+
+        return returnValue;
     }
 
     /// <summary>
@@ -318,8 +346,32 @@ public static class Game
     /// <param name="subsOut">The substitute players that went out.</param>
     public static void GetSubs(int teamNumber, int[] subsIn, int[] subsOut)
     {
-        // Implementation depends on the not yet converted user and player functions.
-        throw new NotImplementedException();
+        LiveGame liveGame = Variables.Users[Bygfoot.Stat2].LiveGame;
+        Team tm = liveGame.Fix.Teams[teamNumber];
+        int[] savedIds = liveGame.TeamState[teamNumber].PlayerIds;
+        int[] currentPlayers = new int[11];
+        int cnt = 0;
+
+        for (int i = 0; i < 3; i++)
+            subsIn[i] = subsOut[i] = -1;
+
+        for (int i = 0; i < 11; i++)
+        {
+            currentPlayers[i] = tm.Players[i].Id;
+            if (!Misc.QueryIntegerIsInArray(tm.Players[i].Id, savedIds, 11))
+            {
+                subsIn[cnt] = tm.Players[i].Id;
+                cnt++;
+            }
+        }
+
+        cnt = 0;
+        for (int i = 0; i < 11; i++)
+            if (!Misc.QueryIntegerIsInArray(savedIds[i], currentPlayers, 11))
+            {
+                subsOut[cnt] = savedIds[i];
+                cnt++;
+            }
     }
 
     /// <summary>
@@ -331,9 +383,45 @@ public static class Game
     /// <returns>The substitute player id.</returns>
     public static int SubstitutePlayer(Team tm, int playerNumber)
     {
-        // Implementation depends on the not yet converted player, team and
-        // finance functions.
-        throw new NotImplementedException();
+        int substitute = -1;
+        List<Player> substitutes = new List<Player>();
+        bool adaptStructure;
+
+        for (int i = 11; i < tm.Players.Count; i++)
+            if (tm.Players[i].Cskill > 0)
+                substitutes.Add(tm.Players[i]);
+
+        if (substitutes.Count == 0)
+        {
+            Debug.DebugPrintMessage("game_substitute_player: no suitable substitutes found (all injured/banned?)");
+            return -1;
+        }
+
+        int oldPos = (int)tm.Players[playerNumber].Cpos;
+        substitutes.Sort((a, b) => Player.CompareSubstituteFunc(a, b, oldPos));
+
+        adaptStructure =
+            (MathHelper.GetPlace(Team.FindAppropriateStructure(tm), 1) +
+             MathHelper.GetPlace(Team.FindAppropriateStructure(tm), 2) +
+             MathHelper.GetPlace(Team.FindAppropriateStructure(tm), 3) != 10 ||
+             (tm.Players[playerNumber].Cpos != substitutes[0].Pos &&
+              Player.SubstitutionGoodStructure(tm.Structure, (int)tm.Players[playerNumber].Cpos, (int)substitutes[0].Pos)));
+
+        substitute = substitutes[0].Id;
+
+        Player.Swap(tm, playerNumber, tm, Player.IdIndex(tm, substitute, true));
+
+        if (adaptStructure)
+        {
+            Team.ChangeStructure(tm, Team.FindAppropriateStructure(tm));
+            Team.Rearrange(tm);
+        }
+
+        // The C version also refreshes the user player list for the current user
+        // (game_gui_write_av_skills, selected_row = -1, treeview_show_user_player_list),
+        // which are GUI-only and not converted.
+
+        return substitute;
     }
 
     /// <summary>
@@ -343,8 +431,85 @@ public static class Game
     /// <param name="pl">The player that gets injured.</param>
     public static void PlayerInjury(Player pl)
     {
-        // Implementation depends on the not yet converted maths and player functions.
-        throw new NotImplementedException();
+        int i;
+        float rndom;
+        float[] injuryProbs =
+        {
+            0,
+            OptionHelper.ConstFloat("float_player_injury_concussion"),
+            OptionHelper.ConstFloat("float_player_injury_pulled_muscle"),
+            OptionHelper.ConstFloat("float_player_injury_hamstring"),
+            OptionHelper.ConstFloat("float_player_injury_groin"),
+            OptionHelper.ConstFloat("float_player_injury_frac_ankle"),
+            OptionHelper.ConstFloat("float_player_injury_rib"),
+            OptionHelper.ConstFloat("float_player_injury_leg"),
+            OptionHelper.ConstFloat("float_player_injury_brok_ankle"),
+            OptionHelper.ConstFloat("float_player_injury_arm"),
+            OptionHelper.ConstFloat("float_player_injury_shoulder"),
+            OptionHelper.ConstFloat("float_player_injury_ligament"),
+            OptionHelper.ConstFloat("float_player_injury_career_stop")
+        };
+
+        int[] duration =
+        {
+            MathHelper.GaussDisti(
+                OptionHelper.ConstInt("int_player_injury_duration_concussion") - OptionHelper.ConstInt("int_player_injury_duration_dev_concussion"),
+                OptionHelper.ConstInt("int_player_injury_duration_concussion") + OptionHelper.ConstInt("int_player_injury_duration_dev_concussion")),
+            MathHelper.GaussDisti(
+                OptionHelper.ConstInt("int_player_injury_duration_pulled_muscle") - OptionHelper.ConstInt("int_player_injury_duration_dev_pulled_muscle"),
+                OptionHelper.ConstInt("int_player_injury_duration_pulled_muscle") + OptionHelper.ConstInt("int_player_injury_duration_dev_pulled_muscle")),
+            MathHelper.GaussDisti(
+                OptionHelper.ConstInt("int_player_injury_duration_hamstring") - OptionHelper.ConstInt("int_player_injury_duration_dev_hamstring"),
+                OptionHelper.ConstInt("int_player_injury_duration_hamstring") + OptionHelper.ConstInt("int_player_injury_duration_dev_hamstring")),
+            MathHelper.GaussDisti(
+                OptionHelper.ConstInt("int_player_injury_duration_groin") - OptionHelper.ConstInt("int_player_injury_duration_dev_groin"),
+                OptionHelper.ConstInt("int_player_injury_duration_groin") + OptionHelper.ConstInt("int_player_injury_duration_dev_groin")),
+            MathHelper.GaussDisti(
+                OptionHelper.ConstInt("int_player_injury_duration_frac_ankle") - OptionHelper.ConstInt("int_player_injury_duration_dev_frac_ankle"),
+                OptionHelper.ConstInt("int_player_injury_duration_frac_ankle") + OptionHelper.ConstInt("int_player_injury_duration_dev_frac_ankle")),
+            MathHelper.GaussDisti(
+                OptionHelper.ConstInt("int_player_injury_duration_rib") - OptionHelper.ConstInt("int_player_injury_duration_dev_rib"),
+                OptionHelper.ConstInt("int_player_injury_duration_rib") + OptionHelper.ConstInt("int_player_injury_duration_dev_rib")),
+            MathHelper.GaussDisti(
+                OptionHelper.ConstInt("int_player_injury_duration_leg") - OptionHelper.ConstInt("int_player_injury_duration_dev_leg"),
+                OptionHelper.ConstInt("int_player_injury_duration_leg") + OptionHelper.ConstInt("int_player_injury_duration_dev_leg")),
+            MathHelper.GaussDisti(
+                OptionHelper.ConstInt("int_player_injury_duration_brok_ankle") - OptionHelper.ConstInt("int_player_injury_duration_dev_brok_ankle"),
+                OptionHelper.ConstInt("int_player_injury_duration_brok_ankle") + OptionHelper.ConstInt("int_player_injury_duration_dev_brok_ankle")),
+            MathHelper.GaussDisti(
+                OptionHelper.ConstInt("int_player_injury_duration_arm") - OptionHelper.ConstInt("int_player_injury_duration_dev_arm"),
+                OptionHelper.ConstInt("int_player_injury_duration_arm") + OptionHelper.ConstInt("int_player_injury_duration_dev_arm")),
+            MathHelper.GaussDisti(
+                OptionHelper.ConstInt("int_player_injury_duration_shoulder") - OptionHelper.ConstInt("int_player_injury_duration_dev_shoulder"),
+                OptionHelper.ConstInt("int_player_injury_duration_shoulder") + OptionHelper.ConstInt("int_player_injury_duration_dev_shoulder")),
+            MathHelper.GaussDisti(
+                OptionHelper.ConstInt("int_player_injury_duration_ligament") - OptionHelper.ConstInt("int_player_injury_duration_dev_ligament"),
+                OptionHelper.ConstInt("int_player_injury_duration_ligament") + OptionHelper.ConstInt("int_player_injury_duration_dev_ligament")),
+            50
+        };
+
+        for (i = 1; i < 13; i++)
+            injuryProbs[i] += injuryProbs[i - 1];
+
+        rndom = (float)MathHelper.Rnd(0, 1);
+
+        for (i = 1; i < 13; i++)
+            if (rndom >= injuryProbs[i - 1] && rndom < injuryProbs[i])
+            {
+                pl.Health = (global::Bygfoot.Cli.PlayerInjury)i;
+                pl.Recovery = duration[i - 1] + 1;
+                pl.Cskill = pl.Fitness = 0;
+            }
+
+        if (pl.Health == global::Bygfoot.Cli.PlayerInjury.CareerStop && Team.IsUser(pl.Team) != -1)
+            User.EventAdd(Variables.Users[Team.IsUser(pl.Team)], (int)EventType.PlayerCareerStop, pl.Id, -1, null, null);
+
+        Player.StreakAddToProb(pl, OptionHelper.ConstFloat("float_player_streak_add_injury"));
+        if (pl.Streak == PlayerStreak.Hot)
+        {
+            pl.Streak = PlayerStreak.None;
+            Player.StreakResetCount(pl);
+        }
     }
 
     /// <summary>
@@ -416,8 +581,36 @@ public static class Game
     /// <returns>A player index or -1 if we don't substitute.</returns>
     public static int FindToSubstitute(int clid, Team tm)
     {
-        // Implementation depends on the not yet converted player and sorting functions.
-        throw new NotImplementedException();
+        int positionToSubstitute = -1;
+        List<Player> players = new List<Player>();
+        int returnValue = -1;
+        int currentStructure = Team.FindAppropriateStructure(tm);
+        int numForw = currentStructure % 10;
+        int numMid = MathHelper.GetPlace(currentStructure, 2);
+        int numDef = MathHelper.GetPlace(currentStructure, 3);
+
+        for (int i = 0; i < 11; i++)
+            if (Player.IsBanned(tm.Players[i]) <= 0)
+                players.Add(tm.Players[i]);
+
+        players.Sort((a, b) => Player.CompareFunc(a, b, (int)PlayerCompareAttrib.GameSkill));
+
+        if (numForw > 1 || Math.Max(numMid, numDef) <= 2)
+            positionToSubstitute = (int)PlayerPos.Forward;
+        else if (Math.Abs(numDef - numMid) > 1 ||
+            (numForw == 0 && Math.Max(numMid, numDef) > 2))
+            positionToSubstitute = numDef > numMid ? (int)PlayerPos.Defender : (int)PlayerPos.Midfielder;
+        else
+            return -1;
+
+        for (int i = players.Count - 1; i >= 0; i--)
+            if ((int)players[i].Pos == positionToSubstitute)
+            {
+                returnValue = players[i].Id;
+                return returnValue;
+            }
+
+        return -1;
     }
 
     /// <summary>
@@ -427,8 +620,26 @@ public static class Game
     /// <returns>A player id or -1.</returns>
     public static int GetPlayerBanDuration()
     {
-        // Implementation depends on the not yet converted maths and player functions.
-        throw new NotImplementedException();
+        float[] durationProbs =
+        {
+            0,
+            OptionHelper.ConstFloat("float_live_game_ban_1"),
+            OptionHelper.ConstFloat("float_live_game_ban_2"),
+            OptionHelper.ConstFloat("float_live_game_ban_3"),
+            OptionHelper.ConstFloat("float_live_game_ban_4"),
+            OptionHelper.ConstFloat("float_live_game_ban_5")
+        };
+
+        for (int i = 1; i < 6; i++)
+            durationProbs[i] += durationProbs[i - 1];
+
+        float rndom = (float)MathHelper.Rnd(0, 1);
+
+        for (int i = 1; i < 6; i++)
+            if (durationProbs[i - 1] < rndom && rndom < durationProbs[i])
+                return i + 1;
+
+        return -1;
     }
 
     /// <summary>
@@ -438,8 +649,61 @@ public static class Game
     /// <param name="fix">The match we examine.</param>
     public static void PostMatch(Fixture fix)
     {
-        // Implementation depends on the not yet converted team and user functions.
-        throw new NotImplementedException();
+        int i;
+        List<Team> teams = null;
+        Cup cup = null;
+        string buf = string.Empty;
+        string buf2 = string.Empty;
+        int usrIdx;
+
+        usrIdx = Fixture.UserTeamInvolved(fix);
+
+        if ((Variables.DebugLevel > 100 && usrIdx != -1) || Variables.DebugLevel > 130)
+            Debug.DebugPrintMessage("game_post_match: {0} - {1}", fix.Teams[0].Name, fix.Teams[1].Name);
+
+        if (Fixture.QueryFixtureHasTables(fix))
+            Table.Update(fix);
+
+        for (i = 0; i < 2; i++)
+            Team.UpdatePostMatch(fix.Teams[i], fix);
+
+        if (fix.Clid < Bygfoot.IdCupStart)
+            return;
+
+        cup = Cup.CupFromClid(fix.Clid);
+
+        if (fix.Round == cup.Rounds.Count - 1 &&
+            ReferenceEquals(fix, cup.Fixtures[cup.Fixtures.Count - 1]))
+        {
+            teams = Cup.CupGetTeamsSorted(cup);
+
+            int winUserIdx = Team.IsUser(teams[0]);
+            if (winUserIdx != -1)
+            {
+                User.HistoryAdd(Variables.Users[winUserIdx], (int)UserHistoryType.WinFinal,
+                    teams[0].Name, League.LeagueCupGetNameString(fix.Clid), teams[1].Name, null);
+                User.AddCupSuccess(Variables.Users[winUserIdx], cup, fix.Round, (int)UserHistoryType.WinFinal);
+            }
+            else
+            {
+                int loseUserIdx = Team.IsUser(teams[1]);
+                if (loseUserIdx != -1)
+                {
+                    User.HistoryAdd(Variables.Users[loseUserIdx], (int)UserHistoryType.LoseFinal,
+                        teams[1].Name, League.LeagueCupGetNameString(fix.Clid), teams[0].Name, null);
+                    User.AddCupSuccess(Variables.Users[loseUserIdx], cup, fix.Round, (int)UserHistoryType.LoseFinal);
+                }
+            }
+        }
+        else if (usrIdx != -1)
+        {
+            Cup.CupGetRoundName(cup, fix.Round, ref buf);
+            buf2 = (fix.Round + 1).ToString();
+
+            User.HistoryAdd(Variables.Users[usrIdx], (int)UserHistoryType.ReachCupRound,
+                Variables.Users[usrIdx].Team.Name, League.LeagueCupGetNameString(fix.Clid), buf, buf2);
+            User.AddCupSuccess(Variables.Users[usrIdx], cup, fix.Round, (int)UserHistoryType.ReachCupRound);
+        }
     }
 
     /// <summary>
@@ -474,9 +738,24 @@ public static class Game
     /// <param name="maxValues">The place to store the values.</param>
     public static void GetMaxValues(float[] maxValues)
     {
-        // Implementation depends on the not yet converted game_get_player_contribution and
-        // player_get_position_from_structure functions.
-        throw new NotImplementedException();
+        int i;
+        Player pl = new Player();
+
+        pl.Skill = pl.Cskill = OptionHelper.ConstFloat("float_player_max_skill");
+        pl.Fitness = 1;
+        pl.Streak = PlayerStreak.None;
+
+        maxValues[0] = OptionHelper.ConstFloat("float_player_max_skill");
+
+        for (i = 1; i < 4; i++)
+        {
+            maxValues[i] = 0;
+            for (int j = 1; j < 11; j++)
+            {
+                pl.Cpos = Player.GetPositionFromStructure(442, j);
+                maxValues[i] += GetPlayerContribution(pl, i, false);
+            }
+        }
     }
 
     /// <summary>
@@ -488,8 +767,21 @@ public static class Game
     /// <returns>A player id or -1.</returns>
     public static int GetDefaultPenaltyShooter(Team tm)
     {
-        // Implementation depends on the option and player functions that are yet to be converted.
-        throw new NotImplementedException();
+        int returnValue = -1;
+
+        int usrIdx = Team.IsUser(tm);
+        if (usrIdx == -1)
+            return returnValue;
+
+        int shooterId = Variables.Users[usrIdx].Options.GetInt("int_opt_user_penalty_shooter");
+        if (shooterId == -1)
+            return returnValue;
+
+        int idx = Player.IdIndex(tm, shooterId, false);
+        if (idx != -1 && idx < 11 && tm.Players[idx].Cskill != 0)
+            returnValue = shooterId;
+
+        return returnValue;
     }
 
     /// <summary>
@@ -498,8 +790,11 @@ public static class Game
     /// </summary>
     public static void BoostCost()
     {
-        // Implementation depends on the not yet converted finance and user functions.
-        throw new NotImplementedException();
+        float wageUnit = Finance.WageUnit(Variables.Users[Bygfoot.Stat2].Team);
+        int deduce = (int)Math.Round(wageUnit * OptionHelper.ConstFloat("float_boost_cost_factor"));
+
+        Variables.Users[Bygfoot.Stat2].Money -= deduce;
+        Variables.Users[Bygfoot.Stat2].MoneyOut[1, (int)MonOut.MonOutBoost] -= deduce;
     }
 
     /// <summary>
@@ -509,8 +804,13 @@ public static class Game
     /// <param name="fix">The match being played.</param>
     public static void DecreaseFitness(Fixture fix)
     {
-        // Implementation depends on the not yet converted player functions.
-        throw new NotImplementedException();
+        for (int i = 0; i < 2; i++)
+        {
+            if (Variables.DebugLevel < 50 || Team.IsUser(fix.Teams[i]) == -1)
+                for (int j = 0; j < 11; j++)
+                    if (fix.Teams[i].Players[j].Cskill > 0)
+                        Player.DecreaseFitness(fix.Teams[i].Players[j]);
+        }
     }
 
     /// <summary>
@@ -521,8 +821,55 @@ public static class Game
     /// <param name="unit">The live game unit.</param>
     public static void UpdateStats(LiveGame lg, LiveGameUnit unit)
     {
-        // Implementation depends on the not yet converted live game and player functions.
-        throw new NotImplementedException();
+        int i;
+        LiveGameStats stats = lg.Stats;
+
+        if (unit.Minute != -1)
+            stats.Values[unit.Possession, (int)LiveGameStatValue.Possession]++;
+
+        if (unit.Event.Type == (int)LiveGameEventType.ScoringChance ||
+            unit.Event.Type == (int)LiveGameEventType.FreeKick ||
+            unit.Event.Type == (int)LiveGameEventType.Header)
+            stats.Values[unit.Possession, (int)LiveGameStatValue.Shots]++;
+        else if (unit.Event.Type == (int)LiveGameEventType.Penalty)
+            stats.Values[unit.Possession, (int)LiveGameStatValue.Penalties]++;
+        else if (unit.Event.Type == (int)LiveGameEventType.Injury)
+        {
+            stats.Values[unit.Event.Team, (int)LiveGameStatValue.Injuries]++;
+            UpdateStatsPlayer(lg, unit);
+        }
+        else if (unit.Event.Type == (int)LiveGameEventType.Foul ||
+            unit.Event.Type == (int)LiveGameEventType.FoulYellow ||
+            unit.Event.Type == (int)LiveGameEventType.FoulRed ||
+            unit.Event.Type == (int)LiveGameEventType.FoulRedInjury)
+        {
+            stats.Values[unit.Event.Team, (int)LiveGameStatValue.Fouls]++;
+            if (unit.Event.Type == (int)LiveGameEventType.FoulYellow)
+            {
+                stats.Values[unit.Event.Team, (int)LiveGameStatValue.Cards]++;
+                UpdateStatsPlayer(lg, unit);
+            }
+        }
+        else if (unit.Event.Type == (int)LiveGameEventType.SendOff)
+        {
+            stats.Values[unit.Event.Team, (int)LiveGameStatValue.Reds]++;
+            UpdateStatsPlayer(lg, unit);
+        }
+        else if (unit.Event.Type == (int)LiveGameEventType.Goal ||
+            unit.Event.Type == (int)LiveGameEventType.OwnGoal)
+        {
+            LiveGameUnit before = LiveGame.UnitBefore(lg, unit, -1);
+            if ((before == null || before.Event.Type != (int)LiveGameEventType.Penalty) &&
+                unit.Event.Type != (int)LiveGameEventType.OwnGoal)
+                stats.Values[unit.Event.Team, (int)LiveGameStatValue.GoalsRegular]++;
+            UpdateStatsPlayer(lg, unit);
+        }
+
+        for (i = 0; i < 2; i++)
+            stats.Values[i, (int)LiveGameStatValue.ShotPercentage] =
+                (stats.Values[i, (int)LiveGameStatValue.Shots] > 0) ?
+                (int)Math.Round((double)stats.Values[i, (int)LiveGameStatValue.GoalsRegular] /
+                (double)stats.Values[i, (int)LiveGameStatValue.Shots] * 100) : 0;
     }
 
     /// <summary>
@@ -533,8 +880,74 @@ public static class Game
     /// <param name="unit">The live game unit.</param>
     public static void UpdateStatsPlayer(LiveGame lg, LiveGameUnit unit)
     {
-        // Implementation depends on the not yet converted live game and player functions.
-        throw new NotImplementedException();
+        int i;
+        string buf = string.Empty;
+        string buf2 = string.Empty;
+        LiveGameStats stats = lg.Stats;
+        int minute = LiveGame.UnitGetMinute(lg, unit);
+        int arrayIndex = -1;
+        bool ownGoal;
+        int team = unit.Event.Team;
+        int player = unit.Event.Player;
+        int player2 = unit.Event.Player2;
+        Team[] tms = { lg.Fix.Teams[0], lg.Fix.Teams[1] };
+        List<object> players = null;
+
+        if (unit.Event.Type == (int)LiveGameEventType.Goal ||
+            unit.Event.Type == (int)LiveGameEventType.OwnGoal)
+        {
+            ownGoal = unit.Event.Type == (int)LiveGameEventType.OwnGoal;
+            arrayIndex = ownGoal ? 1 - team : team;
+
+            LiveGameUnit before = LiveGame.UnitBefore(lg, unit, -1);
+            if (before != null && before.Event.Type == (int)LiveGameEventType.Penalty)
+                buf2 = " (P)";
+            else if (before != null && before.Event.Type == (int)LiveGameEventType.FreeKick)
+                buf2 = " (FK)";
+            else if (unit.Event.Type == (int)LiveGameEventType.OwnGoal)
+                buf2 = " (OG)";
+            else
+                buf2 = string.Empty;
+
+            string playerName = PlayerOfIdTeam(tms[team], player).Name;
+            if (!ownGoal)
+                stats.Players[arrayIndex, (int)LiveGameStatArray.Scorers].Add(playerName);
+
+            for (i = 0; i < stats.Players[arrayIndex, (int)LiveGameStatArray.ScorersForDisplay].Count; i++)
+            {
+                string existing = (string)stats.Players[arrayIndex, (int)LiveGameStatArray.ScorersForDisplay][i];
+                if (existing != null && existing.StartsWith(playerName))
+                {
+                    buf = $"{existing} {minute}{buf2}";
+                    stats.Players[arrayIndex, (int)LiveGameStatArray.ScorersForDisplay][i] = buf;
+                    return;
+                }
+            }
+
+            buf = $"{playerName} {minute}{buf2}";
+            stats.Players[arrayIndex, (int)LiveGameStatArray.ScorersForDisplay].Add(buf);
+        }
+        else
+        {
+            if (unit.Event.Type == (int)LiveGameEventType.Injury)
+            {
+                buf = PlayerOfIdTeam(tms[team], player).Name;
+                players = stats.Players[team, (int)LiveGameStatArray.Injured];
+            }
+            else if (unit.Event.Type == (int)LiveGameEventType.FoulYellow)
+            {
+                buf = PlayerOfIdTeam(tms[team], player2).Name;
+                players = stats.Players[team, (int)LiveGameStatArray.Yellows];
+            }
+            else if (unit.Event.Type == (int)LiveGameEventType.SendOff)
+            {
+                buf = PlayerOfIdTeam(tms[team], player).Name;
+                players = stats.Players[team, (int)LiveGameStatArray.Reds];
+            }
+
+            if (players != null && buf.Length > 0)
+                players.Add(buf);
+        }
     }
 
     /// <summary>
@@ -544,8 +957,47 @@ public static class Game
     /// <param name="fix">The match we examine.</param>
     public static void AssignAttendance(Fixture fix)
     {
-        // Implementation depends on the not yet converted league and maths functions.
-        throw new NotImplementedException();
+        Team[] tm = { fix.Teams[0], fix.Teams[1] };
+        float factor =
+            (float)MathHelper.Rnd(OptionHelper.ConstFloat("float_game_stadium_attendance_percentage_lower"),
+                                  OptionHelper.ConstFloat("float_game_stadium_attendance_percentage_upper")) *
+            (float)Math.Pow(tm[0].Stadium.Safety, OptionHelper.ConstFloat("float_game_stadium_attendance_safety_exponent"));
+        int maxAtt = Math.Min((int)Math.Round(League.LeagueCupAverageCapacity(tm[0].Clid) *
+            OptionHelper.ConstFloat("float_game_stadium_attendance_average_exceed_factor") *
+            (float)MathHelper.Rnd(0.9, 1.1)),
+            tm[0].Stadium.Capacity);
+
+        if (fix.Clid < Bygfoot.IdCupStart &&
+            Team.GetLeagueRank(tm[1], fix.Clid) <
+            (int)Math.Round(League.LeagueFromClid(fix.Clid).Teams.Count *
+            OptionHelper.ConstFloat("float_game_stadium_attendance_rank_percentage")))
+            factor *= OptionHelper.ConstFloat("float_game_stadium_attendance_rank_factor");
+
+        if (fix.Clid >= Bygfoot.IdCupStart)
+        {
+            Cup cup = Cup.CupFromClid(fix.Clid);
+            if (cup.Rounds.Count - fix.Round <= OptionHelper.ConstInt("int_game_stadium_attendance_cup_rounds_full_house"))
+                factor = 1;
+            else if (League.QueryLeagueCupHasProperty(fix.Clid, "national"))
+                factor *= OptionHelper.ConstFloat("float_game_stadium_attendance_cup_national_factor");
+            else
+                factor *= OptionHelper.ConstFloat("float_game_stadium_attendance_cup_international_factor");
+        }
+
+        /* Calculate the difference in ticket prices has on attendance */
+        float deltaPrice = tm[0].Stadium.TicketPrice - OptionHelper.ConstInt("int_team_stadium_ticket_price");
+        float priceFactor = (float)MathHelper.GaussDist(0.92, 1.08) *
+            1 / (1 + OptionHelper.ConstFloat("float_team_stadium_price_attendance_factor") * deltaPrice);
+
+        factor = Math.Min(factor * priceFactor, 1);
+        float attRegular = (float)(int)Math.Round((float)tm[0].Stadium.Capacity * factor);
+        fix.Attendance = (int)Math.Min(Math.Min(attRegular, maxAtt * factor), (float)maxAtt);
+
+        tm[0].Stadium.AverageAttendance =
+            (int)Math.Round((float)(tm[0].Stadium.AverageAttendance * tm[0].Stadium.Games + fix.Attendance) /
+            (float)(tm[0].Stadium.Games + 1));
+        tm[0].Stadium.PossibleAttendance += tm[0].Stadium.Capacity;
+        tm[0].Stadium.Games++;
     }
 
     /// <summary>
@@ -555,8 +1007,15 @@ public static class Game
     /// <param name="fix">The match we examine.</param>
     public static void AssignAttendanceNeutral(Fixture fix)
     {
-        // Implementation depends on the not yet converted league functions.
-        throw new NotImplementedException();
+        List<Team> teamsp = League.LeagueCupGetTeams(fix.Clid);
+        float avAtt = (fix.Clid >= Bygfoot.IdCupStart &&
+            League.QueryLeagueCupHasProperty(fix.Clid, "international") && teamsp.Count > 0) ?
+            League.LeagueCupAverageCapacity(fix.Clid) :
+            League.LeagueCupAverageCapacity(Bygfoot.GetLeague(0).Id);
+
+        fix.Attendance = (int)Math.Round(avAtt *
+            (float)MathHelper.Rnd(OptionHelper.ConstFloat("float_game_stadium_attendance_neutral_lower"),
+                                 OptionHelper.ConstFloat("float_game_stadium_attendance_neutral_upper")));
     }
 
     /// <summary>
@@ -566,8 +1025,24 @@ public static class Game
     /// <param name="idx">The team index in the current live game fixture.</param>
     public static void ResetPlayers(int idx)
     {
-        // Implementation depends on the not yet converted user, team and player functions.
-        throw new NotImplementedException();
+        LiveGame liveGame = Variables.Users[Bygfoot.Stat2].LiveGame;
+        Team tm = liveGame.Fix.Teams[idx];
+        int[] savedIds = liveGame.TeamState[idx].PlayerIds;
+        List<Player> players = new List<Player>();
+
+        for (int i = 0; i < 11; i++)
+            players.Add(PlayerOfIdTeam(tm, savedIds[i]));
+
+        for (int i = 0; i < tm.Players.Count; i++)
+            if (!Misc.QueryIntegerIsInArray(tm.Players[i].Id, savedIds, 11))
+                players.Add(tm.Players[i]);
+
+        tm.Players = players;
+        Team.ChangeStructure(tm, Team.FindAppropriateStructure(tm));
+        Team.Rearrange(tm);
+
+        // The C version also refreshes the user player list (treeview_show_user_player_list),
+        // which is GUI-only and not converted.
     }
 
     /// <summary>
@@ -580,7 +1055,58 @@ public static class Game
     /// <param name="substitute">The return location for the player who comes into the game.</param>
     public static void SubstitutePlayerSendOff(int clid, Team tm, int player, out int toSubstitute, out int substitute)
     {
-        // Implementation depends on the not yet converted player, team and user functions.
-        throw new NotImplementedException();
+        int position = -1;
+        List<Player> substitutes = null;
+        int currentStructure = Team.FindAppropriateStructure(tm);
+        int numForw = currentStructure % 10;
+        int numMid = MathHelper.GetPlace(currentStructure, 2);
+        int numDef = MathHelper.GetPlace(currentStructure, 3);
+
+        toSubstitute = -1;
+        substitute = -1;
+
+        toSubstitute = FindToSubstitute(clid, tm);
+
+        if (toSubstitute == -1)
+            return;
+
+        substitutes = new List<Player>();
+        for (int i = 11; i < tm.Players.Count; i++)
+            if (tm.Players[i].Cskill > 0)
+                substitutes.Add(tm.Players[i]);
+
+        if (substitutes.Count == 0)
+        {
+            Debug.DebugPrintMessage("game_substitute_player_send_off: no suitable substitutes found (all injured/banned?)");
+            toSubstitute = -1;
+            return;
+        }
+
+        if (numForw == 0 && Math.Max(numDef, numMid) > 2)
+            position = (int)PlayerPos.Forward;
+        else
+            position = numDef > numMid ? (int)PlayerPos.Midfielder : (int)PlayerPos.Defender;
+
+        substitutes.Sort((a, b) => Player.CompareSubstituteFunc(a, b, position));
+
+        substitute = substitutes[0].Id;
+        Player.Swap(tm, Player.IdIndex(tm, toSubstitute, true), tm, Player.IdIndex(tm, substitute, true));
+
+        Team.ChangeStructure(tm, Team.FindAppropriateStructure(tm));
+        Team.Rearrange(tm);
+
+        // The C version also refreshes the user player list for the current user
+        // (game_gui_write_av_skills, selected_row = -1, treeview_show_user_player_list),
+        // which are GUI-only and not converted.
     }
+
+    /// <summary>
+    /// Return the player of a team with the given id.
+    /// Corresponds to C: player_of_id_team.
+    /// </summary>
+    /// <param name="tm">The team we examine.</param>
+    /// <param name="id">The player id.</param>
+    /// <returns>The player with that id.</returns>
+    private static Player PlayerOfIdTeam(Team tm, int id) =>
+        tm.Players[Player.IdIndex(tm, id, true)];
 }
