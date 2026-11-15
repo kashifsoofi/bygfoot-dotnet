@@ -84,8 +84,36 @@ public class Transfer
     /// </summary>
     public static void TransferAddCpuOffers()
     {
-        // Implementation depends on the not yet converted player and team functions.
-        throw new NotImplementedException();
+        float[][] scoutFactorBounds = new float[][]
+        {
+            new float[] { Variables.Constants.GetFloat("float_transfer_offer_fee_best_lower"),
+                          Variables.Constants.GetFloat("float_transfer_offer_fee_best_upper") },
+            new float[] { Variables.Constants.GetFloat("float_transfer_offer_fee_good_lower"),
+                          Variables.Constants.GetFloat("float_transfer_offer_fee_good_upper") },
+            new float[] { -Variables.Constants.GetFloat("float_transfer_offer_fee_good_upper"),
+                          -Variables.Constants.GetFloat("float_transfer_offer_fee_good_lower") },
+            new float[] { -Variables.Constants.GetFloat("float_transfer_offer_fee_best_upper"),
+                          -Variables.Constants.GetFloat("float_transfer_offer_fee_best_lower") }
+        };
+
+        for (int i = 0; i < Variables.TransferList.Count; i++)
+        {
+            if (Team.IsUser(Variables.TransferList[i].Tm) != -1 &&
+                Variables.TransferList[i].Offers.Count == 0 &&
+                MathHelper.Rnd(0, 1) < Variables.Constants.GetFloat("float_transfer_offer_prob_max") -
+                (User.FromTeam(Variables.TransferList[i].Tm).Scout % 10 *
+                 Variables.Constants.GetFloat("float_transfer_offer_prob_reduce")))
+            {
+                Transfer trans = Variables.TransferList[i];
+                Player pl = trans.Tm.Players[Player.IdIndex(trans.Tm, trans.Id, true)];
+                int scout = User.FromTeam(trans.Tm).Scout % 10;
+                TransferAddOffer(i, TransferTeamGetNew(),
+                    MathHelper.RoundInteger(
+                        (int)(pl.Value * (1 + MathHelper.Rnd(scoutFactorBounds[scout][0],
+                                                            scoutFactorBounds[scout][1]))), 2),
+                    -1);
+            }
+        }
     }
 
     /// <summary>
@@ -178,8 +206,66 @@ public class Transfer
     /// </summary>
     public static void TransferEvaluateOffers()
     {
-        // Implementation depends on the not yet converted player and user functions.
-        throw new NotImplementedException();
+        for (int i = Variables.TransferList.Count - 1; i >= 0; i--)
+        {
+            Transfer trans = Variables.TransferList[i];
+            if (trans.Offers.Count > 0)
+            {
+                bool notify = false;
+
+                if (Team.IsUser(trans.Tm) == -1)
+                {
+                    for (int j = trans.Offers.Count - 1; j >= 0; j--)
+                    {
+                        if (trans.Offers[j].Status != TransferOfferStatus.Rejected2)
+                        {
+                            Player pl = trans.Tm.Players[Player.IdIndex(trans.Tm, trans.Id, true)];
+                            if (pl.Value > trans.Offers[j].Fee &&
+                                pl.Wage > trans.Offers[j].Wage)
+                            {
+                                User.EventAdd(User.FromTeam(trans.Offers[j].Tm),
+                                    (int)EventType.TransferOfferRejectedFeeWage,
+                                    trans.Offers[j].Fee, trans.Offers[j].Wage,
+                                    trans.Tm, pl.Name, null);
+                                trans.Offers[j].Status = TransferOfferStatus.Rejected;
+                            }
+                            else if (pl.Value > trans.Offers[j].Fee)
+                            {
+                                User.EventAdd(User.FromTeam(trans.Offers[j].Tm),
+                                    (int)EventType.TransferOfferRejectedFee,
+                                    trans.Offers[j].Fee, trans.Offers[j].Wage,
+                                    trans.Tm, pl.Name, null);
+                                trans.Offers[j].Status = TransferOfferStatus.Rejected;
+                            }
+                            else if (pl.Wage > trans.Offers[j].Wage)
+                            {
+                                User.EventAdd(User.FromTeam(trans.Offers[j].Tm),
+                                    (int)EventType.TransferOfferRejectedWage,
+                                    trans.Offers[j].Fee, trans.Offers[j].Wage,
+                                    trans.Tm, pl.Name, null);
+                                trans.Offers[j].Status = TransferOfferStatus.Rejected;
+                            }
+                            else if (TransferNewStarBalks(trans, trans.Offers[j]))
+                            {
+                                User.EventAdd(User.FromTeam(trans.Offers[j].Tm),
+                                    (int)EventType.TransferOfferRejectedStars, -1, -1,
+                                    trans.Tm, pl.Name, null);
+                                trans.Offers[j].Status = TransferOfferStatus.Rejected;
+                            }
+                            else
+                                notify = true;
+                        }
+                    }
+                }
+                else
+                    notify = true;
+
+                if (notify)
+                    TransferOffersNotify(trans, true);
+                else if (Variables.Week >= TransferGetDeadline())
+                    TransferRemovePlayer(i);
+            }
+        }
     }
 
     /// <summary>
@@ -188,8 +274,18 @@ public class Transfer
     /// </summary>
     public static void TransferAddNewPlayers()
     {
-        // Implementation depends on the not yet converted team, player and maths functions.
-        throw new NotImplementedException();
+        int numberOfNew = Misc.MathRndi(Variables.Constants.GetInt("int_transfer_new_players_lower"),
+                                        Variables.Constants.GetInt("int_transfer_new_players_upper"));
+        numberOfNew = Math.Min(numberOfNew,
+                               Variables.Constants.GetInt("int_transfer_max_players") - Variables.TransferList.Count);
+
+        for (int i = 0; i < numberOfNew; i++)
+            TransferAddPlayer(
+                TransferPlayerGetNew(
+                    MathHelper.Rnd(0, 1) < Variables.Constants.GetFloat("float_transfer_cup_percentage") &&
+                    Cup.QueryCupTransfer()),
+                Misc.MathRndi(Variables.Constants.GetInt("int_transfer_time_lower"),
+                               Variables.Constants.GetInt("int_transfer_time_upper")));
     }
 
     /// <summary>
@@ -200,8 +296,22 @@ public class Transfer
     /// <returns>The new player.</returns>
     public static Player TransferPlayerGetNew(bool cup)
     {
-        // Implementation depends on the not yet converted team, player and maths functions.
-        throw new NotImplementedException();
+        List<Team> teams = Team.GetSorted((t1, t2) => Team.CompareFunc(t1, t2, 2), 2, cup);
+        Player pl = null;
+
+        while (pl == null || Team.IsUser(pl.Team) != -1 ||
+               QueryTransferPlayerIsOnList(pl))
+        {
+            Team tm = teams[Misc.MathRndi(0, teams.Count - 1)];
+            pl = tm.Players[Misc.MathRndi(0, tm.Players.Count - 1)];
+
+            if (pl.Skill > Variables.Constants.GetFloat("float_player_max_skill") *
+                Variables.Constants.GetFloat("float_transfer_good_player_skill_bound") &&
+                MathHelper.Rnd(0, 1) > Variables.Constants.GetFloat("float_transfer_good_player_prob"))
+                pl = null;
+        }
+
+        return pl;
     }
 
     /// <summary>
@@ -213,8 +323,31 @@ public class Transfer
     /// <param name="time">The time.</param>
     public static void TransferAddPlayer(Player pl, int time)
     {
-        // Implementation depends on the not yet converted player and team functions.
-        throw new NotImplementedException();
+        Transfer newTransfer = new Transfer();
+        float devianceValue, devianceWage;
+
+        newTransfer.Tm = pl.Team;
+        newTransfer.Id = pl.Id;
+        newTransfer.Time = time;
+        newTransfer.Offers = new List<TransferOffer>();
+        newTransfer.Fee = new int[(int)Quality.QualityEnd];
+        newTransfer.Wage = new int[(int)Quality.QualityEnd];
+
+        for (int i = 0; i < (int)Quality.QualityEnd; i++)
+        {
+            devianceValue =
+                (float)MathHelper.Rnd(-(i + 1) * Variables.Constants.GetFloat("float_transfer_scout_deviance_value"),
+                                      (i + 1) * Variables.Constants.GetFloat("float_transfer_scout_deviance_value"));
+            devianceWage =
+                (float)MathHelper.Rnd(-(i + 1) * Variables.Constants.GetFloat("float_transfer_scout_deviance_wage"),
+                                      (i + 1) * Variables.Constants.GetFloat("float_transfer_scout_deviance_wage"));
+            newTransfer.Fee[i] = MathHelper.RoundInteger(
+                (int)(pl.Value * (1 + devianceValue)), 3);
+            newTransfer.Wage[i] = MathHelper.RoundInteger(
+                (int)(pl.Wage * (1 + devianceWage)), 2);
+        }
+
+        Variables.TransferList.Add(newTransfer);
     }
 
     /// <summary>
@@ -224,8 +357,22 @@ public class Transfer
     /// <returns>The deadline.</returns>
     public static int TransferGetDeadline()
     {
-        // Implementation depends on the not yet converted league, cup and maths functions.
-        throw new NotImplementedException();
+        int length = 0;
+
+        for (int i = 0; i < Variables.Country.Leagues.Count; i++)
+        {
+            League league = Variables.Country.Leagues[i];
+            if (League.QueryLeagueActive(league) && league.Fixtures.Count > 0)
+                length = Math.Max(length, league.Fixtures[league.Fixtures.Count - 1].WeekNumber);
+        }
+
+        if (length == 0)
+            for (int i = 0; i < Variables.Country.Cups.Count; i++)
+                length = Math.Max(length, Variables.Country.Cups[i].LastWeek);
+
+        return (length > 0) ?
+            (int)(length * Variables.Constants.GetFloat("float_transfer_deadline_percentage")) :
+            35;
     }
 
     /// <summary>
@@ -280,8 +427,18 @@ public class Transfer
     /// <returns>Whether there's an offer.</returns>
     public static bool QueryTransferCurrentTeamOffer(Player pl)
     {
-        // Implementation depends on the not yet converted user and team functions.
-        throw new NotImplementedException();
+        for (int i = 0; i < Variables.TransferList.Count; i++)
+        {
+            if (Variables.TransferList[i].Tm == pl.Team &&
+                Variables.TransferList[i].Id == pl.Id)
+            {
+                for (int j = 0; j < Variables.TransferList[i].Offers.Count; j++)
+                    if (Variables.TransferList[i].Offers[j].Tm == Variables.Users[Variables.CurUser].Team)
+                        return true;
+            }
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -370,8 +527,26 @@ public class Transfer
     /// <param name="pl">The player.</param>
     public static void TransferAddRemoveUserPlayer(Player pl)
     {
-        // Implementation depends on the not yet converted player, team and user functions.
-        throw new NotImplementedException();
+        if (!QueryTransferPlayerIsOnList(pl))
+        {
+            if (Variables.Week < TransferGetDeadline())
+            {
+                int time = (int)((Variables.Constants.GetInt("int_transfer_time_lower") +
+                                  (float)Variables.Constants.GetInt("int_transfer_time_upper")) / 2);
+                TransferAddPlayer(pl, time);
+                Debug.DebugPrintMessage("{0} has been added to the transfer list for {1} weeks.",
+                    pl.Name, time);
+            }
+            else
+            {
+                Debug.DebugPrintMessage("The transfer deadline is over.");
+                return;
+            }
+        }
+        else
+            TransferRemovePlayerPtr(pl);
+
+        // on_button_transfers_clicked -- not yet converted
     }
 
     /// <summary>
@@ -428,8 +603,27 @@ public class Transfer
     /// <returns>Whether the star bails.</returns>
     public static bool TransferNewStarBalks(Transfer tr, TransferOffer troff)
     {
-        // Implementation depends on the not yet converted player and maths functions.
-        throw new NotImplementedException();
+        /* Weak players never balk. */
+        Player pl = tr.Tm.Players[Player.IdIndex(tr.Tm, tr.Id, true)];
+        if (pl.Skill < Variables.Constants.GetFloat("float_transfer_star_skill_limit"))
+            return false;
+
+        /* There is some chance that the new star doesn't balk at all. */
+        if (MathHelper.Rnd(0, 1) < Variables.Constants.GetFloat("float_transfer_star_no_balk"))
+            return false;
+
+        /* Find out if there are any stars at all on the team. */
+        int numberOfStars = 0;
+        foreach (Player player in troff.Tm.Players)
+        {
+            if (player.Skill > Variables.Constants.GetFloat("float_transfer_star_skill_limit"))
+                numberOfStars++;
+        }
+
+        if (numberOfStars == 0)
+            return false;
+
+        return MathHelper.Rnd(0, 1) > 1 - numberOfStars * Variables.Constants.GetFloat("float_transfer_star_prob_decrease");
     }
 }
 

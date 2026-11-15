@@ -600,6 +600,7 @@ public class User
                 // game_gui_show_warning(..., @event.ValueString);
                 break;
             case EventType.TransferOfferRejectedBetterOffer:
+            case EventType.TransferOfferRejectedFeeWage:
             case EventType.TransferOfferRejectedWage:
             case EventType.TransferOfferRejectedFee:
             case EventType.TransferOfferRejectedStars:
@@ -1223,6 +1224,7 @@ public enum EventType
     TransferOfferUser,            // EVENT_TYPE_TRANSFER_OFFER_USER
     TransferOfferCpu,             // EVENT_TYPE_TRANSFER_OFFER_CPU
     TransferOfferRejectedBetterOffer, // EVENT_TYPE_TRANSFER_OFFER_REJECTED_BETTER_OFFER
+    TransferOfferRejectedFeeWage, // EVENT_TYPE_TRANSFER_OFFER_REJECTED_FEE_WAGE
     TransferOfferRejectedWage,    // EVENT_TYPE_TRANSFER_OFFER_REJECTED_WAGE
     TransferOfferRejectedFee,     // EVENT_TYPE_TRANSFER_OFFER_REJECTED_FEE
     TransferOfferRejectedStars,   // EVENT_TYPE_TRANSFER_OFFER_REJECTED_STARS

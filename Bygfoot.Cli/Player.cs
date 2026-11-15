@@ -771,6 +771,18 @@ public class Player
     }
 
     /// <summary>
+    /// Add to a player's streak probability, clamped to the range [-1, 1].
+    /// Corresponds to C: player_streak_add_to_prob.
+    /// </summary>
+    /// <param name="pl">The player.</param>
+    /// <param name="add">The value to add to the streak probability.</param>
+    public static void StreakAddToProb(Player pl, float add)
+    {
+        pl.StreakProb += add;
+        pl.StreakProb = Math.Clamp(pl.StreakProb, -1f, 1f);
+    }
+
+    /// <summary>
     /// Increase of player fitness after a match. Depends on the decrease values and the percentage
     /// values that determine how much of the decrease a player gains. Corresponds to C: player_update_fitness.
     /// </summary>
