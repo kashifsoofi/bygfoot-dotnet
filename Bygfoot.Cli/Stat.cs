@@ -85,8 +85,53 @@ public class Stat
     /// <param name="league">The league.</param>
     public static void StatUpdateLeaguePlayers(League league)
     {
-        // Implementation depends on the not yet converted player and maths functions.
-        throw new NotImplementedException();
+        int i, j;
+        List<Player> playersSorted = new List<Player>();
+        List<Player> playersGoalies = new List<Player>();
+        int maxlen = Variables.Constants.GetInt("int_stat_players_len");
+
+        for (i = 0; i < league.Teams.Count; i++)
+            for (j = 0; j < league.Teams[i].Players.Count; j++)
+            {
+                Player pl = league.Teams[i].Players[j];
+                if (pl.Pos != PlayerPos.Goalie)
+                    playersSorted.Add(pl);
+                else if (Player.GamesGoalsGet(pl, pl.Team.Clid, (int)PlayerValue.Games) >=
+                    Variables.Constants.GetFloat("float_stat_goalie_percentage") *
+                    (float)Team.GetTableValue(pl.Team, (int)TableElementValues.TablePlayed))
+                    playersGoalies.Add(pl);
+            }
+
+        playersSorted.Sort((pl1, pl2) => Player.CompareFunc(pl1, pl2, (int)PlayerCompareAttrib.LeagueGoals));
+        playersGoalies.Sort((pl1, pl2) => Player.CompareFunc(pl1, pl2, -(int)PlayerCompareAttrib.LeagueGoals));
+
+        maxlen = Math.Min(maxlen, playersSorted.Count);
+        maxlen = Math.Min(maxlen, playersGoalies.Count);
+
+        List<Stat> players = new List<Stat>();
+        List<Stat> playersGoaliesStats = new List<Stat>();
+        for (i = 0; i < 2; i++)
+            for (j = 0; j < maxlen; j++)
+            {
+                Player pl = i == 0 ? playersSorted[j] : playersGoalies[j];
+                Stat newStat = new Stat();
+                newStat.TeamName = pl.Team.Name;
+                newStat.ValueString = pl.Name;
+                newStat.Value1 =
+                    Player.GamesGoalsGet(pl, pl.Team.Clid, (int)PlayerValue.Goals);
+                newStat.Value2 =
+                    Player.GamesGoalsGet(pl, pl.Team.Clid, (int)PlayerValue.Games);
+                newStat.Value3 =
+                    Player.GamesGoalsGet(pl, pl.Team.Clid, (int)PlayerValue.Shots);
+
+                if (i == 0)
+                    players.Add(newStat);
+                else
+                    playersGoaliesStats.Add(newStat);
+            }
+
+        league.Stats.PlayerScorers = players;
+        league.Stats.PlayerGoalies = playersGoaliesStats;
     }
 
     /// <summary>
@@ -123,8 +168,41 @@ public class Stat
     /// </summary>
     public static void StatCreateSeasonStat()
     {
-        // Implementation depends on the not yet converted league and cup functions.
-        throw new NotImplementedException();
+        SeasonStat newStat = SeasonStatNew(Variables.Season);
+        ChampStat newChamp;
+
+        foreach (League league in Variables.Country.Leagues)
+        {
+            if (!League.QueryLeagueCupHasProperty(league.Id, "omit_from_history") &&
+                !League.QueryLeagueCupHasProperty(league.Id, "inactive"))
+            {
+                foreach (Table table in league.Tables)
+                {
+                    newChamp = new ChampStat();
+                    newChamp.ClName = table.Name;
+                    newChamp.TeamName =
+                        table.Elements[0].Team.Name;
+                    newStat.LeagueChamps.Add(newChamp);
+                }
+
+                newStat.LeagueStats.Add(league.Stats);
+                league.Stats = LeagueStatNew(league.Name, league.Symbol);
+            }
+        }
+
+        foreach (Cup cup in Variables.Country.AllCups)
+        {
+            if (!League.QueryLeagueCupHasProperty(cup.Id, "omit_from_history"))
+            {
+                newChamp = new ChampStat();
+                newChamp.ClName = cup.Name;
+                newChamp.TeamName =
+                    Cup.CupGetWinner(cup).Name;
+                newStat.CupChamps.Add(newChamp);
+            }
+        }
+
+        Variables.SeasonStats.Add(newStat);
     }
 
     /// <summary>
@@ -135,8 +213,37 @@ public class Stat
     /// <param name="fixtures">The fixtures.</param>
     public static void StatShowAvGoals(List<Fixture> fixtures)
     {
-        // Implementation depends on the not yet converted maths and league functions.
-        throw new NotImplementedException();
+        float games = 0,
+            allgoals = 0,
+            homegoals = 0,
+            awaygoals = 0,
+            goaldiff = 0,
+            homewon = 0,
+            homeloss = 0,
+            draw = 0;
+
+        foreach (Fixture fix in fixtures)
+            if (fix.Attendance != -1)
+            {
+                games++;
+                allgoals += fix.Result[0, 0] + fix.Result[1, 0];
+                homegoals += fix.Result[0, 0];
+                awaygoals += fix.Result[1, 0];
+                goaldiff += Math.Abs(fix.Result[0, 0] - fix.Result[1, 0]);
+
+                if (fix.Result[0, 0] > fix.Result[1, 0])
+                    homewon++;
+                else if (fix.Result[0, 0] < fix.Result[1, 0])
+                    homeloss++;
+                else
+                    draw++;
+            }
+
+        Console.WriteLine("------------------------------------ ");
+        Console.WriteLine(League.LeagueCupGetNameString(fixtures[0].Clid) +
+            "\nGoals/G HomeG/G AwayG/G Away % GD/G \n");
+        Console.WriteLine($"{allgoals / games:0.00} \t {homegoals / games:0.00} \t {awaygoals / games:0.00} \t {awaygoals / allgoals:0.00} \t {goaldiff / games:0.00} \n");
+        Console.WriteLine($"Home win %: {homewon / games:0.00} Loss %: {homeloss / games:0.00} Draw %: {draw / games:0.00} \n");
     }
 
     /// <summary>
@@ -145,8 +252,9 @@ public class Stat
     /// </summary>
     public static void StatShowAvLeagueGoals()
     {
-        // Implementation depends on the not yet converted league functions.
-        throw new NotImplementedException();
+        Console.WriteLine("\n\n");
+        foreach (League league in Variables.Country.Leagues)
+            StatShowAvGoals(league.Fixtures);
     }
 }
 

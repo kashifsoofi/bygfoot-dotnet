@@ -164,7 +164,7 @@ public class LgCommentary
     /// <returns>Whether the commentary was used recently.</returns>
     private static bool QueryIsRepetition(int id)
     {
-        List<LiveGameUnit> units = LiveGame.LastUnit.LiveGame.Units;
+        List<LiveGameUnit> units = ((LiveGame)Variables.Statp).Units;
         int unitsMin = units.Count - OptionHelper.ConstInt("int_lg_commentary_check_backwards") - 1;
         int min = Math.Max(unitsMin, 0);
 
