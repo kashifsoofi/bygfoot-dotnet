@@ -381,8 +381,53 @@ public class Cup
     /// <param name="preload">Whether to preload.</param>
     public static void CupGetTeamPointers(Cup cup, int round, List<Team> teamsSorted, bool preload)
     {
-        // Implementation depends on the not yet converted league and team functions.
-        throw new NotImplementedException();
+        CupRound cupRound = cup.Rounds[round];
+
+        int existingTeams = cupRound.Teams.Count;
+
+        /* The C team_ptrs array holds Team pointers; the C# model stores
+           the team ids in TeamPtrs, so we mirror it into a Team list and
+           add the new ids back after the choose teams have been loaded. */
+        List<Team> teams = new List<Team>();
+        foreach (int teamId in cupRound.TeamPtrs)
+        {
+            Team team = Team.OfId(teamId);
+            if (team != null)
+                teams.Add(team);
+        }
+
+        for (int i = 0; i < cupRound.ChooseTeams.Count; i++)
+        {
+            CupChooseTeam ct = cupRound.ChooseTeams[i];
+            if (ct.Preload == preload)
+            {
+                if (ct.Generate)
+                    CupLoadChooseTeamGenerate(cup, cupRound, ct);
+                else
+                    CupLoadChooseTeam(cup, teams, teamsSorted, ct);
+            }
+        }
+
+        while (cupRound.TeamPtrs.Count < teams.Count)
+            cupRound.TeamPtrs.Add(teams[cupRound.TeamPtrs.Count].Id);
+
+        if (cupRound.Teams.Count - existingTeams > 0)
+        {
+            while (teams.Count + cupRound.Teams.Count - existingTeams > cupRound.NewTeams)
+            {
+                Free.FreeTeam(Team.OfId(cupRound.Teams[cupRound.Teams.Count - 1]));
+                cupRound.Teams.RemoveAt(cupRound.Teams.Count - 1);
+            }
+        }
+
+        for (int i = existingTeams; i < cupRound.Teams.Count; i++)
+        {
+            Team team = Team.OfId(cupRound.Teams[i]);
+            Team.GeneratePlayersStadium(team, 0f);
+            cup.Teams.Add(cupRound.Teams[i]);
+            teams.Add(team);
+            cupRound.TeamPtrs.Add(cupRound.Teams[i]);
+        }
     }
 
     /// <summary>
@@ -396,8 +441,15 @@ public class Cup
     /// <param name="ct">The choose team.</param>
     public static void CupLoadChooseTeam(Cup cup, List<Team> teams, List<Team> teamsSorted, CupChooseTeam ct)
     {
-        // Implementation depends on the not yet converted league and cup functions.
-        throw new NotImplementedException();
+        League league;
+        Cup cupTemp;
+
+        CupGetChooseTeamLeagueCup(ct, out league, out cupTemp);
+
+        if (cupTemp == null)
+            CupLoadChooseTeamFromLeague(cup, league, teams, ct);
+        else
+            CupLoadChooseTeamFromCup(cup, cupTemp, teams, teamsSorted, ct);
     }
 
     /// <summary>
@@ -411,8 +463,84 @@ public class Cup
     /// <param name="ct">The choose team.</param>
     public static void CupLoadChooseTeamFromCup(Cup cup, Cup cupTemp, List<Team> teams, List<Team> teamsSorted, CupChooseTeam ct)
     {
-        // Implementation depends on the not yet converted league and cup functions.
-        throw new NotImplementedException();
+        int numberOfTeams = 0;
+        List<Team> cupTeamsSorted;
+
+        if (Variables.Season == 1 && Variables.Week == 1 && cup.AddWeek == 0)
+        {
+            List<Team> leagueTeams = Variables.Country.Leagues[0].Teams;
+
+            if (leagueTeams.Count < ct.NumberOfTeams)
+                Main.MainExitProgram(Bygfoot.ExitCode.ChooseTeamError,
+                    "cup_load_choose_team_from_cup: not enough teams in league 0 for chooseteam %s (%d; required: %d) in cup %s\n",
+                    ct.Sid, leagueTeams.Count,
+                    ct.NumberOfTeams, cup.Name);
+
+            int[] permutation = new int[leagueTeams.Count];
+            MathHelper.GeneratePermutation(permutation, 0, leagueTeams.Count - 1);
+
+            for (int i = ct.StartIdx - 1; i <= ct.EndIdx - 1; i++)
+            {
+                Team team = leagueTeams[permutation[i - ct.StartIdx + 1]];
+                if (ct.SkipGroupCheck ||
+                   !Team.QueryTeamIsInCups(team, cup.Group))
+                {
+                    teams.Add(team);
+                    cup.TeamNames.Add(team.Name);
+                    numberOfTeams++;
+                }
+
+                if (numberOfTeams == ct.NumberOfTeams)
+                    break;
+            }
+
+            if (numberOfTeams != ct.NumberOfTeams)
+                Main.MainExitProgram(Bygfoot.ExitCode.ChooseTeamError,
+                    "cup_load_choose_team_from_cup (2): not enough teams found in league 0 for chooseteam %s (%d; required: %d) in cup %s (group %d)\n",
+                    ct.Sid, numberOfTeams,
+                    ct.NumberOfTeams, cup.Name, cup.Group);
+        }
+        else
+        {
+            /* Self-referential cup or no? */
+            cupTeamsSorted = ReferenceEquals(cup, cupTemp) ?
+                teamsSorted :
+                CupGetTeamsSorted(cupTemp);
+
+            int start, end;
+            if (ct.NumberOfTeams == -1)
+            {
+                start = 0;
+                end = cupTeamsSorted.Count;
+            }
+            else
+            {
+                start = ct.StartIdx - 1;
+                end = ct.EndIdx;
+            }
+
+            for (int i = start; i < end; i++)
+            {
+                Team team = cupTeamsSorted[i];
+                if (ct.SkipGroupCheck ||
+                   !Team.QueryTeamIsInCups(team, cup.Group))
+                {
+                    teams.Add(team);
+                    cup.TeamNames.Add(team.Name);
+                    numberOfTeams++;
+
+                    if (numberOfTeams == ct.NumberOfTeams)
+                        break;
+                }
+            }
+
+            if (ct.NumberOfTeams != -1 &&
+               numberOfTeams != ct.NumberOfTeams)
+                Main.MainExitProgram(Bygfoot.ExitCode.ChooseTeamError,
+                    "cup_load_choose_team_from_cup (3): not enough teams (that don't participate in international cups yet) found in chooseteam %s for cup %s (%d specified, %d found) cup group %d.\n ",
+                    ct.Sid, cup.Name,
+                    ct.NumberOfTeams, numberOfTeams, cup.Group);
+        }
     }
 
     /// <summary>
@@ -425,8 +553,58 @@ public class Cup
     /// <param name="ct">The choose team.</param>
     public static void CupLoadChooseTeamFromLeague(Cup cup, League league, List<Team> teams, CupChooseTeam ct)
     {
-        // Implementation depends on the not yet converted league and cup functions.
-        throw new NotImplementedException();
+        int numberOfTeams = 0;
+        Table table;
+
+        if (league.Tables.Count == 0)
+            table = league.Tables[0];
+        else
+            table = league.Tables[ct.FromTable];
+
+        if (ct.NumberOfTeams == -1)
+        {
+            for (int j = 0; j < table.Elements.Count; j++)
+            {
+                Team team = Team.OfId(table.Elements[j].TeamId);
+                teams.Add(team);
+                cup.TeamNames.Add(team.Name);
+            }
+        }
+        else
+        {
+            int start = ct.StartIdx - 1;
+            int end = ct.EndIdx - start;
+
+            int[] order = new int[end];
+            for (int j = 0; j < end; j++)
+                order[j] = j + start;
+
+            if (ct.Randomly)
+                MathHelper.GeneratePermutation(order, start, start + end - 1);
+
+            for (int j = 0; j < end; j++)
+            {
+                Team team = Team.OfId(table.Elements[order[j]].TeamId);
+
+                if (ct.SkipGroupCheck ||
+                   !Team.QueryTeamIsInCups(team, cup.Group))
+                {
+                    teams.Add(team);
+                    cup.TeamNames.Add(team.Name);
+                    numberOfTeams++;
+
+                    if (numberOfTeams == ct.NumberOfTeams)
+                        break;
+                }
+            }
+        }
+
+        if (ct.NumberOfTeams != -1 &&
+           numberOfTeams != ct.NumberOfTeams)
+            Main.MainExitProgram(Bygfoot.ExitCode.ChooseTeamError,
+                "cup_load_choose_team_from_league (1): not enough teams (that don't participate in international cups yet) found in chooseteam %s for cup %s (%d specified, %d found) cup group %d.\n ",
+                ct.Sid, cup.Name, ct.NumberOfTeams,
+                numberOfTeams, cup.Group);
     }
 
     /// <summary>
@@ -438,8 +616,92 @@ public class Cup
     /// <param name="ct">The choose team.</param>
     public static void CupLoadChooseTeamGenerate(Cup cup, CupRound cupRound, CupChooseTeam ct)
     {
-        // Implementation depends on the not yet converted league, xml and team functions.
-        throw new NotImplementedException();
+        int numberOfTeams;
+        List<League> leagues = new List<League>();
+        List<Team> teamsLocal = new List<Team>();
+        List<string> sids = Misc.MiscRandomiseGPointerArray(Misc.MiscSeparateStrings(ct.Sid));
+
+        for (int j = 0; j < sids.Count; j++)
+        {
+            if (!QueryCupChooseTeamIsLeague(sids[j]))
+            {
+                LeagueXml.XmlLeagueRead(sids[j], leagues);
+
+                for (int k = 0; k < leagues[leagues.Count - 1].Teams.Count; k++)
+                {
+                    if (League.QueryLeagueCupHasProperty(cup.Id, "league_talents"))
+                        leagues[leagues.Count - 1].Teams[k].AverageTalent = leagues[leagues.Count - 1].AverageTalent;
+
+                    teamsLocal.Add(leagues[leagues.Count - 1].Teams[k]);
+                }
+
+                Free.FreeTeamsArray(leagues[leagues.Count - 1].Teams, true);
+                Free.FreeLeague(leagues[leagues.Count - 1]);
+            }
+        }
+
+        /** No teams found. */
+        if (teamsLocal.Count == 0)
+        {
+            Free.FreeTeamsArray(teamsLocal, false);
+            return;
+        }
+
+        int[] permutation = new int[teamsLocal.Count];
+        for (int j = 0; j < teamsLocal.Count; j++)
+            permutation[j] = j;
+
+        if (ct.Randomly && teamsLocal.Count > 0)
+        {
+            if (ct.StartIdx == -1)
+                MathHelper.GeneratePermutation(permutation, 0, teamsLocal.Count - 1);
+            else
+                MathHelper.GeneratePermutation(permutation, ct.StartIdx - 1, ct.EndIdx - 1);
+        }
+
+        numberOfTeams = 0;
+        int endIdx = ct.StartIdx == -1 ?
+            teamsLocal.Count :
+            ct.EndIdx - ct.StartIdx + 1;
+
+        if (teamsLocal.Count < endIdx)
+        {
+            Main.MainExitProgram(Bygfoot.ExitCode.ChooseTeamError,
+                "cup_load_choose_team_generate: not enough teams (%d) in chooseteam %s in cup %s (%d are specified) \n",
+                teamsLocal.Count, ct.Sid,
+                cup.Name, endIdx);
+        }
+
+        for (int j = 0; j < endIdx; j++)
+        {
+            Team team = teamsLocal[permutation[j]];
+            if (ct.SkipGroupCheck ||
+               !Team.QueryTeamIsInCups(team, cup.Group))
+            {
+                cupRound.Teams.Add(team.Id);
+                team.Clid = cup.Id;
+                cup.TeamNames.Add(team.Name);
+
+                numberOfTeams++;
+            }
+
+            if (numberOfTeams == ct.NumberOfTeams)
+                break;
+        }
+
+        if (((ct.NumberOfTeams != -1 && numberOfTeams != ct.NumberOfTeams) ||
+            (ct.NumberOfTeams == -1 && numberOfTeams != teamsLocal.Count)) &&
+           teamsLocal.Count > 0)
+            Main.MainExitProgram(Bygfoot.ExitCode.ChooseTeamError,
+                "cup_load_choose_team_generate: not enough teams (that don't participate in international cups yet) found in chooseteam %s for cup %s (%d specified, %d found).\n ",
+                ct.Sid, cup.Name,
+                ct.NumberOfTeams, numberOfTeams);
+
+        for (int j = teamsLocal.Count - 1; j >= 0; j--)
+            if (Team.QueryTeamIsInCup(teamsLocal[j], cup))
+                teamsLocal.RemoveAt(j);
+
+        Free.FreeTeamsArray(teamsLocal, false);
     }
 
     /// <summary>
