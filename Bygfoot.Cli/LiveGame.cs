@@ -321,8 +321,29 @@ public class LiveGame
     /// <returns>The break event type.</returns>
     public static int GetBreak(LiveGame liveGame)
     {
-        // Implementation depends on the not yet converted fixture and live game functions.
-        throw new NotImplementedException();
+        LiveGameUnit lastUnit = GetLastUnit(liveGame);
+        int type;
+
+        if (lastUnit.Time == (int)LiveGameUnitTime.FirstHalf)
+            type = (int)LiveGameEventType.HalfTime;
+        else if (lastUnit.Time == (int)LiveGameUnitTime.SecondHalf)
+        {
+            if (Fixture.QueryFixtureIsDraw(liveGame.Fix))
+                type = (int)LiveGameEventType.ExtraTime;
+            else
+                type = (int)LiveGameEventType.EndMatch;
+        }
+        else if (lastUnit.Time == (int)LiveGameUnitTime.ExtraTime)
+        {
+            if (Fixture.QueryFixtureIsDraw(liveGame.Fix))
+                type = (int)LiveGameEventType.Penalties;
+            else
+                type = (int)LiveGameEventType.EndMatch;
+        }
+        else
+            type = (int)LiveGameEventType.EndMatch;
+
+        return type;
     }
 
     /// <summary>

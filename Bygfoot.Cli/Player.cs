@@ -1381,17 +1381,6 @@ public class Player
     }
 
     /// <summary>
-    /// Add to the streak probability and keep it within the boundaries. Corresponds to C: player_streak_add_to_prob.
-    /// </summary>
-    /// <param name="pl">The player.</param>
-    /// <param name="add">The value to add.</param>
-    public static void StreakAddToProb(Player pl, float add)
-    {
-        pl.StreakProb += add;
-        pl.StreakProb = Math.Min(Math.Max(pl.StreakProb, -1), 1);
-    }
-
-    /// <summary>
     /// Reset the streak count of a player to a random lock length. Corresponds to C: player_streak_reset_count (macro).
     /// </summary>
     /// <param name="pl">The player.</param>
