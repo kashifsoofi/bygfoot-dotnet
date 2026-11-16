@@ -180,7 +180,7 @@ public class LiveGame
     public List<LiveGameUnit> Units { get; set; } = new List<LiveGameUnit>();
     public LiveGameStats Stats { get; set; } = new LiveGameStats();
     public List<LiveGameTeamState> TeamState { get; set; } = new List<LiveGameTeamState> { new LiveGameTeamState(), new LiveGameTeamState() };
-    public List<List<int>>[] ActionIds { get; set; } = new List<List<int>>[2];
+    public List<int>[] ActionIds { get; set; } = new List<int>[2];
     public List<string>[] Waivers { get; set; } = new List<string>[2]; // For completeness
 
     /// <summary>
@@ -209,8 +209,8 @@ public class LiveGame
 
         liveGame.StartedGame = -1;
         liveGame.Units = new List<LiveGameUnit>();
-        liveGame.ActionIds[0] = new List<List<int>>();
-        liveGame.ActionIds[1] = new List<List<int>>();
+        liveGame.ActionIds[0] = new List<int>();
+        liveGame.ActionIds[1] = new List<int>();
 
         for (int i = 0; i < (int)LiveGameStatArray.End; i++)
         {
@@ -574,6 +574,209 @@ public class LiveGame
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Show a substitution event.
+    /// Corresponds to C: live_game_event_substitution.
+    /// </summary>
+    /// <param name="liveGame">The live game.</param>
+    /// <param name="teamNumber">The team that substitutes.</param>
+    /// <param name="subIn">The id of the player who moves into the team.</param>
+    /// <param name="subOut">The id of the player who gets replaced.</param>
+    public static void EventSubstitution(LiveGame liveGame, int teamNumber, int subIn, int subOut)
+    {
+        LiveGameUnit lastUnit = GetLastUnit(liveGame);
+        LiveGameUnit newUnit = new LiveGameUnit
+        {
+            Possession = lastUnit.Possession,
+            Area = lastUnit.Area,
+            Result = new[] { lastUnit.Result[0], lastUnit.Result[1] },
+            Event = new LiveGameEvent
+            {
+                Verbosity = lastUnit.Event.Verbosity,
+                Team = lastUnit.Event.Team,
+                Player = lastUnit.Event.Player,
+                Player2 = lastUnit.Event.Player2,
+                Commentary = lastUnit.Event.Commentary,
+                CommentaryId = lastUnit.Event.CommentaryId
+            }
+        };
+
+        newUnit.Minute = -1;
+        newUnit.Time = GetTime(lastUnit);
+
+        newUnit.Event.Type = (int)LiveGameEventType.Substitution;
+        newUnit.Event.Team = teamNumber;
+        newUnit.Event.Player = subIn;
+        newUnit.Event.Player2 = subOut;
+        newUnit.Event.Commentary = null;
+
+        Team tm = liveGame.Fix.Teams[teamNumber];
+        Player plIn = Player.OfIdTeam(tm, subIn);
+
+        if (plIn.Cskill > 0)
+        {
+            liveGame.SubsLeft[teamNumber]--;
+
+            Player.StreakAddToProb(plIn, OptionHelper.ConstFloat("float_player_streak_add_sub_out"));
+            Player.StreakAddToProb(plIn, OptionHelper.ConstFloat("float_player_streak_add_sub_in"));
+
+            Player.GamesGoalsSet(plIn, liveGame.Fix.Clid, (int)PlayerValue.Games, 1);
+            plIn.Career[(int)PlayerValue.Games]++;
+            plIn.Participation = true;
+
+            // C: if (show) game_gui_live_game_show_opponent(); (GUI not yet converted).
+        }
+
+        liveGame.Units.Add(newUnit);
+
+        FinishUnit(liveGame);
+    }
+
+    /// <summary>
+    /// Show a team change event, e.g. structure change.
+    /// Corresponds to C: live_game_event_team_change.
+    /// </summary>
+    /// <param name="liveGame">The live game.</param>
+    /// <param name="teamNumber">The index of the team.</param>
+    /// <param name="eventType">The event type.</param>
+    public static void EventTeamChange(LiveGame liveGame, int teamNumber, int eventType)
+    {
+        LiveGameUnit lastUnit = GetLastUnit(liveGame);
+        LiveGameUnit newUnit = new LiveGameUnit
+        {
+            Possession = lastUnit.Possession,
+            Area = lastUnit.Area,
+            Result = new[] { lastUnit.Result[0], lastUnit.Result[1] },
+            Event = new LiveGameEvent
+            {
+                Verbosity = lastUnit.Event.Verbosity,
+                Team = lastUnit.Event.Team,
+                Player = lastUnit.Event.Player,
+                Player2 = lastUnit.Event.Player2,
+                Commentary = lastUnit.Event.Commentary,
+                CommentaryId = lastUnit.Event.CommentaryId
+            }
+        };
+
+        newUnit.Minute = -1;
+        newUnit.Time = GetTime(lastUnit);
+
+        newUnit.Event.Team = teamNumber;
+        newUnit.Event.Player = newUnit.Event.Player2 = -1;
+        newUnit.Event.Type = eventType;
+        newUnit.Event.Commentary = null;
+
+        liveGame.Units.Add(newUnit);
+
+        FinishUnit(liveGame);
+
+        // C: if (show) game_gui_live_game_show_opponent(); (GUI not yet converted).
+    }
+
+    /// <summary>
+    /// Finish a unit of the live game.
+    /// Corresponds to C: live_game_finish_unit.
+    /// </summary>
+    /// <param name="liveGame">The live game.</param>
+    public static void FinishUnit(LiveGame liveGame)
+    {
+        LiveGameUnit unit = GetLastUnit(liveGame);
+
+        if (unit.Minute != -1 && unit.Time != (int)LiveGameUnitTime.Penalties)
+        {
+            if (Bygfoot.Stat2 != -1 && Variables.Users[Bygfoot.Stat2].Team.Boost == 1)
+                Game.BoostCost();
+
+            Game.DecreaseFitness(liveGame.Fix);
+
+            float[,] teamValues = new float[2, (int)GameTeamValue.End];
+            Game.GetValues(liveGame.Fix, teamValues, liveGame.HomeAdvantage);
+            for (int i = 0; i < 2; i++)
+                for (int j = 0; j < (int)GameTeamValue.End; j++)
+                    liveGame.TeamValues[i * (int)GameTeamValue.End + j] = (int)teamValues[i, j];
+
+            // C: if (stat2 != -1 && stat2 == cur_user && show &&
+            //     unit->minute % opt_int("int_opt_live_game_player_list_refresh") == 0)
+            //     treeview_show_user_player_list(); (GUI not yet converted).
+        }
+
+        Game.UpdateStats(liveGame, unit);
+
+        if (Bygfoot.Stat2 != -1 || Bygfoot.Stat5 < -1000)
+        {
+            // C: if (unit->time != LIVE_GAME_UNIT_TIME_PENALTIES && show)
+            //     treeview_show_game_stats(...); (GUI not yet converted).
+
+            unit.Event.Verbosity = EventGetVerbosity(unit.Event.Type);
+        }
+
+        // C: if (show) game_gui_live_game_show_unit(unit); (GUI not yet converted).
+    }
+
+    /// <summary>
+    /// Return the verbosity of a live game event.
+    /// Corresponds to C: live_game_event_get_verbosity.
+    /// </summary>
+    /// <param name="eventType">The event type.</param>
+    /// <returns>The verbosity of the event.</returns>
+    public static int EventGetVerbosity(int eventType)
+    {
+        int returnValue = -1;
+
+        if (eventType == (int)LiveGameEventType.StartMatch ||
+            eventType == (int)LiveGameEventType.HalfTime ||
+            eventType == (int)LiveGameEventType.ExtraTime ||
+            eventType == (int)LiveGameEventType.EndMatch ||
+            eventType == (int)LiveGameEventType.Penalties ||
+            eventType == (int)LiveGameEventType.Goal ||
+            eventType == (int)LiveGameEventType.OwnGoal)
+            returnValue = 0;
+        else if (eventType == (int)LiveGameEventType.Penalty ||
+            eventType == (int)LiveGameEventType.ScoringChance ||
+            eventType == (int)LiveGameEventType.Header ||
+            eventType == (int)LiveGameEventType.FreeKick ||
+            eventType == (int)LiveGameEventType.Post ||
+            eventType == (int)LiveGameEventType.Miss ||
+            eventType == (int)LiveGameEventType.CornerKick ||
+            eventType == (int)LiveGameEventType.KeeperPushedInCorner ||
+            eventType == (int)LiveGameEventType.PlayerPushedInCorner ||
+            eventType == (int)LiveGameEventType.CrossBar ||
+            eventType == (int)LiveGameEventType.Save)
+            returnValue = 1;
+        else if (eventType == (int)LiveGameEventType.SendOff ||
+            eventType == (int)LiveGameEventType.Injury)
+            returnValue = 2;
+        else if (eventType == (int)LiveGameEventType.FoulRed ||
+            eventType == (int)LiveGameEventType.FoulYellow ||
+            eventType == (int)LiveGameEventType.FoulRedInjury)
+            returnValue = 3;
+        else if (eventType == (int)LiveGameEventType.Foul ||
+            eventType == (int)LiveGameEventType.TempInjury ||
+            eventType == (int)LiveGameEventType.StadiumRiots ||
+            eventType == (int)LiveGameEventType.StadiumBreakdown ||
+            eventType == (int)LiveGameEventType.StadiumFire ||
+            eventType == (int)LiveGameEventType.LostPossession)
+            returnValue = 4;
+        else if (eventType == (int)LiveGameEventType.Substitution ||
+            eventType == (int)LiveGameEventType.StructureChange ||
+            eventType == (int)LiveGameEventType.StyleChangeAllOutDefend ||
+            eventType == (int)LiveGameEventType.StyleChangeDefend ||
+            eventType == (int)LiveGameEventType.StyleChangeBalanced ||
+            eventType == (int)LiveGameEventType.StyleChangeAttack ||
+            eventType == (int)LiveGameEventType.StyleChangeAllOutAttack ||
+            eventType == (int)LiveGameEventType.BoostChangeAnti ||
+            eventType == (int)LiveGameEventType.BoostChangeOff ||
+            eventType == (int)LiveGameEventType.BoostChangeOn)
+            returnValue = 5;
+        else if (eventType == (int)LiveGameEventType.General)
+            returnValue = 6;
+        else
+            Main.MainExitProgram(Bygfoot.ExitCode.IntNotFound,
+                "live_game_event_get_verbosity: unknown event type {0} ", eventType);
+
+        return returnValue;
     }
 
     /// <summary>

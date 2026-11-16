@@ -448,6 +448,43 @@ public class Player
     }
 
     /// <summary>
+    /// Return a pointer to the player with specified index of the team.
+    /// Corresponds to C: player_of_idx_team.
+    /// </summary>
+    /// <param name="tm">The team.</param>
+    /// <param name="number">The player's index in the team's player list.</param>
+    /// <returns>The player.</returns>
+    public static Player OfIdxTeam(Team tm, int number)
+    {
+        if (tm.Players.Count <= number)
+            Main.MainExitProgram(Bygfoot.ExitCode.PointerNotFound,
+                "player_of_idx_team: Player list of team {0} too short for number {1}.", tm.Name, number);
+
+        return tm.Players[number];
+    }
+
+    /// <summary>
+    /// Return a pointer to the player with specified id of the team.
+    /// Corresponds to C: player_of_id_team.
+    /// </summary>
+    /// <param name="tm">The team.</param>
+    /// <param name="id">The player's id.</param>
+    /// <returns>The player.</returns>
+    public static Player OfIdTeam(Team tm, int id)
+    {
+        for (int i = 0; i < tm.Players.Count; i++)
+        {
+            if (tm.Players[i].Id == id)
+                return tm.Players[i];
+        }
+
+        Main.MainExitProgram(Bygfoot.ExitCode.PointerNotFound,
+            "player_of_id_team: didn't find player with id {0} of team {1}", id, tm.Name);
+
+        return null;
+    }
+
+    /// <summary>
     /// Find out whether the given player id is in the team.
     /// Corresponds to C: query_player_id_in_team.
     /// </summary>

@@ -13,8 +13,41 @@ public static class Language
     /// <param name="index">The language index.</param>
     public static void LanguageSet(int index)
     {
-        // Implementation depends on the not yet converted window and news functions.
-        throw new NotImplementedException();
+        List<string> codes = Misc.MiscSeparateStrings(OptionHelper.ConstStr("string_language_codes"));
+
+        string buf = index > 0 ? codes[index - 1] : "";
+
+        if (buf != OptionHelper.OptStr("string_opt_language_code") ||
+            Variables.Window.Main == null)
+        {
+            // C: on non-Mac systems we point the gettext message catalog at the
+            // <current dir>/locale directory:
+            //     if (g_file_test(localeDir, G_FILE_TEST_EXISTS))
+            //     {
+            //         bindtextdomain(GETTEXT_PACKAGE, localeDir);
+            //         bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+            //         textdomain(GETTEXT_PACKAGE);
+            //     }
+            // The gettext NLS bindings have no C# equivalent; the lg commentary
+            // and news files loaded below are selected by language instead.
+
+            Environment.SetEnvironmentVariable("LANGUAGE", buf, EnvironmentVariableTarget.Process);
+            OptionHelper.OptSetStr("string_opt_language_code", buf);
+
+            if (Variables.Window.Main != null)
+            {
+                Gtk.Widget? main = Variables.Window.Main;
+                Window.WindowDestroy(ref main);
+                Variables.Window.Main = main;
+
+                Window.WindowCreate(WindowsType.Main);
+
+                // TODO: on_button_back_to_main_clicked (src/callbacks.c not yet converted).
+            }
+        }
+
+        LgCommentary.LoadCommentaryFileFromOption();
+        News.LoadNewsFileFromOption();
     }
 
     /// <summary>
