@@ -126,8 +126,116 @@ public class Fixture
     /// <returns>Whether the fixtures were written successfully.</returns>
     public static bool WriteCupFixtures(Cup cup)
     {
-        // Implementation depends on the not yet converted cup functions.
-        throw new NotImplementedException();
+        List<Team> teamsSorted = null;
+
+        /* Store the order of teams in case the cup
+           uses teams from its previous incarnation (previous season). */
+        if (Cup.QueryCupSelfReferential(cup))
+            teamsSorted = Cup.CupGetTeamsSorted(cup);
+
+        Cup.CupReset(cup);
+
+        for (int i = 0; i < cup.Rounds.Count; i++)
+            Cup.CupGetTeamPointers(cup, i, teamsSorted, true);
+
+        /* The C team_ptrs array holds Team pointers; the C# model stores
+           the team ids in TeamPtrs, so we resolve them into a Team list. */
+        List<Team> teams = new List<Team>();
+        foreach (int teamId in cup.Rounds[0].TeamPtrs)
+        {
+            Team tm = Team.OfId(teamId);
+            if (tm != null)
+                teams.Add(tm);
+        }
+
+        if (cup.Rounds[0].RoundRobinNumberOfGroups > 0)
+            WriteCupRoundRobin(cup, 0, teams);
+        else
+            WriteKnockoutRound(cup, 0, teams);
+
+        return Cup.CupCheckFixtures(cup);
+    }
+
+    /// <summary>
+    /// Write round robins for the given cup and cup round.
+    /// Corresponds to C: fixture_write_cup_round_robin.
+    /// </summary>
+    /// <param name="cup">The cup the fixtures are for.</param>
+    /// <param name="cupRound">The cup round.</param>
+    /// <param name="teams">The teams.</param>
+    public static void WriteCupRoundRobin(Cup cup, int cupRound, List<Team> teams)
+    {
+        CupRound cupround = cup.Rounds[cupRound];
+        int numberOfGroups = cupround.RoundRobinNumberOfGroups;
+        int teamNum = (teams.Count - (teams.Count % numberOfGroups)) / numberOfGroups;
+        int plusDiv = teams.Count % numberOfGroups;
+        List<Team>[] teamsGroup = new List<Team>[numberOfGroups];
+        Table[] tableGroup = new Table[numberOfGroups];
+
+        if (Variables.DebugLevel > 100)
+            Debug.DebugPrintMessage("fixture_write_cup_round_robin: {0} round {1} teamlen {2}",
+                cup.Name, cupRound, teams.Count);
+
+        if (teams.Count < numberOfGroups)
+            Main.MainExitProgram(Bygfoot.ExitCode.FixtureWriteError,
+                "fixture_write_cup_round_robin: cup {0} round {1}: number of teams ({2}) less than number of groups ({3})",
+                cup.Name, cupRound, teams.Count, numberOfGroups);
+
+        if (cupround.RandomiseTeams || OptionHelper.OptInt("int_opt_randomise_teams") != 0)
+            teams.Sort((tm1, tm2) => Team.CompareFunc(tm1, tm2, 3)); /* TEAM_COMPARE_AV_SKILL */
+
+        for (int i = 0; i < numberOfGroups; i++)
+        {
+            tableGroup[i] = Table.New();
+            tableGroup[i].Name = cup.Name;
+            tableGroup[i].Clid = cup.Id;
+            tableGroup[i].Round = cupRound;
+            teamsGroup[i] = new List<Team>();
+        }
+
+        int cnt = 0;
+        if (!cupround.RandomiseTeams && OptionHelper.OptInt("int_opt_randomise_teams") == 0)
+        {
+            for (int i = 0; i < numberOfGroups; i++)
+                for (int j = 0; j < teamNum + (i < plusDiv ? 1 : 0); j++)
+                {
+                    teamsGroup[i].Add(teams[cnt]);
+                    tableGroup[i].Elements.Add(Table.TableElementNew(teams[cnt], tableGroup[i].Elements.Count));
+                    cnt++;
+                }
+        }
+        else
+        {
+            for (int i = 0; i < teams.Count; i++)
+            {
+                teamsGroup[cnt].Add(teams[i]);
+                tableGroup[cnt].Elements.Add(Table.TableElementNew(teams[i], tableGroup[cnt].Elements.Count));
+                cnt = (cnt + 1) % numberOfGroups;
+            }
+        }
+
+        for (int i = 0; i < numberOfGroups; i++)
+        {
+            cupround.Tables.Add(tableGroup[i]);
+
+            for (int j = 0; j < cupround.RoundRobins;)
+            {
+                WriteRoundRobin(cup, cupRound,
+                    Misc.MiscCopyPtrArray(teamsGroup[i]),
+                    j == cupround.RoundRobins - 1,
+                    (j == 0) ? -1 : cup.Fixtures[cup.Fixtures.Count - 1].WeekNumber +
+                        cupround.RrBreaks[j - 1],
+                    cupround.RrBreaks, j - 1);
+                j += (j < cupround.RoundRobins - 1) ? 2 : 1;
+            }
+        }
+
+        cup.Fixtures.Sort((fix1, fix2) => CompareFunc(fix1, fix2, 0));
+
+        cup.NextFixtureUpdateWeek = (cupRound < cup.Rounds.Count - 1) ?
+            cup.Fixtures[cup.Fixtures.Count - 1].WeekNumber : 1000;
+        cup.NextFixtureUpdateWeekRound = (cupRound < cup.Rounds.Count - 1) ?
+            cup.Fixtures[cup.Fixtures.Count - 1].WeekRoundNumber : 1000;
     }
 
     /// <summary>
@@ -137,8 +245,66 @@ public class Fixture
     /// <param name="cup">The cup we update.</param>
     public static void Update(Cup cup)
     {
-        // Implementation depends on the not yet converted cup functions.
-        throw new NotImplementedException();
+        List<Fixture> fixtures = cup.Fixtures;
+        int round = fixtures[fixtures.Count - 1].Round;
+        int replay = cup.Rounds[round].Replay;
+        List<Team> teams = null;
+        CupRound newRound = null;
+
+        if (Variables.DebugLevel > 90)
+            Debug.DebugPrintMessage("fixture_update: cup {0} (id {1})", cup.Name, cup.Id);
+
+        if (replay != 0 &&
+            fixtures[fixtures.Count - 1].ReplayNumber < replay &&
+            UpdateWriteReplays(cup))
+            return;
+
+        /* Still waiting for other cups. */
+        if (round + 1 < cup.Rounds.Count &&
+            Cup.CupRoundCheckWaits(cup.Rounds[round + 1]))
+            return;
+
+        teams = GetCupRoundWinners(cup);
+
+        if (round == cup.Rounds.Count - 1 && teams.Count < 2)
+            return;
+
+        if (round + 1 > cup.Rounds.Count - 1)
+            Main.MainExitProgram(Bygfoot.ExitCode.CupRoundError,
+                "fixture_update: round index {0} too high for round array ({1}) in cup {2}",
+                round + 1, cup.Rounds.Count - 1, cup.Name);
+
+        newRound = cup.Rounds[round + 1];
+        Cup.CupGetTeamPointers(cup, round + 1, null, false);
+
+        /* The C team_ptrs array holds Team pointers; the C# model stores
+           the team ids in TeamPtrs, so we resolve them into the Team list. */
+        foreach (int teamId in newRound.TeamPtrs)
+        {
+            Team tm = Team.OfId(teamId);
+            if (tm != null)
+                teams.Add(tm);
+        }
+
+        if (teams.Count < 2)
+            return;
+
+        if (cup.Bye.Count != 0)
+        {
+            foreach (int teamId in cup.Bye)
+            {
+                Team tm = Team.OfId(teamId);
+                if (tm != null)
+                    teams.Add(tm);
+            }
+
+            cup.Bye = new List<int>();
+        }
+
+        if (newRound.RoundRobinNumberOfGroups > 0)
+            WriteCupRoundRobin(cup, round + 1, teams);
+        else
+            WriteKnockoutRound(cup, round + 1, teams);
     }
 
     /// <summary>
@@ -149,8 +315,32 @@ public class Fixture
     /// <returns>Whether fixtures were written, FALSE otherwise.</returns>
     public static bool UpdateWriteReplays(Cup cup)
     {
-        // Implementation depends on the not yet converted cup functions.
-        throw new NotImplementedException();
+        List<Fixture> fixtures = cup.Fixtures;
+        int replayNumber = fixtures[fixtures.Count - 1].ReplayNumber + 1;
+        int round = fixtures[fixtures.Count - 1].Round;
+        bool returnValue = false;
+
+        for (int i = 0; i < fixtures.Count; i++)
+        {
+            Fixture f = fixtures[i];
+            if (f.Round == round &&
+                f.ReplayNumber == replayNumber - 1 &&
+                f.Result[0, 0] == f.Result[1, 0])
+                WriteFixture(fixtures, f.Teams[1], f.Teams[0], Variables.Week,
+                    GetFreeRound(Variables.Week, null, f.Teams[0].Id, f.Teams[1].Id),
+                    cup.Id, round, replayNumber,
+                    !cup.Rounds[round].Neutral,
+                    false, cup.Rounds[round].Replay == replayNumber);
+        }
+
+        if (fixtures[fixtures.Count - 1].ReplayNumber == replayNumber)
+        {
+            returnValue = true;
+            cup.NextFixtureUpdateWeekRound =
+                fixtures[fixtures.Count - 1].WeekRoundNumber;
+        }
+
+        return returnValue;
     }
 
     /// <summary>
@@ -446,8 +636,83 @@ public class Fixture
     /// <param name="teams">The teams participating.</param>
     public static void WriteKnockoutRound(Cup cup, int cupRound, List<Team> teams)
     {
-        // Implementation depends on the not yet converted league and maths functions.
-        throw new NotImplementedException();
+        int i, len = teams.Count;
+        int firstWeek = Cup.CupGetFirstWeekOfCupRound(cup, cupRound, true);
+        int weekNumber, weekRoundNumber;
+        CupRound round = cup.Rounds[cupRound];
+        int byeLen = (round.Byes == -1) ?
+            MathHelper.GetByeLen(len) : round.Byes;
+
+        if (Variables.DebugLevel > 60)
+            Debug.DebugPrintMessage("fixture_write_knockout_round: {0} {1} byelen {2}",
+                cup.Name, cupRound, byeLen);
+
+        if (byeLen != 0)
+        {
+            cup.Bye = new List<int>();
+
+            teams.Sort((tm1, tm2) => Team.CompareFunc(tm1, tm2, 1)); /* TEAM_COMPARE_LEAGUE_LAYER */
+
+            for (i = 0; i < byeLen; i++)
+            {
+                cup.Bye.Add(teams[0].Id);
+                teams.RemoveAt(0);
+            }
+
+            teams = Misc.MiscRandomiseGPointerArray(teams);
+        }
+        else if (round.RandomiseTeams)
+            teams = Misc.MiscRandomiseGPointerArray(teams);
+
+        /* Special rule for cups that have to wait for other cups. */
+        if (firstWeek < Variables.Week)
+            firstWeek = Variables.Week + 1;
+
+        weekNumber = League.LeagueCupGetWeekWithBreak(cup.Id, firstWeek);
+        weekRoundNumber =
+            GetFreeRound(weekNumber, teams, -1, -1);
+        for (i = 0; i <= (teams.Count - 2) / 2; i++)
+        {
+            if (!round.HomeAway && League.QueryLeagueCupHasProperty(cup.Id, "weak_at_home") &&
+                League.LeagueFromClid(teams[2 * i].Clid).Layer <
+                League.LeagueFromClid(teams[2 * i + 1].Clid).Layer)
+                WriteFixture(cup.Fixtures, teams[2 * i + 1],
+                    teams[2 * i], weekNumber,
+                    weekRoundNumber, cup.Id, cupRound, 0,
+                    !round.Neutral, false,
+                    !round.HomeAway && round.Replay == 0);
+            else
+                WriteFixture(cup.Fixtures, teams[2 * i],
+                    teams[2 * i + 1], weekNumber,
+                    weekRoundNumber, cup.Id, cupRound, 0,
+                    !round.Neutral, false,
+                    !round.HomeAway && round.Replay == 0);
+        }
+
+        if (round.HomeAway)
+        {
+            weekNumber = round.TwoMatchWeek ?
+                weekNumber :
+                League.LeagueCupGetWeekWithBreak(cup.Id, weekNumber + cup.WeekGap);
+
+            weekRoundNumber =
+                GetFreeRound(weekNumber, teams, -1, -1);
+            for (i = 0; i <= (teams.Count - 2) / 2; i++)
+                WriteFixture(cup.Fixtures, teams[2 * i + 1],
+                    teams[2 * i], weekNumber,
+                    weekRoundNumber, cup.Id, cupRound, 0,
+                    !round.Neutral, true, true);
+        }
+
+        cup.Fixtures.Sort((fix1, fix2) => CompareFunc(fix1, fix2, 0));
+
+        cup.NextFixtureUpdateWeek =
+            (cupRound < cup.Rounds.Count - 1 || round.Replay > 0) ?
+            cup.Fixtures[cup.Fixtures.Count - 1].WeekNumber : 1000;
+
+        cup.NextFixtureUpdateWeekRound =
+            (cupRound < cup.Rounds.Count - 1 || round.Replay > 0) ?
+            cup.Fixtures[cup.Fixtures.Count - 1].WeekRoundNumber : 1000;
     }
 
     /// <summary>
@@ -1594,8 +1859,7 @@ public class Fixture
     /// <returns>The first week.</returns>
     private static int GetFirstWeekOfCupRound(Cup cup, int cupRound)
     {
-        // Implementation depends on the not yet converted league functions.
-        throw new NotImplementedException();
+        return Cup.CupGetFirstWeekOfCupRound(cup, cupRound, true);
     }
 
     /// <summary>
