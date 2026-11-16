@@ -142,16 +142,14 @@ public static class News
     /// <param name="liveGame">The live game.</param>
     public static void SetMatchTokens(LiveGame liveGame)
     {
-        TokenRepNews.Clear();
-        TokenRepNews.Add(new List<string>());
-        TokenRepNews.Add(new List<string>());
-
-        SetScorerTokens(liveGame.Stats);
+        LgCommentary.SetStatsTokens(liveGame.Stats);
         SetFixtureTokens(liveGame.Fix);
         SetLeagueCupTokens(liveGame.Fix);
         SetStreakTokens(liveGame.Fix);
-        SetRankTokens(liveGame.Fix);
         SetScorerTokens(liveGame.Stats);
+
+        if (liveGame.Fix.Clid < Bygfoot.IdCupStart)
+            SetRankTokens(liveGame.Fix);
     }
 
     /// <summary>
@@ -181,12 +179,14 @@ public static class News
             newArticle.WeekNumber = Variables.Week;
             newArticle.WeekRoundNumber = Variables.WeekRound;
 
-            newArticle.TitleSmall = liveGame.Fix.Teams[0].Name + " " + liveGame.Fix.Teams[1].Name;
+            string buf = string.Empty;
+            Fixture.ResultToBuf(liveGame.Fix, ref buf, false);
+            newArticle.TitleSmall = $"{liveGame.Fix.Teams[0].Name} {buf} {liveGame.Fix.Teams[1].Name}";
             newArticle.Title = title;
             newArticle.Subtitle = subtitle;
             newArticle.TitleId = titleId;
             newArticle.SubtitleId = subtitleId;
-            newArticle.UserIdx = -1;
+            newArticle.UserIdx = Fixture.UserTeamInvolved(liveGame.Fix);
             newArticle.Clid = liveGame.Fix.Clid;
             newArticle.CupRound = liveGame.Fix.Round;
 
@@ -214,8 +214,65 @@ public static class News
     /// <param name="subtitleId">The subtitle id.</param>
     public static void Select(List<NewsArticle> newsArray, ref string title, ref string subtitle, ref int articleId, ref int titleId, ref int subtitleId)
     {
-        // Implementation depends on the not yet converted misc, news and token functions.
-        throw new NotImplementedException();
+        int i;
+        int[] orderArticles = new int[newsArray.Count];
+
+        ArticlesGetOrder(newsArray, orderArticles);
+
+        titleId = -1;
+        subtitleId = -1;
+
+        for (i = 0; i < newsArray.Count; i++)
+        {
+            if ((!CheckArticleForRepetition(newsArray[orderArticles[i]].Id) ||
+                 newsArray[orderArticles[i]].Priority > 20) &&
+                Misc.MiscParseCondition(newsArray[orderArticles[i]].Condition, TokenRepNews))
+                break;
+        }
+
+        if (i == newsArray.Count)
+            for (i = 0; i < newsArray.Count; i++)
+                if (Misc.MiscParseCondition(newsArray[orderArticles[i]].Condition, TokenRepNews))
+                    break;
+
+        if (i == newsArray.Count)
+            return;
+
+        NewsArticle article = newsArray[orderArticles[i]];
+
+        articleId = article.Id;
+
+        int[] orderTitles = new int[article.Titles.Count];
+        int[] orderSubtitles = new int[article.Subtitles.Count];
+        TitlesGetOrder(article.Titles, orderTitles);
+        TitlesGetOrder(article.Subtitles, orderSubtitles);
+
+        int toCheck;
+        titleId = GetTitle(article.Titles, ref title, orderTitles, true, false,
+            OptionHelper.ConstInt("int_news_repetition_max_check_number"));
+        if (titleId == -1)
+            for (toCheck = OptionHelper.ConstInt("int_news_repetition_max_check_number") - 1;
+                toCheck >= OptionHelper.ConstInt("int_news_repetition_min_check_number");
+                toCheck--)
+            {
+                titleId = GetTitle(article.Titles, ref title, orderTitles, true,
+                    toCheck == OptionHelper.ConstInt("int_news_repetition_min_check_number"), toCheck);
+                if (titleId == -1)
+                    break;
+            }
+
+        subtitleId = GetTitle(article.Subtitles, ref subtitle, orderSubtitles, false, false,
+            OptionHelper.ConstInt("int_news_repetition_max_check_number"));
+        if (subtitleId == -1)
+            for (toCheck = OptionHelper.ConstInt("int_news_repetition_max_check_number") - 1;
+                toCheck >= OptionHelper.ConstInt("int_news_repetition_min_check_number");
+                toCheck--)
+            {
+                subtitleId = GetTitle(article.Subtitles, ref subtitle, orderSubtitles, false,
+                    toCheck == OptionHelper.ConstInt("int_news_repetition_min_check_number"), toCheck);
+                if (subtitleId == -1)
+                    break;
+            }
     }
 
     /// <summary>
@@ -228,10 +285,20 @@ public static class News
     /// <param name="ignoreRepetition">Whether to ignore repetitions.</param>
     /// <param name="toCheck">The number to check.</param>
     /// <returns>The title id.</returns>
-    public static int GetTitle(List<NewsText> titles, ref string title, ref int order, bool isTitle, bool ignoreRepetition, int toCheck)
+    public static int GetTitle(List<NewsText> titles, ref string title, int[] order, bool isTitle, bool ignoreRepetition, int toCheck)
     {
-        // Implementation depends on the not yet converted misc and news functions.
-        throw new NotImplementedException();
+        for (int i = 0; i < titles.Count; i++)
+        {
+            if (Misc.MiscParseCondition(titles[order[i]].Condition, TokenRepNews) &&
+                Misc.MiscStringReplaceAllTokens(TokenRepNews, titles[order[i]].Text, out title))
+            {
+                int result = titles[order[i]].Id;
+                if (ignoreRepetition || !CheckTitleForRepetition(result, isTitle, toCheck))
+                    return result;
+            }
+        }
+
+        return -1;
     }
 
     /// <summary>
@@ -243,8 +310,18 @@ public static class News
     /// <returns>Whether it repeated.</returns>
     public static bool CheckTitleForRepetition(int id, bool isTitle, int toCheck)
     {
-        // Implementation depends on the not yet converted newspaper and news functions.
-        throw new NotImplementedException();
+        int end = (Variables.Newspaper.Articles.Count < toCheck) ?
+            0 : Variables.Newspaper.Articles.Count - toCheck;
+
+        for (int i = Variables.Newspaper.Articles.Count - 1; i >= end; i--)
+        {
+            NewsPaperArticle article = Variables.Newspaper.Articles[i];
+            if ((isTitle && article.TitleId == id) ||
+                (!isTitle && article.SubtitleId == id))
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -254,8 +331,15 @@ public static class News
     /// <returns>Whether it repeated.</returns>
     public static bool CheckArticleForRepetition(int id)
     {
-        // Implementation depends on the not yet converted newspaper and news functions.
-        throw new NotImplementedException();
+        int maxCheck = OptionHelper.ConstInt("int_news_repetition_max_check_number");
+        int end = (Variables.Newspaper.Articles.Count < maxCheck) ?
+            0 : Variables.Newspaper.Articles.Count - maxCheck;
+
+        for (int i = Variables.Newspaper.Articles.Count - 1; i >= end; i--)
+            if (Variables.Newspaper.Articles[i].Id == id)
+                return true;
+
+        return false;
     }
 
     /// <summary>
@@ -263,8 +347,10 @@ public static class News
     /// </summary>
     public static void LoadNewsFileFromOption()
     {
-        // Implementation depends on the not yet converted language and news functions.
-        throw new NotImplementedException();
+        string buf = string.Empty;
+        Language.LanguageGetCode(ref buf);
+
+        LoadNewsFile($"news_{buf}.xml", false);
     }
 
     /// <summary>
@@ -274,8 +360,26 @@ public static class News
     /// <param name="abort">Whether to abort.</param>
     public static void LoadNewsFile(string newsFile, bool abort)
     {
-        // Implementation depends on the not yet converted file and news functions.
-        throw new NotImplementedException();
+        if (File.Exists(newsFile))
+        {
+            NewsXml.XmlNewsRead(newsFile);
+            return;
+        }
+
+        string fileName = FileHelper.FindSupportFile(newsFile, false);
+
+        if (fileName != null)
+        {
+            NewsXml.XmlNewsRead(fileName);
+        }
+        else
+        {
+            if (abort)
+                Main.MainExitProgram(Bygfoot.ExitCode.FileNotFound,
+                    "news_load_news_file: file {0} not found ", newsFile);
+            else
+                LoadNewsFile("news_en.xml", true);
+        }
     }
 
     /// <summary>
@@ -285,8 +389,39 @@ public static class News
     /// <param name="order">The order.</param>
     public static void TitlesGetOrder(List<NewsText> titles, int[] order)
     {
-        // Implementation depends on the not yet converted maths and news functions.
-        throw new NotImplementedException();
+        int i, j, orderIdx = 0;
+        int prioritySum = 0;
+        int[] bounds = new int[titles.Count + 1];
+
+        bounds[0] = 0;
+
+        for (i = 0; i < titles.Count; i++)
+        {
+            prioritySum += titles[i].Priority;
+            bounds[i + 1] = prioritySum;
+            order[i] = -1;
+        }
+
+        int[] permutation = new int[prioritySum];
+        MathHelper.GeneratePermutation(permutation, 1, prioritySum);
+
+        for (i = 0; i < prioritySum; i++)
+        {
+            if (orderIdx == titles.Count)
+                break;
+
+            for (j = 0; j < titles.Count; j++)
+                if (bounds[j] < permutation[i] && permutation[i] <= bounds[j + 1])
+                {
+                    if (!Misc.QueryIntegerIsInArray(j, order, titles.Count))
+                    {
+                        order[orderIdx] = j;
+                        orderIdx++;
+                    }
+
+                    break;
+                }
+        }
     }
 
     /// <summary>
@@ -296,8 +431,25 @@ public static class News
     /// <returns>Whether the match is relevant.</returns>
     public static bool CheckMatchRelevant(LiveGame liveGame)
     {
-        // Implementation depends on the not yet converted user, option and news functions.
-        throw new NotImplementedException();
+        if (Fixture.UserTeamInvolved(liveGame.Fix) != -1 &&
+            OptionHelper.OptInt("int_opt_news_create_user") != 0)
+            return true;
+
+        if (liveGame.Fix.Clid >= Bygfoot.IdCupStart &&
+            OptionHelper.OptInt("int_opt_news_create_cup") != 0)
+            return true;
+
+        List<int> userLeagues = new List<int>();
+
+        for (int i = 0; i < Variables.Users.Count; i++)
+            if (!Misc.QueryIntegerIsInArray(Variables.Users[i].Team.Clid, userLeagues.ToArray(), userLeagues.Count))
+                userLeagues.Add(Variables.Users[i].Team.Clid);
+
+        if (Misc.QueryIntegerIsInArray(liveGame.Fix.Clid, userLeagues.ToArray(), userLeagues.Count) &&
+            OptionHelper.OptInt("int_opt_news_create_league") != 0)
+            return true;
+
+        return false;
     }
 
     /// <summary>
@@ -306,8 +458,77 @@ public static class News
     /// <param name="stats">The live game stats.</param>
     public static void SetScorerTokens(LiveGameStats stats)
     {
-        // Implementation depends on the not yet converted live game, player and token functions.
-        throw new NotImplementedException();
+        for (int i = 0; i < 2; i++)
+        {
+            List<string> scorers = new List<string>();
+            List<int> goals = new List<int>();
+
+            foreach (object obj in stats.Players[i, (int)LiveGameStatArray.Scorers])
+            {
+                string scorer = (string)obj;
+
+                int existingIdx = scorers.IndexOf(scorer);
+                if (existingIdx != -1)
+                    goals[existingIdx]++;
+                else
+                {
+                    scorers.Add(scorer);
+                    goals.Add(1);
+                }
+            }
+
+            int maxGoals = 0;
+            string buf = "";
+            string scorerStr = "";
+            string highScorer = "";
+
+            for (int j = 0; j < scorers.Count; j++)
+            {
+                int scorerGoals = goals[j];
+                string scorer = scorers[j];
+
+                if (scorerGoals > maxGoals)
+                {
+                    maxGoals = scorerGoals;
+                    highScorer = scorer;
+                }
+
+                if (j == 0)
+                {
+                    scorerStr = (scorerGoals > 1) ?
+                        $"{scorer} ({scorerGoals})" : scorer;
+                }
+                else if (j == scorers.Count - 1)
+                {
+                    scorerStr = (scorerGoals > 1) ?
+                        $"{buf} and {scorer} ({scorerGoals})" : $"{buf} and {scorer}";
+                }
+                else
+                {
+                    scorerStr = (scorerGoals > 1) ?
+                        $"{buf}, {scorer} ({scorerGoals})" : $"{buf}, {scorer}";
+                }
+
+                buf = scorerStr;
+            }
+
+            if (scorerStr != "")
+            {
+                Misc.MiscTokenAddBool(TokenRepNews,
+                    Variables.Tokens.GetInt($"string_token_bool_multiple_scorers{i}"),
+                    scorers.Count > 1);
+
+                Misc.MiscTokenAdd(TokenRepNews,
+                    Variables.Tokens.GetInt($"string_token_scorers{i}"),
+                    scorerStr);
+                Misc.MiscTokenAdd(TokenRepNews,
+                    Variables.Tokens.GetInt($"string_token_highscorer{i}"),
+                    highScorer);
+                Misc.MiscTokenAdd(TokenRepNews,
+                    Variables.Tokens.GetInt($"string_token_highscorer_goals{i}"),
+                    Misc.MiscIntToChar(maxGoals));
+            }
+        }
     }
 
     /// <summary>
@@ -316,8 +537,119 @@ public static class News
     /// <param name="fix">The fixture.</param>
     public static void SetLeagueCupTokens(Fixture fix)
     {
-        // Implementation depends on the not yet converted league, cup and token functions.
-        throw new NotImplementedException();
+        Team tm = null;
+
+        if (fix.Teams[0].Clid < Bygfoot.IdCupStart)
+            Misc.MiscTokenAdd(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_team_layer0"),
+                Misc.MiscIntToChar(League.LeagueFromClid(fix.Teams[0].Clid).Layer));
+        if (fix.Teams[1].Clid < Bygfoot.IdCupStart)
+            Misc.MiscTokenAdd(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_team_layer1"),
+                Misc.MiscIntToChar(League.LeagueFromClid(fix.Teams[1].Clid).Layer));
+
+        if (fix.Teams[0].Clid < Bygfoot.IdCupStart &&
+            fix.Teams[1].Clid < Bygfoot.IdCupStart)
+            Misc.MiscTokenAdd(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_team_layerdiff"),
+                Misc.MiscIntToChar(Math.Abs(League.LeagueFromClid(fix.Teams[0].Clid).Layer -
+                    League.LeagueFromClid(fix.Teams[1].Clid).Layer)));
+
+        Misc.MiscTokenAdd(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_league_cup_name"),
+            League.LeagueCupGetNameString(fix.Clid));
+
+        Misc.MiscTokenAddBool(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_bool_cup"),
+            fix.Clid >= Bygfoot.IdCupStart);
+
+        if (fix.Clid >= Bygfoot.IdCupStart)
+        {
+            Cup cup = Cup.CupFromClid(fix.Clid);
+            CupRound cupRound = cup.Rounds[fix.Round];
+
+            if (League.QueryLeagueCupHasProperty(fix.Clid, "international"))
+                Misc.MiscTokenAdd(TokenRepNews,
+                    Variables.Tokens.GetInt("string_token_team_layerdiff"),
+                    Misc.MiscIntToChar(0));
+
+            Misc.MiscTokenAdd(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_cup_stage"),
+                Misc.MiscIntToChar(cup.Rounds.Count - fix.Round));
+
+            Misc.MiscTokenAdd(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_bool_cup_neutral"),
+                Misc.MiscIntToChar(cupRound.Neutral ? 1 : 0));
+
+            string buf = string.Empty;
+            Cup.CupGetRoundName(cup, fix.Round, ref buf);
+            Misc.MiscTokenAdd(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_cup_round_name"),
+                buf);
+
+            Misc.MiscTokenAddBool(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_bool_cup_knockout"),
+                cupRound.Tables.Count == 0);
+
+            Misc.MiscTokenAddBool(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_bool_cup_home_away"),
+                cupRound.HomeAway);
+
+            Misc.MiscTokenAddBool(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_bool_cup_first_leg"),
+                cupRound.HomeAway && !fix.SecondLeg);
+            Misc.MiscTokenAddBool(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_bool_cup_second_leg"),
+                cupRound.HomeAway && fix.SecondLeg);
+
+            if (fix.Decisive)
+            {
+                tm = Fixture.WinnerOf(fix, false);
+                Misc.MiscTokenAdd(TokenRepNews,
+                    Variables.Tokens.GetInt("string_token_cup_match_winner"),
+                    tm.Name);
+                Misc.MiscTokenAdd(TokenRepNews,
+                    Variables.Tokens.GetInt("string_token_cup_match_loser"),
+                    fix.Teams[fix.Teams[1] != tm ? 1 : 0].Name);
+                Misc.MiscTokenAdd(TokenRepNews,
+                    Variables.Tokens.GetInt("string_token_cup_match_winnern"),
+                    Misc.MiscIntToChar(fix.Teams[1] == tm ? 1 : 0));
+                Misc.MiscTokenAdd(TokenRepNews,
+                    Variables.Tokens.GetInt("string_token_cup_match_losern"),
+                    Misc.MiscIntToChar(fix.Teams[1] != tm ? 1 : 0));
+            }
+
+            Misc.MiscTokenAddBool(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_bool_cup_national"),
+                League.QueryLeagueCupHasProperty(fix.Clid, "national"));
+            Misc.MiscTokenAddBool(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_bool_cup_international"),
+                League.QueryLeagueCupHasProperty(fix.Clid, "international"));
+            Misc.MiscTokenAddBool(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_bool_cup_promrel"),
+                League.QueryLeagueCupHasProperty(fix.Clid, "promotion"));
+            Misc.MiscTokenAddBool(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_bool_cup_aux"),
+                League.QueryLeagueCupHasProperty(fix.Clid, "hide") ||
+                League.QueryLeagueCupHasProperty(fix.Clid, "omit_from_history"));
+        }
+        else
+        {
+            Misc.MiscTokenAddBool(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_bool_cup_knockout"),
+                false);
+
+            Misc.MiscTokenAddBool(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_bool_cup_home_away"),
+                false);
+
+            Misc.MiscTokenAddBool(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_bool_cup_first_leg"),
+                false);
+            Misc.MiscTokenAddBool(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_bool_cup_second_leg"),
+                false);
+        }
     }
 
     /// <summary>
@@ -326,8 +658,96 @@ public static class News
     /// <param name="fix">The fixture.</param>
     public static void SetFixtureTokens(Fixture fix)
     {
-        // Implementation depends on the not yet converted fixture, team and token functions.
-        throw new NotImplementedException();
+        int avskill0 = (int)Math.Round(Team.GetAverageSkill(fix.Teams[0], true));
+        int avskill1 = (int)Math.Round(Team.GetAverageSkill(fix.Teams[1], true));
+        int res0 = fix.Result[0, 0] + fix.Result[0, 1] + fix.Result[0, 2];
+        int res1 = fix.Result[1, 0] + fix.Result[1, 1] + fix.Result[1, 2];
+        int goaldiffaggr = Math.Abs(res0 - res1);
+
+        string buf = string.Empty;
+        Fixture.ResultToBuf(fix, ref buf, false);
+        Misc.MiscTokenAdd(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_result"),
+            buf);
+
+        Fixture.ResultToBuf(fix, ref buf, res0 < res1);
+        Misc.MiscTokenAdd(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_result_rew"),
+            buf);
+
+        Fixture.ResultToBuf(fix, ref buf, res0 > res1);
+        Misc.MiscTokenAdd(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_result_rel"),
+            buf);
+
+        Misc.MiscTokenAddBool(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_bool_cup_penalties"),
+            fix.Result[0, 2] + fix.Result[1, 2] != 0);
+
+        Misc.MiscTokenAddBool(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_bool_cup_extra"),
+            fix.Result[0, 2] + fix.Result[1, 2] == 0 &&
+            fix.Result[0, 1] + fix.Result[1, 1] != 0);
+
+        Misc.MiscTokenAdd(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_attendance"),
+            Misc.MiscPrintGroupedInt(MathHelper.RoundInteger(fix.Attendance, 2)));
+
+        Misc.MiscTokenAdd(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_team_avskill0"),
+            Misc.MiscIntToChar(avskill0));
+        Misc.MiscTokenAdd(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_team_avskill1"),
+            Misc.MiscIntToChar(avskill1));
+        Misc.MiscTokenAdd(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_team_avskilldiff"),
+            Misc.MiscIntToChar(Math.Abs(avskill0 - avskill1)));
+
+        Misc.MiscTokenAdd(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_goals0"),
+            Misc.MiscIntToChar(fix.Result[0, 0]));
+        Misc.MiscTokenAdd(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_goals1"),
+            Misc.MiscIntToChar(fix.Result[1, 0]));
+        Misc.MiscTokenAdd(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_goal_diff"),
+            Misc.MiscIntToChar(goaldiffaggr));
+
+        if (fix.Clid >= Bygfoot.IdCupStart)
+        {
+            Fixture firstLeg = Fixture.GetFirstLeg(fix, true);
+
+            if (firstLeg != null)
+                goaldiffaggr = Math.Abs(fix.Result[0, 0] + fix.Result[0, 1] + firstLeg.Result[1, 0] -
+                    fix.Result[1, 0] - fix.Result[1, 1] - firstLeg.Result[0, 0]);
+        }
+
+        Misc.MiscTokenAdd(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_goal_diff_aggregate"),
+            Misc.MiscIntToChar(goaldiffaggr));
+
+        Misc.MiscTokenAdd(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_team_home"),
+            fix.Teams[0].Name);
+        Misc.MiscTokenAdd(TokenRepNews,
+            Variables.Tokens.GetInt("string_token_team_away"),
+            fix.Teams[1].Name);
+
+        if (fix.Result[0, 0] != fix.Result[1, 0])
+        {
+            Misc.MiscTokenAdd(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_team_losing"),
+                fix.Teams[fix.Result[0, 0] > fix.Result[1, 0] ? 1 : 0].Name);
+            Misc.MiscTokenAdd(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_team_winning"),
+                fix.Teams[fix.Result[0, 0] < fix.Result[1, 0] ? 1 : 0].Name);
+            Misc.MiscTokenAdd(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_team_losingn"),
+                Misc.MiscIntToChar(fix.Result[0, 0] > fix.Result[1, 0] ? 1 : 0));
+            Misc.MiscTokenAdd(TokenRepNews,
+                Variables.Tokens.GetInt("string_token_team_winningn"),
+                Misc.MiscIntToChar(fix.Result[0, 0] < fix.Result[1, 0] ? 1 : 0));
+        }
     }
 
     /// <summary>
@@ -336,8 +756,22 @@ public static class News
     /// <param name="fix">The fixture.</param>
     public static void SetRankTokens(Fixture fix)
     {
-        // Implementation depends on the not yet converted league, table and token functions.
-        throw new NotImplementedException();
+        for (int i = 0; i < 2; i++)
+        {
+            League league = League.LeagueFromClid(fix.Teams[i].Clid);
+            if (league.Tables.Count == 0)
+                continue;
+
+            Table table = league.Tables[league.Tables.Count - 1];
+            for (int j = 0; j < table.Elements.Count; j++)
+                if (table.Elements[j].Team == fix.Teams[i])
+                {
+                    Misc.MiscTokenAdd(TokenRepNews, Variables.Tokens.GetInt($"string_token_rank{i}"), Misc.MiscIntToChar(j + 1));
+                    Misc.MiscTokenAdd(TokenRepNews, Variables.Tokens.GetInt($"string_token_oldrank{i}"),
+                        Misc.MiscIntToChar(table.Elements[j].OldRank));
+                    break;
+                }
+        }
     }
 
     /// <summary>
@@ -347,8 +781,39 @@ public static class News
     /// <param name="order">The order.</param>
     public static void ArticlesGetOrder(List<NewsArticle> articles, int[] order)
     {
-        // Implementation depends on the not yet converted maths and news functions.
-        throw new NotImplementedException();
+        int i, j, orderIdx = 0;
+        int prioritySum = 0;
+        int[] bounds = new int[articles.Count + 1];
+
+        bounds[0] = 0;
+
+        for (i = 0; i < articles.Count; i++)
+        {
+            prioritySum += articles[i].Priority;
+            bounds[i + 1] = prioritySum;
+            order[i] = -1;
+        }
+
+        int[] permutation = new int[prioritySum];
+        MathHelper.GeneratePermutation(permutation, 1, prioritySum);
+
+        for (i = 0; i < prioritySum; i++)
+        {
+            if (orderIdx == articles.Count)
+                break;
+
+            for (j = 0; j < articles.Count; j++)
+                if (bounds[j] < permutation[i] && permutation[i] <= bounds[j + 1])
+                {
+                    if (!Misc.QueryIntegerIsInArray(j, order, articles.Count))
+                    {
+                        order[orderIdx] = j;
+                        orderIdx++;
+                    }
+
+                    break;
+                }
+        }
     }
 
     /// <summary>
@@ -357,7 +822,66 @@ public static class News
     /// <param name="fix">The fixture.</param>
     public static void SetStreakTokens(Fixture fix)
     {
-        // Implementation depends on the not yet converted fixture, team, user and token functions.
-        throw new NotImplementedException();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int k = 0; k < 2; k++)
+            {
+                List<Fixture> latestFixtures = Fixture.GetLatest(fix.Teams[i], k == 0);
+                int streakWon, streakLost, streakUnbeaten;
+                bool draw;
+                streakWon = streakLost = streakUnbeaten = 0;
+                draw = false;
+
+                for (int j = latestFixtures.Count - 1; j >= 0; j--)
+                {
+                    Fixture f = latestFixtures[j];
+                    int res0 = f.Result[0, 0] + f.Result[0, 1] + f.Result[0, 2];
+                    int res1 = f.Result[1, 0] + f.Result[1, 1] + f.Result[1, 2];
+
+                    if (res0 == res1)
+                    {
+                        if (streakLost == 0)
+                        {
+                            draw = true;
+                            streakUnbeaten++;
+                        }
+                        else
+                            break;
+                    }
+                    else if ((f.Teams[0] == fix.Teams[i] ? res0 : res1) >
+                        (f.Teams[0] == fix.Teams[i] ? res1 : res0))
+                    {
+                        if (streakWon == 0)
+                            streakLost++;
+                        else
+                            break;
+                    }
+                    else
+                    {
+                        if (streakLost == 0)
+                        {
+                            streakUnbeaten++;
+
+                            if (!draw)
+                                streakWon++;
+                        }
+                        else
+                            break;
+                    }
+                }
+
+                string prefix = k == 0 ? "" : "league_";
+
+                Misc.MiscTokenAdd(TokenRepNews,
+                    Variables.Tokens.GetInt($"string_token_streak_{prefix}won{i}"),
+                    Misc.MiscIntToChar(streakWon));
+                Misc.MiscTokenAdd(TokenRepNews,
+                    Variables.Tokens.GetInt($"string_token_streak_{prefix}lost{i}"),
+                    Misc.MiscIntToChar(streakLost));
+                Misc.MiscTokenAdd(TokenRepNews,
+                    Variables.Tokens.GetInt($"string_token_streak_{prefix}unbeaten{i}"),
+                    Misc.MiscIntToChar(streakUnbeaten));
+            }
+        }
     }
 }
