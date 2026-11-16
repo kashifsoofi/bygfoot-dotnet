@@ -134,8 +134,42 @@ public static class Debug
     /// </summary>
     public static void DebugCalibrateBettingOdds(int skilldiffmax, int matches_per_skilldiff)
     {
-        // Implementation depends on simulation logic.
-        throw new NotImplementedException();
+        int i, skilldiff, matches;
+        Fixture fix = Bygfoot.GetLeague(0).Fixtures[0];
+        LiveGame liveGame = new LiveGame();
+
+        fix.HomeAdvantage = false;
+
+        for (skilldiff = 0; skilldiff <= skilldiffmax; skilldiff++)
+        {
+            int[] res = new int[3];
+
+            for (matches = 0; matches < matches_per_skilldiff; matches++)
+            {
+                fix.Attendance = -1;
+                fix.Result[0, 0] = fix.Result[1, 0] = 0;
+                for (i = 0; i < fix.Teams[0].Players.Count; i++)
+                {
+                    Strategy.RepairPlayer(fix.Teams[0].Players[i]);
+                    Strategy.RepairPlayer(fix.Teams[1].Players[i]);
+                    fix.Teams[0].Players[i].Skill = 90;
+                    fix.Teams[1].Players[i].Skill = 90 - skilldiff;
+                    fix.Teams[0].Players[i].Fitness = 0.9f;
+                    fix.Teams[1].Players[i].Fitness = 0.9f;
+                }
+
+                LiveGame.CalculateFixture(fix, liveGame);
+                if (fix.Result[0, 0] < fix.Result[1, 0])
+                    res[2]++;
+                else
+                    res[fix.Result[0, 0] == fix.Result[1, 0] ? 1 : 0]++;
+            }
+
+            // C: g_print(...) — routed through the file's Serilog logger.
+            DebugPrintMessage("sd {0,3} res {1,3} {2,3} {3,3} prob {4:0.00} {5:0.00} {6:0.00}",
+                skilldiff, res[0], res[1], res[2],
+                (double)res[0] / matches, (double)res[1] / matches, (double)res[2] / matches);
+        }
     }
 
     /// <summary>
@@ -163,8 +197,20 @@ public static class Debug
     /// </summary>
     public static void DebugWriterOut(string fileName, string methodName, string text, int debugLevel)
     {
-        // Implementation depends on logging mechanism.
-        throw new NotImplementedException();
+        // C only declares debug_writer_out (src/debug.h); it is never defined or
+        // called in the C source, so there is no C body to port. Provide the
+        // documented behavior: append the text to the file when a debug level is set.
+        if (debugLevel <= 0)
+            return;
+
+        try
+        {
+            File.AppendAllText(fileName, $"{methodName}: {text}{Environment.NewLine}");
+        }
+        catch
+        {
+            // Ignore I/O errors: this is best-effort debug output.
+        }
     }
 
     /// <summary>
