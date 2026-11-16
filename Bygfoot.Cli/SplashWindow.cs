@@ -57,7 +57,9 @@ public partial class SplashWindow
     /// </summary>
     private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
-        // TODO: Call the C function on_window_splash_delete_event (which ignores the close event and does nothing).
+        // The C handler on_window_splash_delete_event is empty. Unlike GTK3's
+        // delete-event, GTK4's close-request has no default destruction, so
+        // there is nothing to do here.
         return true;
     }
 
@@ -68,8 +70,12 @@ public partial class SplashWindow
     /// </summary>
     private void OnButtonSplashHintBackClicked(Button sender, EventArgs args)
     {
-        // TODO: Call the C function on_button_splash_hint_back_clicked (which updates the hint counter and shows the hint).
-        throw new NotImplementedException();
+        Variables.Counters[(int)Counters.CountHintNumber] =
+            (Variables.Counters[(int)Counters.CountHintNumber] == 0) ?
+            Variables.Hints.List.Count - 1 :
+            Variables.Counters[(int)Counters.CountHintNumber] - 1;
+
+        Window.WindowSplashShowHint();
     }
 
     /// <summary>
@@ -79,8 +85,10 @@ public partial class SplashWindow
     /// </summary>
     private void OnButtonSplashHintNextClicked(Button sender, EventArgs args)
     {
-        // TODO: Call the C function on_button_splash_hint_next_clicked (which updates the hint counter and shows the hint).
-        throw new NotImplementedException();
+        Variables.Counters[(int)Counters.CountHintNumber] =
+            (Variables.Counters[(int)Counters.CountHintNumber] + 1) % Variables.Hints.List.Count;
+
+        Window.WindowSplashShowHint();
     }
 
     /// <summary>
@@ -90,8 +98,12 @@ public partial class SplashWindow
     /// </summary>
     private void OnButtonSplashNewGameClicked(Button sender, EventArgs args)
     {
-        // TODO: Call the C function on_button_splash_new_game_clicked (which destroys the splash window and shows the startup window).
-        throw new NotImplementedException();
+        Gtk.Widget? splash = Variables.Window.Splash;
+        Window.WindowDestroy(ref splash);
+        Variables.Window.Splash = splash;
+
+        Window.WindowShowStartup();
+        Bygfoot.Stat0 = (int)Status0Value.StatusTeamSelection;
     }
 
     /// <summary>
@@ -101,8 +113,8 @@ public partial class SplashWindow
     /// </summary>
     private void OnButtonSplashLoadGameClicked(Button sender, EventArgs args)
     {
-        // TODO: Call the C function on_button_splash_load_game_clicked (which shows the file chooser window).
-        throw new NotImplementedException();
+        Bygfoot.Stat5 = (int)Status0Value.StatusLoadGameSplash;
+        Window.WindowShowFileSel();
     }
 
     /// <summary>
@@ -112,8 +124,7 @@ public partial class SplashWindow
     /// </summary>
     private void OnButtonSplashResumeGameClicked(Button sender, EventArgs args)
     {
-        // TODO: Call the C function on_button_splash_resume_game_clicked (which resumes the last game).
-        throw new NotImplementedException();
+        // TODO: misc_callback_startup_load("last_save") (src/misc_callback_func.c not yet converted).
     }
 
     /// <summary>
@@ -123,7 +134,9 @@ public partial class SplashWindow
     /// </summary>
     private void OnButtonSplashQuitClicked(Button sender, EventArgs args)
     {
-        // TODO: Call the C function on_button_splash_quit_clicked (which destroys the splash window and exits the program).
-        throw new NotImplementedException();
+        Gtk.Widget? splash = Variables.Window.Splash;
+        Window.WindowDestroy(ref splash);
+        Variables.Window.Splash = splash;
+        Main.MainExitProgram(Bygfoot.ExitCode.Ok, null);
     }
 }
