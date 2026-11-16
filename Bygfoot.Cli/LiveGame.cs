@@ -191,8 +191,43 @@ public class LiveGame
     /// <param name="liveGame">The live game used for calculation.</param>
     public static void CalculateFixture(Fixture fix, LiveGame liveGame)
     {
-        // Implementation depends on the not yet converted game and lg_commentary functions.
-        throw new NotImplementedException();
+        Variables.Statp = liveGame;
+
+        if (Bygfoot.Stat0 != (int)Status0Value.StatusLiveGamePause &&
+            Bygfoot.Stat0 != (int)Status0Value.StatusLiveGameChange)
+            Initialize(fix, liveGame);
+        else
+            Bygfoot.Stat0 = (int)Status0Value.StatusShowLiveGame;
+
+        Team tm0 = liveGame.Fix.Teams[0];
+        Team tm1 = liveGame.Fix.Teams[1];
+
+        UpdateTeamValues(liveGame);
+
+        if ((Variables.DebugLevel > 80 && Bygfoot.Stat2 != -1) ||
+            Variables.DebugLevel > 130)
+            Debug.DebugPrintMessage("\n\nlive_game_calculate_fixture\n{0:0000} {1} {2} {3:0000}\n\n",
+                tm0.Id, tm0.Name, tm1.Name, tm1.Id);
+
+        do
+        {
+            CreateUnit(liveGame);
+            EvaluateUnit(liveGame, liveGame.Units[liveGame.Units.Count - 1]);
+        }
+        while (liveGame.Units[liveGame.Units.Count - 1].Event.Type != (int)LiveGameEventType.EndMatch &&
+            Bygfoot.Stat0 != (int)Status0Value.StatusLiveGamePause &&
+            Bygfoot.Stat0 != (int)Status0Value.StatusLiveGameChange);
+
+        if (liveGame.Units[liveGame.Units.Count - 1].Event.Type == (int)LiveGameEventType.EndMatch)
+        {
+            if (Bygfoot.Stat2 != -1 || Bygfoot.Stat5 < -1000)
+                LgCommentary.FreeTokens();
+
+            Game.PostMatch(fix);
+            Bygfoot.Stat0 = (int)Status0Value.StatusNone;
+        }
+        else if (Bygfoot.Stat0 == (int)Status0Value.StatusLiveGameChange)
+            Resume();
     }
 
     /// <summary>
@@ -256,8 +291,1172 @@ public class LiveGame
     /// <param name="liveGame">The live game.</param>
     public static void Initialize(Fixture fix, LiveGame liveGame)
     {
-        // Implementation depends on the not yet converted user, window, game and lg_commentary functions.
-        throw new NotImplementedException();
+        Bygfoot.Stat2 = Fixture.UserTeamInvolved(fix);
+        Variables.Statp = liveGame;
+        show = Bygfoot.Stat2 != -1 &&
+            Variables.Users[Bygfoot.Stat2].Options.GetInt("int_opt_user_show_live_game") != 0;
+
+        Reset(liveGame, fix, Bygfoot.Stat2 != -1);
+
+        if (show)
+        {
+            Variables.CurUser = Bygfoot.Stat2;
+            // C: on_button_back_to_main_clicked(NULL, NULL); (GUI, not yet converted).
+
+            if (Variables.Window.Live == null)
+            {
+                Window.WindowCreate(WindowsType.Live);
+                // WindowCreate calls WindowLiveSetUp internally.
+            }
+            else
+            {
+                (Variables.Window.Live as Gtk.Window)?.Title =
+                    League.LeagueCupGetNameString(liveGame.Fix.Clid);
+                Window.WindowLiveSetUp();
+            }
+
+            // C: game_gui_live_game_show_opponent(); (src/game_gui.c not yet converted).
+        }
+
+        fix.LiveGame = liveGame;
+        Game.Initialize(fix);
+        liveGame.Attendance = fix.Attendance;
+
+        if (Bygfoot.Stat2 != -1 || Bygfoot.Stat5 < -1000)
+            LgCommentary.Initialize(fix);
+    }
+
+    /// <summary>
+    /// Whether the events of the current live game are actually shown.
+    /// Corresponds to the C global variable show in src/live_game.c.
+    /// </summary>
+    private static bool show;
+
+    /// <summary>
+    /// Compute the attacking/defending values of both teams and store
+    /// them in the live game variable.
+    /// Corresponds to the game_get_values call in live_game.c.
+    /// </summary>
+    private static void UpdateTeamValues(LiveGame liveGame)
+    {
+        float[,] teamValues = new float[2, (int)GameTeamValue.End];
+        Game.GetValues(liveGame.Fix, teamValues, liveGame.HomeAdvantage);
+        for (int i = 0; i < 2; i++)
+            for (int j = 0; j < (int)GameTeamValue.End; j++)
+                liveGame.TeamValues[i * (int)GameTeamValue.End + j] = (int)teamValues[i, j];
+    }
+
+    /// <summary>
+    /// Deep copy of a live game unit (the C original copies the struct by value).
+    /// </summary>
+    private static LiveGameUnit CopyUnit(LiveGameUnit unit)
+    {
+        return new LiveGameUnit
+        {
+            Possession = unit.Possession,
+            Area = unit.Area,
+            Minute = unit.Minute,
+            Time = unit.Time,
+            Result = new[] { unit.Result[0], unit.Result[1] },
+            Event = new LiveGameEvent
+            {
+                Type = unit.Event.Type,
+                Verbosity = unit.Event.Verbosity,
+                Team = unit.Event.Team,
+                Player = unit.Event.Player,
+                Player2 = unit.Event.Player2,
+                Commentary = unit.Event.Commentary,
+                CommentaryId = unit.Event.CommentaryId
+            }
+        };
+    }
+
+    /// <summary>
+    /// Stop the live game so that users can make subs etc.
+    /// Corresponds to C: misc_callback_pause_live_game (src/misc_callback_func.c).
+    /// </summary>
+    private static void PauseLiveGame()
+    {
+        if (Bygfoot.Stat1 == (int)Status0Value.StatusShowLastMatch)
+        {
+            Bygfoot.Stat4 = (int)Status0Value.StatusShowLastMatchPause;
+            return;
+        }
+
+        LiveGame liveGame = Variables.Users[Bygfoot.Stat2].LiveGame;
+
+        if (liveGame.Units[liveGame.Units.Count - 1].Event.Type == (int)LiveGameEventType.EndMatch)
+            return;
+
+        // C: gtk_widget_set_sensitive(lookup_widget(window.live, "button_pause"), FALSE);
+        // C: gtk_widget_set_sensitive(lookup_widget(window.live, "button_resume"), TRUE);
+        // C: gtk_widget_grab_focus(button_resume);
+        // C: game_gui_set_main_window_sensitivity(TRUE); (src/game_gui.c not yet converted).
+        // C: if (stat2 == cur_user) treeview_show_user_player_list(); (GUI not yet converted).
+
+        Game.SaveTeamStates();
+
+        Bygfoot.Stat0 = (int)Status0Value.StatusLiveGamePause;
+    }
+
+    /// <summary>
+    /// Create a game unit for the live game.
+    /// Corresponds to C: live_game_create_unit.
+    /// </summary>
+    public static void CreateUnit(LiveGame liveGame)
+    {
+        if (liveGame.Units.Count == 0)
+        {
+            CreateStartUnit(liveGame);
+            return;
+        }
+
+        LiveGameUnit lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+
+        if (lastUnit.Event.Type == (int)LiveGameEventType.EndMatch)
+        {
+            Debug.DebugPrintMessage("live_game_create_unit: called after end of match.");
+            return;
+        }
+
+        LiveGameUnit newUnit = new LiveGameUnit
+        {
+            Minute = GetMinute(liveGame),
+            Time = GetTime(lastUnit),
+            Area = lastUnit.Area,
+            Result = new[] { lastUnit.Result[0], lastUnit.Result[1] },
+            Event = new LiveGameEvent
+            {
+                Team = -1,
+                Player = -1,
+                Player2 = -1
+            }
+        };
+
+        if (lastUnit.Event.Type == (int)LiveGameEventType.HalfTime ||
+            lastUnit.Event.Type == (int)LiveGameEventType.ExtraTime)
+        {
+            EventGeneral(liveGame, true);
+            return;
+        }
+        else if (QueryLiveGameEventIsBreak(liveGame, newUnit.Minute, newUnit.Time))
+        {
+            newUnit.Event.Type = GetBreak(liveGame);
+            newUnit.Possession = lastUnit.Possession;
+            liveGame.Units.Add(newUnit);
+            return;
+        }
+        else if (newUnit.Time == (int)LiveGameUnitTime.Penalties)
+            newUnit.Event.Type = (int)LiveGameEventType.Penalties;
+        else
+            FillNewUnit(liveGame, newUnit);
+
+        liveGame.Units.Add(newUnit);
+    }
+
+    /// <summary>
+    /// Fill in a new unit depending on the team values and the constants from above.
+    /// Corresponds to C: live_game_fill_new_unit.
+    /// </summary>
+    public static void FillNewUnit(LiveGame liveGame, LiveGameUnit newUnit)
+    {
+        LiveGameUnit lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+        Team tm0 = liveGame.Fix.Teams[0];
+        Team tm1 = liveGame.Fix.Teams[1];
+        float rndom = (float)MathHelper.Rnd(0, 1);
+        float stadiumEvent =
+            1 - (float)Math.Pow(tm0.Stadium.Safety,
+                OptionHelper.ConstFloat("float_live_game_stadium_event_exponent"));
+        float possessionChange, scoringChance = 0, injuryEventProb, foulEventProb;
+
+        possessionChange = OptionHelper.ConstFloat("float_live_game_event_general") *
+            OptionHelper.ConstFloat("float_live_game_possession_changes") /
+            PitTeams(liveGame, lastUnit, OptionHelper.ConstFloat("float_live_game_possession_team_exponent"));
+
+        injuryEventProb = OptionHelper.ConstFloat("float_live_game_injury") *
+            (1 + (OptionHelper.ConstFloat("float_player_boost_injury_effect") *
+            ((tm0.Boost != 0 || tm1.Boost != 0) ? 1f : 0f)));
+
+        newUnit.Possession = lastUnit.Possession;
+
+        if (lastUnit.Event.Type == (int)LiveGameEventType.General)
+            newUnit.Area = GetArea(liveGame, newUnit);
+
+        if (newUnit.Area == (int)LiveGameUnitArea.Attack)
+            scoringChance = OptionHelper.ConstFloat("float_live_game_scoring_chance") *
+                PitTeams(liveGame, newUnit, OptionHelper.ConstFloat("float_live_game_scoring_chance_team_exponent"));
+
+        foulEventProb = Game.GetFoulProb(liveGame, newUnit);
+
+        if (rndom < foulEventProb)
+            newUnit.Event.Type = (int)LiveGameEventType.Foul;
+        else if (rndom < foulEventProb + injuryEventProb)
+            newUnit.Event.Type = (int)LiveGameEventType.Injury;
+        else if (rndom < foulEventProb + injuryEventProb + stadiumEvent &&
+            liveGame.StadiumEvent == -1)
+            newUnit.Event.Type = (int)LiveGameEventType.Stadium;
+        else if (rndom < foulEventProb + injuryEventProb + stadiumEvent + possessionChange)
+        {
+            newUnit.Event.Type = (int)LiveGameEventType.LostPossession;
+            newUnit.Possession = 1 - lastUnit.Possession;
+            if (newUnit.Area == (int)LiveGameUnitArea.Attack)
+                newUnit.Area = (int)LiveGameUnitArea.Defend;
+            else if (newUnit.Area == (int)LiveGameUnitArea.Defend)
+                newUnit.Area = (int)LiveGameUnitArea.Attack;
+        }
+        else if (rndom < foulEventProb + injuryEventProb + stadiumEvent + possessionChange + scoringChance)
+            newUnit.Event.Type = (int)LiveGameEventType.ScoringChance;
+        else
+            newUnit.Event.Type = (int)LiveGameEventType.General;
+    }
+
+    /// <summary>
+    /// Create the first unit of a match.
+    /// Corresponds to C: live_game_create_start_unit.
+    /// </summary>
+    public static void CreateStartUnit(LiveGame liveGame)
+    {
+        LiveGameUnit newUnit = new LiveGameUnit
+        {
+            Minute = 0,
+            Time = (int)LiveGameUnitTime.FirstHalf,
+            Possession = Misc.MathRndi(0, 1),
+            Area = (int)LiveGameUnitArea.Midfield,
+            Result = new[] { 0, 0 },
+            Event = new LiveGameEvent
+            {
+                Type = (int)LiveGameEventType.StartMatch,
+                Team = 0,
+                Player = -1,
+                Player2 = -1
+            }
+        };
+
+        newUnit.Event.Team = newUnit.Possession;
+        liveGame.StartedGame = newUnit.Possession;
+
+        liveGame.Units.Add(newUnit);
+    }
+
+    /// <summary>
+    /// Evaluate a live game unit. This means we find out what happens
+    /// after the unit, depending on its type.
+    /// Corresponds to C: live_game_evaluate_unit.
+    /// </summary>
+    public static void EvaluateUnit(LiveGame liveGame, LiveGameUnit unit)
+    {
+        int type = unit.Event.Type;
+
+        if (type == (int)LiveGameEventType.Foul)
+            EventFoul(liveGame);
+        else if (type == (int)LiveGameEventType.LostPossession)
+            EventLostPossession(liveGame);
+        else if (type == (int)LiveGameEventType.Injury)
+            EventInjury(liveGame, -1, -1, false);
+        else if (type == (int)LiveGameEventType.Stadium)
+            EventStadium(liveGame);
+        else if (type == (int)LiveGameEventType.ScoringChance)
+            EventScoringChance(liveGame);
+        else if (type == (int)LiveGameEventType.Penalty)
+            EventPenalty(liveGame);
+        else if (type == (int)LiveGameEventType.General)
+            EventGeneral(liveGame, false);
+        else if (type == (int)LiveGameEventType.StartMatch)
+            FinishUnit(liveGame);
+        else if (type == (int)LiveGameEventType.HalfTime ||
+            type == (int)LiveGameEventType.ExtraTime ||
+            type == (int)LiveGameEventType.Penalties ||
+            type == (int)LiveGameEventType.EndMatch)
+        {
+            FinishUnit(liveGame);
+            if (type != (int)LiveGameEventType.EndMatch && show &&
+                Variables.Users[Bygfoot.Stat2].Options.GetInt("int_opt_user_pause_break") != 0)
+                PauseLiveGame();
+        }
+        else if (type != (int)LiveGameEventType.EndMatch)
+            Debug.DebugPrintMessage("live_game_evaluate_unit: unknown event type {0}", type);
+    }
+
+    /// <summary>
+    /// Calculate a foul event.
+    /// Corresponds to C: live_game_event_foul.
+    /// </summary>
+    public static void EventFoul(LiveGame liveGame)
+    {
+        LiveGameUnit lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+        Team[] tms = { liveGame.Fix.Teams[0], liveGame.Fix.Teams[1] };
+        float rndom = (float)MathHelper.Rnd(0, 1);
+        float reductionFactor = 1;
+        int type, fouledPlayer, foulPlayer, foulTeam;
+
+        if ((float)MathHelper.Rnd(0, 1) > OptionHelper.ConstFloat("float_live_game_foul_by_possession") *
+            Game.GetFoulPossessionFactor(tms[lastUnit.Possession].Boost, tms[1 - lastUnit.Possession].Boost))
+        {
+            foulTeam = lastUnit.Event.Team = 1 - lastUnit.Possession;
+            if (liveGame.Units[liveGame.Units.Count - 2].Event.Type == (int)LiveGameEventType.General)
+                fouledPlayer = lastUnit.Event.Player =
+                    liveGame.Units[liveGame.Units.Count - 2].Event.Player;
+            else
+                fouledPlayer = lastUnit.Event.Player =
+                    Game.GetPlayer(tms[lastUnit.Possession], lastUnit.Area, 0, -1, false);
+
+            foulPlayer = lastUnit.Event.Player2 =
+                Game.GetPlayer(tms[1 - lastUnit.Possession], lastUnit.Area, 0, -1, false);
+        }
+        else
+        {
+            foulTeam = lastUnit.Event.Team = lastUnit.Possession;
+            fouledPlayer = lastUnit.Event.Player =
+                Game.GetPlayer(tms[1 - lastUnit.Possession], lastUnit.Area, 0, -1, false);
+            foulPlayer = lastUnit.Event.Player2 =
+                Game.GetPlayer(tms[lastUnit.Possession], lastUnit.Area, 0, -1, false);
+        }
+
+        /* Probability of hard foul gets reduced if the player is already booked, except when boost is on. */
+        if (tms[foulTeam].Boost != 1 &&
+            Player.OfIdTeam(tms[foulTeam], foulPlayer).CardStatus == PlayerCardStatus.Yellow)
+            reductionFactor = 1 - OptionHelper.ConstFloat("float_live_game_foul_booked_reduction");
+
+        if (rndom < OptionHelper.ConstFloat("float_live_game_foul_red_injury") * reductionFactor)
+            type = (int)LiveGameEventType.FoulRedInjury;
+        else if (rndom < OptionHelper.ConstFloat("float_live_game_foul_red") * reductionFactor)
+            type = (int)LiveGameEventType.FoulRed;
+        else if (rndom < OptionHelper.ConstFloat("float_live_game_foul_yellow") * reductionFactor)
+        {
+            type = (int)LiveGameEventType.FoulYellow;
+            Player pl = Player.OfIdTeam(tms[foulTeam], foulPlayer);
+            Player.CardSet(pl, liveGame.Fix.Clid, (int)PlayerValue.CardYellow, 1, true);
+            pl.Career[(int)PlayerValue.CardYellow]++;
+            pl.CardStatus = PlayerCardStatus.Yellow;
+        }
+        else
+            type = (int)LiveGameEventType.Foul;
+
+        lastUnit.Event.Type = type;
+
+        FinishUnit(liveGame);
+
+        if (type == (int)LiveGameEventType.FoulRed ||
+            type == (int)LiveGameEventType.FoulRedInjury ||
+            (type == (int)LiveGameEventType.FoulYellow &&
+             QueryLiveGameSecondYellow(liveGame, foulTeam, foulPlayer)))
+        {
+            EventSendOff(liveGame, foulTeam, foulPlayer,
+                QueryLiveGameSecondYellow(liveGame, foulTeam, foulPlayer));
+            if (type == (int)LiveGameEventType.FoulRedInjury)
+                EventInjury(liveGame, 1 - foulTeam, fouledPlayer, true);
+            Player.OfIdTeam(tms[foulTeam], foulPlayer).CardStatus = PlayerCardStatus.Red;
+        }
+
+        /* In C, the last_unit macro re-resolves to the current last unit
+           after the send-off/injury events possibly appended units. */
+        lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+
+        if (lastUnit.Area == (int)LiveGameUnitArea.Attack && foulTeam != lastUnit.Possession)
+        {
+            rndom = (float)MathHelper.Rnd(0, 1);
+            if (rndom < OptionHelper.ConstFloat("float_live_game_penalty_prob"))
+                EventPenalty(liveGame);
+            else if (rndom < OptionHelper.ConstFloat("float_live_game_free_kick_prob"))
+                EventFreeKick(liveGame);
+            else
+                lastUnit.Possession = 1 - foulTeam;
+        }
+        else
+            lastUnit.Possession = 1 - foulTeam;
+    }
+
+    /// <summary>
+    /// Calculate a lost possession event.
+    /// Corresponds to C: live_game_event_lost_possession.
+    /// </summary>
+    public static void EventLostPossession(LiveGame liveGame)
+    {
+        LiveGameUnit lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+        Team[] tms = { liveGame.Fix.Teams[0], liveGame.Fix.Teams[1] };
+
+        lastUnit.Event.Player =
+            Game.GetPlayer(tms[lastUnit.Possession], lastUnit.Area, 0, -1, true);
+
+        if (liveGame.Units[liveGame.Units.Count - 2].Event.Type == (int)LiveGameEventType.General)
+            lastUnit.Event.Player2 =
+                liveGame.Units[liveGame.Units.Count - 2].Event.Player;
+        else
+            lastUnit.Event.Player2 =
+                Game.GetPlayer(tms[1 - lastUnit.Possession],
+                    liveGame.Units[liveGame.Units.Count - 2].Area, 0, -1, false);
+
+        FinishUnit(liveGame);
+
+        EventGeneral(liveGame, true);
+    }
+
+    /// <summary>
+    /// Calculate an injury event.
+    /// Corresponds to C: live_game_event_injury.
+    /// </summary>
+    /// <param name="liveGame">The live game.</param>
+    /// <param name="team">The team the player is from.</param>
+    /// <param name="player">The player that's injured, or -1 if we have to choose a random one.</param>
+    /// <param name="createNew">Whether to put the event into a new unit instead of the last one.</param>
+    public static void EventInjury(LiveGame liveGame, int team, int player, bool createNew)
+    {
+        LiveGameUnit lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+        Team[] tms = { liveGame.Fix.Teams[0], liveGame.Fix.Teams[1] };
+        int oldStructure = -1, subIn = -1;
+        int usrIdx = -1;
+
+        if (createNew)
+        {
+            LiveGameUnit newUnit = CopyUnit(lastUnit);
+            newUnit.Event.Commentary = null;
+            liveGame.Units.Add(newUnit);
+
+            // In C, the last_unit macro re-resolves to the newly appended unit.
+            lastUnit = newUnit;
+
+            lastUnit.Event.Player = player;
+            lastUnit.Event.Team = team;
+        }
+        else
+            InjuryGetPlayer(liveGame);
+
+        usrIdx = Team.IsUser(tms[lastUnit.Event.Team]);
+
+        lastUnit.Minute = -1;
+        lastUnit.Event.Type = (int)LiveGameEventType.Injury;
+
+        if ((float)MathHelper.Rnd(0, 1) < OptionHelper.ConstFloat("float_live_game_injury_is_temp"))
+        {
+            lastUnit.Event.Type = (int)LiveGameEventType.TempInjury;
+
+            if (Variables.DebugLevel < 50 ||
+                usrIdx == -1)
+            {
+                Player pl = Player.OfIdTeam(tms[lastUnit.Event.Team], lastUnit.Event.Player);
+                pl.Fitness = Math.Max(0, pl.Fitness -
+                    (float)MathHelper.Rnd(
+                        OptionHelper.ConstFloat("float_live_game_temp_injury_fitness_decrease_lower"),
+                        OptionHelper.ConstFloat("float_live_game_temp_injury_fitness_decrease_upper")));
+            }
+        }
+
+        FinishUnit(liveGame);
+
+        if (Variables.DebugLevel >= 50 &&
+            usrIdx != -1)
+            return;
+
+        if (lastUnit.Event.Type == (int)LiveGameEventType.Injury)
+        {
+            Team tm = tms[lastUnit.Event.Team];
+            Game.PlayerInjury(Player.OfIdTeam(tm, lastUnit.Event.Player));
+
+            if (liveGame.SubsLeft[lastUnit.Event.Team] > 0)
+            {
+                if (show &&
+                    usrIdx != -1 &&
+                    ((Variables.Users[usrIdx].Options.GetInt("int_opt_user_pause_injury") != 0 &&
+                      Variables.Users[usrIdx].Options.GetInt("int_opt_user_auto_sub") == 0) ||
+                     tm.Players.Count == 11))
+                    PauseLiveGame();
+                else if (tm.Players.Count > 11)
+                {
+                    subIn = Game.SubstitutePlayer(tm,
+                        Player.IdIndex(tm, lastUnit.Event.Player, true));
+                    if (subIn != -1)
+                    {
+                        oldStructure = tm.Structure;
+                        EventSubstitution(liveGame, lastUnit.Event.Team, subIn,
+                            lastUnit.Event.Player);
+
+                        if (oldStructure != tm.Structure)
+                            EventTeamChange(liveGame, lastUnit.Event.Team,
+                                (int)LiveGameEventType.StructureChange);
+                    }
+                }
+            }
+        }
+
+        UpdateTeamValues(liveGame);
+    }
+
+    /// <summary>
+    /// Calculate a stadium event.
+    /// Corresponds to C: live_game_event_stadium.
+    /// </summary>
+    public static void EventStadium(LiveGame liveGame)
+    {
+        LiveGameUnit lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+        Team tm0 = liveGame.Fix.Teams[0];
+        float rndom = (float)MathHelper.Rnd(0, 1);
+        float[] probs =
+        {
+            OptionHelper.ConstFloat("float_live_game_stadium_event_breakdown"),
+            OptionHelper.ConstFloat("float_live_game_stadium_event_riots"),
+            OptionHelper.ConstFloat("float_live_game_stadium_event_fire")
+        };
+
+        for (int i = 1; i < 3; i++)
+            probs[i] += probs[i - 1];
+
+        if (rndom <= probs[0])
+            lastUnit.Event.Type = (int)LiveGameEventType.StadiumBreakdown;
+        else if (rndom <= probs[1])
+            lastUnit.Event.Type = (int)LiveGameEventType.StadiumRiots;
+        else if (rndom <= probs[2])
+            lastUnit.Event.Type = (int)LiveGameEventType.StadiumFire;
+
+        FinishUnit(liveGame);
+
+        if (Team.IsUser(tm0) != -1 && Variables.DebugLevel < 50)
+            Game.StadiumEvent(tm0.Stadium, lastUnit.Event.Type);
+
+        liveGame.StadiumEvent = lastUnit.Event.Type;
+
+        EventGeneral(liveGame, true);
+    }
+
+    /// <summary>
+    /// Calculate a scoring chance event.
+    /// Corresponds to C: live_game_event_scoring_chance.
+    /// </summary>
+    public static void EventScoringChance(LiveGame liveGame)
+    {
+        LiveGameUnit lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+        LiveGameUnit prevUnit = liveGame.Units[liveGame.Units.Count - 2];
+        Team[] tms = { liveGame.Fix.Teams[0], liveGame.Fix.Teams[1] };
+        int resIdx = (lastUnit.Time == (int)LiveGameUnitTime.ExtraTime) ? 1 : 0;
+
+        if ((float)MathHelper.Rnd(0, 1) < OptionHelper.ConstFloat("float_live_game_scoring_chance_is_own_goal"))
+        {
+            lastUnit.Event.Type = (int)LiveGameEventType.OwnGoal;
+            lastUnit.Event.Player =
+                Game.GetPlayer(tms[1 - lastUnit.Possession], (int)GamePlayerType.Defend, 0, -1, false);
+            lastUnit.Event.Team = 1 - lastUnit.Possession;
+            liveGame.Fix.Result[lastUnit.Possession, resIdx]++;
+            lastUnit.Result[lastUnit.Possession]++;
+
+            Player.StreakAddToProb(Player.OfIdTeam(tms[lastUnit.Event.Team],
+                lastUnit.Event.Player),
+                OptionHelper.ConstFloat("float_player_streak_add_own_goal"));
+        }
+        else
+        {
+            lastUnit.Event.Team = lastUnit.Possession;
+
+            if (prevUnit.Event.Player != -1 &&
+                (float)MathHelper.Rnd(0, 1) < OptionHelper.ConstFloat("float_live_game_player_in_poss_shoots") &&
+                Player.QueryIdInTeam(prevUnit.Event.Player, tms[lastUnit.Possession]))
+                lastUnit.Event.Player = prevUnit.Event.Player;
+            else
+            {
+                if (prevUnit.Event.Player != -1 &&
+                    Player.QueryIdInTeam(prevUnit.Event.Player, tms[lastUnit.Possession]))
+                {
+                    lastUnit.Event.Player =
+                        Game.GetPlayer(tms[lastUnit.Possession], lastUnit.Area, 0,
+                            prevUnit.Event.Player, true);
+                    lastUnit.Event.Player2 = prevUnit.Event.Player;
+                }
+                else
+                {
+                    lastUnit.Event.Player =
+                        Game.GetPlayer(tms[lastUnit.Possession], lastUnit.Area, 0, -1, true);
+                    lastUnit.Event.Player2 =
+                        Game.GetPlayer(tms[lastUnit.Possession], lastUnit.Area, 0,
+                            lastUnit.Event.Player, true);
+                }
+            }
+
+            if ((float)MathHelper.Rnd(0, 1) < OptionHelper.ConstFloat("float_live_game_scoring_chance_is_header"))
+                lastUnit.Event.Type = (int)LiveGameEventType.Header;
+        }
+
+        FinishUnit(liveGame);
+
+        if (lastUnit.Event.Type != (int)LiveGameEventType.OwnGoal)
+            EventDuel(liveGame);
+        else
+            EventGeneral(liveGame, true);
+    }
+
+    /// <summary>
+    /// Calculate a penalty event.
+    /// Corresponds to C: live_game_event_penalty.
+    /// </summary>
+    public static void EventPenalty(LiveGame liveGame)
+    {
+        LiveGameUnit lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+
+        if (lastUnit.Time != (int)LiveGameUnitTime.Penalties)
+        {
+            LiveGameUnit newUnit = CopyUnit(lastUnit);
+            newUnit.Event.Commentary = null;
+            newUnit.Minute = -1;
+            newUnit.Event.Type = (int)LiveGameEventType.Penalty;
+
+            liveGame.Units.Add(newUnit);
+
+            // In C, the last_unit macro re-resolves to the newly appended unit.
+            lastUnit = newUnit;
+        }
+
+        lastUnit.Event.Player2 = -1;
+        lastUnit.Event.Team = -1;
+
+        if (lastUnit.Time == (int)LiveGameUnitTime.Penalties)
+        {
+            if (PenaltiesTaken(liveGame) == 1)
+            {
+                lastUnit.Possession = Misc.MathRndi(0, 1);
+                lastUnit.Event.Player =
+                    Game.GetPlayer(liveGame.Fix.Teams[lastUnit.Possession],
+                        (int)GamePlayerType.Penalty, -1, -1, false);
+            }
+            else if (PenaltiesTaken(liveGame) == 2)
+            {
+                lastUnit.Possession = 1 - liveGame.Units[liveGame.Units.Count - 3].Possession;
+                lastUnit.Event.Player =
+                    Game.GetPlayer(liveGame.Fix.Teams[lastUnit.Possession],
+                        (int)GamePlayerType.Penalty, -1, -1, false);
+            }
+            else
+            {
+                lastUnit.Possession = 1 - liveGame.Units[liveGame.Units.Count - 3].Possession;
+                lastUnit.Event.Player =
+                    Game.GetPlayer(liveGame.Fix.Teams[lastUnit.Possession],
+                        (int)GamePlayerType.Penalty,
+                        liveGame.Units[liveGame.Units.Count - 4].Event.Player, -1, false);
+            }
+        }
+        else
+        {
+            lastUnit.Event.Team = lastUnit.Possession;
+
+            lastUnit.Event.Player =
+                Game.GetDefaultPenaltyShooter(liveGame.Fix.Teams[lastUnit.Possession]);
+            if (lastUnit.Event.Player == -1)
+                lastUnit.Event.Player =
+                    Game.GetPlayer(liveGame.Fix.Teams[lastUnit.Possession],
+                        (int)GamePlayerType.Penalty, -1, -1, false);
+        }
+
+        FinishUnit(liveGame);
+
+        EventDuel(liveGame);
+    }
+
+    /// <summary>
+    /// Calculate a general event.
+    /// Corresponds to C: live_game_event_general.
+    /// </summary>
+    /// <param name="liveGame">The live game.</param>
+    /// <param name="createNew">Whether we create a new unit for the event.</param>
+    public static void EventGeneral(LiveGame liveGame, bool createNew)
+    {
+        LiveGameUnit lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+        Team[] tms = { liveGame.Fix.Teams[0], liveGame.Fix.Teams[1] };
+
+        if (createNew && Bygfoot.Stat0 == (int)Status0Value.StatusLiveGamePause)
+            return;
+
+        if (createNew)
+        {
+            LiveGameUnit newUnit = new LiveGameUnit
+            {
+                Minute = GetMinute(liveGame),
+                Time = lastUnit.Time,
+                Result = new[] { lastUnit.Result[0], lastUnit.Result[1] },
+                Event = new LiveGameEvent
+                {
+                    Type = (int)LiveGameEventType.General,
+                    Team = -1
+                }
+            };
+
+            if (lastUnit.Event.Type == (int)LiveGameEventType.General ||
+                lastUnit.Event.Type == (int)LiveGameEventType.StartMatch ||
+                lastUnit.Event.Type == (int)LiveGameEventType.LostPossession ||
+                lastUnit.Event.Type == (int)LiveGameEventType.Foul ||
+                lastUnit.Event.Type == (int)LiveGameEventType.FoulYellow ||
+                lastUnit.Event.Type == (int)LiveGameEventType.SendOff ||
+                lastUnit.Event.Type == (int)LiveGameEventType.Injury ||
+                lastUnit.Event.Type == (int)LiveGameEventType.TempInjury ||
+                lastUnit.Event.Type == (int)LiveGameEventType.Stadium ||
+                lastUnit.Event.Type == (int)LiveGameEventType.StadiumBreakdown ||
+                lastUnit.Event.Type == (int)LiveGameEventType.StadiumFire ||
+                lastUnit.Event.Type == (int)LiveGameEventType.StadiumRiots ||
+                (lastUnit.Event.Type >= (int)LiveGameEventType.StructureChange &&
+                 lastUnit.Event.Type <= (int)LiveGameEventType.BoostChangeOn) ||
+                ((lastUnit.Event.Type == (int)LiveGameEventType.Post ||
+                  lastUnit.Event.Type == (int)LiveGameEventType.CrossBar) &&
+                 (float)MathHelper.Rnd(0, 1) < OptionHelper.ConstFloat("float_live_game_possession_after_post")))
+            {
+                newUnit.Possession = lastUnit.Possession;
+                newUnit.Area = (lastUnit.Event.Type == (int)LiveGameEventType.General) ?
+                    GetArea(liveGame, lastUnit) : lastUnit.Area;
+            }
+            else if (lastUnit.Event.Type == (int)LiveGameEventType.Goal ||
+                lastUnit.Event.Type == (int)LiveGameEventType.OwnGoal ||
+                lastUnit.Event.Type == (int)LiveGameEventType.Miss ||
+                lastUnit.Event.Type == (int)LiveGameEventType.Save ||
+                lastUnit.Event.Type == (int)LiveGameEventType.Post ||
+                lastUnit.Event.Type == (int)LiveGameEventType.CornerKick ||
+                lastUnit.Event.Type == (int)LiveGameEventType.CrossBar)
+            {
+                newUnit.Possession = 1 - lastUnit.Possession;
+                if (lastUnit.Event.Type == (int)LiveGameEventType.Goal ||
+                    lastUnit.Event.Type == (int)LiveGameEventType.OwnGoal)
+                    newUnit.Area = (int)LiveGameUnitArea.Midfield;
+                else
+                    newUnit.Area = (int)LiveGameUnitArea.Defend;
+            }
+            else if (lastUnit.Event.Type == (int)LiveGameEventType.HalfTime)
+            {
+                newUnit.Possession = 1 - liveGame.StartedGame;
+                newUnit.Time = (int)LiveGameUnitTime.SecondHalf;
+                newUnit.Area = (int)LiveGameUnitArea.Midfield;
+            }
+            else if (lastUnit.Event.Type == (int)LiveGameEventType.ExtraTime)
+            {
+                newUnit.Possession = Misc.MathRndi(0, 1);
+                newUnit.Time = (int)LiveGameUnitTime.ExtraTime;
+                newUnit.Area = (int)LiveGameUnitArea.Midfield;
+            }
+            else
+                Main.MainExitProgram(Bygfoot.ExitCode.IntNotFound,
+                    "live_game_event_general: unknown event type: {0}", lastUnit.Event.Type);
+
+            liveGame.Units.Add(newUnit);
+        }
+
+        EventGeneralGetPlayers(liveGame);
+
+        FinishUnit(liveGame);
+
+        /* First, check whether CPU strategy changes are made. */
+        if (Team.IsUser(tms[0]) == -1)
+            Strategy.LiveGameCheck(liveGame, 0);
+
+        if (Team.IsUser(tms[1]) == -1)
+            Strategy.LiveGameCheck(liveGame, 1);
+
+        /* In C, the last_unit macro re-resolves to the current last unit
+           after the strategy checks possibly appended team-change units. */
+        LiveGameUnit finalUnit = liveGame.Units[liveGame.Units.Count - 1];
+
+        if (finalUnit.Event.Type >= (int)LiveGameEventType.StructureChange &&
+            finalUnit.Event.Type <= (int)LiveGameEventType.BoostChangeOn)
+            EventGeneral(liveGame, true);
+    }
+
+    /// <summary>
+    /// Fill in the players values in a general unit.
+    /// Corresponds to C: live_game_event_general_get_players.
+    /// </summary>
+    public static void EventGeneralGetPlayers(LiveGame liveGame)
+    {
+        LiveGameUnit lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+        int oldPl1 = liveGame.Units[liveGame.Units.Count - 2].Event.Player;
+        int type = liveGame.Units[liveGame.Units.Count - 2].Event.Type;
+
+        lastUnit.Event.Player = -1;
+        lastUnit.Event.Player2 = -1;
+
+        if (type == (int)LiveGameEventType.LostPossession)
+        {
+            lastUnit.Event.Player2 = oldPl1;
+            lastUnit.Event.Player = Game.GetPlayer(liveGame.Fix.Teams[lastUnit.Possession],
+                lastUnit.Area, 0, lastUnit.Event.Player2, true);
+        }
+        else if (type != (int)LiveGameEventType.General)
+        {
+            lastUnit.Event.Player = Game.GetPlayer(liveGame.Fix.Teams[lastUnit.Possession],
+                lastUnit.Area, 0, -1, true);
+            if ((float)MathHelper.Rnd(0, 1) < OptionHelper.ConstFloat("float_live_game_general_event_second_player"))
+                lastUnit.Event.Player2 = Game.GetPlayer(liveGame.Fix.Teams[lastUnit.Possession],
+                    lastUnit.Area, 0, lastUnit.Event.Player, true);
+        }
+        else
+        {
+            lastUnit.Event.Player2 = Player.QueryIdInTeam(oldPl1, liveGame.Fix.Teams[lastUnit.Possession]) ? oldPl1 : -1;
+            lastUnit.Event.Player = Game.GetPlayer(liveGame.Fix.Teams[lastUnit.Possession],
+                lastUnit.Area, 0, lastUnit.Event.Player2, true);
+        }
+    }
+
+    /// <summary>
+    /// Calculate a free kick event.
+    /// Corresponds to C: live_game_event_free_kick.
+    /// </summary>
+    public static void EventFreeKick(LiveGame liveGame)
+    {
+        LiveGameUnit newUnit = CopyUnit(liveGame.Units[liveGame.Units.Count - 1]);
+
+        newUnit.Event.Player = -1;
+        newUnit.Event.Player2 = -1;
+
+        newUnit.Minute = -1;
+
+        newUnit.Event.Type = (int)LiveGameEventType.FreeKick;
+        newUnit.Event.Team = newUnit.Possession;
+        newUnit.Event.Commentary = null;
+
+        newUnit.Event.Player =
+            Game.GetDefaultPenaltyShooter(liveGame.Fix.Teams[newUnit.Possession]);
+
+        if (newUnit.Event.Player == -1)
+            newUnit.Event.Player =
+                Game.GetPlayer(liveGame.Fix.Teams[newUnit.Possession], newUnit.Area, 0, -1, true);
+
+        liveGame.Units.Add(newUnit);
+
+        FinishUnit(liveGame);
+
+        EventDuel(liveGame);
+    }
+
+    /// <summary>
+    /// Calculate a send-off event.
+    /// Corresponds to C: live_game_event_send_off.
+    /// </summary>
+    public static void EventSendOff(LiveGame liveGame, int team, int player, bool secondYellow)
+    {
+        Team tm = liveGame.Fix.Teams[team];
+        LiveGameUnit newUnit = CopyUnit(liveGame.Units[liveGame.Units.Count - 1]);
+        int substitute = -1, toSubstitute = -1;
+        int usrIdx = Team.IsUser(tm);
+
+        newUnit.Event.Player = -1;
+        newUnit.Event.Player2 = -1;
+
+        newUnit.Minute = -1;
+
+        newUnit.Event.Type = (int)LiveGameEventType.SendOff;
+        newUnit.Event.Player = player;
+        newUnit.Event.Team = team;
+        newUnit.Event.Commentary = null;
+
+        liveGame.Units.Add(newUnit);
+
+        FinishUnit(liveGame);
+
+        if (Variables.DebugLevel >= 50 && usrIdx != -1)
+            return;
+
+        Player pl = Player.OfIdTeam(tm, player);
+        Player.StreakAddToProb(pl, OptionHelper.ConstFloat("float_player_streak_add_sendoff"));
+        if (pl.Streak == PlayerStreak.Hot)
+        {
+            pl.Streak = PlayerStreak.None;
+            Player.StreakResetCount(pl);
+        }
+
+        pl.Cskill = 0;
+
+        if (secondYellow)
+            Player.CardSet(pl, liveGame.Fix.Clid, (int)PlayerValue.CardRed, 2, false);
+        else
+            Player.CardSet(pl, liveGame.Fix.Clid, (int)PlayerValue.CardRed,
+                Game.GetPlayerBanDuration(), false);
+
+        pl.Career[(int)PlayerValue.CardRed]++;
+
+        if (usrIdx != -1)
+        {
+            tm.Structure = Team.FindAppropriateStructure(tm);
+            Team.Rearrange(tm);
+            EventTeamChange(liveGame, team, (int)LiveGameEventType.StructureChange);
+        }
+
+        if (liveGame.SubsLeft[team] > 0)
+        {
+            if (show && usrIdx != -1 &&
+                ((Variables.Users[usrIdx].Options.GetInt("int_opt_user_pause_red") != 0 &&
+                  Variables.Users[usrIdx].Options.GetInt("int_opt_user_auto_sub") == 0) ||
+                 tm.Players.Count == 1))
+                PauseLiveGame();
+            else if (tm.Players.Count > 11)
+            {
+                Game.SubstitutePlayerSendOff(liveGame.Fix.Clid, tm,
+                    Player.IdIndex(tm, player, true),
+                    out toSubstitute, out substitute);
+
+                if (toSubstitute != -1)
+                    EventSubstitution(liveGame, team, substitute, toSubstitute);
+                else
+                {
+                    tm.Structure = Team.FindAppropriateStructure(tm);
+                    Team.Rearrange(tm);
+                }
+                EventTeamChange(liveGame, team, (int)LiveGameEventType.StructureChange);
+            }
+        }
+        else if (usrIdx == -1)
+        {
+            tm.Structure = Team.FindAppropriateStructure(tm);
+            Team.Rearrange(tm);
+            EventTeamChange(liveGame, team, (int)LiveGameEventType.StructureChange);
+        }
+
+        UpdateTeamValues(liveGame);
+    }
+
+    /// <summary>
+    /// Calculate whether a player who tries to score succeeds.
+    /// Corresponds to C: live_game_event_duel.
+    /// </summary>
+    public static void EventDuel(LiveGame liveGame)
+    {
+        LiveGameUnit lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+        Team[] tms = { liveGame.Fix.Teams[0], liveGame.Fix.Teams[1] };
+        float rndom = (float)MathHelper.Rnd(0, 1);
+        float scoringProb;
+        float duelFactor;
+        LiveGameUnit newUnit = CopyUnit(lastUnit);
+        Player attacker, goalie, assistant = null;
+        int resIdx1, resIdx2;
+
+        newUnit.Minute = -1;
+        newUnit.Event.Team = newUnit.Possession;
+        newUnit.Event.Commentary = null;
+
+        attacker = Player.OfIdTeam(tms[newUnit.Possession], newUnit.Event.Player);
+        goalie = Player.OfIdxTeam(tms[1 - newUnit.Possession], 0);
+
+        if (newUnit.Event.Player2 != -1)
+            assistant = Player.OfIdTeam(tms[newUnit.Possession], newUnit.Event.Player2);
+
+        newUnit.Event.Player2 = goalie.Id;
+
+        duelFactor = Player.GetGameSkill(attacker, false, true) /
+            Player.GetGameSkill(goalie, false, true);
+
+        resIdx1 = newUnit.Possession;
+        if (newUnit.Time == (int)LiveGameUnitTime.Penalties)
+            resIdx2 = 2;
+        else if (newUnit.Time == (int)LiveGameUnitTime.ExtraTime)
+            resIdx2 = 1;
+        else
+            resIdx2 = 0;
+
+        if (lastUnit.Event.Type == (int)LiveGameEventType.Penalty)
+            scoringProb = OptionHelper.ConstFloat("float_live_game_score_penalty") * duelFactor * attacker.Team.Luck;
+        else if (lastUnit.Event.Type == (int)LiveGameEventType.FreeKick)
+            scoringProb = OptionHelper.ConstFloat("float_live_game_score_free_kick") * duelFactor * attacker.Team.Luck;
+        else
+            scoringProb = OptionHelper.ConstFloat("float_live_game_score_base_prob") *
+                (float)Math.Pow(duelFactor, OptionHelper.ConstFloat("float_live_game_score_duel_exponent")) *
+                (float)Math.Pow(liveGame.TeamValues[newUnit.Possession * (int)GameTeamValue.End + (int)GameTeamValue.Attack] / (float)liveGame.TeamValues[(1 - newUnit.Possession) * (int)GameTeamValue.End + (int)GameTeamValue.Defend],
+                    OptionHelper.ConstFloat("float_live_game_score_team_exponent")) * attacker.Team.Luck;
+
+        if (newUnit.Time != (int)LiveGameUnitTime.Penalties)
+        {
+            Player.GamesGoalsSet(attacker, liveGame.Fix.Clid, (int)PlayerValue.Shots, 1);
+            attacker.Career[(int)PlayerValue.Shots]++;
+        }
+
+        if (rndom < scoringProb)
+        {
+            newUnit.Event.Type = (int)LiveGameEventType.Goal;
+            liveGame.Fix.Result[resIdx1, resIdx2]++;
+            newUnit.Result[resIdx1]++;
+
+            if (newUnit.Time != (int)LiveGameUnitTime.Penalties)
+            {
+                Player.GamesGoalsSet(attacker, liveGame.Fix.Clid, (int)PlayerValue.Goals, 1);
+                Player.GamesGoalsSet(goalie, liveGame.Fix.Clid, (int)PlayerValue.Goals, 1);
+                attacker.Career[(int)PlayerValue.Goals]++;
+                goalie.Career[(int)PlayerValue.Goals]++;
+
+                Player.StreakAddToProb(attacker, OptionHelper.ConstFloat("float_player_streak_add_goal"));
+                Player.StreakAddToProb(goalie, OptionHelper.ConstFloat("float_player_streak_add_goalie_goal"));
+                if (assistant != null)
+                    Player.StreakAddToProb(assistant, OptionHelper.ConstFloat("float_player_streak_add_assist"));
+            }
+        }
+        else
+        {
+            /* In penalties a player can't push the ball in corner */
+            if (newUnit.Time == (int)LiveGameUnitTime.Penalties)
+                newUnit.Event.Type = MathHelper.GaussDisti((int)LiveGameEventType.Post, (int)LiveGameEventType.CrossBar);
+            else
+                newUnit.Event.Type = MathHelper.GaussDisti((int)LiveGameEventType.Post, (int)LiveGameEventType.PlayerPushedInCorner);
+        }
+
+        if (newUnit.Time != (int)LiveGameUnitTime.Penalties &&
+            (newUnit.Event.Type == (int)LiveGameEventType.Save ||
+             newUnit.Event.Type == (int)LiveGameEventType.KeeperPushedInCorner ||
+             newUnit.Event.Type == (int)LiveGameEventType.Goal))
+        {
+            Player.GamesGoalsSet(goalie, liveGame.Fix.Clid, (int)PlayerValue.Shots, 1);
+            goalie.Career[(int)PlayerValue.Shots]++;
+
+            if (newUnit.Event.Type == (int)LiveGameEventType.Save ||
+                newUnit.Event.Type == (int)LiveGameEventType.KeeperPushedInCorner)
+                Player.StreakAddToProb(goalie, OptionHelper.ConstFloat("float_player_streak_add_goalie_save"));
+        }
+
+        liveGame.Units.Add(newUnit);
+
+        // In C, the last_unit macro re-resolves to the newly appended unit.
+        lastUnit = newUnit;
+
+        FinishUnit(liveGame);
+
+        if (lastUnit.Time != (int)LiveGameUnitTime.Penalties)
+        {
+            if (lastUnit.Event.Type == (int)LiveGameEventType.KeeperPushedInCorner ||
+                lastUnit.Event.Type == (int)LiveGameEventType.PlayerPushedInCorner)
+                EventCornerKick(liveGame);
+            else
+                EventGeneral(liveGame, true);
+        }
+    }
+
+    /// <summary>
+    /// Create an event for the corner kick.
+    /// Corresponds to C: live_game_event_corner_kick.
+    /// </summary>
+    public static void EventCornerKick(LiveGame liveGame)
+    {
+        if (Bygfoot.Stat0 == (int)Status0Value.StatusLiveGamePause)
+            return;
+
+        LiveGameUnit lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+        LiveGameUnit newUnit = new LiveGameUnit
+        {
+            Minute = GetMinute(liveGame),
+            Time = lastUnit.Time,
+            Area = lastUnit.Area,
+            Possession = lastUnit.Possession,
+            Result = new[] { lastUnit.Result[0], lastUnit.Result[1] },
+            Event = new LiveGameEvent
+            {
+                Type = (int)LiveGameEventType.CornerKick,
+                Player = -1,
+                Player2 = -1
+            }
+        };
+
+        newUnit.Event.Team = newUnit.Possession;
+
+        newUnit.Event.Player =
+            Game.GetDefaultPenaltyShooter(liveGame.Fix.Teams[newUnit.Possession]);
+
+        if (newUnit.Event.Player == -1)
+            newUnit.Event.Player =
+                Game.GetPlayer(liveGame.Fix.Teams[newUnit.Possession], newUnit.Area, 0, -1, true);
+
+        liveGame.Units.Add(newUnit);
+
+        FinishUnit(liveGame);
+
+        /* The corner is taken, define what happens next */
+        lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+        LiveGameUnit newUnit2 = CopyUnit(lastUnit);
+        newUnit2.Minute = -1;
+        newUnit2.Event.Team = newUnit2.Possession;
+        newUnit2.Event.Commentary = null;
+        newUnit2.Event.Type = (int)LiveGameEventType.General;
+        newUnit2.Event.CommentaryId = -1;
+
+        FillNewUnit(liveGame, newUnit2);
+
+        liveGame.Units.Add(newUnit2);
+
+        EvaluateUnit(liveGame, newUnit2);
+    }
+
+    /// <summary>
+    /// Find a random player (influenced by fitness) who gets injured.
+    /// Corresponds to C: live_game_injury_get_player.
+    /// </summary>
+    public static void InjuryGetPlayer(LiveGame liveGame)
+    {
+        LiveGameUnit lastUnit = liveGame.Units[liveGame.Units.Count - 1];
+        Team[] tms = { liveGame.Fix.Teams[0], liveGame.Fix.Teams[1] };
+        float[] probs = new float[22];
+        float fitnessFactor;
+        float goalieFactor = OptionHelper.ConstFloat("float_live_game_injury_goalie_factor");
+        float boostFactor = OptionHelper.ConstFloat("float_player_boost_injury_effect");
+
+        for (int j = 0; j < 2; j++)
+        {
+            fitnessFactor = (Player.OfIdxTeam(tms[j], 0).Fitness < 0.025) ?
+                40 : 1 / Player.OfIdxTeam(tms[j], 0).Fitness;
+            probs[j * 11] = goalieFactor * fitnessFactor *
+                (Player.OfIdxTeam(tms[j], 0).Cskill != 0 ? 1f : 0f) *
+                (1 + tms[j].Boost * boostFactor);
+            if (j == 1)
+                probs[11] += probs[10];
+
+            for (int i = 1; i < 11; i++)
+            {
+                fitnessFactor = (Player.OfIdxTeam(tms[j], i).Fitness < 0.025) ?
+                    40 : 1 / Player.OfIdxTeam(tms[j], i).Fitness;
+                probs[i + j * 11] = probs[i + j * 11 - 1] + (1 - goalieFactor) * fitnessFactor *
+                    (Player.OfIdxTeam(tms[j], i).Cskill != 0 ? 1f : 0f) *
+                    (1 + tms[j].Boost * boostFactor);
+            }
+        }
+
+        float rndom = (float)MathHelper.Rnd(0, probs[21]);
+
+        if (rndom < probs[0])
+        {
+            lastUnit.Event.Player = Player.OfIdxTeam(tms[0], 0).Id;
+            lastUnit.Event.Team = 0;
+        }
+        else
+            for (int i = 1; i < 22; i++)
+                if (probs[i - 1] <= rndom && rndom < probs[i])
+                {
+                    lastUnit.Event.Player =
+                        Player.OfIdxTeam(tms[(i > 10) ? 1 : 0], i % 11).Id;
+                    lastUnit.Event.Team = (i > 10) ? 1 : 0;
+                }
+    }
+
+    /// <summary>
+    /// Resume a live game. Show team changes.
+    /// Corresponds to C: live_game_resume.
+    /// </summary>
+    public static void Resume()
+    {
+        LiveGame liveGame = Variables.Users[Bygfoot.Stat2].LiveGame;
+
+        Variables.Statp = liveGame;
+
+        for (int i = 0; i < 2; i++)
+        {
+            int[] subsIn = new int[3];
+            int[] subsOut = new int[3];
+
+            Game.GetSubs(i, subsIn, subsOut);
+            for (int j = 0; j < 3; j++)
+            {
+                if (subsIn[j] != -1)
+                    EventSubstitution(liveGame, i, subsIn[j], subsOut[j]);
+            }
+
+            Team tm = liveGame.Fix.Teams[i];
+            LiveGameTeamState teamState = liveGame.TeamState[i];
+
+            if (tm.Structure != teamState.Structure)
+                EventTeamChange(liveGame, i, (int)LiveGameEventType.StructureChange);
+
+            if (tm.Style != teamState.Style)
+                EventTeamChange(liveGame, i, (int)LiveGameEventType.StyleChangeAllOutDefend +
+                    tm.Style + 2);
+
+            if (tm.Boost != (teamState.Boost ? 1 : 0))
+                EventTeamChange(liveGame, i, (int)LiveGameEventType.BoostChangeAnti +
+                    tm.Boost + 1);
+        }
+
+        CalculateFixture(liveGame.Fix, liveGame);
     }
 
     /// <summary>
