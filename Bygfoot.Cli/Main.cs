@@ -14,6 +14,9 @@ public static class Main
     /// Corresponds to C: gboolean load_last_save.</summary>
     public static bool LoadLastSave { get; set; }
 
+    /// <summary>The GTK main loop, the C# equivalent of C's gtk_main()/gtk_main_quit().</summary>
+    private static GLib.MainLoop? mainLoop;
+
     // C: #define DEBUG_LEVEL_DEFAULT 0
     private const int DebugLevelDefault = 0;
 
@@ -189,8 +192,7 @@ public static class Main
 
         if (testcom)
         {
-            // TODO: Call the C function lg_commentary_test(testcomFile, tokenFile,
-            // eventName, numberOfPasses) (not yet converted).
+            LgCommentary.Test(testcomFile, tokenFile, eventName, numberOfPasses);
             MainExitProgram(Bygfoot.ExitCode.Ok, null);
         }
 
@@ -281,7 +283,7 @@ public static class Main
         {
             Variables.DebugLevel = debLevel;
             Debug.SyncMinimumLevel();
-            // TODO: Call the C function window_create(WINDOW_DEBUG) (GUI not yet converted).
+            Window.WindowCreate(WindowsType.Debug);
         }
 
         if (debOutput != -1)
@@ -387,7 +389,9 @@ public static class Main
         {
             // C: #else (MAC_BUILD) — file_add_support_directory_recursive
             // (file_get_mac_resource_path("support_files"));
-            // TODO: Call the C function file_get_mac_resource_path (not yet converted).
+            string? dir = FileHelper.FileGetMacResourcePath("support_files");
+            if (dir != null)
+                FileHelper.FileAddSupportDirectoryRecursive(dir);
         }
 
         MainInitVariables();
@@ -429,19 +433,22 @@ public static class Main
             if (Variables.Country.SId == null)
             {
                 Bygfoot.Stat0 = (int)Status0Value.StatusSplash;
-                // TODO: Call the C function window_show_splash (GUI not yet converted).
+                Window.WindowShowSplash();
 
                 if (Variables.OsIsUnix)
                     FileHelper.CheckHomeDir();
             }
             else
             {
-                // TODO: Call the C function window_show_startup (GUI not yet converted).
+                Window.WindowShowStartup();
                 Bygfoot.Stat0 = (int)Status0Value.StatusTeamSelection;
             }
         }
 
-        // TODO: Call gtk_main (GUI not yet converted).
+        // C: gtk_main() — the C# GTK4 equivalent is running the GLib main loop,
+        // which dispatches GTK events until it is quit.
+        mainLoop = GLib.MainLoop.New(null, false);
+        mainLoop.Run();
 
         MainExitProgram(Bygfoot.ExitCode.Ok, null);
 
@@ -461,7 +468,8 @@ public static class Main
         if (format != null)
             Debug.DebugPrintMessage(string.Format(format, args));
 
-        // C: if (gtk_main_level() > 0) gtk_main_quit(); (GUI not yet converted).
+        // C: if (gtk_main_level() > 0) gtk_main_quit();
+        mainLoop?.Quit();
 
         Free.FreeMemory();
 

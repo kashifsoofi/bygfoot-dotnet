@@ -149,6 +149,18 @@ public static class FileHelper
     }
 
     /// <summary>
+    /// Get the path to a resource inside the Mac OS X application bundle.
+    /// Corresponds to C: file_get_mac_resource_path(const gchar *resource).
+    /// </summary>
+    public static string? FileGetMacResourcePath(string resource)
+    {
+        // C: #ifndef MAC_BUILD returns NULL. Only the Mac OS X bundle build
+        // (Xcode) resolves resources via CoreFoundation; this console build is
+        // never a bundle, so it is always null here.
+        return null;
+    }
+
+    /// <summary>
     /// Creates a $HOME/.bygfoot directory and other stuff if necessary.
     /// </summary>
     public static void CheckHomeDirCreateDirs()
@@ -335,7 +347,7 @@ public static class FileHelper
     /// <summary>
     /// Get the next option line from a file.
     /// </summary>
-    private static bool GetNextOptLine(StreamReader reader, out string optName, out string optValue)
+    internal static bool GetNextOptLine(StreamReader reader, out string optName, out string optValue)
     {
         optName = "";
         optValue = "";

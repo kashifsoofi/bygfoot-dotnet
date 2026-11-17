@@ -609,4 +609,58 @@ public class LgCommentary
                 LoadCommentaryFile("lg_commentary_en.xml", true);
         }
     }
+
+    /// <summary>
+    /// Load the token names and replacements from a file for the test mode.
+    /// Corresponds to C: lg_commentary_test_load_token_file(const gchar *token_file).
+    /// </summary>
+    public static void TestLoadTokenFile(string tokenFile)
+    {
+        Debug.DebugPrintMessage("lg_commentary_test_load_token_file\n");
+
+        if (!FileHelper.MyFopen(tokenFile, "r", out Stream fil, true))
+            return;
+
+        // C: token_rep[0] = g_ptr_array_new(); token_rep[1] = g_ptr_array_new();
+        // In C# the TokenRep lists are reused, so clear and refill.
+        TokenRep[0].Clear();
+        TokenRep[1].Clear();
+
+        using StreamReader reader = new StreamReader(fil);
+        while (FileHelper.GetNextOptLine(reader, out string tokenName, out string tokenValue))
+        {
+            TokenRep[0].Add(tokenName);
+            TokenRep[1].Add(tokenValue);
+        }
+    }
+
+    /// <summary>
+    /// Test a live game commentary file.
+    /// Corresponds to C: lg_commentary_test(const gchar *commentary_file, const gchar* token_file,
+    /// const gchar *event_name, gint number_of_passes).
+    /// </summary>
+    public static void Test(string? commentaryFile, string? tokenFile, string? eventName, int numberOfPasses)
+    {
+        Debug.DebugPrintMessage("lg_commentary_test\n");
+
+        int i, j;
+        LiveGame dummy = new LiveGame();
+
+        LoadCommentaryFile(commentaryFile ?? "", true);
+
+        TestLoadTokenFile(tokenFile ?? "");
+
+        // C: dummy.units = g_array_new(...); statp = (gpointer)&dummy;
+        Variables.Statp = dummy;
+
+        if (eventName == null)
+            for (i = 0; i < (int)LiveGameEventType.End; i++)
+                for (j = 0; j < numberOfPasses; j++)
+                    Generate(null, null, null, i);
+        else
+            for (i = 0; i < numberOfPasses; i++)
+                Generate(null, null, eventName, -1);
+
+        // C: g_array_free(dummy.units, TRUE) — no-op under C# GC.
+    }
 }
