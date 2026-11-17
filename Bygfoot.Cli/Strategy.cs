@@ -23,7 +23,7 @@ public class StrategyPrematch
     public string Condition { get; set; } = string.Empty;
 
     /// <summary>Array of possible formations, sorted by preference. Corresponds to C: GArray *formations.</summary>
-    public List<string> Formations { get; set; } = new List<string>();
+    public List<int> Formations { get; set; } = new List<int>();
 
     /// <summary>Boost, style values and lineup type. Corresponds to C: gint boost, style, lineup.</summary>
     public int Boost { get; set; }
@@ -252,7 +252,7 @@ public class Strategy
     /// <param name="prematch">The pre-match strategy.</param>
     public static void RepairPlayers(List<Player> players, StrategyPrematch prematch)
     {
-        int primaryFormation = int.Parse(prematch.Formations[0]);
+        int primaryFormation = prematch.Formations[0];
         int[] form = { Misc.MathGetPlace(primaryFormation, 3),
             Misc.MathGetPlace(primaryFormation, 2),
             Misc.MathGetPlace(primaryFormation, 1) };
@@ -299,10 +299,10 @@ public class Strategy
         for (i = 0; i < prematch.Formations.Count; i++)
         {
             if (QueryStrategyFormationPossible(
-                players, prematch, int.Parse(prematch.Formations[i])))
+                players, prematch, prematch.Formations[i]))
             {
                 UpdateLineup(
-                    tm, players, prematch, int.Parse(prematch.Formations[i]));
+                    tm, players, prematch, prematch.Formations[i]);
                 break;
             }
         }
@@ -312,7 +312,7 @@ public class Strategy
         if (i == prematch.Formations.Count)
         {
             RepairPlayers(players, prematch);
-            UpdateLineup(tm, players, prematch, int.Parse(prematch.Formations[0]));
+            UpdateLineup(tm, players, prematch, prematch.Formations[0]);
         }
     }
 

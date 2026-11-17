@@ -496,7 +496,7 @@ public static class FileHelper
     /// <summary>
     /// Returns the first support directory which has the given suffix.
     /// </summary>
-    public static string GetFirstSupportDirSuffix(string suffix)
+    public static string? GetFirstSupportDirSuffix(string suffix)
     {
         foreach (var dir in Variables.SupportDirectories)
         {

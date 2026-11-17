@@ -15,16 +15,16 @@ public static class StrategyXml
     private const string TagStrategyDesc = "desc";
     private const string TagStrategyPriority = "priority";
     private const string TagStrategyPrematch = "prematch";
-    private const string TagStrategyPrematchFormation = "prematch_formation";
-    private const string TagStrategyPrematchLineup = "prematch_lineup";
+    private const string TagStrategyPrematchFormation = "formation";
+    private const string TagStrategyPrematchLineup = "lineup";
     private const string TagStrategyPrematchBoost = "prematch_boost";
     private const string TagStrategyPrematchStyle = "prematch_style";
     private const string TagStrategyMatchAction = "match_action";
-    private const string TagStrategyMatchActionBoost = "match_action_boost";
-    private const string TagStrategyMatchActionStyle = "match_action_style";
-    private const string TagStrategyMatchActionSub = "match_action_sub";
-    private const string TagStrategyMatchActionSubInPos = "match_action_sub_in_pos";
-    private const string TagStrategyMatchActionSubOutPos = "match_action_sub_out_pos";
+    private const string TagStrategyMatchActionBoost = "boost";
+    private const string TagStrategyMatchActionStyle = "style";
+    private const string TagStrategyMatchActionSub = "sub";
+    private const string TagStrategyMatchActionSubInPos = "in";
+    private const string TagStrategyMatchActionSubOutPos = "out";
 
     private const string AttNameMinFitness = "min_fitness";
     private const string AttNameCond = "cond";
@@ -108,38 +108,27 @@ public static class StrategyXml
             reader.MoveToContent();
             int depth = 0;
 
-            while (true)
+            while (reader.Read())
             {
                 switch (reader.NodeType)
                 {
                     case XmlNodeType.Element:
-                        if (reader.IsEmptyElement)
-                        {
-                            StrategyXmlReadStartElement(reader, reader.LocalName);
-                            StrategyXmlReadEndElement(reader.LocalName);
-                        }
-                        else
-                        {
-                            StrategyXmlReadStartElement(reader, reader.LocalName);
-                            depth++;
-                        }
+                        StrategyXmlReadStartElement(reader, reader.LocalName);
+                        depth++;
                         break;
-
+                    
                     case XmlNodeType.EndElement:
                         StrategyXmlReadEndElement(reader.LocalName);
                         depth--;
                         break;
-
+                    
                     case XmlNodeType.Text:
                     case XmlNodeType.CDATA:
                     case XmlNodeType.SignificantWhitespace:
                     case XmlNodeType.Whitespace:
-                        StrategyXmlReadText(reader.ReadString());
+                        StrategyXmlReadText(reader.Value);
                         break;
                 }
-
-                if (!reader.Read())
-                    break;
             }
         }
 
@@ -212,9 +201,9 @@ public static class StrategyXml
                 newPrematch.Boost = -100;
                 newPrematch.Style = -100;
                 newPrematch.MinFitness = 0;
-                newPrematch.Formations = new List<string>();
+                newPrematch.Formations = new List<int>();
                 string condition = getAttribute(AttNameCond);
-                if (newPrematch.Condition == null)
+                if (string.IsNullOrEmpty(newPrematch.Condition))
                     newPrematch.Condition = condition;
                 CurrentStrategy.Prematch.Add(newPrematch);
                 CurrentPrematch = newPrematch;
@@ -383,7 +372,7 @@ public static class StrategyXml
                     CurrentStrategy.Priority = Strategy.AllStrategies[Strategy.AllStrategies.Count - 2].Priority + intValue;
                 break;
             case XmlStrategyStates.StateStrategyPrematchFormation:
-                CurrentPrematch.Formations.Add(text);
+                CurrentPrematch.Formations.Add(intValue);
                 break;
             case XmlStrategyStates.StateStrategyPrematchLineup:
                 if (text == LineupNameBest)
@@ -448,7 +437,7 @@ public static class StrategyXml
             case XmlStrategyStates.StateStrategyMatchActionSubInPos:
             case XmlStrategyStates.StateStrategyMatchActionSubOutPos:
             {
-                string[] positions = text.Split(',');
+                string[] positions = text.Split(' ');
                 int pos = 9;
                 if (State == XmlStrategyStates.StateStrategyMatchActionSubInPos)
                     CurrentMatchAction.SubInPos = pos;
@@ -483,51 +472,45 @@ public static class StrategyXml
 
     /// <summary>
     /// Load all strategy files found in the appropriate folder.
+    /// Corresponds to C: xml_strategy_load_strategies.
     /// </summary>
     public static void StrategyLoadStrategies()
     {
-        string strategyDir = string.Empty;
-        foreach (string directory in Variables.SupportDirectories)
-        {
-            if (directory.StartsWith("strategy", StringComparison.OrdinalIgnoreCase))
-            {
-                strategyDir = directory;
-                break;
-            }
-        }
+        Debug.DebugPrintMessage("xml_strategy_load_strategies\n");
 
-        if (string.IsNullOrEmpty(strategyDir))
-        {
-            Debug.DebugPrintMessage("xml_strategy_load_strategies: strategy directory not found.");
-            return;
-        }
+        string? strategyDir = FileHelper.GetFirstSupportDirSuffix("strategy");
+
+        if (strategyDir == null)
+            Main.MainExitProgram(Bygfoot.ExitCode.StrategyError,
+                "xml_strategy_load_strategies: strategy directory not found.");
 
         List<string> files = FileHelper.GetDirectoryContents(strategyDir, "strategy_", ".xml");
 
         if (files.Count == 0)
-        {
-            Debug.DebugPrintMessage("xml_strategy_load_strategies: no CPU strategies found.");
-            return;
-        }
+            Main.MainExitProgram(Bygfoot.ExitCode.StrategyError,
+                "xml_strategy_load_strategies: no CPU strategies found.");
 
+        // C: sprintf(buf, "%s%s%s", strategydir, G_DIR_SEPARATOR_S, name) —
+        // GetDirectoryContents already returns the full paths.
         foreach (string file in files)
-        {
             StrategyXmlRead(file);
-        }
 
-        // Fill secondary prematches with default values.
+        /* Fill secondary prematches with default values. */
         for (int i = 0; i < Strategy.AllStrategies.Count; i++)
         {
-            Strategy strategy = Strategy.AllStrategies[i];
-            StrategyPrematch prem0 = strategy.Prematch.Count > 0 ? strategy.Prematch[0] : new StrategyPrematch();
-            for (int j = 1; j < strategy.Prematch.Count; j++)
+            StrategyPrematch prem0 = Strategy.AllStrategies[i].Prematch[0];
+
+            if (prem0.Formations.Count == 0)
+                Main.MainExitProgram(Bygfoot.ExitCode.StrategyError,
+                    "xml_strategy_read ({0}): The primary prematch should have at least one formation.",
+                    Strategy.AllStrategies[i].Sid);
+
+            for (int j = 1; j < Strategy.AllStrategies[i].Prematch.Count; j++)
             {
-                StrategyPrematch premcur = strategy.Prematch[j];
-                if (premcur.Formations.Count == 0 && prem0.Formations.Count > 0)
-                {
-                    foreach (string formation in prem0.Formations)
-                        premcur.Formations.Add(formation);
-                }
+                StrategyPrematch premcur = Strategy.AllStrategies[i].Prematch[j];
+
+                if (premcur.Formations.Count == 0)
+                    premcur.Formations.AddRange(prem0.Formations);
 
                 if (premcur.Boost == -100)
                     premcur.Boost = prem0.Boost;
