@@ -68,7 +68,7 @@ public static class Main
         int numberOfPasses = 1, numMatches = 100, skilldiffmax = 20;
 
         List<string> kept = new List<string>();
-        for (int i = 1; i < argv.Length; i++)
+        for (int i = 0; i < argv.Length; i++)
         {
             string arg = argv[i];
             int eq = arg.IndexOf('=');
@@ -176,12 +176,15 @@ public static class Main
         }
 
         // Rebuild the argument list without the parsed options (as GOption does in C).
-        string[] newArgv = new string[kept.Count + 1];
-        newArgv[0] = argv[0];
-        for (int k = 0; k < kept.Count; k++)
-            newArgv[k + 1] = kept[k];
-        argv = newArgv;
-        argc = kept.Count + 1;
+        if (argc > 0)
+        {
+            string[] newArgv = new string[kept.Count + 1];
+            newArgv[0] = argv[0];
+            for (int k = 0; k < kept.Count; k++)
+                newArgv[k + 1] = kept[k];
+            argv = newArgv;
+            argc = kept.Count + 1;
+        }
 
         if (calodds)
         {
@@ -230,7 +233,7 @@ public static class Main
         Variables.DebugOutput = DebugOutputDefault;
 
         List<string> kept = new List<string>();
-        for (int i = 1; i < argv.Length; i++)
+        for (int i = 0; i < argv.Length; i++)
         {
             string arg = argv[i];
             int eq = arg.IndexOf('=');
@@ -272,12 +275,15 @@ public static class Main
         }
 
         // Rebuild the argument list without the parsed options (as GOption does in C).
-        string[] newArgv = new string[kept.Count + 1];
-        newArgv[0] = argv[0];
-        for (int k = 0; k < kept.Count; k++)
-            newArgv[k + 1] = kept[k];
-        argv = newArgv;
-        argc = kept.Count + 1;
+        if (argc > 0)
+        {
+            string[] newArgv = new string[kept.Count + 1];
+            newArgv[0] = argv[0];
+            for (int k = 0; k < kept.Count; k++)
+                newArgv[k + 1] = kept[k];
+            argv = newArgv;
+            argc = kept.Count + 1;
+        }
 
         if (debLevel != -1)
         {
@@ -378,21 +384,21 @@ public static class Main
                 Bygfoot.HomeDirName));
         }
 
-        if (!OperatingSystem.IsMacOS())
+        // if (!OperatingSystem.IsMacOS())
         {
             // C: #ifndef MAC_BUILD
             string dir = Directory.GetCurrentDirectory();
             FileHelper.FileAddSupportDirectoryRecursive(Path.Combine(dir, "support_files"));
             FileHelper.FileAddSupportDirectoryRecursive(Path.Combine(dir, "saves"));
         }
-        else
-        {
+        // else
+        // {
             // C: #else (MAC_BUILD) — file_add_support_directory_recursive
             // (file_get_mac_resource_path("support_files"));
-            string? dir = FileHelper.FileGetMacResourcePath("support_files");
-            if (dir != null)
-                FileHelper.FileAddSupportDirectoryRecursive(dir);
-        }
+            // string? dir = FileHelper.FileGetMacResourcePath("support_files");
+            // if (dir != null)
+            //     FileHelper.FileAddSupportDirectoryRecursive(dir);
+        // }
 
         MainInitVariables();
 
