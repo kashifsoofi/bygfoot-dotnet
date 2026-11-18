@@ -20,9 +20,12 @@ public class StrategyFileFieldTests
     private static Strategy LoadAttack2(out int countBefore)
     {
         countBefore = Strategy.AllStrategies.Count;
-        StrategyXml.StrategyXmlRead(Attack2Path);
+        Strategy? loaded = StrategyXml.StrategyXmlRead(Attack2Path);
+        loaded.Should().NotBeNull();
+        Strategy.AllStrategies.Add(loaded!);
         Strategy.AllStrategies.Count.Should().Be(countBefore + 1);
-        return Strategy.AllStrategies[^1];
+        Strategy.AllStrategies[^1].Should().Be(loaded);
+        return loaded!;
     }
 
     [Test]
