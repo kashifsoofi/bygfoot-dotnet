@@ -3,4 +3,6 @@
     <File Path="Directory.Packages.props" />
   </Folder>
   <Project Path="Bygfoot.Cli\Bygfoot.Cli.csproj" />
+  <Project Path="Bygfoot.Cli.Tests.Unit\Bygfoot.Cli.Tests.Unit.csproj" />
+  <Project Path="Bygfoot.Cli.Tests.Integration\Bygfoot.Cli.Tests.Integration.csproj" />
 </Solution>

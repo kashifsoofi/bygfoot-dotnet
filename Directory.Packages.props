@@ -8,5 +8,8 @@
     <PackageVersion Include="Serilog" Version="4.3.1" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageVersion Include="TUnit" Version="1.86.6" />
+    <PackageVersion Include="Tunit.Analyzers" Version="0.1.984" />
+    <PackageVersion Include="AwesomeAssertions" Version="9.6.0" />
   </ItemGroup>
 </Project>
