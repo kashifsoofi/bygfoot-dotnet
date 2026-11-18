@@ -7,6 +7,7 @@ using TUnit.Core;
 /// Integration tests which exercise the shipped support files
 /// (copied to the test output directory by the main project build).
 /// </summary>
+[NotInParallel("strategy")]
 public class StrategyLoadTests
 {
     /// <summary>

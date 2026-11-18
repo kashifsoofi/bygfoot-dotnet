@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Xml;
 
 namespace Bygfoot.Cli;
@@ -51,10 +52,10 @@ public static class StrategyXml
     private const string PosNameForward = "forward";
 
     /// <summary>
-    /// Enum with the states used in the XML parsing functions.
+    /// Enum with the states used in the strategy XML parser.
     /// Corresponds to the C enum of the strategy module.
     /// </summary>
-    public enum XmlStrategyStates
+    private enum XmlStrategyStates
     {
         StateStrategy = 0,
         StateStrategySid,
@@ -73,16 +74,9 @@ public static class StrategyXml
         StateStrategyMatchActionSubOutPos
     }
 
-    private static XmlStrategyStates State = XmlStrategyStates.StateStrategy;
-    private static int ActionId = 0;
-    private static Strategy CurrentStrategy = new Strategy();
-    private static StrategyPrematch CurrentPrematch = new StrategyPrematch();
-    private static StrategyMatchAction CurrentMatchAction = new StrategyMatchAction();
-
     /// <summary>
     /// Function reading a strategy file and adding the strategy
     /// to the strategies array.
-    /// @param filename Name of the xml file (e.g. 'strategy_defenders.xml') to be read.
     /// </summary>
     /// <param name="filename">The strategy xml file to read.</param>
     public static void StrategyXmlRead(string filename)
@@ -90,383 +84,385 @@ public static class StrategyXml
         if (string.IsNullOrEmpty(filename) || !File.Exists(filename))
             return;
 
-        State = XmlStrategyStates.StateStrategy;
-
-        Strategy newStrategy = new Strategy();
-        newStrategy.Sid = string.Empty;
-        newStrategy.Desc = string.Empty;
-        newStrategy.Priority = 1;
-        newStrategy.Prematch = new List<StrategyPrematch>();
-        newStrategy.MatchAction = new List<StrategyMatchAction>();
-        Strategy.AllStrategies.Add(newStrategy);
-        CurrentStrategy = newStrategy;
-
-        ActionId = 0;
-
-        using (var reader = XmlReader.Create(filename))
+        Strategy newStrategy = new()
         {
-            reader.MoveToContent();
-            int depth = 0;
+            Sid = string.Empty,
+            Desc = string.Empty,
+            Priority = 1,
+            Prematch = new List<StrategyPrematch>(),
+            MatchAction = new List<StrategyMatchAction>()
+        };
+        Strategy.AllStrategies.Add(newStrategy);
 
-            while (reader.Read())
+        var parser = new Parser(newStrategy);
+        using XmlReader reader = XmlReader.Create(filename);
+        while (reader.Read())
+        {
+            switch (reader.NodeType)
             {
-                switch (reader.NodeType)
-                {
-                    case XmlNodeType.Element:
-                        StrategyXmlReadStartElement(reader, reader.LocalName);
-                        depth++;
-                        break;
-                    
-                    case XmlNodeType.EndElement:
-                        StrategyXmlReadEndElement(reader.LocalName);
-                        depth--;
-                        break;
-                    
-                    case XmlNodeType.Text:
-                    case XmlNodeType.CDATA:
-                    case XmlNodeType.SignificantWhitespace:
-                    case XmlNodeType.Whitespace:
-                        StrategyXmlReadText(reader.Value);
-                        break;
-                }
+                case XmlNodeType.Element:
+                    parser.ReadStartElement(reader);
+                    break;
+                case XmlNodeType.EndElement:
+                    parser.ReadEndElement(reader.LocalName);
+                    break;
+                case XmlNodeType.Text:
+                case XmlNodeType.CDATA:
+                case XmlNodeType.SignificantWhitespace:
+                case XmlNodeType.Whitespace:
+                    parser.ReadText(reader.Value);
+                    break;
             }
         }
 
         // Check that all match actions have conditions.
-        for (int i = 0; i < CurrentStrategy.MatchAction.Count; i++)
+        // C: main_exit_program(EXIT_STRATEGY_ERROR,
+        //   "xml_strategy_read: unconditional match action encountered in file %s. match actions MUST have conditions.", filename);
+        foreach (StrategyMatchAction matchAction in newStrategy.MatchAction)
         {
-            if (string.IsNullOrEmpty(CurrentStrategy.MatchAction[i].Condition))
+            if (string.IsNullOrEmpty(matchAction.Condition))
             {
-                // main_exit_program(EXIT_STRATEGY_ERROR,
-                //   "xml_strategy_read: unconditional match action encountered in file %s. match actions MUST have conditions.", filename);
+                // The exit is intentionally not active yet.
             }
         }
     }
 
     /// <summary>
-    /// The function called by the reader when an opening tag is read.
-    /// The state variable is changed in this function and
-    /// sometimes memory allocated for the information that's going to be read.
-    /// @see The GLib manual (Simple XML parser).
+    /// Single-file strategy XML parser. One instance is created per file;
+    /// the instance fields correspond to the file-scope statics of the C
+    /// xml_strategy module (state, action_id, curstrat, curprematch and
+    /// curmatchaction).
     /// </summary>
-    /// <param name="reader">The XML reader.</param>
-    /// <param name="elementName">Name of the opening tag.</param>
-    public static void StrategyXmlReadStartElement(XmlReader reader, string elementName)
+    private sealed class Parser
     {
-        StartElement(elementName, attributeName => reader.GetAttribute(attributeName));
-    }
+        private readonly Strategy _strategy;
+        private XmlStrategyStates _state = XmlStrategyStates.StateStrategy;
+        private int _actionId;
+        private StrategyPrematch _prematch = new();
+        private StrategyMatchAction _matchAction = new();
 
-    /// <summary>
-    /// The function called by the reader when an opening tag is read.
-    /// The state variable is changed in this function and
-    /// sometimes memory allocated for the information that's going to be read.
-    /// @see The GLib manual (Simple XML parser).
-    /// </summary>
-    /// <param name="elementName">Name of the opening tag.</param>
-    /// <param name="attributeNames">The attributes of the opening tag.</param>
-    public static void StrategyXmlReadStartElement(string elementName, IDictionary<string, string> attributeNames)
-    {
-        StartElement(elementName, attributeName => GetAttribute(attributeNames, attributeName));
-    }
+        public Parser(Strategy strategy) => _strategy = strategy;
 
-    /// <summary>
-    /// Start element handler of the strategy XML parser, dispatching
-    /// on the name of the opening tag and updating the parser state
-    /// accordingly. Attributes are fetched via the given function.
-    /// </summary>
-    /// <param name="elementName">Name of the opening tag.</param>
-    /// <param name="getAttribute">Function to get the value of an attribute by its name.</param>
-    private static void StartElement(string elementName, Func<string, string> getAttribute)
-    {
-        switch (elementName)
+        /// <summary>
+        /// Start element handler of the strategy XML parser, dispatching
+        /// on the name of the opening tag and updating the parser state
+        /// accordingly.
+        /// </summary>
+        public void ReadStartElement(XmlReader reader)
         {
-            case TagStrategy:
-                State = XmlStrategyStates.StateStrategy;
-                break;
-            case TagStrategySid:
-                State = XmlStrategyStates.StateStrategySid;
-                break;
-            case TagStrategyDesc:
-                State = XmlStrategyStates.StateStrategyDesc;
-                break;
-            case TagStrategyPriority:
-                State = XmlStrategyStates.StateStrategyPriority;
-                break;
-            case TagStrategyPrematch:
+            switch (reader.LocalName)
             {
-                StrategyPrematch newPrematch = new StrategyPrematch();
-                State = XmlStrategyStates.StateStrategyPrematch;
-                newPrematch.Condition = string.Empty;
-                newPrematch.Lineup = -100;
-                newPrematch.Boost = -100;
-                newPrematch.Style = -100;
-                newPrematch.MinFitness = 0;
-                newPrematch.Formations = new List<int>();
-                string condition = getAttribute(AttNameCond);
-                if (string.IsNullOrEmpty(newPrematch.Condition))
-                    newPrematch.Condition = condition;
-                CurrentStrategy.Prematch.Add(newPrematch);
-                CurrentPrematch = newPrematch;
-                break;
-            }
-            case TagStrategyPrematchFormation:
-                State = XmlStrategyStates.StateStrategyPrematchFormation;
-                break;
-            case TagStrategyPrematchLineup:
-            {
-                State = XmlStrategyStates.StateStrategyPrematchLineup;
-                string minFitness = getAttribute(AttNameMinFitness);
-                if (minFitness != null && float.TryParse(minFitness, out float minFitnessValue))
-                    CurrentPrematch.MinFitness = minFitnessValue / 100f;
-                break;
-            }
-            case TagStrategyPrematchBoost:
-                State = XmlStrategyStates.StateStrategyPrematchBoost;
-                break;
-            case TagStrategyPrematchStyle:
-                State = XmlStrategyStates.StateStrategyPrematchStyle;
-                break;
-            case TagStrategyMatchAction:
-            {
-                StrategyMatchAction newMatchAction = new StrategyMatchAction();
-                State = XmlStrategyStates.StateStrategyMatchAction;
-                newMatchAction.Condition = string.Empty;
-                newMatchAction.SubCondition = string.Empty;
-                newMatchAction.Boost = -100;
-                newMatchAction.Style = -100;
-                newMatchAction.SubInPos = -1;
-                newMatchAction.SubInProp = -1;
-                newMatchAction.SubOutPos = -1;
-                newMatchAction.SubOutProp = -1;
-                newMatchAction.Id = ActionId++;
-                string condition = getAttribute(AttNameCond);
-                if (newMatchAction.Condition == null)
-                    newMatchAction.Condition = condition;
-                CurrentStrategy.MatchAction.Add(newMatchAction);
-                CurrentMatchAction = newMatchAction;
-                break;
-            }
-            case TagStrategyMatchActionBoost:
-                State = XmlStrategyStates.StateStrategyMatchActionBoost;
-                break;
-            case TagStrategyMatchActionStyle:
-                State = XmlStrategyStates.StateStrategyMatchActionStyle;
-                break;
-            case TagStrategyMatchActionSub:
-                State = XmlStrategyStates.StateStrategyMatchActionSub;
-                string subCondition = getAttribute(AttNameCond);
-                if (CurrentMatchAction.SubCondition == null)
-                    CurrentMatchAction.SubCondition = subCondition;
-                break;
-            case TagStrategyMatchActionSubInPos:
-                State = XmlStrategyStates.StateStrategyMatchActionSubInPos;
-                string subInProp = getAttribute(AttNameSubProperty);
-                if (subInProp == LineupNameBest)
-                    CurrentMatchAction.SubInProp = (int)StratLineupType.Best;
-                else if (subInProp == LineupNameWeakest)
-                    CurrentMatchAction.SubInProp = (int)StratLineupType.Weakest;
-                else if (subInProp == LineupNameFittest)
-                    CurrentMatchAction.SubInProp = (int)StratLineupType.Fittest;
-                else if (subInProp == LineupNameUnfittest)
-                    CurrentMatchAction.SubInProp = (int)StratLineupType.Unfittest;
-                else
-                    Debug.DebugPrintMessage($"xml_strategy_read_start_element: unknown property value {subInProp}");
-                break;
-            case TagStrategyMatchActionSubOutPos:
-                State = XmlStrategyStates.StateStrategyMatchActionSubOutPos;
-                string subOutProp = getAttribute(AttNameSubProperty);
-                if (subOutProp == LineupNameBest)
-                    CurrentMatchAction.SubOutProp = (int)StratLineupType.Best;
-                else if (subOutProp == LineupNameWeakest)
-                    CurrentMatchAction.SubOutProp = (int)StratLineupType.Weakest;
-                else if (subOutProp == LineupNameFittest)
-                    CurrentMatchAction.SubOutProp = (int)StratLineupType.Fittest;
-                else if (subOutProp == LineupNameUnfittest)
-                    CurrentMatchAction.SubOutProp = (int)StratLineupType.Unfittest;
-                else
-                    Debug.DebugPrintMessage($"xml_strategy_read_start_element: unknown property value {subOutProp}");
-                break;
-            default:
-                Debug.DebugPrintMessage($"xml_strategy_read_start_element: unknown tag: {elementName}; I'm in state {State}");
-                break;
-        }
-    }
-
-    /// <summary>
-    /// Get the value of an attribute from a dictionary of attributes.
-    /// </summary>
-    /// <param name="attributeNames">The attributes.</param>
-    /// <param name="attributeName">The name of the attribute.</param>
-    /// <returns>The value of the attribute, or null if it is not set.</returns>
-    private static string GetAttribute(IDictionary<string, string> attributeNames, string attributeName)
-    {
-        return attributeNames.TryGetValue(attributeName, out string value) ? value : null;
-    }
-
-    /// <summary>
-    /// The function called by the reader when a closing tag is read.
-    /// The state variable is changed in this function.
-    /// @see The GLib manual (Simple XML parser).
-    /// </summary>
-    /// <param name="elementName">Name of the closing tag.</param>
-    public static void StrategyXmlReadEndElement(string elementName)
-    {
-        switch (elementName)
-        {
-            case TagStrategySid:
-            case TagStrategyDesc:
-            case TagStrategyPriority:
-            case TagStrategyMatchAction:
-            case TagStrategyPrematch:
-                State = XmlStrategyStates.StateStrategy;
-                break;
-            case TagStrategyPrematchFormation:
-            case TagStrategyPrematchLineup:
-            case TagStrategyPrematchBoost:
-            case TagStrategyPrematchStyle:
-                State = XmlStrategyStates.StateStrategyPrematch;
-                break;
-            case TagStrategyMatchActionSub:
-            case TagStrategyMatchActionStyle:
-            case TagStrategyMatchActionBoost:
-                State = XmlStrategyStates.StateStrategyMatchAction;
-                break;
-            case TagStrategyMatchActionSubInPos:
-            case TagStrategyMatchActionSubOutPos:
-                State = XmlStrategyStates.StateStrategyMatchActionSub;
-                break;
-            case TagStrategy:
-                break;
-            default:
-                Debug.DebugPrintMessage($"xml_strategy_read_end_element: unknown tag: {elementName}; I'm in state {State}");
-                break;
-        }
-    }
-
-    /// <summary>
-    /// The function called by the reader when the text between tags is read.
-    /// This function is responsible for filling in the strategy variables
-    /// when a file gets loaded.
-    /// @see The GLib manual (Simple XML parser).
-    /// </summary>
-    /// <param name="text">The text between the tags.</param>
-    public static void StrategyXmlReadText(string text)
-    {
-        float floatValue = 0;
-        if (!float.TryParse(text, out floatValue))
-            floatValue = 0;
-        int intValue = (int)floatValue;
-
-        switch (State)
-        {
-            case XmlStrategyStates.StateStrategySid:
-                CurrentStrategy.Sid = text;
-                break;
-            case XmlStrategyStates.StateStrategyDesc:
-                CurrentStrategy.Desc = text;
-                break;
-            case XmlStrategyStates.StateStrategyPriority:
-                if (Strategy.AllStrategies.Count == 1)
-                    CurrentStrategy.Priority = intValue;
-                else
-                    CurrentStrategy.Priority = Strategy.AllStrategies[Strategy.AllStrategies.Count - 2].Priority + intValue;
-                break;
-            case XmlStrategyStates.StateStrategyPrematchFormation:
-                CurrentPrematch.Formations.Add(intValue);
-                break;
-            case XmlStrategyStates.StateStrategyPrematchLineup:
-                if (text == LineupNameBest)
-                    CurrentPrematch.Lineup = (int)StratLineupType.Best;
-                else if (text == LineupNameWeakest)
-                    CurrentPrematch.Lineup = (int)StratLineupType.Weakest;
-                else if (text == LineupNameFittest)
-                    CurrentPrematch.Lineup = (int)StratLineupType.Fittest;
-                else if (text == LineupNameUnfittest)
-                    CurrentPrematch.Lineup = (int)StratLineupType.Unfittest;
-                else
-                    Debug.DebugPrintMessage($"xml_strategy_read_text: unknown lineup type {text}");
-                break;
-            case XmlStrategyStates.StateStrategyPrematchBoost:
-                if (text == BoostNameOn)
-                    CurrentPrematch.Boost = 1;
-                else if (text == BoostNameOff)
-                    CurrentPrematch.Boost = 0;
-                else if (text == BoostNameAnti)
-                    CurrentPrematch.Boost = -1;
-                else
-                    Debug.DebugPrintMessage($"xml_strategy_read_text: unknown boost type {text}");
-                break;
-            case XmlStrategyStates.StateStrategyPrematchStyle:
-                if (text == StyleNameAllOutDefend)
-                    CurrentPrematch.Style = -2;
-                else if (text == StyleNameDefend)
-                    CurrentPrematch.Style = -1;
-                else if (text == StyleNameBalanced)
-                    CurrentPrematch.Style = 0;
-                else if (text == StyleNameAttack)
-                    CurrentPrematch.Style = 1;
-                else if (text == StyleNameAllOutAttack)
-                    CurrentPrematch.Style = 2;
-                else
-                    Debug.DebugPrintMessage($"xml_strategy_read_text: unknown style type {text}");
-                break;
-            case XmlStrategyStates.StateStrategyMatchActionStyle:
-                if (text == StyleNameAllOutDefend)
-                    CurrentMatchAction.Style = -2;
-                else if (text == StyleNameDefend)
-                    CurrentMatchAction.Style = -1;
-                else if (text == StyleNameBalanced)
-                    CurrentMatchAction.Style = 0;
-                else if (text == StyleNameAttack)
-                    CurrentMatchAction.Style = 1;
-                else if (text == StyleNameAllOutAttack)
-                    CurrentMatchAction.Style = 2;
-                else
-                    Debug.DebugPrintMessage($"xml_strategy_read_text: unknown style type {text}");
-                break;
-            case XmlStrategyStates.StateStrategyMatchActionBoost:
-                if (text == BoostNameOn)
-                    CurrentMatchAction.Boost = 1;
-                else if (text == BoostNameOff)
-                    CurrentMatchAction.Boost = 0;
-                else if (text == BoostNameAnti)
-                    CurrentMatchAction.Boost = -1;
-                else
-                    Debug.DebugPrintMessage($"xml_strategy_read_text: unknown boost type {text}");
-                break;
-            case XmlStrategyStates.StateStrategyMatchActionSubInPos:
-            case XmlStrategyStates.StateStrategyMatchActionSubOutPos:
-            {
-                string[] positions = text.Split(' ');
-                int pos = 9;
-                if (State == XmlStrategyStates.StateStrategyMatchActionSubInPos)
-                    CurrentMatchAction.SubInPos = pos;
-                else
-                    CurrentMatchAction.SubOutPos = pos;
-
-                foreach (string position in positions)
+                case TagStrategy:
+                    _state = XmlStrategyStates.StateStrategy;
+                    break;
+                case TagStrategySid:
+                    _state = XmlStrategyStates.StateStrategySid;
+                    break;
+                case TagStrategyDesc:
+                    _state = XmlStrategyStates.StateStrategyDesc;
+                    break;
+                case TagStrategyPriority:
+                    _state = XmlStrategyStates.StateStrategyPriority;
+                    break;
+                case TagStrategyPrematch:
                 {
-                    if (position == PosNameGoalie)
-                        pos *= 10;
-                    else if (position == PosNameDefender)
-                        pos = (pos * 10) + 1;
-                    else if (position == PosNameMidfielder)
-                        pos = (pos * 10) + 2;
-                    else if (position == PosNameForward)
-                        pos = (pos * 10) + 3;
-                    else
-                        Debug.DebugPrintMessage($"xml_strategy_read_text: unknown position {position}");
+                    StrategyPrematch newPrematch = new()
+                    {
+                        Condition = string.Empty,
+                        Lineup = -100,
+                        Boost = -100,
+                        Style = -100,
+                        MinFitness = 0,
+                        Formations = new List<int>()
+                    };
+                    _state = XmlStrategyStates.StateStrategyPrematch;
+                    if (string.IsNullOrEmpty(newPrematch.Condition))
+                        newPrematch.Condition = reader.GetAttribute(AttNameCond) ?? string.Empty;
+                    _strategy.Prematch.Add(newPrematch);
+                    _prematch = newPrematch;
+                    break;
                 }
-
-                if (pos < 100)
-                    pos = pos % 10;
-
-                if (State == XmlStrategyStates.StateStrategyMatchActionSubInPos)
-                    CurrentMatchAction.SubInPos = pos;
-                else
-                    CurrentMatchAction.SubOutPos = pos;
-                break;
+                case TagStrategyPrematchFormation:
+                    _state = XmlStrategyStates.StateStrategyPrematchFormation;
+                    break;
+                case TagStrategyPrematchLineup:
+                {
+                    _state = XmlStrategyStates.StateStrategyPrematchLineup;
+                    string? minFitness = reader.GetAttribute(AttNameMinFitness);
+                    if (!string.IsNullOrEmpty(minFitness) &&
+                        float.TryParse(minFitness, NumberStyles.Float, CultureInfo.InvariantCulture, out float minFitnessValue))
+                        _prematch.MinFitness = minFitnessValue / 100f;
+                    break;
+                }
+                case TagStrategyPrematchBoost:
+                    _state = XmlStrategyStates.StateStrategyPrematchBoost;
+                    break;
+                case TagStrategyPrematchStyle:
+                    _state = XmlStrategyStates.StateStrategyPrematchStyle;
+                    break;
+                case TagStrategyMatchAction:
+                {
+                    StrategyMatchAction newMatchAction = new()
+                    {
+                        Condition = string.Empty,
+                        SubCondition = string.Empty,
+                        Boost = -100,
+                        Style = -100,
+                        SubInPos = -1,
+                        SubInProp = -1,
+                        SubOutPos = -1,
+                        SubOutProp = -1,
+                        Id = _actionId++
+                    };
+                    _state = XmlStrategyStates.StateStrategyMatchAction;
+                    if (string.IsNullOrEmpty(newMatchAction.Condition))
+                        newMatchAction.Condition = reader.GetAttribute(AttNameCond) ?? string.Empty;
+                    _strategy.MatchAction.Add(newMatchAction);
+                    _matchAction = newMatchAction;
+                    break;
+                }
+                case TagStrategyMatchActionBoost:
+                    _state = XmlStrategyStates.StateStrategyMatchActionBoost;
+                    break;
+                case TagStrategyMatchActionStyle:
+                    _state = XmlStrategyStates.StateStrategyMatchActionStyle;
+                    break;
+                case TagStrategyMatchActionSub:
+                    _state = XmlStrategyStates.StateStrategyMatchActionSub;
+                    if (string.IsNullOrEmpty(_matchAction.SubCondition))
+                        _matchAction.SubCondition = reader.GetAttribute(AttNameCond) ?? string.Empty;
+                    break;
+                case TagStrategyMatchActionSubInPos:
+                    _state = XmlStrategyStates.StateStrategyMatchActionSubInPos;
+                    SetSubProperty(_matchAction, reader, isSubIn: true);
+                    break;
+                case TagStrategyMatchActionSubOutPos:
+                    _state = XmlStrategyStates.StateStrategyMatchActionSubOutPos;
+                    SetSubProperty(_matchAction, reader, isSubIn: false);
+                    break;
+                default:
+                    Debug.DebugPrintMessage($"xml_strategy_read_start_element: unknown tag: {reader.LocalName}; I'm in state {_state}");
+                    break;
             }
+        }
+
+        /// <summary>
+        /// End element handler of the strategy XML parser, walking the
+        /// parser state back up to the enclosing element.
+        /// </summary>
+        public void ReadEndElement(string elementName)
+        {
+            switch (elementName)
+            {
+                case TagStrategySid:
+                case TagStrategyDesc:
+                case TagStrategyPriority:
+                case TagStrategyMatchAction:
+                case TagStrategyPrematch:
+                    _state = XmlStrategyStates.StateStrategy;
+                    break;
+                case TagStrategyPrematchFormation:
+                case TagStrategyPrematchLineup:
+                case TagStrategyPrematchBoost:
+                case TagStrategyPrematchStyle:
+                    _state = XmlStrategyStates.StateStrategyPrematch;
+                    break;
+                case TagStrategyMatchActionSub:
+                case TagStrategyMatchActionStyle:
+                case TagStrategyMatchActionBoost:
+                    _state = XmlStrategyStates.StateStrategyMatchAction;
+                    break;
+                case TagStrategyMatchActionSubInPos:
+                case TagStrategyMatchActionSubOutPos:
+                    _state = XmlStrategyStates.StateStrategyMatchActionSub;
+                    break;
+                case TagStrategy:
+                    break;
+                default:
+                    Debug.DebugPrintMessage($"xml_strategy_read_end_element: unknown tag: {elementName}; I'm in state {_state}");
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Text handler of the strategy XML parser. Fills in the strategy
+        /// variables according to the current parser state.
+        /// </summary>
+        public void ReadText(string text)
+        {
+            // C: float_value = (gfloat)g_ascii_strtod(...); int_value = (int)float_value;
+            int intValue = float.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out float floatValue)
+                ? (int)floatValue
+                : 0;
+
+            switch (_state)
+            {
+                case XmlStrategyStates.StateStrategySid:
+                    _strategy.Sid = text;
+                    break;
+                case XmlStrategyStates.StateStrategyDesc:
+                    _strategy.Desc = text;
+                    break;
+                case XmlStrategyStates.StateStrategyPriority:
+                    if (Strategy.AllStrategies.Count == 1)
+                        _strategy.Priority = intValue;
+                    else
+                        _strategy.Priority = Strategy.AllStrategies[Strategy.AllStrategies.Count - 2].Priority + intValue;
+                    break;
+                case XmlStrategyStates.StateStrategyPrematchFormation:
+                    _prematch.Formations.Add(intValue);
+                    break;
+                case XmlStrategyStates.StateStrategyPrematchLineup:
+                    SetLineup(_prematch, text);
+                    break;
+                case XmlStrategyStates.StateStrategyPrematchBoost:
+                    SetBoost(_prematch, text);
+                    break;
+                case XmlStrategyStates.StateStrategyPrematchStyle:
+                    SetStyle(_prematch, text);
+                    break;
+                case XmlStrategyStates.StateStrategyMatchActionStyle:
+                    SetStyle(_matchAction, text);
+                    break;
+                case XmlStrategyStates.StateStrategyMatchActionBoost:
+                    SetBoost(_matchAction, text);
+                    break;
+                case XmlStrategyStates.StateStrategyMatchActionSubInPos:
+                    _matchAction.SubInPos = ParseSubPos(text);
+                    break;
+                case XmlStrategyStates.StateStrategyMatchActionSubOutPos:
+                    _matchAction.SubOutPos = ParseSubPos(text);
+                    break;
+            }
+        }
+
+        /// <summary>Read the "prop" attribute of a "in"/"out" tag.</summary>
+        private static void SetSubProperty(StrategyMatchAction matchAction, XmlReader reader, bool isSubIn)
+        {
+            int prop = reader.GetAttribute(AttNameSubProperty) switch
+            {
+                LineupNameBest => (int)StratLineupType.Best,
+                LineupNameWeakest => (int)StratLineupType.Weakest,
+                LineupNameFittest => (int)StratLineupType.Fittest,
+                LineupNameUnfittest => (int)StratLineupType.Unfittest,
+                _ => -100 // unknown, keep the current value
+            };
+
+            if (prop == -100)
+                Debug.DebugPrintMessage($"xml_strategy_read_start_element: unknown property value {reader.GetAttribute(AttNameSubProperty)}");
+            else if (isSubIn)
+                matchAction.SubInProp = prop;
+            else
+                matchAction.SubOutProp = prop;
+        }
+
+        private static void SetLineup(StrategyPrematch prematch, string text)
+        {
+            int lineup = text switch
+            {
+                LineupNameBest => (int)StratLineupType.Best,
+                LineupNameWeakest => (int)StratLineupType.Weakest,
+                LineupNameFittest => (int)StratLineupType.Fittest,
+                LineupNameUnfittest => (int)StratLineupType.Unfittest,
+                _ => -100 // unknown, keep the current value
+            };
+
+            if (lineup == -100)
+                Debug.DebugPrintMessage($"xml_strategy_read_text: unknown lineup type {text}");
+            else
+                prematch.Lineup = lineup;
+        }
+
+        private static void SetBoost(StrategyPrematch prematch, string text)
+        {
+            int boost = text switch
+            {
+                BoostNameOn => 1,
+                BoostNameOff => 0,
+                BoostNameAnti => -1,
+                _ => -100 // unknown, keep the current value
+            };
+
+            if (boost == -100)
+                Debug.DebugPrintMessage($"xml_strategy_read_text: unknown boost type {text}");
+            else
+                prematch.Boost = boost;
+        }
+
+        private static void SetBoost(StrategyMatchAction matchAction, string text)
+        {
+            int boost = text switch
+            {
+                BoostNameOn => 1,
+                BoostNameOff => 0,
+                BoostNameAnti => -1,
+                _ => -100 // unknown, keep the current value
+            };
+
+            if (boost == -100)
+                Debug.DebugPrintMessage($"xml_strategy_read_text: unknown boost type {text}");
+            else
+                matchAction.Boost = boost;
+        }
+
+        private static void SetStyle(StrategyPrematch prematch, string text)
+        {
+            int style = text switch
+            {
+                StyleNameAllOutDefend => -2,
+                StyleNameDefend => -1,
+                StyleNameBalanced => 0,
+                StyleNameAttack => 1,
+                StyleNameAllOutAttack => 2,
+                _ => -100 // unknown, keep the current value
+            };
+
+            if (style == -100)
+                Debug.DebugPrintMessage($"xml_strategy_read_text: unknown style type {text}");
+            else
+                prematch.Style = style;
+        }
+
+        private static void SetStyle(StrategyMatchAction matchAction, string text)
+        {
+            int style = text switch
+            {
+                StyleNameAllOutDefend => -2,
+                StyleNameDefend => -1,
+                StyleNameBalanced => 0,
+                StyleNameAttack => 1,
+                StyleNameAllOutAttack => 2,
+                _ => -100 // unknown, keep the current value
+            };
+
+            if (style == -100)
+                Debug.DebugPrintMessage($"xml_strategy_read_text: unknown style type {text}");
+            else
+                matchAction.Style = style;
+        }
+
+        /// <summary>
+        /// Parses a space-separated list of position names ("goalie defender
+        /// midfielder forward") into the C position integer.
+        /// </summary>
+        private static int ParseSubPos(string text)
+        {
+            int pos = 9;
+            foreach (string position in text.Split(' '))
+            {
+                if (position == PosNameGoalie)
+                    pos *= 10;
+                else if (position == PosNameDefender)
+                    pos = (pos * 10) + 1;
+                else if (position == PosNameMidfielder)
+                    pos = (pos * 10) + 2;
+                else if (position == PosNameForward)
+                    pos = (pos * 10) + 3;
+                else
+                    Debug.DebugPrintMessage($"xml_strategy_read_text: unknown position {position}");
+            }
+
+            return pos < 100 ? pos % 10 : pos;
         }
     }
 
@@ -481,8 +477,11 @@ public static class StrategyXml
         string? strategyDir = FileHelper.GetFirstSupportDirSuffix("strategy");
 
         if (strategyDir == null)
+        {
             Main.MainExitProgram(Bygfoot.ExitCode.StrategyError,
                 "xml_strategy_load_strategies: strategy directory not found.");
+            return;
+        }
 
         List<string> files = FileHelper.GetDirectoryContents(strategyDir, "strategy_", ".xml");
 
