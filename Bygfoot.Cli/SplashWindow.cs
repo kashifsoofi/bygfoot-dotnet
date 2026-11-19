@@ -14,6 +14,12 @@ namespace Bygfoot.Cli;
 [Gtk.Template<Gtk.AssemblyResource>("splash.ui")]
 public partial class SplashWindow
 {
+    [Gtk.Connect("label_splash_hintcounter")]
+    public Gtk.Label LabelSplashHintCounter;
+    
+    [Gtk.Connect("label_splash_hint")]
+    public Gtk.Label LabelSplashHint;
+    
     [Gtk.Connect("button_splash_hint_back")]
     private Gtk.Button _buttonSplashHintBack;
 

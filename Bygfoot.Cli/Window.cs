@@ -166,11 +166,9 @@ public static class Window
 
         int hintNumber = Variables.Counters[(int)Counters.CountHintNumber];
 
-        (Gui.LookupWidget(Variables.Window.Splash, "label_splash_hint") as Gtk.Label)!.SetLabel(
-            Variables.Hints.List[hintNumber].StringValue ?? "");
-
-        (Gui.LookupWidget(Variables.Window.Splash, "label_splash_hintcounter") as Gtk.Label)!.SetLabel(
-            $"({hintNumber + 1}/{Variables.Hints.List.Count})");
+        var splash = Variables.Window.Splash as SplashWindow; 
+        splash!.LabelSplashHint.SetLabel(Variables.Hints.List[hintNumber].StringValue ?? "");
+        splash!.LabelSplashHintCounter.SetLabel($"({hintNumber + 1}/{Variables.Hints.List.Count})");
     }
 
     /// <summary>

@@ -433,8 +433,8 @@ public static class Main
         MainInit(ref argc, ref argv);
 
         if ((LoadLastSave && !LoadSave.LoadGameFromCommandLine("last_save")) ||
-                (!LoadLastSave && (argc == 1 ||
-                             (argc > 1 && !LoadSave.LoadGameFromCommandLine(argv[1])))))
+                (!LoadLastSave && (argc == 0 ||
+                             (argc > 0 && !LoadSave.LoadGameFromCommandLine(argv[0])))))
         {
             if (Variables.Country.SId == null)
             {
