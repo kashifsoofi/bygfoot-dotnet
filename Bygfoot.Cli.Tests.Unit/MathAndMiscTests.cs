@@ -86,6 +86,7 @@ public class MiscTests
     /// numeric expression.
     /// </summary>
     [Test]
+    [NotInParallel("tokens")]
     [Arguments("{0}", 0, "{0}", "5", " > 4", true)]
     [Arguments("{0}", 0, "{0}", "5", " < 4", false)]
     public void MiscParseCondition_EvaluatesTokenisedExpression(string name, int intValue, string strValue, string replacement, string condition, bool expected)

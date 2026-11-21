@@ -416,18 +416,26 @@ public static class FileHelper
             string? stringValue = optName.StartsWith("string_", StringComparison.Ordinal) ? optValue : null;
             int value = optName.StartsWith("string_", StringComparison.Ordinal) ? -1 : (int.TryParse(optValue, out int parsedValue) ? parsedValue : 0);
 
-            optionList.Add(optName, value, stringValue);
+            // C: g_array_append_val(optionlist->list, new) - appended
+            // unconditionally, so duplicate names in the file all survive
+            // (option_add's update-in-place semantics would keep only the last).
+            optionList.AppendOption(optName, value, stringValue);
 
             if ((optName.EndsWith("_unix", StringComparison.Ordinal) && Variables.OsIsUnix) ||
                 (optName.EndsWith("_win32", StringComparison.Ordinal) && !Variables.OsIsUnix))
             {
                 string strippedName = optName.Substring(0, optName.Length - (Variables.OsIsUnix ? 5 : 6));
-                optionList.Add(strippedName, -1, optValue);
+                // C: the stripped copy reuses the parsed value; string_value is opt_value.
+                optionList.AppendOption(strippedName, value, optValue);
             }
         }
 
         if (sort)
             optionList.List.Sort((first, second) => string.CompareOrdinal(first.Name, second.Name));
+
+        // C: the datalist lookup is (re)built after appending/sorting,
+        // so for duplicate names the last entry wins in lookups.
+        optionList.RebuildLookup();
     }
 
     /// <summary>

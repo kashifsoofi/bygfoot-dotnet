@@ -42,6 +42,7 @@ public class OptionList
 
     public void Add(string name, int intValue, string? stringValue = null)
     {
+        // C: option_add - an existing option is updated in place, a new one is appended.
         if (_lookup.TryGetValue(name, out var existing))
         {
             existing.Value = intValue;
@@ -58,6 +59,36 @@ public class OptionList
             List.Add(newOption);
             _lookup[name] = newOption;
         }
+    }
+
+    /// <summary>
+    /// Unconditionally appends a new option, allowing duplicate names.
+    /// Corresponds to the g_array_append_val in C file_load_opt_file, which
+    /// does NOT deduplicate (files may contain the same name several times,
+    /// e.g. the repeated string_contrib_entry rows of bygfoot_help).
+    /// </summary>
+    internal void AppendOption(string name, int intValue, string? stringValue)
+    {
+        var newOption = new Option
+        {
+            Name = name,
+            Value = intValue,
+            StringValue = stringValue
+        };
+        List.Add(newOption);
+        _lookup[name] = newOption;
+    }
+
+    /// <summary>
+    /// Rebuild the lookup dictionary from the list. Corresponds to the
+    /// g_datalist_set_data loop in C file_load_opt_file, which runs after
+    /// appending (and after sorting): for duplicate names the last entry wins.
+    /// </summary>
+    internal void RebuildLookup()
+    {
+        _lookup.Clear();
+        foreach (Option option in List)
+            _lookup[option.Name] = option;
     }
 
     public int GetInt(string name)
