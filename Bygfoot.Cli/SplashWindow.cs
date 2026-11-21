@@ -110,15 +110,17 @@ public partial class SplashWindow
     /// <summary>
     /// The window was asked to be closed (GTK4 equivalent of the former
     /// "delete_event" signal of GTK3). Corresponds to the C handler
-    /// on_window_splash_delete_event of the close-request signal, which ignores
-    /// the close event and does nothing.
+    /// on_window_splash_delete_event (src/misc3_callbacks.c), which returns
+    /// FALSE, leaving the close to the default handler.
     /// </summary>
     private bool OnWindowCloseRequest(Gtk.Window sender, EventArgs args)
     {
-        // The C handler on_window_splash_delete_event is empty. Unlike GTK3's
-        // delete-event, GTK4's close-request has no default destruction, so
-        // there is nothing to do here.
-        return true;
+        Debug.DebugPrintMessage("on_window_splash_delete_event\n");
+
+        // C: return FALSE - the event is not handled, so the default handler
+        // closes the window. (The glade file wires this handler; here it is
+        // connected in Initialize, since the signal element is not supported.)
+        return false;
     }
 
     /// <summary>
