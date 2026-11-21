@@ -148,9 +148,10 @@ public static class Window
 
         Window.WindowCreate(WindowsType.Splash);
 
-        // TODO: treeview_show_contributors (src/treeview.c not yet converted).
         // C: treeview_show_contributors(GTK_TREE_VIEW(
         //     lookup_widget(window.splash, "treeview_splash_contributors")));
+        if (Variables.Window.Splash is SplashWindow splash)
+            splash.TreeViewShowContributors();
 
         Window.WindowLoadHintNumber();
         Window.WindowSplashShowHint();

@@ -39,9 +39,12 @@
                 <property name="hscrollbar-policy">automatic</property>
                 <property name="vscrollbar-policy">automatic</property>
                 <child>
-                  <object class="GtkListView" id="treeview_splash_contributors">
+                  <!-- C: a GtkTreeView (treeview_splash_contributors). The GirCore
+                       binding cannot feed data to a GtkListView, so a box of markup
+                       labels is used instead (same visual result). -->
+                  <object class="GtkBox" id="treeview_splash_contributors">
                     <property name="visible">1</property>
-                    <property name="can-focus">1</property>
+                    <property name="orientation">vertical</property>
                   </object>
                 </child>
               </object>

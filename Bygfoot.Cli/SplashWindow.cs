@@ -38,6 +38,9 @@ public partial class SplashWindow
     [Gtk.Connect("button_splash_quit")]
     private Gtk.Button _buttonSplashQuit;
 
+    [Gtk.Connect("treeview_splash_contributors")]
+    private Gtk.Box _treeViewContributors;
+
     partial void Initialize()
     {
         Variables.Window.Splash = this;
@@ -53,6 +56,55 @@ public partial class SplashWindow
         _buttonSplashLoadGame.OnClicked += OnButtonSplashLoadGameClicked;
         _buttonSplashResumeGame.OnClicked += OnButtonSplashResumeGameClicked;
         _buttonSplashQuit.OnClicked += OnButtonSplashQuitClicked;
+    }
+
+    /// <summary>
+    /// Show the list of contributors of the game, loaded from the bygfoot_help
+    /// support file. Corresponds to the C function treeview_show_contributors
+    /// (src/treeview.c), which window_show_splash calls for this window's tree view.
+    /// C renders the options in a tree view column with a markup cell renderer;
+    /// here each row is a markup label (the GirCore binding cannot feed data to
+    /// a GtkListView, and the box replaces the tree view in the UI file).
+    /// </summary>
+    public void TreeViewShowContributors()
+    {
+        Debug.DebugPrintMessage("treeview_show_contributors\n");
+
+        string? helpFile = FileHelper.FindSupportFile("bygfoot_help", true);
+        if (helpFile == null)
+        {
+            // C: game_gui_show_warning(_("Didn't find file 'bygfoot_help'."));
+            // (src/game_gui.c not yet converted)
+            return;
+        }
+
+        OptionList helpList = new();
+        FileHelper.LoadOptFile(helpFile, helpList, false);
+
+        // C: the title attribute constant for the section headings.
+        string titleAttribute = OptionHelper.ConstApp("string_help_window_title_attribute");
+
+        // C: the tree view is non-selectable, without rules and without headers;
+        // none of those concepts apply to the label box.
+
+        foreach (Option opt in helpList.List)
+        {
+            // C: a row is appended for every option; only the contrib entries
+            // occur in the file, anything else is skipped.
+            if (!opt.Name.StartsWith("string_contrib_", StringComparison.Ordinal))
+                continue;
+
+            Gtk.Label label = new();
+            if (opt.Name.StartsWith("string_contrib_title", StringComparison.Ordinal))
+                // C: sprintf(buf, "\n<span %s>%s</span>", attr, value)
+                label.SetMarkup($"\n<span {titleAttribute}>{opt.StringValue}</span>");
+            else
+                label.SetMarkup(opt.StringValue ?? string.Empty);
+
+            label.Hexpand = true;
+            label.Halign = Align.Start;
+            _treeViewContributors.Append(label);
+        }
     }
 
     /// <summary>
