@@ -244,6 +244,92 @@ public class User
     }
 
     /// <summary>
+    /// Move a user's team to top or bottom league
+    /// at the beginning of a new game and set up the team.
+    /// Corresponds to C: user_set_up_team_new_game.
+    /// </summary>
+    /// <param name="user">The user we set up the team for.</param>
+    public static void SetUpTeamNewGame(User user)
+    {
+        Debug.DebugPrintMessage("user_set_up_team_new_game\n");
+
+        /* If the user chose to start in a different league than
+           his team is originally in, the league is stored in the scout
+           variable. */
+        if (user.Scout == -1)
+        {
+            SetUpTeam(user, true);
+            User.HistoryAdd(user, (int)UserHistoryType.StartGame,
+                user.Team.Name,
+                League.LeagueCupGetNameString(user.Team.Clid), null, null);
+        }
+        else
+        {
+            int rndom = Misc.MathRndi(0, Bygfoot.GetLeague(user.Scout).Teams.Count - 1);
+            while (Team.IsUser(Bygfoot.GetLeague(user.Scout).Teams[rndom]) != -1)
+                rndom = Misc.MathRndi(0, Bygfoot.GetLeague(user.Scout).Teams.Count - 1);
+
+            string name = Bygfoot.GetLeague(user.Scout).Teams[rndom].Name;
+            Bygfoot.GetLeague(user.Scout).Teams[rndom].Name = user.Team.Name;
+            user.Team.Name = name;
+
+            user.Team = Bygfoot.GetLeague(user.Scout).Teams[rndom];
+            user.TeamId = user.Team.Id;
+
+            User.HistoryAdd(user, (int)UserHistoryType.StartGame,
+                user.Team.Name,
+                League.LeagueCupGetNameString(user.Team.Clid), null, null);
+
+            SetUpTeam(user, true);
+        }
+    }
+
+    /// <summary>
+    /// Set up finances, remove some players etc. for a new user team.
+    /// Corresponds to C: user_set_up_team.
+    /// </summary>
+    /// <param name="user">The user whose team we set up.</param>
+    /// <param name="removePlayers">Whether some of the team's players have to be removed.</param>
+    public static void SetUpTeam(User user, bool removePlayers)
+    {
+        Debug.DebugPrintMessage("user_set_up_team\n");
+
+        if (removePlayers)
+        {
+            for (PlayerPos pos = PlayerPos.Defender; pos <= PlayerPos.Forward; pos++)
+                for (int j = user.Team.Players.Count - 1; j > 10; j--)
+                    if (user.Team.Players[j].Pos == pos &&
+                        user.Team.Players[j].Recovery != 1)
+                    {
+                        Player.RemoveFromTeam(user.Team, j);
+                        break;
+                    }
+        }
+
+        foreach (Player pl in user.Team.Players)
+            pl.Recovery = 0;
+
+        user.Scout = (int)Quality.QualityAverage;
+        user.Physio = (int)Quality.QualityAverage;
+
+        if (OptionHelper.SettInt("int_opt_disable_transfers") != 0)
+            user.Physio = (int)Quality.QualityGood;
+
+        user.Team.Style = 0;
+
+        SetUpFinances(user);
+        SetUpCounters(user);
+
+        if (OptionHelper.SettInt("int_opt_disable_ya") == 0)
+            YouthAcademy.New(user);
+
+        user.Counters[(int)CounterType.NewSponsor] =
+            (OptionHelper.SettInt("int_opt_disable_finances") != 0) ? -5 : 1;
+
+        user.Options.SetInt("int_opt_user_penalty_shooter", -1);
+    }
+
+    /// <summary>
     /// Set up finances, remove some players etc. for a new user team.
     /// Corresponds to C: user_set_up_finances.
     /// </summary>
